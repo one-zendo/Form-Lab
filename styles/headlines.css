@@ -1,5 +1,5 @@
 /* ONE approved headline measurements; no viewport or navigation changes. */
-:root{--headline-size:28px;--headline-weight:700;--headline-height:44px;--headline-tracking:-.7px;--headline-leading:24px;--headline-glyph-height:32px;--headline-stroke:3px;--headline-optical-gap:10px;--headline-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+:root{--headline-size:28px;--headline-weight:700;--headline-height:44px;--headline-tracking:-.7px;--headline-leading:24px;--headline-glyph-height:32px;--headline-stroke:3px;--headline-optical-gap:10.5px;--headline-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 .page:not(:has(.diagnostic-caption)) .brand,.workouts-page .workouts-header h1,.workouts-page .workouts-header .one-routine-title,.workouts-page .workouts-layout[data-wide=true] .workouts-header h1{font:var(--headline-weight) var(--headline-size)/var(--headline-height) var(--headline-family);letter-spacing:var(--headline-tracking);height:var(--headline-height);min-height:var(--headline-height);min-width:0;margin:0;padding:0;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .home-brand .brand,.workouts-stack .workouts-header h1,.page>.brand{display:flex;align-items:center;gap:0}
 .headline-leading,.home-brand .brand-signature{display:grid;place-items:center;flex:0 0 var(--headline-leading);width:var(--headline-leading);height:var(--headline-height);background:none;border-radius:0}
@@ -20,8 +20,8 @@ body:is([data-duo-orientation=FP],[data-duo-orientation=FL1],[data-duo-orientati
 body:is([data-duo-orientation=FP],[data-duo-orientation=FL1],[data-duo-orientation=FL2],[data-duo-orientation=UP],[data-duo-orientation=UL]) main>.page{margin-block:0}
 .home-header .brand{align-items:center}.home-header .home-date strong{align-self:center}
 
-/* Native design coordinates and web-only FL1 adapter. */
-:root{--fl1-native-headline-inset:84px;--fl1-native-content-inset:16px;--fl1-safari-excluded:84px;--fl1-safari-headline-inset:max(0px,calc(var(--fl1-native-headline-inset) - var(--fl1-safari-excluded)));--fl1-safari-content-inset:max(0px,calc(var(--fl1-native-content-inset) - var(--fl1-safari-excluded)));--fl1-workout-share:2fr;--fl1-streak-share:3fr}
+/* Approved FL1 coordinates. Safari's viewport already begins after the 84pt left exclusion. */
+:root{--fl1-native-headline-inset:84px;--fl1-native-content-inset:29.5px;--fl1-safari-excluded:84px;--fl1-safari-headline-inset:max(0px,calc(var(--fl1-native-headline-inset) - var(--fl1-safari-excluded)));--fl1-safari-content-inset:max(0px,calc(var(--fl1-native-content-inset) - var(--fl1-safari-excluded)));--fl1-workout-share:2fr;--fl1-streak-share:3fr}
 #fl1-preview{margin:8px 0;padding:8px;border:1px solid #ccd4df;border-radius:12px}#fl1-preview svg{display:block;width:100%;height:auto;margin-top:8px}#fl1-preview select{font:inherit;margin-left:8px}
 
 
