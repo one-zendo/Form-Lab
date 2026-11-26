@@ -217,3 +217,5 @@ Native physical headline inset 84px, content inset 16px; Safari adapter subtract
 Build 187: early CSS FL1 inset adapter for compact landscape using remembered landscape side; synchronous rotation handler updates side before layout reads. Initial unknown side defaults left until angle is reported. No rotation animation added; device verification pending.
 
 Build 188: persistent diagnostic toggle for blue viewport outline on app and diagnostic pages; diagnostic grid and camera guides remain independent. Removed FL1-only signature justification overrides so shared 24px leading slot centers the 3px signature at 10.5px, consistent across orientations. Preview wordmark uses 24px slot. Device verification pending.
+
+Build 189: compact landscape shares zero Safari leading inset and 13.5px Home signature slot (3px stroke + 10.5px gap), independent of late rotation angle. FL2 now shares FL1 leading alignment intentionally; native targets, right rail and hinge animation logic unchanged. Removed competing FL1 angle-based selectors. Device verification pending.
