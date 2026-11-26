@@ -891,3 +891,15 @@ body[data-dock=bottom] #build-tools{bottom:calc(var(--bottom-bar-height) + var(-
 body[data-dock=bottom] nav.nav,body[data-layout=folded-portrait][data-dock=bottom] nav.nav{inset:auto calc(var(--bottom-bar-edge) + var(--safe-right)) calc(var(--bottom-bar-offset) + var(--safe-bottom)) calc(var(--bottom-bar-edge) + var(--safe-left));width:auto;height:var(--bottom-bar-height);padding:var(--bottom-bar-padding) max(var(--space-1),calc((100% - var(--bottom-bar-content-max))/2));border:1px solid var(--line);border-radius:var(--radius-card);grid-template-columns:repeat(4,minmax(0,1fr));}
 body[data-dock=bottom] main,body[data-layout=folded-portrait][data-dock=bottom] main{padding-bottom:calc(var(--bottom-bar-height) + var(--bottom-bar-offset) + var(--safe-bottom) + var(--space-4))}
 body[data-dock=bottom] #build-tools{bottom:calc(var(--bottom-bar-height) + var(--bottom-bar-offset) + var(--safe-bottom));}
+
+/* Build 140: Home hierarchy and spacing; retain primary workout surface. */
+.home-page{gap:var(--space-4)}
+.home-header{row-gap:var(--space-1)}
+.home-greeting{font-size:var(--type-body);font-weight:var(--weight-medium);line-height:var(--line-body)}
+.home-dashboard{gap:var(--space-4)}
+.home-streak-card{box-shadow:none;gap:var(--space-3)}
+.home-streak-title svg{color:var(--accent)}
+.home-days{margin-block:var(--space-2)}
+.home-workout-cta{background:transparent;color:var(--workout-ink)}
+#build-tools[hidden]{display:none!important}
+@media(max-height:500px){.home-page,.home-dashboard{gap:var(--space-3)}}
