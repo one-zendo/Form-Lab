@@ -3,3 +3,5 @@ Independent overlay layer: orange camera boundaries derived from hardware, purpl
 
 ## Build 11
 Independent fixed noninteractive DOM overlay; live getBoundingClientRect for headline/content/cards/navigation, visual and layout viewport, CSS env safe insets and zoom scale. Individual guide toggles plus existing master. Camera is recorded outer-screen reference only, withheld for manual override/unmatched viewport; excluded portions cannot be painted. Native/Safari selector changes reference dimensions only, not live layout or runtime. Grid is 20 CSS px. Measurements viewport-relative and in CSS px, not independently measured physical points. Modal top layer may obscure guides. JS syntax checked; browser/device validation pending. No shell, posture or navigation changes.
+
+Build 12: FORM wordmark toggles a nonmodal fixed diagnostic panel, Close/Escape restores focus. Normal startup hides panel and overlays; opening enables master, closing disables it; individual toggles retained during session. Panel geometry provisional; Profile entry deferred to Stage 7. Existing component state and shell preserved. JS syntax checked; device verification pending.
