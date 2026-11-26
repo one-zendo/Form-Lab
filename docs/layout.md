@@ -36,3 +36,7 @@ Consolidated Home component styling into one authoritative block in foundation/p
 
 ## Build 27 — Shared fixed headline and compact date
 Reduced Home date typography to 14 pt weekday and 10 pt calendar date. The shared headline remains a non-scrolling flex item outside the single content scroller, so page headlines remain stationary across Home, Workouts, Progress, Profile and Diagnostics. The weekday/date block is centered in the headline's fixed height and right-aligned. Removed duplicate Demo Mode script includes and duplicate Demo Mode setting row discovered in the current HTML. Hardware geometry, orientation, calibration and navigation sources were not modified. The requested blue alignment lines remain a design/diagnostic visualization and are not permanently rendered in the app.
+
+
+## Build 28 — single scroll owner
+Locked html and body to the viewport with overflow hidden and overscroll containment. Constrained #shell to the dynamic viewport and retained its existing orientation-aware navigation clearance. The calibrated shell remains a fixed-height flex column: the headline is a non-shrinking fixed-height row, while .content is the sole vertical scroll container with a zero flex basis and min-height:0. Preserved the existing calibrated headline offset, date sizing, safe-area and Duo geometry tokens. Added regression coverage for root scroll locking and the single internal scroll owner. Real Safari rubber-band/visual-viewport behavior and Duo hardware still require device validation.
