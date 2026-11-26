@@ -869,3 +869,19 @@ body[data-dock=bottom] nav.nav button svg{width:var(--bottom-bar-icon);height:va
 body[data-dock=bottom] main,body[data-layout=folded-portrait][data-dock=bottom] main{padding-bottom:calc(var(--bottom-bar-height) + var(--safe-bottom) + var(--space-4))}
 body[data-dock=bottom] #build-tools{bottom:calc(var(--bottom-bar-height) + var(--safe-bottom));}
 @media(prefers-reduced-motion:reduce){body[data-dock=bottom] nav.nav button,body[data-dock=bottom] nav.nav button::before{transition:none}}
+
+:root[data-theme=studio]{color-scheme:light;--canvas:#F2F2F7;--surface:#FFFFFF;--raised:#E5E5EA;--ink:#000000;--muted:#636366;--brand-color:#0088FF;--accent:#0066CC;--on-accent:#FFFFFF;--success:#007A30;--warning:#995000;--danger:#D51028;--completion:#34C759;--line:#00000012;--workout-bg:#0066CC;--workout-ink:#FFFFFF;--workout-muted:#EAF2FF;--workout-pill:#00000026}
+
+:root[data-theme=graphite]{color-scheme:dark;--canvas:#17171F;--surface:#24242E;--raised:#30303C;--ink:#F5F5F5;--muted:#A3A3A3;--brand-color:#B0FF00;--accent:#B0FF00;--on-accent:#17171F;--success:#30D158;--warning:#FFB340;--danger:#FF6961;--completion:#B0FF00;--line:#ffffff18;--workout-bg:#24242E;--workout-ink:#F5F5F5;--workout-muted:#A3A3A3;--workout-pill:#B0FF00}
+
+:root[data-theme] body[data-dock=bottom] nav.nav button[aria-current=page]{color:var(--brand-color)}
+:root[data-theme] body[data-dock=bottom] nav.nav button::before{background:var(--brand-color)}
+:root[data-theme=studio] body[data-dock=side] nav.nav{background:#ffffffdf;border-color:#ffffffb0}
+:root[data-theme=graphite] body[data-dock=side] nav.nav{background:var(--surface);border-color:var(--line)}
+:root[data-theme] body[data-dock=side] nav.nav button{color:var(--muted)}
+:root[data-theme] body[data-dock=side] nav.nav button[aria-current=page]{color:var(--brand-color);background:var(--raised)}
+.appearance-options{display:grid;gap:0;background:var(--surface);border-radius:var(--radius-card);padding-inline:var(--space-3)}
+.appearance-options label{display:flex;align-items:center;gap:var(--space-3);min-height:var(--touch-target);padding-block:var(--space-2);color:var(--ink);cursor:pointer}
+.appearance-options label+label{border-top:1px solid var(--line)}
+.appearance-options input{margin-left:auto;accent-color:var(--accent);width:20px;height:20px}
+.appearance-options svg{width:20px;height:20px;color:var(--accent)}
