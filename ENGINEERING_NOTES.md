@@ -87,3 +87,6 @@ Remove old fixed production landscape offsets; retain developer calibration and 
 
 ## Build 170 — layout integration
 Apply form-page to Home, Workouts and generic pages, form-grid to Home dashboard, form-card to streak and standard workout cards. Shared primitives use :where() specificity and precede specialized rules; container query containment stays Home-only. Consolidate default Home grid track and landscape page inset. Preserve hinge segment calculations, navigation and motion source. Calibration Home inset now zero as in production; developer main calibration retained. JS syntax checked; source regression definitions updated. Browser and physical device verification pending.
+
+## Build 171 — design hardware and layout audit
+Five standalone schematic SVGs and measured/reference fixtures added. Runtime CSS unchanged; JS only build number. Audit: screen ratio and compact thresholds remain heuristics, overlapping Home hinge rules remain; no changes pending device verification. Correct malformed escaped adaptive-layout test regex. Ten fixture classifier checks passed, JS syntax passed; full Node suite and device rendering not verified. Hardware camera/radii illustrative, not measured.
