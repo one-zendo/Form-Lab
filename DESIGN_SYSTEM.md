@@ -215,3 +215,5 @@ Shared 44px headline row; default viewport-relative center 48px, top = center âˆ
 Native physical headline inset 84px, content inset 16px; Safari adapter subtracts excluded 84px and clamps to zero, respecting reported safe left. Independent tokens, 2:3 dashboard tracks. Diagnostic preview switch uses simulated physical SVG, not native rendering. Other orientations and navigation unchanged. Native drawable area remains unverified.
 
 Build 187: early CSS FL1 inset adapter for compact landscape using remembered landscape side; synchronous rotation handler updates side before layout reads. Initial unknown side defaults left until angle is reported. No rotation animation added; device verification pending.
+
+Build 188: persistent diagnostic toggle for blue viewport outline on app and diagnostic pages; diagnostic grid and camera guides remain independent. Removed FL1-only signature justification overrides so shared 24px leading slot centers the 3px signature at 10.5px, consistent across orientations. Preview wordmark uses 24px slot. Device verification pending.
