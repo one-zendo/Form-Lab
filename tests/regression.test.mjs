@@ -31,3 +31,6 @@ test('shared day indicator preserves state classes',()=>{const ui=vm.runInNewCon
 test('Home modules load before app',()=>{for(const name of ['home','components'])assert.ok(html.indexOf('core/'+name+'.js?v=')>=0&&html.indexOf('core/'+name+'.js?v=')<html.indexOf('core/app.js?v='))});
 
 test('recovery schedule preserves earlier weeks',()=>{const now=new Date(2026,10,26,12),from=home.weekStart(now),history=[16,17,18,23,24,25].map(d=>({finished:new Date(2026,10,d,8)}));const s=home.stats(history,now,3,[{from,rest:[0]}]);assert.equal(s.best,1);assert.equal(s.goal,6);assert.equal(s.days[0].rest,true)});
+
+test('recovery credit starts after the day ends',()=>{const now=new Date(2026,10,26,12),from=home.weekStart(now),s=home.stats([],now,3,[{from,rest:[0,3,5]}]);assert.equal(s.onTrack,1);assert.equal(s.days[0].recovered,true);assert.equal(s.days[3].recovered,false)});
+test('current day breathing is limited to unfinished days',()=>{const ui=vm.runInNewContext(fs.readFileSync(new URL('../core/components.js',import.meta.url),'utf8')+';FormUI');assert.ok(ui.dayIndicator({today:true}).includes('breathing'));assert.ok(!ui.dayIndicator({today:true,done:true}).includes('breathing'));assert.ok(!ui.dayIndicator({today:false}).includes('<svg'))});
