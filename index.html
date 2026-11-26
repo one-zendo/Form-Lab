@@ -834,17 +834,24 @@ body[data-layout=folded-landscape][data-calibrating=true] main{padding-left:var(
 #form-marker{display:none;position:absolute;top:0;bottom:0;left:var(--calibration-left);width:1px;background:#64a8ff;z-index:1003;pointer-events:none}
 body[data-layout=folded-landscape][data-calibrating=true] #form-marker{display:block}
 #form-slider{accent-color:#64a8ff!important}
+body[data-layout=folded-landscape][data-calibrating=true] main{padding-top:0;padding-left:0;transform:translate(var(--calibration-left,0px),var(--calibration-top,0px))}
+#form-marker{left:var(--calibration-left,0px)}
+#form-marker-y{display:none;position:absolute;left:0;right:0;top:var(--calibration-top,0px);height:1px;background:#64a8ff;z-index:1003;pointer-events:none}
+body[data-layout=folded-landscape][data-calibrating=true] #form-marker-y{display:block}
+#rail-panel{max-height:80%;overflow-y:auto}
+#rail-panel strong,#rail-panel label{display:block}
+#form-slider-y{accent-color:#64a8ff!important}
 </style></head>
 <body>
 <main></main>
-<div id="build-tools"><span id="build-number">Build 100</span><button id="quick-check" type="button">Check</button><button id="quick-update" type="button">Update</button><button id="rail-calibrate" type="button">Calibrate</button><span id="update-status" role="status" aria-live="polite"></span></div>
-<div id="form-marker" aria-hidden="true"></div><div id="rail-marker" aria-hidden="true"></div><section id="rail-panel" hidden><strong>Layout calibration</strong><label for="form-slider">FORM / content left edge</label><input id="form-slider" type="range" min="0" max="120" step="1"><output id="form-reading"></output><label for="rail-slider">Navigation right edge</label><input id="rail-slider" type="range" min="-64" max="64" step="1" aria-label="Navigation right offset"><output id="rail-reading"></output><div><button id="rail-reset" type="button">Reset</button> <button id="rail-done" type="button">Done</button></div></section><nav class="nav" aria-label="Main navigation"></nav>
+<div id="build-tools"><span id="build-number">Build 101</span><button id="quick-check" type="button">Check</button><button id="quick-update" type="button">Update</button><button id="rail-calibrate" type="button">Calibrate</button><span id="update-status" role="status" aria-live="polite"></span></div>
+<div id="form-marker-y" aria-hidden="true"></div><div id="form-marker" aria-hidden="true"></div><div id="rail-marker" aria-hidden="true"></div><section id="rail-panel" hidden><strong>Layout calibration</strong><label for="form-slider">FORM / content left edge</label><input id="form-slider" type="range" min="-120" max="120" step="1"><output id="form-reading"></output><label for="form-slider-y">FORM / content top edge</label><input id="form-slider-y" type="range" min="-100" max="120" step="1"><output id="form-reading-y"></output><label for="rail-slider">Navigation right edge</label><input id="rail-slider" type="range" min="-64" max="64" step="1" aria-label="Navigation right offset"><output id="rail-reading"></output><div><button id="rail-reset" type="button">Reset</button> <button id="rail-done" type="button">Done</button></div></section><nav class="nav" aria-label="Main navigation"></nav>
 <dialog class="page-tab-menu" id="page-tab-menu" aria-labelledby="page-tab-title"><h2 id="page-tab-title">Navigate</h2><div class="page-tab-options"></div></dialog>
 <dialog class="dev-dialog" id="developer"></dialog>
 <dialog class="home-coming" id="home-coming"><h2>Coming next</h2><p>We’re building the workout and activity features on this clean FORM foundation.</p><button id="home-coming-close">Done</button></dialog>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD=100;
+const BUILD=101;
 const UPDATE_INTERVAL_MS = 5000;
 const tabs=['Home','Workouts','Progress','Profile'];
 const glyphs={home:'M3 11 12 3l9 8v9h-6v-7H9v7H3z',workouts:'M3 10h18v4H3zM7 6v12M17 6v12',progress:'M3 20h18M5 15l4-5 4 3 6-9',profile:'M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8M4 21v-2a8 8 0 0 1 16 0v2',exercise:'M3 10h18v4H3zM6 7v10M18 7v10',timer:'M12 7v6l4 2M9 2h6M12 4a9 9 0 1 0 0 18 9 9 0 0 0 0-18',records:'M5 20V9h14v11M8 9V5h8v4M9 14h6',library:'M4 4h6v16H4zM14 4h6v16h-6z',plus:'M12 4v16M4 12h16',swap:'M4 7h15l-4-4m5 14H5l4 4',rest:'M4 3h16v18H4zM8 8h8M8 12h8M8 16h5',calendar:'M3 5h18v16H3zM7 3v4m10-4v4M3 10h18',heart:'M20 8c0 5-8 11-8 11S4 13 4 8a4 4 0 0 1 8-1 4 4 0 0 1 8 1'};
@@ -963,11 +970,14 @@ const railPanel=document.getElementById('rail-panel'),railSlider=document.getEle
 const formSlider=document.getElementById('form-slider'),formReading=document.getElementById('form-reading');
 function formSet(v){formSlider.value=v;document.body.style.setProperty('--calibration-left',formSlider.value+'px');formReading.textContent='FORM left edge: '+formSlider.value+'px';}
 formSlider.oninput=()=>formSet(formSlider.value);
+const formSliderY=document.getElementById('form-slider-y'),formReadingY=document.getElementById('form-reading-y');
+function formSetY(v){formSliderY.value=v;document.body.style.setProperty('--calibration-top',formSliderY.value+'px');formReadingY.textContent='FORM top edge: '+formSliderY.value+'px';}
+formSliderY.oninput=()=>formSetY(formSliderY.value);
 function railMeasure(){const n=nav.getBoundingClientRect();railReading.textContent='Right offset: '+railSlider.value+'px · center X: '+Math.round(n.x+n.width/2)+'px · viewport: '+document.documentElement.clientWidth+'px · orientation: '+(screen.orientation?.angle ?? window.orientation ?? 'unknown');}
 function railSet(v){railSlider.value=v;document.body.style.setProperty('--calibration-right',railSlider.value+'px');railMeasure();}
-document.getElementById('rail-calibrate').onclick=()=>{const n=nav.getBoundingClientRect();const current=Math.round(document.documentElement.clientWidth-n.right);const left=parseFloat(getComputedStyle(main).paddingLeft);document.body.dataset.calibrating='true';railPanel.hidden=false;formSet(Math.round(left));railSet(current)};
+document.getElementById('rail-calibrate').onclick=()=>{const n=nav.getBoundingClientRect();const current=Math.round(document.documentElement.clientWidth-n.right);const left=document.body.dataset.calibrating==='true'?Number(formSlider.value):parseFloat(getComputedStyle(main).paddingLeft);const top=document.body.dataset.calibrating==='true'?Number(formSliderY.value):parseFloat(getComputedStyle(main).paddingTop);document.body.dataset.calibrating='true';railPanel.hidden=false;formSet(Math.round(left));formSetY(Math.round(top));railSet(current)};
 railSlider.oninput=()=>railSet(railSlider.value);
-document.getElementById('rail-reset').onclick=()=>{railSet(24);formSet(16)};
+document.getElementById('rail-reset').onclick=()=>{railSet(24);formSet(16);formSetY(20)};
 document.getElementById('rail-done').onclick=()=>{railPanel.hidden=true;};
 addEventListener('resize',()=>{if(document.body.dataset.layout!=='folded-landscape'){railPanel.hidden=true;delete document.body.dataset.calibrating;document.body.style.removeProperty('--calibration-right')}else if(document.body.dataset.calibrating)railMeasure()});
 </script>
