@@ -39,3 +39,6 @@ Implemented foundation/tokens.css and migrated temporary shell styling to shared
 
 ## Build 9 — component playground
 Shared card, stack, grid, primary/secondary buttons, numeric inputs, selection, native dialog/sheet, expandable details and deadline-based sample timer. Test-only inputs and timer are ephemeral and may reset on deployment reload; no workout records created. Swipe/drag, production timer persistence, sheet animation and full hinge-safe modal positioning deferred. Backdrop and focus outline are provisional structural visual values. Existing shell/navigation/posture code unchanged. JS parsed; device testing pending.
+
+## Build 10 — approved measurement refinements
+Retain existing baseline. Add optional 56 CSS px workout action height (timer playground demonstrates it), 150ms immediate button feedback, 480 CSS px maximum dialog width on flat UP/UL; compact and partially folded postures retain 360 maximum. Expanded width is a new design choice within user-approved adaptive sizing, not a measured device calibration. Centralize focus and backdrop tokens. Exact hinge-safe modal placement remains pending. Browser/device verification required.

@@ -13,3 +13,7 @@
 }
 [data-theme="graphite-lime"]{--canvas:#17171F;--paper:#24242E;--elevated:#30303C;--ink:#F5F5F5;--muted:#A3A3A3;--action:#B0FF00;--on-action:#17171F;--danger:#FF6961;}
 @media(prefers-reduced-motion:reduce){:root{--motion-standard:0ms;--motion-selection:0ms;--motion-hinge:0ms;--motion-unfold:0ms;--motion-retarget:0ms}}
+
+/* Approved workout interaction refinements. */
+:root{--workout-action-height:56px;--motion-feedback:150ms;--dialog-expanded-max:480px;--focus-width:2px;--focus-offset:2px;--modal-scrim:#0006}
+@media(prefers-reduced-motion:reduce){:root{--motion-feedback:0ms}}
