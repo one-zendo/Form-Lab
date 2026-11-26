@@ -1,6 +1,6 @@
 
-const BUILD=116;
-const UPDATE_INTERVAL_MS = 5000;
+const BUILD=117;
+const UPDATE_INTERVAL_MS = 30000;
 const tabs=['Home','Workouts','Progress','Profile'];
 const glyphs={home:'M3 11 12 3l9 8v9h-6v-7H9v7H3z',workouts:'M3 10h18v4H3zM7 6v12M17 6v12',progress:'M3 20h18M5 15l4-5 4 3 6-9',profile:'M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8M4 21v-2a8 8 0 0 1 16 0v2',exercise:'M3 10h18v4H3zM6 7v10M18 7v10',timer:'M12 7v6l4 2M9 2h6M12 4a9 9 0 1 0 0 18 9 9 0 0 0 0-18',records:'M5 20V9h14v11M8 9V5h8v4M9 14h6',library:'M4 4h6v16H4zM14 4h6v16h-6z',plus:'M12 4v16M4 12h16',swap:'M4 7h15l-4-4m5 14H5l4 4',rest:'M4 3h16v18H4zM8 8h8M8 12h8M8 16h5',calendar:'M3 5h18v16H3zM7 3v4m10-4v4M3 10h18',heart:'M20 8c0 5-8 11-8 11S4 13 4 8a4 4 0 0 1 8-1 4 4 0 0 1 8 1'};
 const icon=n=>{const names={home:'house',workouts:'dumbbell',progress:'chart-no-axes-combined',profile:'user-round',exercise:'dumbbell',records:'trophy',library:'library-big',rest:'clipboard-list',swap:'arrow-left-right',heart:'heart-pulse'};const name=names[n]||n;return '<svg viewBox="0 0 24 24" aria-hidden="true" data-lucide="'+name+'"><path d="'+(glyphs[n]||glyphs.exercise)+'"/></svg>'};
@@ -14,11 +14,34 @@ function homeMarkup(){const now=new Date(),weekday=now.toLocaleDateString(undefi
 /* Independent Workouts implementation. No One data or styling is imported. */
 const WORKOUT_STORAGE='form.lab.workouts.v1';
 let workoutData={routines:[],history:[],session:null},workoutView='routines',workoutQuery='',workoutDetail=null,workoutDraft=null,workoutNotice='';
-try { const saved=JSON.parse(localStorage.getItem(WORKOUT_STORAGE)||'null'); if(saved&&Array.isArray(saved.routines)&&Array.isArray(saved.history))workoutData={routines:saved.routines,history:saved.history,session:saved.session||null}; } catch { workoutNotice='Saved workout data could not be read.'; }
+const WORKOUT_BACKUP=WORKOUT_STORAGE+'.backup';
+let storageReadBlocked=false,storageDirty=false;
+const validRecord=r=>r&&typeof r.id==='string'&&typeof r.name==='string'&&Array.isArray(r.exercises)&&r.exercises.every(e=>e&&typeof e.name==='string'&&Array.isArray(e.sets)&&e.sets.every(t=>t&&typeof t==='object'));
+const validWorkoutData=d=>d&&(!('schemaVersion' in d)||d.schemaVersion===1)&&Array.isArray(d.routines)&&d.routines.every(validRecord)&&Array.isArray(d.history)&&d.history.every(validRecord)&&(d.session==null||validRecord(d.session));
+function readWorkoutData(raw){const d=JSON.parse(raw);if(!validWorkoutData(d))throw Error('Invalid workout data');return {routines:d.routines,history:d.history,session:d.session||null}}
+try{
+ const raw=localStorage.getItem(WORKOUT_STORAGE);
+ if(raw!==null)workoutData=readWorkoutData(raw);
+ else {const backup=localStorage.getItem(WORKOUT_BACKUP);if(backup!==null){workoutData=readWorkoutData(backup);workoutNotice='Recovered workout data from backup.'}}
+}catch{
+ storageReadBlocked=true;
+ try{const backup=localStorage.getItem(WORKOUT_BACKUP);if(backup!==null){workoutData=readWorkoutData(backup);workoutNotice='Recovered backup. Original data is preserved; saving is disabled until recovery is reviewed.'}else workoutNotice='Saved workout data could not be read. Saving is disabled to protect it.'}
+ catch{workoutNotice='Saved workout data could not be read. Saving is disabled to protect it.'}
+}
 const escapeWorkout=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const workoutId=()=>globalThis.crypto?.randomUUID?.()||Date.now().toString(36)+Math.random().toString(36).slice(2);
 const workoutClone=v=>JSON.parse(JSON.stringify(v));
-function saveWorkouts(){try{localStorage.setItem(WORKOUT_STORAGE,JSON.stringify(workoutData));workoutNotice='';return true}catch{workoutNotice='Could not save on this device. Keep the app open.';return false}}
+function saveWorkouts(){
+ storageDirty=true;
+ if(storageReadBlocked){workoutNotice='Saving is disabled to protect unreadable original workout data.';return false}
+ try{
+  if(!validWorkoutData(workoutData))throw Error('Invalid workout data');
+  const previous=localStorage.getItem(WORKOUT_STORAGE);
+  if(previous!==null){readWorkoutData(previous);try{localStorage.setItem(WORKOUT_BACKUP,previous)}catch{}}
+  localStorage.setItem(WORKOUT_STORAGE,JSON.stringify({...workoutData,schemaVersion:1}));
+  storageDirty=false;workoutNotice='';return true
+ }catch{workoutNotice='Could not save on this device. Keep the app open.';return false}
+}
 const setCount=r=>r.exercises.reduce((n,e)=>n+e.sets.length,0);
 const workoutMeta=r=>r.exercises.length+' exercise'+(r.exercises.length===1?'':'s')+' · '+setCount(r)+' sets';
 const workoutAction=(label,action,extra='',secondary=false)=>'<button type="button" class="workouts-action'+(secondary?' workouts-secondary':'')+'" data-w-action="'+action+'" '+extra+'>'+label+'</button>';
@@ -53,7 +76,7 @@ function workoutsMarkup(){
  let detail=workoutData.session?workoutSessionMarkup():workoutDraft?workoutEditorMarkup():workoutDetail?workoutDetailMarkup(workoutDetail,workoutView==='history'):'';
  return '<div class="page workouts-page enter">'+(workoutNotice?'<p role="status" class="workouts-muted">'+escapeWorkout(workoutNotice)+'</p>':'')+'<div class="workouts-layout" data-wide="'+(wide&&!workoutData.session)+'">'+(!detail||wide&&!workoutData.session?workoutListMarkup():'')+detail+(!detail&&wide?'<section class="workouts-detail"><article class="workouts-card workouts-idle"><h3>'+(workoutView==='history'?'Workout details':'Routine details')+'</h3><p class="workouts-muted">Select '+(workoutView==='history'?'a workout':'a routine')+' to view its details.</p></article></section>':'')+'</div></div>';
 }
-function workoutRefresh(){render()}
+function workoutRefresh(){const scroll=main.scrollTop;render();main.scrollTop=scroll}
 function workoutStart(r){workoutData.session={id:workoutId(),name:r.name,description:r.description||'',exercises:workoutClone(r.exercises),started:Date.now()};saveWorkouts();workoutRefresh()}
 function handleWorkoutAction(b){
  const action=b.dataset.wAction,e=Number(b.dataset.e),j=Number(b.dataset.s),id=b.dataset.id;
@@ -83,7 +106,7 @@ function handleWorkoutAction(b){
 }
 document.addEventListener('click',e=>{const b=e.target.closest('[data-w-action]');if(b&&page==='Workouts')handleWorkoutAction(b)});
 document.addEventListener('input',e=>{const t=e.target;if(t.id==='workouts-search'){workoutQuery=t.value;const {cards,count}=workoutListItems();document.getElementById('workouts-items').innerHTML=cards;document.getElementById('workouts-count').textContent=count;return}if(!workoutDraft||!t.dataset.wField)return;const k=t.dataset.wField,i=Number(t.dataset.e),j=Number(t.dataset.s);if(k==='name'||k==='description')workoutDraft[k]=t.value;else if(k==='exercise')workoutDraft.exercises[i].name=t.value;else workoutDraft.exercises[i].sets[j][k]=Math.max(0,Number(t.value)||0)});
-document.addEventListener('change',e=>{const t=e.target;if(!t.dataset.wSession||!workoutData.session)return;const [i,j]=t.dataset.wSession.split(':').map(Number);workoutData.session.exercises[i].sets[j].done=t.checked;saveWorkouts()});
+document.addEventListener('change',e=>{const t=e.target;if(!t.dataset.wSession||!workoutData.session)return;const [i,j]=t.dataset.wSession.split(':').map(Number);workoutData.session.exercises[i].sets[j].done=t.checked;if(!saveWorkouts())workoutRefresh()});
 
 function render(){if(showDiagnostics){main.innerHTML='<div class="page enter"><h1 class="brand">FORM · Diagnostics</h1><p class="diagnostic-caption">Navigation and viewport test</p><section class="diagnostic-card"><h2>Live diagnostics</h2><div id="diagnostics"></div></section><button id="check-update">Check for Updates</button><p class="foot"></p><section class="diagnostic-card" style="margin-top:12px"><h2>Scroll test</h2><p>Navigation stays stationary while content scrolls.</p>'+Array.from({length:12},(_,i)=>'<div class="diagnostic-marker">Scroll marker '+(i+1)+'</div>').join('')+'</section></div>'}else{main.innerHTML=page==='Home'?homeMarkup():page==='Workouts'?workoutsMarkup():'<div class="page enter"><h1 class="brand">'+page+'</h1><p class="tagline">This page will follow One’s design when its turn comes.</p></div>'}document.querySelectorAll('button[data-go]').forEach(b=>b.setAttribute('aria-current',b.dataset.go===page?'page':'false'));const start=document.getElementById('home-start');if(start)start.onclick=()=>document.getElementById('home-coming').showModal();const calendar=document.getElementById('home-calendar');if(calendar)calendar.onclick=()=>document.getElementById('home-coming').showModal();installHeadingNavigation();window.lucide?.createIcons();layout()}
 function go(t){taps++;if(page!==t){page=t;render()}}
@@ -106,8 +129,8 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
 function adaptWorkoutsOrientation(){if(page!=='Workouts'||showDiagnostics||workoutsWide===isWorkoutsWide())return;const active=document.activeElement,field=active?.dataset?.wField,search=active?.id==='workouts-search',e=active?.dataset?.e,j=active?.dataset?.s,scroll=main.scrollTop;render();main.scrollTop=scroll;if(search)document.getElementById('workouts-search')?.focus({preventScroll:true});else if(field){const match=[...main.querySelectorAll('[data-w-field]')].find(t=>t.dataset.wField===field&&t.dataset.e===e&&t.dataset.s===j);match?.focus({preventScroll:true})}}
 main.addEventListener('scroll',diagnostics,{passive:true});
 let updateRequest=null,reloading=false;
-function reloadLatest(){if(reloading)return;reloading=true;const target=new URL('index.html',location.href);target.searchParams.set('refresh',Date.now());location.replace(target.href)}
-async function update(manual=false){if(reloading||(!manual&&document.hidden))return;const status=document.getElementById('update-status');if(manual)status.textContent='Checking…';if(!updateRequest){updateRequest=(async()=>{const url=new URL('index.html',location.href);url.searchParams.set('check',Date.now());const response=await fetch(url,{cache:'no-store'});if(!response.ok)throw Error('HTTP '+response.status);const source=await response.text(),latest=Number(source.match(/const BUILD=(\d+)/)?.[1]);if(!latest)throw Error('Build not found');return latest})().finally(()=>{updateRequest=null})}try{const latest=await updateRequest;if(latest>BUILD){status.textContent='Updating to Build '+latest+'…';reloadLatest();}else if(manual)status.textContent='Up to date · '+latest}catch(e){if(manual)status.textContent='Check failed · '+e.message}}
+function reloadLatest(){if(reloading)return;if(workoutData.session||workoutDraft||storageDirty||storageReadBlocked){document.getElementById('update-status').textContent='Update deferred · protect workout data';return}reloading=true;const target=new URL('index.html',location.href);target.searchParams.set('refresh',Date.now());location.replace(target.href)}
+async function update(manual=false){if(reloading||(!manual&&document.hidden))return;const status=document.getElementById('update-status');if(manual)status.textContent='Checking…';if(!updateRequest){updateRequest=(async()=>{const url=new URL('version.json',location.href);url.searchParams.set('check',Date.now());const response=await fetch(url,{cache:'no-store'});if(!response.ok)throw Error('HTTP '+response.status);const manifest=await response.json();if(!Number.isSafeInteger(manifest.build)||manifest.build<1)throw Error('Invalid build');return manifest.build})().finally(()=>{updateRequest=null})}try{const latest=await updateRequest;if(latest>BUILD){status.textContent='Updating to Build '+latest+'…';reloadLatest()}else if(manual)status.textContent='Up to date · '+latest}catch(e){if(manual)status.textContent='Check failed · '+e.message}}
 // Prevent horizontal touch panning in the static preview, without clipping the dock.
 let swipeOrigin=null;
 document.addEventListener('touchstart',e=>{swipeOrigin=e.touches.length===1?[e.touches[0].clientX,e.touches[0].clientY]:null},{passive:true});
