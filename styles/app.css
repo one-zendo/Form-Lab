@@ -857,3 +857,15 @@ body:not([data-layout]) main,body:not([data-layout]) nav.nav{visibility:hidden}
 /* Build 128: user-approved change to folded portrait only. */
 body[data-layout=folded-portrait][data-dock=bottom] nav.nav{position:fixed;flex-direction:row;left:calc(50% + (var(--safe-left) - var(--safe-right))/2);right:auto;top:auto;bottom:calc(var(--dock-bottom) + var(--safe-bottom));transform:translateX(-50%)}
 body[data-layout=folded-portrait][data-dock=bottom] main{padding-bottom:calc(var(--dock-reserve) + var(--safe-bottom))}
+
+/* Build 137: integrated bottom navigation; side rail geometry untouched. */
+:root{--bottom-bar-height:64px;--bottom-bar-target:48px;--bottom-bar-icon:24px;--bottom-bar-capsule-width:88px;--bottom-bar-capsule-height:44px;--bottom-bar-content-max:480px;--bottom-bar-padding:8px}
+body[data-dock=bottom] nav.nav,body[data-layout=folded-portrait][data-dock=bottom] nav.nav{position:fixed;inset:auto 0 0;transform:none;width:100%;height:calc(var(--bottom-bar-height) + var(--safe-bottom));box-sizing:border-box;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;padding:var(--bottom-bar-padding) max(var(--safe-right),calc((100% - var(--bottom-bar-content-max))/2)) calc(var(--bottom-bar-padding) + var(--safe-bottom)) max(var(--safe-left),calc((100% - var(--bottom-bar-content-max))/2));border:0;border-top:1px solid var(--line);border-radius:0;background:var(--surface);box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;align-items:center;justify-items:stretch}
+body[data-dock=bottom] nav.nav button{position:relative;isolation:isolate;width:100%;height:var(--bottom-bar-target);min-width:0;min-height:var(--bottom-bar-target);border-radius:0;background:transparent;color:var(--muted);transition:color var(--motion-color-duration) var(--motion-ease)}
+body[data-dock=bottom] nav.nav button::before{content:"";position:absolute;z-index:-1;inset:50% auto auto 50%;transform:translate(-50%,-50%);width:min(100%,var(--bottom-bar-capsule-width));height:var(--bottom-bar-capsule-height);border-radius:var(--radius-pill);background:var(--accent);opacity:0;transition:opacity var(--motion-color-duration) var(--motion-ease)}
+body[data-dock=bottom] nav.nav button[aria-current=page]{color:var(--accent);background:transparent}
+body[data-dock=bottom] nav.nav button[aria-current=page]::before{opacity:.12}
+body[data-dock=bottom] nav.nav button svg{width:var(--bottom-bar-icon);height:var(--bottom-bar-icon)}
+body[data-dock=bottom] main,body[data-layout=folded-portrait][data-dock=bottom] main{padding-bottom:calc(var(--bottom-bar-height) + var(--safe-bottom) + var(--space-4))}
+body[data-dock=bottom] #build-tools{bottom:calc(var(--bottom-bar-height) + var(--safe-bottom));}
+@media(prefers-reduced-motion:reduce){body[data-dock=bottom] nav.nav button,body[data-dock=bottom] nav.nav button::before{transition:none}}
