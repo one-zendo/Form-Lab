@@ -1,0 +1,9 @@
+/* Scoped routine gestures; accessible move/remove buttons remain available. */
+(function(){
+let gesture=null;
+document.addEventListener('pointerdown',e=>{const card=e.target.closest('.routine-exercise');if(!card||!e.isPrimary||e.button!==0)return;const grip=e.target.closest('[data-routine-grip]');if(!grip&&e.target.closest('button,input,select,label'))return;gesture={id:e.pointerId,card,index:Number(card.dataset.routineIndex),x:e.clientX,y:e.clientY,drag:!!grip};if(grip){grip.setPointerCapture(e.pointerId);e.preventDefault()}});
+document.addEventListener('pointermove',e=>{if(!gesture||gesture.id!==e.pointerId)return;if(gesture.drag){const target=document.elementFromPoint(e.clientX,e.clientY)?.closest('.routine-exercise');document.querySelectorAll('.routine-drop-target').forEach(el=>el.classList.remove('routine-drop-target'));if(target&&target!==gesture.card)target.classList.add('routine-drop-target')}});
+function clear(){document.querySelectorAll('.routine-drop-target').forEach(el=>el.classList.remove('routine-drop-target'));gesture=null}
+document.addEventListener('pointercancel',clear);
+document.addEventListener('pointerup',e=>{if(!gesture||gesture.id!==e.pointerId)return;const g=gesture;clear();if(!workoutDraft||!g.card.isConnected)return;if(g.drag){const target=document.elementFromPoint(e.clientX,e.clientY)?.closest('.routine-exercise'),to=Number(target?.dataset.routineIndex),a=workoutDraft.exercises;if(Number.isInteger(to)&&to>=0&&to<a.length&&g.index!==to){const [item]=a.splice(g.index,1);a.splice(to,0,item);workoutRefresh()}}else if(Math.abs(e.clientY-g.y)<40&&e.clientX-g.x< -65){g.card.classList.add('routine-swipe-open');g.card.querySelector('.routine-swipe-action button')?.focus({preventScroll:true})}else if(e.clientX-g.x>65)g.card.classList.remove('routine-swipe-open')});
+})();
