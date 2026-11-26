@@ -1063,7 +1063,7 @@ body[data-diagnostics=true] main,body[data-diagnostics=true] nav.nav{visibility:
 
 /* Adaptive landscape shell: viewport-relative, independent of measured signatures. */
 :root{--fl-shell-edge:var(--space-3);--fl-shell-gap:var(--space-3);--fl-shell-rail:var(--dock-width)}
-body[data-layout=folded-landscape]:not([data-calibrating=true]) main{inset:0;width:auto;height:auto;transform:none;padding:calc(var(--fl-shell-edge) + var(--safe-top)) calc(var(--fl-shell-edge) + var(--fl-shell-rail) + var(--fl-shell-gap) + var(--safe-right)) calc(var(--safe-bottom) + var(--fl-shell-edge)) calc(var(--fl-shell-edge) + var(--safe-left));overflow-x:hidden}
+body[data-layout=folded-landscape]:not([data-calibrating=true]) main{inset:0;width:auto;height:auto;transform:none;padding:calc(var(--fl-shell-edge) + var(--safe-top)) calc(var(--fl-shell-edge) + var(--fl-shell-rail) + var(--fl-shell-gap) + var(--safe-right)) calc(var(--safe-bottom) + var(--fl-shell-edge)) max(var(--safe-left),var(--fl1-safari-content-inset));overflow-x:hidden}
 
 
 body[data-layout=folded-landscape]:not([data-calibrating=true]) nav.nav{flex-direction:column;right:calc(var(--fl-shell-edge) + var(--safe-right));top:calc((100% + var(--safe-top) - var(--safe-bottom))/2);bottom:auto;left:auto;transform:translateY(-50%);width:var(--fl-shell-rail);box-sizing:border-box}
