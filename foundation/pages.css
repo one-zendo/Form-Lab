@@ -4,8 +4,8 @@
 .home-date[hidden]{display:none}
 .home-date span:first-child{font-size:var(--type-headline);font-weight:var(--weight-bold);color:var(--ink)}
 .home-date span:last-child{font-size:var(--type-support);font-weight:var(--weight-body);color:var(--muted)}
-.tagline{font-size:var(--type-support);margin:var(--space-8) 0 var(--space-16)}
-.home-greeting{font-size:var(--type-page);font-weight:var(--weight-bold);line-height:1.1;margin:0 0 var(--space-16)}
+.tagline{font-size:var(--type-support);margin:0}
+.home-greeting{font-size:var(--type-page);font-weight:var(--weight-bold);line-height:1.1;margin:0}
 .home-dashboard{display:grid;flex:1 0 auto;grid-template-columns:minmax(0,1fr);grid-template-rows:repeat(2,minmax(min-content,1fr));gap:var(--space-12);align-items:stretch;min-height:0}
 .home-workout-card{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;gap:var(--space-16);min-height:148px;padding:var(--space-16);border:0;border-radius:var(--radius-card);background:var(--action);color:var(--on-action);text-align:start;font:inherit;cursor:pointer;transition:opacity var(--motion-feedback) var(--ease-standard)}
 .home-workout-card:active{opacity:.82}
@@ -38,7 +38,7 @@
 .content{flex:1;min-height:0;overflow-y:auto;overscroll-behavior-y:contain;padding-bottom:var(--space-16)}
 body[data-page=Home] .content{display:flex;flex-direction:column}
 body[data-page=Home] #app-pages{flex:1 0 auto;display:flex;flex-direction:column;min-height:0}
-body[data-page=Home] [data-screen=Home]{display:flex;flex-direction:column;flex:1 0 auto;width:100%;min-height:0}
+body[data-page=Home] [data-screen=Home]{display:flex;flex-direction:column;flex:1 0 auto;width:100%;min-height:0;gap:var(--space-12)}
 body[data-page=Home] [data-screen=Home]>.tagline,body[data-page=Home] .home-greeting{flex:none}
 [data-landscape=true] .home-dashboard,body[data-hinge=book] .home-dashboard{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:minmax(min-content,1fr)}
 body[data-hinge=laptop] .home-dashboard{grid-template-columns:minmax(0,1fr);grid-template-rows:repeat(2,minmax(min-content,1fr))}
@@ -80,3 +80,10 @@ body[data-nav="rail"] .headline-material{right:var(--rail-clearance)}
 body[data-nav="rail"] .content{margin-inline-end:0;padding-inline-end:calc(var(--rail-clearance) + max(var(--space-16),env(safe-area-inset-right)) + var(--glass-lead))}
 }
 @media(prefers-reduced-transparency:reduce){body:not([data-nav="rail"]) .content{padding-bottom:var(--space-16)}body[data-nav="rail"] .headline,body[data-nav="rail"] .headline-material{right:0}body[data-nav="rail"] .content{margin-inline-end:max(var(--space-16),env(safe-area-inset-right));padding-inline-end:0}}
+
+/* Home uses measured dock clearance, not the additional scroll-page glass reserve. */
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+body[data-page=Home]:not([data-nav="rail"]) .content{padding-bottom:calc(var(--home-dock-clearance,var(--dock-reserve)) + var(--space-12))}
+body[data-page=Home][data-nav="rail"] .content{padding-inline-end:calc(var(--home-dock-clearance,var(--rail-clearance)) + var(--space-12))}
+}
+@media(prefers-reduced-transparency:reduce){body[data-page=Home]:not([data-nav="rail"]) .content{padding-bottom:var(--space-12)}body[data-page=Home][data-nav="rail"] .content{padding-inline-end:0}}

@@ -48,3 +48,7 @@ Official Lucide 0.456.0 SVGs and ISC license vendored from upstream; dock inline
 
 ## Build 20 — Workouts icon
 User approved official Lucide biceps-flexed replacing dumbbell. Existing dock sizing, stroke and behavior unchanged. Compliance test updated; prior vendor asset retained for future use.
+
+
+## Proportional composition (approved 2026-11-26)
+Every interface must use deliberate proportional relationships, consistent alignment and shared spacing tokens. Measure actual rendered distances between adjacent components, internal padding, card dimensions, and clearance to fixed navigation; distinguish measured bounds from target tokens. Equivalent relationships use equal spacing, not arbitrary offsets. Distribute remaining drawable space according to approved page proportions (Home equal cards), preserving minimum content size, safe areas, accessibility and hardware calibration. Avoid double-reserving visual glass regions; material overlays are independent from layout. Validate across all five orientations and environments before claiming visual approval; use live DOM diagnostics in Safari and native measurements when implemented. No uniform scaling or forced equal spacing between semantically different groups.

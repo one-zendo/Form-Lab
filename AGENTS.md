@@ -13,3 +13,6 @@ Design and review each page for Native and Safari together across FP, FL1, FL2, 
 
 ## Build 19 — design compliance gate
 Official Lucide 0.456.0 SVGs and ISC license vendored from upstream; dock inline geometry matches these assets, with FORM stroke token 1.75 and existing 20px dock size preserved provisionally (20/22 conflict unresolved). No external runtime dependency. CI checks dock geometry, icon tokens, build metadata and JS syntax. New icons must be sourced from pinned official assets and added to compliance coverage. Before every commit review canonical design, layout, motion, accessibility and protected shell behavior; document exceptions and run relevant tests. Static checks do not replace visual/device review. CI is not confirmed a required branch protection gate.
+
+## Proportional composition
+Follow the mandatory proportional composition principle in docs/design.md. Audit actual component gaps, padding, alignment, available space and dock clearance for every page; use semantic spacing tokens and live measurements, preserve calibrated geometry, and document exceptions and unverified device behavior.
