@@ -12,6 +12,12 @@
   --radius-control:12px;
   --radius-pill:999px;
   /* Global measurement scale */
+  /* Existing intermediate values, preserved for visual parity. */
+  --space-2-5:10px;
+  --space-3-5:14px;
+  --space-4-5:18px;
+  --space-5-5:22px;
+  --type-dialog-title:18px;
   --space-1:4px;
   --space-2:8px;
   --space-3:12px;
@@ -143,7 +149,7 @@ main::-webkit-scrollbar {
   display:flex;
   justify-content:space-between;
   gap:var(--space-3);
-  padding:10px 0;
+  padding:var(--space-2-5) 0;
   border-bottom:1px solid #ffffff15;
   font-size:var(--type-caption);
 }
@@ -171,7 +177,7 @@ main::-webkit-scrollbar {
 
 #check-update,.dev-dialog button {
   min-height:var(--touch-target);
-  padding:0 14px;
+  padding:0 var(--space-3-5);
   border-radius:var(--radius-control);
   background:var(--raised);
   width:100%;
@@ -183,7 +189,7 @@ main::-webkit-scrollbar {
   background:var(--surface);
   border:1px solid var(--raised);
   border-radius:var(--radius-card);
-  padding:18px;
+  padding:var(--space-4-5);
   width:min(320px,90%);
 }
 
@@ -519,7 +525,7 @@ main {
   border-radius:var(--radius-card);
   background:var(--surface);
   color:var(--ink);
-  padding:22px;
+  padding:var(--space-5-5);
   width:min(var(--dialog-max),90vw);
 }
 
@@ -528,7 +534,7 @@ main {
 }
 
 .home-coming h2 {
-  font-size:18px;
+  font-size:var(--type-dialog-title);
   margin:0 0 var(--space-2);
 }
 
