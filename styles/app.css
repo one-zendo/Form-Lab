@@ -1043,3 +1043,13 @@ body[data-safe-overlay=true] #safe-area-overlay,body[data-diagnostics=true] #saf
 #safe-area-overlay i:nth-child(4){inset:0 auto 0 0;width:var(--safe-left)}
 
 .diagnostics-toggle{font:inherit;font-size:var(--type-caption);font-weight:600;color:var(--accent);background:var(--raised);border:0;border-radius:var(--radius-pill);padding:var(--space-2) var(--space-3);min-height:32px;letter-spacing:0;white-space:nowrap;flex:none}#open-diagnostics{margin-inline-start:var(--space-2)}#close-diagnostics{margin-block:var(--space-2)}
+
+/* Independent viewport lab: no FORM content, rail, or calibrated inset. */
+#viewport-lab[hidden]{display:none!important}
+body[data-diagnostics=true] main,body[data-diagnostics=true] nav.nav{visibility:hidden!important}
+#viewport-lab{position:fixed;inset:0;z-index:100000;box-sizing:border-box;background:#e8edf3;color:#111;overflow:hidden;font:12px system-ui,sans-serif;isolation:isolate}
+.viewport-grid{position:absolute;inset:0;border:2px solid #0088ff;background-image:linear-gradient(to right,#0088ff26 1px,transparent 1px),linear-gradient(to bottom,#0088ff26 1px,transparent 1px);background-size:20px 20px;pointer-events:none}
+.viewport-readings{position:absolute;inset:calc(env(safe-area-inset-top,0px) + 12px) calc(env(safe-area-inset-right,0px) + 12px) calc(env(safe-area-inset-bottom,0px) + 12px) calc(env(safe-area-inset-left,0px) + 12px);max-width:440px;margin:auto;max-height:max-content;overflow:auto;background:#fffffff0;border:1px solid #ccd5df;border-radius:12px;padding:12px;box-sizing:border-box}
+.viewport-readings header,.viewport-reading{display:flex;justify-content:space-between;align-items:center;gap:8px}.viewport-reading{padding:4px 0;border-bottom:1px solid #dde3ea}.viewport-readings header button{border:0;background:#0066cc;color:white;padding:8px 14px;border-radius:8px;font:inherit}.viewport-readings p{margin:8px 0 0;font-size:11px}
+#safe-area-overlay{padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+#safe-area-overlay i:nth-child(1){height:env(safe-area-inset-top,0px)}#safe-area-overlay i:nth-child(2){width:env(safe-area-inset-right,0px)}#safe-area-overlay i:nth-child(3){height:env(safe-area-inset-bottom,0px)}#safe-area-overlay i:nth-child(4){width:env(safe-area-inset-left,0px)}
