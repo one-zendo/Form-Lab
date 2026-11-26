@@ -1,7 +1,7 @@
 /* ONE visual adaptation, scoped to Lab workout content. Reference e4a038bc. */
-.workouts-page .workouts-card[data-w-action]{position:relative;min-height:76px;padding:var(--space-3) var(--space-4);border-radius:var(--radius-card);text-align:left}
+.workouts-page .workouts-card[data-w-action]{position:relative;min-height:var(--routine-row-min);padding:var(--space-3) var(--space-4);border-radius:var(--radius-card);text-align:left}
 .workouts-page .workouts-card[data-w-action][aria-current=true]::before{content:"";position:absolute;inset-inline-start:var(--space-1);top:50%;transform:translateY(-50%);width:var(--signature-width);height:var(--signature-height);border-radius:var(--radius-pill);background:var(--accent)}
-.workouts-page .workouts-exercise summary{min-height:76px;gap:var(--space-3);align-items:center}
+.workouts-page .workouts-exercise summary{min-height:var(--routine-row-min);gap:var(--space-3);align-items:center}
 .one-editor .workouts-back{flex:1;min-width:0}
 .one-editor .one-routine-title{font-size:var(--type-heading);font-weight:var(--weight-semibold);min-width:0;width:100%}
 .one-editor .one-set-grid{display:grid;grid-template-columns:minmax(34px,.65fr) repeat(3,minmax(0,1fr)) minmax(32px,.6fr);gap:var(--space-1);align-items:center;margin-bottom:var(--space-2)}
