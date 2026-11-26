@@ -1,5 +1,5 @@
 
-const BUILD=140;
+const BUILD=141;
 const appearanceKey='form.lab.appearance.v1';
 let appearance='system';try{const saved=localStorage.getItem(appearanceKey);if(['system','studio','graphite'].includes(saved))appearance=saved}catch{}
 function applyAppearance(){if(appearance==='system')delete document.documentElement.dataset.theme;else document.documentElement.dataset.theme=appearance;document.querySelectorAll('meta[name="theme-color"]').forEach(m=>{if(!m.dataset.originalColor)m.dataset.originalColor=m.content;m.content=appearance==='studio'?'#F2F2F7':appearance==='graphite'?'#17171F':m.dataset.originalColor})}
@@ -169,7 +169,7 @@ document.addEventListener('touchstart',e=>{swipeOrigin=e.touches.length===1?[e.t
 document.addEventListener('touchmove',e=>{if(!swipeOrigin||e.touches.length!==1)return;const t=e.touches[0],dx=Math.abs(t.clientX-swipeOrigin[0]),dy=Math.abs(t.clientY-swipeOrigin[1]);if(dx>8&&dx>dy&&e.cancelable)e.preventDefault()},{passive:false});
 for(const type of ['touchend','touchcancel'])document.addEventListener(type,()=>{swipeOrigin=null},{passive:true});
 document.getElementById('quick-check').onclick=()=>update(true);document.getElementById('quick-update').onclick=reloadLatest;
-addEventListener('pageshow',()=>update());addEventListener('focus',()=>update());document.addEventListener('visibilitychange',()=>update());addEventListener('online',()=>update());setInterval(()=>update(),UPDATE_INTERVAL_MS);document.getElementById('build-number').textContent='Build '+BUILD;render();layout();update();
+addEventListener('pageshow',()=>update());addEventListener('focus',()=>update());document.addEventListener('visibilitychange',()=>update());addEventListener('online',()=>update());setInterval(()=>update(),UPDATE_INTERVAL_MS);document.getElementById('build-number').textContent='Build '+BUILD;document.getElementById('public-build-number').textContent='Build '+BUILD;render();layout();update();
 /* Native device rotation; responsive geometry updates without custom animation. */
 
 const railPanel=document.getElementById('rail-panel'),railSlider=document.getElementById('rail-slider'),railReading=document.getElementById('rail-reading');
