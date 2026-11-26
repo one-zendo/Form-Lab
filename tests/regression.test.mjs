@@ -34,3 +34,5 @@ test('recovery schedule preserves earlier weeks',()=>{const now=new Date(2026,10
 
 test('recovery credit starts after the day ends',()=>{const now=new Date(2026,10,26,12),from=home.weekStart(now),s=home.stats([],now,3,[{from,rest:[0,3,5]}]);assert.equal(s.onTrack,1);assert.equal(s.days[0].recovered,true);assert.equal(s.days[3].recovered,false)});
 test('current day breathing is limited to unfinished days',()=>{const ui=vm.runInNewContext(fs.readFileSync(new URL('../core/components.js',import.meta.url),'utf8')+';FormUI');assert.ok(ui.dayIndicator({today:true}).includes('breathing'));assert.ok(!ui.dayIndicator({today:true,done:true}).includes('breathing'));assert.ok(!ui.dayIndicator({today:false}).includes('<svg'))});
+
+test('physical posture classification requires folded signal and segment direction',()=>{const p=vm.runInNewContext(fs.readFileSync(new URL('../core/posture.js',import.meta.url),'utf8')+';FormPosture');assert.equal(p.classify('folded',2,1),'book');assert.equal(p.classify('folded',1,2),'laptop');assert.equal(p.classify('folded',1,1),'folded-unknown');assert.equal(p.classify('continuous',2,1),'flat')});
