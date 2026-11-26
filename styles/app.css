@@ -934,3 +934,8 @@ body[data-dock=bottom] #public-build-number{bottom:calc(var(--safe-bottom) + var
 @keyframes form-day-breathe{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(var(--motion-breathe-scale));opacity:var(--motion-breathe-opacity)}}
 @media(prefers-reduced-motion:reduce){.home-day-dot.breathing::after{animation:none}}
 .home-page{container-type:inline-size}.home-dashboard{grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--home-card-min-inline)),1fr));grid-template-rows:auto;gap:var(--home-card-fluid-gap)}.home-primary,.home-support{min-width:0}.home-workout-card,.home-streak-card{min-width:0;overflow-wrap:anywhere}
+
+/* Build 150: physical hinge-aware Home layout; no navigation changes. */
+:root{--hinge-clearance:var(--space-3)}
+@media (horizontal-viewport-segments: 2){body[data-hinge=book] .home-dashboard{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto;column-gap:max(var(--home-gap),calc(env(viewport-segment-left 1 0,0px) - env(viewport-segment-right 0 0,0px) + 2 * var(--hinge-clearance)));align-items:stretch}}
+@media (vertical-viewport-segments: 2){body[data-hinge=laptop] .home-dashboard{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;row-gap:max(var(--home-gap),calc(env(viewport-segment-top 0 1,0px) - env(viewport-segment-bottom 0 0,0px) + 2 * var(--hinge-clearance)));align-items:stretch}}
