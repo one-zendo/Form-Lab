@@ -93,3 +93,6 @@ Five standalone schematic SVGs and measured/reference fixtures added. Runtime CS
 
 ## Build 172 — adaptive layout audit
 25 existing regression definitions passed in an adapted JavaScript harness (not native Node). Two remaining definitions checked separately. Removed redundant production FL Home padding override; shared shell and existing FL Home clearance both resolve to space-3 plus safe bottom. No hinge, motion, navigation or classifier changes. Device/browser rendering and CI remain unverified. Retain heuristic classification and specialized hinge rules pending device evidence; no speculative cleanup.
+
+## Build 173 — universal component foundation
+Share existing workout button and input declarations with low-specificity universal classes, integrate primary actions and fields, add opt-in secondary/icon/heading/numeric variants. Existing layout, hinge, motion and theme rules unchanged. Document component contract and discrepancies between design spec and runtime. JS syntax checked; source regression added. Dialog/menu migration and physical verification pending.
