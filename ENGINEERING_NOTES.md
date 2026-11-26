@@ -108,3 +108,6 @@ Remove folded landscape headline navigation menu, its markup and handlers. Home 
 
 ## Build 177 — Home semantic integration
 Verify FORM open/close toggle markup and retain delegated handler. Apply shared tabular numeric class to streak and personal best, add machine-readable local date and explicit rest-day button type. No CSS, navigation, hinge or outline changes. JS syntax checked; source regression added. Home scheduling and full device verification remain pending.
+
+## Build 178 — normalization
+Audited 15 linked CSS/JS assets. Centralize routine row, picker width, compact dialog, calendar control and motion aliases in root; name classifier thresholds and hinge retarget window. Preserve effective values and specialized cascade. Document runtime versus aspirational motion spec and exceptions. No speculative override removal. JS syntax and ten orientation classifier cases passed. Full browser/device/Node CI pending.
