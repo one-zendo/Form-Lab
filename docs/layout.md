@@ -16,3 +16,5 @@ Design and review each page for Native and Safari together across FP, FL1, FL2, 
 
 ## Build 16 — approved FP headline refinement
 FP Native and Safari target: leading signature X16 pt, signature top Y16 pt, center Y32 pt, signature height32 pt; headline moves up16 pt independently of content flow. Other orientations retain prior anchors. Build label follows shared headline, derived from build metadata. User approved visual proposal; device validation pending. Native is a reference target, not a verified SwiftUI layout.
+
+Build 17: user reverted FP center to Y48, signature top32, X16, aligned with camera center. Supersedes Build16 FP Y32. Tagline FP visual top moved up6 CSS px without moving cards; exact 8pt glyph gap requires device verification. Diagnostics simplified to icon-free settings rows and switches, separate Measurements/Calibration/Device information views. Native reference selector only inside Measurements. Experimental headline offsets ±24 CSS px, 0.5 increments, saved per detected orientation and viewport mode; manual/unmatched calibration disabled. Native runtime not implemented. No physical geometry changes.
