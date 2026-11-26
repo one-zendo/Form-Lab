@@ -68,3 +68,6 @@ Build 43: user requested original Atmosphere concept shown in screenshot as addi
 
 
 Build 45 overrides prior headline glass treatment: plain opaque canvas behind all stationary headlines, no headline backdrop blur or feather. Weather artwork retains its own artistic gradients; navigation Liquid Glass remains separate. Preserve calibrated anchors and spacing.
+
+
+Build 46: Build 45 screenshot confirms crisp streak card but gray halo around original weather sun. Remove diffuse glow from Soft Weather (Original) scenes; retain animated objects and particles. Other weather styles retain intentional ambient lighting but use same-hue zero-alpha gradient endpoints instead of transparent black. Adjust original celestial vertical anchor to reduce top clipping. No layout, headline backing or navigation changes. Device rendering pending.
