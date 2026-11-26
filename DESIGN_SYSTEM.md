@@ -199,3 +199,8 @@ The source repository's `DESIGN.md` remains authoritative for detailed component
 ## Build 115 implementation reconciliation
 
 Build 115 preserves the approved Build 114 runtime appearance. Existing intermediate spacing values (10, 14, 18, 22px) are named `--space-2-5`, `--space-3-5`, `--space-4-5`, `--space-5-5` respectively; `--type-dialog-title` is 18px. These are compatibility exceptions, not new visual values. The current runtime palette, typography and motion differ from parts of the historical specification above; do not normalize those differences without visual approval. The navigation shell and calibrated Duo rules are unchanged.
+
+
+## Approved exercise artwork — RepDB Standard
+
+Use RepDB Standard sculptural 3D exercise illustrations with orange target-muscle highlights and transparent backgrounds. Use static thumbnails in exercise lists, routine builder and active workout; show looping demonstrations in exercise details and expanded cards on demand. Support start/peak stills and optional female artwork when licensed. Keep internal exercise IDs independent of provider asset IDs. Use shared image components across all layouts, with accessible labels, lazy loading, reduced-motion support and neutral missing-artwork fallbacks. Preserve calibrated navigation and layout geometry. Premium assets must not be imported, hotlinked or redistributed until the appropriate license and hosting rights are confirmed. No premium assets are included by this specification.
