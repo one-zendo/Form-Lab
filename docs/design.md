@@ -71,3 +71,6 @@ Build 45 overrides prior headline glass treatment: plain opaque canvas behind al
 
 
 Build 46: Build 45 screenshot confirms crisp streak card but gray halo around original weather sun. Remove diffuse glow from Soft Weather (Original) scenes; retain animated objects and particles. Other weather styles retain intentional ambient lighting but use same-hue zero-alpha gradient endpoints instead of transparent black. Adjust original celestial vertical anchor to reduce top clipping. No layout, headline backing or navigation changes. Device rendering pending.
+
+
+Build 47: user selected original Soft Weather as sole permanent weather artwork, at 80% of Build 46 object scale. Remove other theme renderers and theme menu; Profile > Preferences has persistent Weather animation master switch, default on, separate explicit location permission button. Migrate prior diagnostic settings and Off state from v1. Persist enabled state and successful local-weather opt-in in v2 localStorage; reacquire coordinates with browser permission on later sessions, never persist coordinates. Off stops animation and requests; preview remains separately controlled in Diagnostics and only displays when enabled. No gray halo; unchanged normal headline/dashboard geometry, navigation, and reduced-motion support. Browser permission/storage behavior and physical fit pending verification.

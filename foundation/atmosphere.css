@@ -8,4 +8,4 @@ body[data-page=Home]:has(#weather-preview-home:not([hidden])) .content{padding-t
 @media(prefers-reduced-transparency:reduce){#atmosphere-layer{display:none}}
 
 /* Original soft weather concept extends behind greeting without occupying layout space. */
-#atmosphere-layer[data-style=classic]{height:calc(var(--layout-center) + var(--headline-height)/2 + var(--glass-lead) + var(--space-48) + var(--space-24));mask-image:linear-gradient(to bottom,#000 55%,transparent);-webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent)}
+#atmosphere-layer{height:calc(var(--layout-center) + var(--headline-height)/2 + var(--glass-lead) + var(--space-48) + var(--space-24));mask-image:linear-gradient(to bottom,#000 55%,transparent);-webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent)}
