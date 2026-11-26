@@ -44,3 +44,7 @@ Locked html and body to the viewport with overflow hidden and overscroll contain
 
 ## Build 29 — Headline glass fade
 Added an 18px translucent backdrop-blur fade immediately below the shared headline using a pointer-events-none ::after layer. The strip overlays the top edge of the scrolling content, allowing content to soften as it passes underneath. It does not participate in layout and does not change the calibrated headline height, headline position, content scroll ownership, safe areas, navigation, or device geometry. Includes a CSS fallback for browsers without backdrop-filter and a regression test for the effect.
+
+
+## Build 30 — Correct frosted headline boundary
+Removed the narrow blur strip extending below the headline. The frosted glass now belongs to the full shared headline bar itself, with a translucent canvas surface and 18px backdrop blur/saturation. A subtle 1px bottom separator defines the bar's lower boundary. The effect ends at that line; no blur layer extends into page content. Headline dimensions, fixed scrolling architecture, orientation offsets, and navigation are unchanged. Includes a CSS fallback when backdrop-filter is unavailable.

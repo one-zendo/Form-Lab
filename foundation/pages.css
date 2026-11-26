@@ -56,7 +56,18 @@ body[data-page=Home] #headline-build{display:inline-flex;align-items:center;font
 .content{position:relative;flex:1 1 0;height:0;min-height:0;max-height:100%;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-width:none}
 .content::-webkit-scrollbar{display:none}
 
-/* Build 29: subtle glass fade below the persistent shared headline. */
-.headline{isolation:isolate;z-index:30}
-.headline::after{content:"";position:absolute;z-index:1;pointer-events:none;top:100%;left:calc(-1 * var(--layout-headline));right:0;height:18px;background:linear-gradient(to bottom,color-mix(in srgb,var(--canvas) 78%,transparent),transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
-@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.headline::after{background:linear-gradient(to bottom,var(--canvas),transparent)}}
+
+/* Build 30: frosted headline bar ends at its bottom separator line. */
+.headline{
+  position:relative;
+  z-index:30;
+  isolation:isolate;
+  background:color-mix(in srgb,var(--canvas) 76%,transparent);
+  -webkit-backdrop-filter:blur(18px) saturate(1.18);
+  backdrop-filter:blur(18px) saturate(1.18);
+  border-bottom:1px solid color-mix(in srgb,var(--muted) 16%,transparent);
+}
+.headline::after{content:none}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .headline{background:var(--canvas)}
+}
