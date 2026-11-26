@@ -65,3 +65,6 @@ User approved progressive glass edge, removal of separator and matching dock mat
 
 
 Build 34: user screenshot shows readable History text overlapping headline in Build 33. The existing material already begins at drawable top, so extending upward is impossible without moving geometry. Instead extend the material 24 CSS px toward incoming scrolling content, with a 24px feather entirely below the calibrated headline row. Keep original full blur and tint over the headline, and retain headline position, content initial padding, dock and hardware geometry. No-filter and reduced-transparency fallbacks retain original bar height. Provisional visual tuning; physical Safari validation pending.
+
+
+Build 35: approved stronger headline frosting (20px blur, 65% tint in both themes) with existing 24px feather and lead. Separate headline filter token preserves dock material. Content initial padding includes glass lead so section headings start beyond material at rest; scrolling remains underneath. Headline signature, geometry, navigation, typography and separator-free treatment unchanged. Physical Safari visual and fit validation pending.
