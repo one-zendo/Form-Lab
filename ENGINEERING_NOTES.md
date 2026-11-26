@@ -102,3 +102,6 @@ Add opt-in dialog, sheet, menu and selection primitives; classify five existing 
 
 ## Build 175 — persistent viewport outline and component audit
 User requested always-visible diagnostic blue boundary in normal app. Add fixed 2px outline sharing diagnostic color/width, pointer-events none, aria-hidden, no grid or layout space. Diagnostic mode retains its own outline. Native modal top layer may cover/dim normal overlay. Extend focus-visible style to universal fields. Keep existing dialog and motion rules until device validation; no speculative migrations. JS syntax checked; regression definition added.
+
+## Build 176 — FORM headline diagnostics
+Remove folded landscape headline navigation menu, its markup and handlers. Home FORM wordmark opens diagnostics; diagnostic FORM wordmark closes. Build number update shortcut and regular dock retained. Persistent outline unchanged. JS syntax checked; regression definitions updated. Physical rendering pending.
