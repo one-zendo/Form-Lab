@@ -859,7 +859,7 @@ body[data-layout=folded-portrait][data-dock=bottom] nav.nav{position:fixed;flex-
 body[data-layout=folded-portrait][data-dock=bottom] main{padding-bottom:calc(var(--dock-reserve) + var(--safe-bottom))}
 
 /* Build 137: integrated bottom navigation; side rail geometry untouched. */
-:root{--bottom-bar-height:64px;--bottom-bar-target:48px;--bottom-bar-icon:24px;--bottom-bar-capsule-width:88px;--bottom-bar-capsule-height:44px;--bottom-bar-content-max:480px;--bottom-bar-padding:8px}
+:root{--bottom-bar-height:56px;--bottom-bar-target:48px;--bottom-bar-icon:22px;--bottom-bar-capsule-width:54px;--bottom-bar-capsule-height:40px;--bottom-bar-content-max:480px;--bottom-bar-padding:4px;--bottom-bar-edge:var(--content-edge);--bottom-bar-offset:4px}
 body[data-dock=bottom] nav.nav,body[data-layout=folded-portrait][data-dock=bottom] nav.nav{position:fixed;inset:auto 0 0;transform:none;width:100%;height:calc(var(--bottom-bar-height) + var(--safe-bottom));box-sizing:border-box;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;padding:var(--bottom-bar-padding) max(var(--safe-right),calc((100% - var(--bottom-bar-content-max))/2)) calc(var(--bottom-bar-padding) + var(--safe-bottom)) max(var(--safe-left),calc((100% - var(--bottom-bar-content-max))/2));border:0;border-top:1px solid var(--line);border-radius:0;background:var(--surface);box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;align-items:center;justify-items:stretch}
 body[data-dock=bottom] nav.nav button{position:relative;isolation:isolate;width:100%;height:var(--bottom-bar-target);min-width:0;min-height:var(--bottom-bar-target);border-radius:0;background:transparent;color:var(--muted);transition:color var(--motion-color-duration) var(--motion-ease)}
 body[data-dock=bottom] nav.nav button::before{content:"";position:absolute;z-index:-1;inset:50% auto auto 50%;transform:translate(-50%,-50%);width:min(100%,var(--bottom-bar-capsule-width));height:var(--bottom-bar-capsule-height);border-radius:var(--radius-pill);background:var(--accent);opacity:0;transition:opacity var(--motion-color-duration) var(--motion-ease)}
@@ -887,7 +887,7 @@ body[data-dock=bottom] #build-tools{bottom:calc(var(--bottom-bar-height) + var(-
 .appearance-options svg{width:20px;height:20px;color:var(--accent)}
 
 /* Build 139: compact card-aligned bottom dock, independent of side rail. */
-:root{--bottom-bar-height:56px;--bottom-bar-icon:22px;--bottom-bar-capsule-width:54px;--bottom-bar-capsule-height:40px;--bottom-bar-padding:4px;--bottom-bar-edge:var(--content-edge);--bottom-bar-offset:4px}
+/* Bottom dock tokens consolidated above. */
 body[data-dock=bottom] nav.nav,body[data-layout=folded-portrait][data-dock=bottom] nav.nav{inset:auto calc(var(--bottom-bar-edge) + var(--safe-right)) calc(var(--bottom-bar-offset) + var(--safe-bottom)) calc(var(--bottom-bar-edge) + var(--safe-left));width:auto;height:var(--bottom-bar-height);padding:var(--bottom-bar-padding) max(var(--space-1),calc((100% - var(--bottom-bar-content-max))/2));border:1px solid var(--line);border-radius:var(--radius-card);grid-template-columns:repeat(4,minmax(0,1fr));}
 body[data-dock=bottom] main,body[data-layout=folded-portrait][data-dock=bottom] main{padding-bottom:calc(var(--bottom-bar-height) + var(--bottom-bar-offset) + var(--safe-bottom) + var(--space-4))}
 body[data-dock=bottom] #build-tools{bottom:calc(var(--bottom-bar-height) + var(--bottom-bar-offset) + var(--safe-bottom));}
@@ -970,14 +970,14 @@ body[data-layout=unfolded-landscape] .home-streak-card{gap:var(--space-2)}
 @media(vertical-viewport-segments:2){body[data-layout=unfolded-landscape][data-hinge=laptop] .home-dashboard{grid-template-rows:minmax(0,1fr) minmax(0,1fr)}}
 
 /* Build 154: recovery identity, adaptive calendar and shared text baselines. */
-:root{--recovery-accent:#0088FF;--recovery-on-accent:#fff;--hinge-motion-ms:320;--hinge-motion-easing:cubic-bezier(.22,.8,.25,1);--home-month-cell-expanded:40px;--home-month-row-gap:var(--space-2)}
+:root{--recovery-accent:#0088FF;--recovery-on-accent:#fff;--hinge-motion-ms:320;--unfold-motion-ms:460;--unfold-motion-easing:cubic-bezier(.2,.75,.2,1);--hinge-motion-easing:cubic-bezier(.22,.8,.25,1);--home-month-cell-expanded:40px;--home-month-row-gap:var(--space-2)}
 .home-day-dot.done.recovered,.home-month-day.achieved.recovered{background:var(--recovery-accent);color:var(--recovery-on-accent)}
 .home-header{align-items:baseline}.home-header .brand{align-items:baseline}.home-header .brand-signature,.home-header .headline-build{align-self:center}.home-header .page-tab-trigger,.home-header .page-tab-trigger>span{align-items:baseline}.home-header .home-date strong{align-self:baseline}.home-header .tagline,.home-header .home-date span{align-self:baseline}
 @container (min-width:650px){.home-month{flex:1 1 auto;min-height:0;grid-template-rows:auto minmax(0,1fr);gap:var(--home-month-row-gap)}.home-month-grid{min-height:0;grid-auto-rows:minmax(0,1fr);row-gap:var(--home-month-row-gap);column-gap:var(--space-1)}.home-month-day{width:min(100%,var(--home-month-cell-expanded));max-height:100%;height:auto}.home-streak-footer{margin-top:auto}}
 body[data-layout=unfolded-landscape] .home-month-grid{row-gap:clamp(2px,.8vh,var(--home-month-row-gap))}body[data-layout=unfolded-landscape] .home-month-day{width:min(100%,var(--home-month-cell-expanded),5.2vh)}
 
 /* Build 155: gentler return to flat posture. */
-:root{--unfold-motion-ms:460;--unfold-motion-easing:cubic-bezier(.2,.75,.2,1)}
+/* Unfolding tokens consolidated with hinge motion. */
 
 /* Build 156: suppress WebKit native tap flash; preserve keyboard focus. */
 html,body,button,a,[role=button],input,select,textarea,label{-webkit-tap-highlight-color:transparent}
