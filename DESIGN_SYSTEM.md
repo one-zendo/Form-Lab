@@ -1,0 +1,196 @@
+# FORM — Design System & Motion Tokens
+
+**Source of truth:** `one-zendo/One` → `DESIGN.md` and `src/styles.css`  
+**Transfer target:** `one-zendo/Form-Lab`  
+**Baseline reviewed:** 2026-11-25
+
+This document transfers FORM's approved visual principles, semantic design tokens, and motion rules into Lab. When a value is refined in the source repository, update this document and Lab's implementation together. Do not invent parallel component styles or motion values.
+
+## 1. Design principles
+
+1. **Focus over decoration.** The interface supports the workout; it does not compete with it.
+2. **Clarity over density.** Show essential information first; reveal advanced details contextually.
+3. **Consistency over novelty.** Reuse shared tokens, components, iconography, and interaction patterns.
+4. **Effortless logging.** Minimize taps during active training; preserve workout state and scroll position.
+5. **Personal progress, privately.** No social feed, public leaderboard, or unnecessary engagement mechanics.
+6. **Reliable by default.** Offline-capable workout flows, automatic saving, recovery after interruption, and no silent data loss.
+7. **Accessible by default.** Minimum 44px touch targets, scalable type, visible focus, screen-reader labels, semantic non-color cues, and reduced-motion/transparency alternatives.
+8. **Adaptive, not duplicated.** Share one component system and behavior across compact/folded, unfolded portrait, and unfolded landscape layouts. Adapt composition only when available space requires it.
+
+## 2. Visual identity
+
+- Product wordmark: **FORM**, uppercase, no terminal period.
+- Tagline: **Train with focus, follow your progress.**
+- Typeface: Inter variable, weights 400 / 600 / 700; use tabular numerals for timers, weights, and reps.
+- Icons: official Lucide assets only; 24px default, 1.75px stroke, rounded caps and joins. Contextual sizes: Profile rows 20px, dock 22px, settings chevrons 18px, small action glyphs 18px. Keep accessible names on icon-only controls.
+- Use spacious layouts, clear hierarchy, subtle separators, restrained translucent surfaces, and no decorative gradients or arbitrary shadows.
+
+## 3. Foundation tokens
+
+### Typography
+
+| Token / role | Value |
+|---|---:|
+| Wordmark | 28px / 700 |
+| Large title | 34px / 700 |
+| Page title | 28px / 700 |
+| Section heading | 22px / 650 |
+| Headline / card title | 17px / 600 |
+| Body | 17px / 400 |
+| Supporting | 15px / 400 |
+| Caption | 12px / 400 |
+| Control | 14px |
+| Dialog title | 18px / 600 |
+
+Use the shared headline treatment for primary page titles. Scale type with accessibility settings; do not shrink touch targets to fit content.
+
+### Spacing
+
+Use a four-point spacing scale. Canonical values: **4, 8, 12, 16, 20, 24, 32, 40, 48px**.
+
+### Geometry
+
+| Token | Value |
+|---|---:|
+| Small radius | 8px |
+| Control radius | 12px |
+| Card radius | 20px |
+| Dialog radius | 24px |
+| Floating pill radius | 999px |
+| Minimum touch target | 44px |
+| Standard header row | 44px |
+| Dialog max width | 360px |
+| Primary dialog action height | 48px |
+
+Content cards use 20px radius; controls and primary buttons use 12px; compact set inputs use 8px. Do not add component-specific radius values outside this scale without an approved exception.
+
+## 4. Semantic color tokens
+
+Themes: **Default** and **Graphite Lime**. Components consume semantic roles rather than hard-coded colors.
+
+### Default / light
+
+| Role | Value |
+|---|---|
+| Canvas | `#F2F2F7` |
+| Surface / paper | `#FFFFFF` |
+| Primary text | `#000000` |
+| Secondary text | `#636366` |
+| Primary action (web contrast) | `#0066CC` |
+| Brand blue | `#0088FF` |
+| Success (web contrast) | `#007A30` |
+| Insight purple | `#B02FC2` |
+| Danger (web contrast) | `#D51028` |
+| Elevated surface | `#E5E5EA` |
+
+### Graphite Lime / dark
+
+| Role | Value |
+|---|---|
+| Canvas | `#17171F` |
+| Surface / paper | `#24242E` |
+| Elevated surface | `#30303C` |
+| Primary text | `#F5F5F5` |
+| Secondary text | `#A3A3A3` |
+| Action / brand accent | `#B0FF00` |
+| Danger | `#FF6961` |
+| Rest timer | `#0088FF` |
+| Success | `#30D158` |
+| Warning | `#FFB340` |
+| Insight | `#B69CFF` |
+
+### Semantic exceptions and rules
+
+- Primary action and selected navigation use the theme's action accent. Filled lime actions use graphite foreground `#17171F`; light blue actions use white foreground.
+- Rest timer blue remains independent of theme action color.
+- Completion, recovery, warning, destructive, and insight states retain their own semantic roles. Never use the action accent as a substitute for every status.
+- Use WCAG AA contrast targets (4.5:1 for normal text). The existing small white-on-blue timer text is a documented contrast exception to re-evaluate; do not propagate that exception to new components.
+- Native Apple implementations should use dynamic semantic system colors where appropriate rather than fixed web hex values.
+
+## 5. Motion system
+
+Motion is restrained, purposeful, and reversible. Prefer short transitions that communicate state changes without distracting from training. Preserve state, scroll position, and timer deadlines throughout transitions.
+
+### Canonical motion tokens
+
+These values are transferred from the source stylesheet. Use the named tokens instead of introducing local durations.
+
+| Token | Duration | Intended use |
+|---|---:|---|
+| `--motion-fast` | 180ms | Fast feedback / short state changes |
+| `--motion-tab` | 220ms | Tab and selection transitions |
+| `--motion-glide` | 230ms | Gliding movement |
+| `--motion-swipe` | 260ms | Swipe feedback |
+| `--motion-collapse` | 280ms | Collapse and glyph morph |
+| `--motion-back` | 280ms | Back transition |
+| `--motion-edit` | 300ms | Inline editing |
+| `--motion-standard` | 320ms | Standard content transition |
+| `--motion-sheet` | 350ms | Sheet / inline expansion |
+| `--motion-settle` | 550ms | Settling emphasis |
+| `--motion-celebrate` | 650ms | Completion celebration; use sparingly |
+| `--motion-drop` | 200ms | Drop / release interaction |
+
+### Interaction timing guidance
+
+| Interaction | Approved range |
+|---|---:|
+| Button feedback | 100–150ms |
+| Selection | 180–250ms |
+| Inline expansion | 250–350ms |
+| Exercise swaps / screen transitions | 300–400ms |
+| Partner content transition | 320ms |
+| Partner glyph morph | 280ms |
+
+The guidance ranges describe perceived interaction classes; the named tokens above are the implementation source of truth. Choose the closest shared token rather than creating a new duration.
+
+### Easing tokens
+
+- `--motion-gesture-ease: cubic-bezier(.2,.8,.2,1)`
+- `--motion-system-ease: cubic-bezier(.4,0,.2,1)`
+- `--motion-ease: cubic-bezier(.2,.75,.2,1)`
+- `--motion-spring: cubic-bezier(.2,.8,.25,1.15)`
+
+Use spring-like easing only for appropriate small interactions. Avoid exaggerated bounce or overshoot. Partner transitions use a restrained 28px content travel, stationary chrome, and reversible swipe feedback.
+
+### Motion behavior requirements
+
+- Keep persistent navigation and other fixed chrome stationary during page transitions.
+- Translate only the content region when a transition calls for directional movement.
+- Preserve scroll position, selected exercise, completed sets, unsaved edits, active workout state, and rest-timer deadline.
+- Transitions must be interruptible and reversible without duplicated handlers or stale animation state.
+- Avoid stacking simultaneous page and component animations.
+- Do not animate layout in ways that clip content or reduce target size.
+- Under `prefers-reduced-motion: reduce`, remove nonessential transitions, transforms, pulses, and celebrations; state changes must remain clear without motion.
+- Under `prefers-reduced-transparency: reduce`, replace blurred/translucent floating surfaces with opaque theme surfaces.
+
+## 6. Shared component standards
+
+- Floating navigation: four destinations — Home, Workouts, Progress, Profile; translucent rounded dock, sliding selection indicator, safe-area aware.
+- Floating workout timer: pill geometry shared with navigation; countdown uses tabular numerals; preserve its deadline across navigation, folding, and rotation.
+- Exercise cards: contextual expansion/editing, one-tap set completion, previous performance where available, and accessible focus states.
+- Dialogs: shared dimensions, spacing, radius, backdrop, focus handling, and reduced-motion behavior. Avoid unnecessary modal interruption.
+- Primary actions: filled semantic action color. Secondary actions: outlined or quiet.
+- Use official Lucide icons; do not redraw, approximate, or substitute emoji for interface icons.
+
+## 7. Responsive and cross-layout governance
+
+Treat compact/folded, unfolded portrait, and unfolded landscape as three configurations of one product. Maintain a shared data model, business logic, components, tokens, and interaction behavior. Layout-specific composition may differ.
+
+Every applicable UI change must be reviewed in all three configurations and both themes. Preserve workout state, rest timer, drafts, selection, navigation, scroll position, and appearance across folding and rotation. Do not claim device compatibility until tested on actual hardware.
+
+## 8. Implementation checklist
+
+- [ ] Components consume semantic tokens; no arbitrary one-off palette or radius values.
+- [ ] Typography uses Inter and the shared hierarchy.
+- [ ] Lucide icons use approved sizes and 1.75px stroke.
+- [ ] Touch targets are at least 44px.
+- [ ] Motion uses the shared named durations and easing tokens.
+- [ ] Reduced-motion and reduced-transparency modes are verified.
+- [ ] Timers, drafts, scroll, and workout state survive transitions.
+- [ ] Compact, unfolded portrait, and unfolded landscape are reviewed.
+- [ ] Both Default and Graphite Lime themes are reviewed.
+- [ ] Browser regression checks pass; device validation is reported separately.
+
+## Source notes
+
+The source repository's `DESIGN.md` remains authoritative for detailed component decisions and subsequent refinements. This file is the Lab transfer baseline, not permission to diverge from the source. Where a future source revision conflicts with this document, reconcile and update Lab to match the latest approved source.
