@@ -1,5 +1,5 @@
 
-const BUILD=151;
+const BUILD=152;
 const appearanceKey='form.lab.appearance.v1';
 let appearance='system';try{const saved=localStorage.getItem(appearanceKey);if(['system','studio','graphite'].includes(saved))appearance=saved}catch{}
 function applyAppearance(){if(appearance==='system')delete document.documentElement.dataset.theme;else document.documentElement.dataset.theme=appearance;document.querySelectorAll('meta[name="theme-color"]').forEach(m=>{if(!m.dataset.originalColor)m.dataset.originalColor=m.content;m.content=appearance==='studio'?'#F2F2F7':appearance==='graphite'?'#17171F':m.dataset.originalColor})}
@@ -147,6 +147,9 @@ nav.innerHTML=tabs.map((t,i)=>'<button aria-label="'+t+'" title="'+t+'" data-go=
 const pageTabMenu=document.getElementById('page-tab-menu');
 pageTabMenu.querySelector('.page-tab-options').innerHTML=tabs.map((t,i)=>'<button type="button" data-go="'+t+'">'+icon(['home','workouts','progress','profile'][i])+'<span>'+t+'</span></button>').join('');
 function installHeadingNavigation(){
+ const previous=main.querySelector('.headline-build');previous?.remove();installHeadingTrigger();if(showDiagnostics)return;const heading=main.querySelector('h1');if(!heading)return;const label=document.createElement('button');label.type='button';label.className='headline-build';label.textContent=BUILD;label.setAttribute('aria-label','Build '+BUILD+' — check for updates');label.onclick=()=>{openDeveloper();update(true)};heading.append(label);
+}
+function installHeadingTrigger(){
  const heading=main.querySelector('h1');if(!heading)return;const existing=heading.querySelector('.page-tab-trigger');if(document.body.dataset.dock==='bottom'){if(existing)heading.replaceChildren(...existing.firstChild.childNodes);return}if(existing)return;
  const button=document.createElement('button');button.type='button';button.className='page-tab-trigger';button.setAttribute('aria-label',heading.textContent+' — open navigation');button.setAttribute('aria-haspopup','dialog');button.setAttribute('aria-controls','page-tab-menu');
  const label=document.createElement('span');while(heading.firstChild)label.append(heading.firstChild);button.append(label);
@@ -169,7 +172,7 @@ document.addEventListener('touchstart',e=>{swipeOrigin=e.touches.length===1?[e.t
 document.addEventListener('touchmove',e=>{if(!swipeOrigin||e.touches.length!==1)return;const t=e.touches[0],dx=Math.abs(t.clientX-swipeOrigin[0]),dy=Math.abs(t.clientY-swipeOrigin[1]);if(dx>8&&dx>dy&&e.cancelable)e.preventDefault()},{passive:false});
 for(const type of ['touchend','touchcancel'])document.addEventListener(type,()=>{swipeOrigin=null},{passive:true});
 document.getElementById('quick-check').onclick=()=>update(true);document.getElementById('quick-update').onclick=reloadLatest;
-addEventListener('pageshow',()=>update());addEventListener('focus',()=>update());document.addEventListener('visibilitychange',()=>update());addEventListener('online',()=>update());setInterval(()=>update(),UPDATE_INTERVAL_MS);document.getElementById('build-number').textContent='Build '+BUILD;document.getElementById('public-build-number').textContent='Build '+BUILD;render();layout();update();
+addEventListener('pageshow',()=>update());addEventListener('focus',()=>update());document.addEventListener('visibilitychange',()=>update());addEventListener('online',()=>update());setInterval(()=>update(),UPDATE_INTERVAL_MS);document.getElementById('build-number').textContent='Build '+BUILD;render();layout();update();
 /* Native device rotation; responsive geometry updates without custom animation. */
 
 const railPanel=document.getElementById('rail-panel'),railSlider=document.getElementById('rail-slider'),railReading=document.getElementById('rail-reading');
