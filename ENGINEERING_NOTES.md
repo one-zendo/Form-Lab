@@ -44,3 +44,11 @@ Branch: checkpoint/build-159-device-confirmed
 - Verify persisted data after reload, not merely successful save.
 - Verify JS syntax, run regression suite, check deployment and record actual device results.
 - Do not claim unperformed tests. Build 159 had syntax verification and general positive user feedback; full CI/device matrix and independent timer recovery remain unverified.
+
+## Build 160 — conservative consolidation
+- Merged duplicate bottom dock root tokens, retaining effective 56px height, 22px icon, 54×40px capsule, 4px padding and offset; preserved calibration.
+- Grouped folding/unfolding tokens, preserving 320/460ms and easing curves.
+- Named reusable completion check markup; compared all 16 boolean indicator combinations with baseline, identical output.
+- App logic identical to Build 159 except build number; CSS outside targeted token blocks identical after whitespace normalization. Corrected stale initial diagnostic build label.
+- All 10 local scripts parsed; 21 regression assertions passed in an adapted V8 harness using in-memory filesystem/storage and VM substitutes. Native Node CI and browser/device tests not executed here.
+- Deferred broader cascade and component restructuring until visual regression coverage exists. No changes to persistence or hinge algorithms.
