@@ -867,3 +867,7 @@ body[data-layout=folded-landscape][data-calibrating=true] #form-marker-y{display
 /* Keep the UI visible and opaque during device rotation. */
 html,body,main{background-color:var(--canvas)}
 body:not([data-layout]) main,body:not([data-layout]) nav.nav{visibility:hidden}
+
+/* Build 128: user-approved change to folded portrait only. */
+body[data-layout=folded-portrait][data-dock=bottom] nav.nav{position:fixed;flex-direction:row;left:calc(50% + (var(--safe-left) - var(--safe-right))/2);right:auto;top:auto;bottom:calc(var(--dock-bottom) + var(--safe-bottom));transform:translateX(-50%)}
+body[data-layout=folded-portrait][data-dock=bottom] main{padding-bottom:calc(var(--dock-reserve) + var(--safe-bottom))}
