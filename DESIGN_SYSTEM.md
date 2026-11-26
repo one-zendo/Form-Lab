@@ -194,3 +194,8 @@ Every applicable UI change must be reviewed in all three configurations and both
 ## Source notes
 
 The source repository's `DESIGN.md` remains authoritative for detailed component decisions and subsequent refinements. This file is the Lab transfer baseline, not permission to diverge from the source. Where a future source revision conflicts with this document, reconcile and update Lab to match the latest approved source.
+
+
+## Build 115 implementation reconciliation
+
+Build 115 preserves the approved Build 114 runtime appearance. Existing intermediate spacing values (10, 14, 18, 22px) are named `--space-2-5`, `--space-3-5`, `--space-4-5`, `--space-5-5` respectively; `--type-dialog-title` is 18px. These are compatibility exceptions, not new visual values. The current runtime palette, typography and motion differ from parts of the historical specification above; do not normalize those differences without visual approval. The navigation shell and calibrated Duo rules are unchanged.
