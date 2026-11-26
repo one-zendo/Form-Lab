@@ -210,3 +210,6 @@ The deployed Lab is authoritative for approved existing appearance: standard 320
 
 ## Build 185 headline geometry
 Shared 44px headline row; default viewport-relative center 48px, top = center − half row height (26px default). FP uses saved master FL1 X; FL1 and FL2 use saved master Y (FL2 mirrored from bottom). UP/UL inherit 48px. Main top padding respects reported safe top; no double subtraction of excluded rail. Manual calibration overrides preserved. Home date and signature centered in row. Navigation unchanged. Actual device alignment pending.
+
+## Build 186 native-first FL1
+Native physical headline inset 84px, content inset 16px; Safari adapter subtracts excluded 84px and clamps to zero, respecting reported safe left. Independent tokens, 2:3 dashboard tracks. Diagnostic preview switch uses simulated physical SVG, not native rendering. Other orientations and navigation unchanged. Native drawable area remains unverified.
