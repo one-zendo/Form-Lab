@@ -11,10 +11,44 @@
   --radius-card:20px;
   --radius-control:12px;
   --radius-pill:999px;
-  --card-padding:16px;
-  --card-padding-large:20px;
-  --card-padding-compact:12px;
-  --card-gap:16px;
+  /* Global measurement scale */
+  --space-1:4px;
+  --space-2:8px;
+  --space-3:12px;
+  --space-4:16px;
+  --space-5:20px;
+  --space-6:24px;
+  --space-8:32px;
+  --space-adaptive:clamp(var(--space-3), 3.6vw, var(--space-5));
+  --card-padding:var(--space-adaptive);
+  --card-padding-large:clamp(var(--space-4), 4.3vw, var(--space-6));
+  --card-padding-compact:var(--space-3);
+  --card-gap:var(--space-adaptive);
+  --touch-target:44px;
+  --icon-small:16px;
+  --icon-control:18px;
+  --icon-inline:20px;
+  --icon-default:22px;
+  --type-caption:12px;
+  --type-detail:13px;
+  --type-body:15px;
+  --type-subtitle:17px;
+  --type-heading:20px;
+  --type-card-title:clamp(21px, 5.2vw, 24px);
+  --type-brand:clamp(30px, 7.3vw, 34px);
+  --weight-medium:600;
+  --weight-semibold:650;
+  --weight-brand:800;
+  --line-body:1.4;
+  --line-heading:1.2;
+  --content-max:960px;
+  --dialog-max:340px;
+  --home-workout-min:calc(var(--touch-target) * 3.25);
+  --home-streak-min:calc(var(--touch-target) * 4.1);
+  --home-workout-share:45fr;
+  --home-streak-share:55fr;
+  --day-dot-max:34px;
+  --elevation-card:0 2px 12px #00000006;
   --motion-duration:320ms;
   --motion-spring:cubic-bezier(.2,.8,.2,1.15);
   --motion-color-duration:260ms;
@@ -31,7 +65,7 @@ html,body {
   height:100%;
   background:var(--canvas);
   color:var(--ink);
-  font:15px -apple-system,BlinkMacSystemFont,sans-serif;
+  font:var(--type-body) -apple-system,BlinkMacSystemFont,sans-serif;
   overflow:hidden;
 }
 
@@ -44,8 +78,8 @@ button {
 }
 
 svg {
-  width:22px;
-  height:22px;
+  width:var(--icon-default);
+  height:var(--icon-default);
   display:block;
   fill:none;
   stroke:currentColor;
@@ -70,14 +104,14 @@ main::-webkit-scrollbar {
 }
 
 .page {
-  max-width:960px;
+  max-width:var(--content-max);
   margin:auto;
   min-width:0;
 }
 
 .brand {
-  font-size:34px;
-  font-weight:800;
+  font-size:var(--type-brand);
+  font-weight:var(--weight-brand);
   letter-spacing:-1.8px;
   margin:0;
 }
@@ -89,21 +123,21 @@ main::-webkit-scrollbar {
 .tagline {
   margin:3px 0 0 2px;
   color:var(--muted);
-  font-size:13px;
+  font-size:var(--type-detail);
 }
 
 .foot,.diagnostic-caption {
-  font-size:12px;
+  font-size:var(--type-caption);
   color:var(--muted);
 }
 
 .diagnostic-row {
   display:flex;
   justify-content:space-between;
-  gap:12px;
+  gap:var(--space-3);
   padding:10px 0;
   border-bottom:1px solid #ffffff15;
-  font-size:12px;
+  font-size:var(--type-caption);
 }
 
 .diagnostic-row span {
@@ -117,18 +151,18 @@ main::-webkit-scrollbar {
 .diagnostic-card {
   background:var(--surface);
   border-radius:var(--radius-card);
-  padding:16px;
+  padding:var(--card-padding);
 }
 
 .diagnostic-marker {
-  padding:16px;
+  padding:var(--card-padding);
   margin-top:10px;
   background:var(--raised);
   border-radius:var(--radius-control);
 }
 
 #check-update,.dev-dialog button {
-  min-height:44px;
+  min-height:var(--touch-target);
   padding:0 14px;
   border-radius:var(--radius-control);
   background:var(--raised);
@@ -151,8 +185,8 @@ main::-webkit-scrollbar {
 
 .dev-dialog input {
   accent-color:var(--accent);
-  width:22px;
-  height:22px;
+  width:var(--icon-default);
+  height:var(--icon-default);
 }
 
 .enter {
@@ -219,6 +253,9 @@ main {
 }
 
 .home-page {
+  width:100%;
+  max-width:var(--content-max);
+  margin-inline:auto;
   min-height:100%;
   display:flex;
   flex-direction:column;
@@ -229,8 +266,8 @@ main {
   display:grid;
   grid-template-columns:minmax(0,1fr) auto;
   align-items:start;
-  gap:12px;
-  margin-bottom:4px;
+  gap:var(--space-3);
+  margin-bottom:var(--space-4);
 }
 
 .home-brand {
@@ -238,49 +275,51 @@ main {
 }
 
 .home-brand .brand {
-  font-size:34px;
+  letter-spacing:-1.4px;
+  font-size:var(--type-brand);
   line-height:1.1;
 }
 
 .home-brand .tagline {
-  font-size:13px;
-  line-height:18px;
-  margin:4px 0 0 0;
+  font-size:var(--type-detail);
+  line-height:var(--icon-control);
+  margin:var(--space-1) 0 0;
 }
 
 .home-date {
   display:grid;
-  gap:4px;
+  gap:var(--space-1);
   text-align:right;
   white-space:nowrap;
   padding-top:2px;
 }
 
 .home-date strong {
-  font-size:17px;
-  line-height:44px;
+  font-weight:var(--weight-semibold);
+  font-size:var(--type-subtitle);
+  line-height:var(--touch-target);
 }
 
 .home-date span {
-  font-size:13px;
+  font-size:var(--type-detail);
   color:var(--muted);
 }
 
 .home-greeting {
-  font-size:20px;
-  font-weight:650;
+  font-size:var(--type-heading);
+  font-weight:var(--weight-semibold);
   letter-spacing:-.5px;
   line-height:1.3;
-  margin:0 0 4px;
+  margin:0 0 var(--space-2);
 }
 
 .home-dashboard {
   display:grid;
   grid-template-columns:minmax(0,1fr);
-  grid-template-rows:minmax(190px,45fr) minmax(190px,55fr);
+  grid-template-rows:minmax(var(--home-workout-min),var(--home-workout-share)) minmax(var(--home-streak-min),var(--home-streak-share));
   gap:var(--card-gap);
   flex:1;
-  min-height:0;
+  min-height:min-content;
 }
 
 .home-primary,.home-support {
@@ -291,13 +330,13 @@ main {
 
 .home-workout-card {
   display:grid;
-  grid-template-rows:auto 1fr auto;
+  grid-template-rows:auto minmax(var(--space-2),1fr) auto;
   align-content:stretch;
   align-items:start;
-  gap:12px;
+  gap:var(--space-3);
   width:100%;
   height:100%;
-  min-height:190px;
+  min-height:var(--home-workout-min);
   padding:var(--card-padding-large);
   border:0;
   border-radius:var(--radius-card);
@@ -313,17 +352,17 @@ main {
 
 .home-workout-copy {
   display:grid;
-  gap:4px;
+  gap:var(--space-1);
 }
 
 .home-workout-copy strong {
-  font-size:24px;
-  line-height:1.2;
+  font-size:var(--type-card-title);
+  line-height:var(--line-heading);
   letter-spacing:-.5px;
 }
 
 .home-workout-copy span {
-  font-size:14px;
+  font-size:var(--type-body);
   color:var(--workout-muted);
 }
 
@@ -333,98 +372,100 @@ main {
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:8px;
-  min-width:88px;
-  min-height:44px;
-  padding:8px 16px;
+  gap:var(--space-2);
+  min-width:calc(var(--touch-target) * 2);
+  min-height:var(--touch-target);
+  padding:var(--space-2) var(--space-4);
   border-radius:var(--radius-pill);
   background:var(--workout-pill);
   color:var(--workout-ink);
-  font-weight:600;
+  font-weight:var(--weight-medium);
 }
 
 .home-workout-cta svg {
-  width:18px;
-  height:18px;
+  width:var(--icon-control);
+  height:var(--icon-control);
 }
 
 .home-streak-card {
   display:flex;
   flex-direction:column;
   justify-content:space-between;
-  min-height:190px;
+  min-height:var(--home-streak-min);
   padding:var(--card-padding);
   background:var(--surface);
   border-radius:var(--radius-card);
-  box-shadow:0 2px 12px #00000008;
+  box-shadow:var(--elevation-card);
+  border:1px solid var(--line);
 }
 
 .home-streak-top {
   display:flex;
   align-items:flex-start;
   justify-content:space-between;
-  gap:12px;
+  gap:var(--space-3);
 }
 
 .home-streak-title {
   display:flex;
   align-items:center;
-  gap:8px;
+  gap:var(--space-2);
 }
 
 .home-streak-title h2 {
-  font-size:17px;
-  font-weight:600;
+  font-size:var(--type-subtitle);
+  font-weight:var(--weight-medium);
   margin:0;
 }
 
 .home-streak-title svg {
-  width:20px;
-  height:20px;
+  width:var(--icon-inline);
+  height:var(--icon-inline);
   color:var(--muted);
 }
 
 .home-streak-caption {
-  margin:4px 0 0;
+  margin:var(--space-1) 0 0;
   color:var(--muted);
-  font-size:12px;
+  font-size:var(--type-caption);
 }
 
 .home-icon-button {
   display:grid;
   place-items:center;
-  width:44px;
-  height:44px;
-  min-width:44px;
+  width:var(--touch-target);
+  height:var(--touch-target);
+  min-width:var(--touch-target);
   border-radius:50%;
   background:transparent;
   color:var(--muted);
 }
 
 .home-icon-button svg {
-  width:18px;
-  height:18px;
+  width:var(--icon-control);
+  height:var(--icon-control);
 }
 
 .home-days {
+  flex:1 1 auto;
   display:grid;
   grid-template-columns:repeat(7,minmax(0,1fr));
   align-items:center;
-  gap:4px;
-  margin:16px 0 12px;
+  gap:var(--space-1);
+  margin:var(--space-4) 0 var(--space-3);
   text-align:center;
 }
 
 .home-day {
   display:grid;
   justify-items:center;
-  gap:7px;
+  gap:var(--space-2);
   color:var(--muted);
-  font-size:12px;
+  font-size:var(--type-caption);
 }
 
 .home-day-dot {
-  width:clamp(26px,8vw,36px);
+  width:min(100%,var(--day-dot-max));
   aspect-ratio:1;
   border-radius:var(--radius-pill);
   background:var(--canvas);
@@ -438,8 +479,8 @@ main {
 }
 
 .home-day-dot svg {
-  width:16px;
-  height:16px;
+  width:var(--icon-small);
+  height:var(--icon-small);
 }
 
 .home-streak-footer {
@@ -447,8 +488,8 @@ main {
   justify-content:space-between;
   align-items:center;
   border-top:1px solid var(--line);
-  padding-top:12px;
-  font-size:13px;
+  padding-top:var(--space-3);
+  font-size:var(--type-detail);
 }
 
 .home-streak-footer span {
@@ -456,7 +497,7 @@ main {
 }
 
 .home-streak-footer strong {
-  font-weight:600;
+  font-weight:var(--weight-medium);
 }
 
 .home-coming {
@@ -465,7 +506,7 @@ main {
   background:var(--surface);
   color:var(--ink);
   padding:22px;
-  width:min(340px,90vw);
+  width:min(var(--dialog-max),90vw);
 }
 
 .home-coming::backdrop {
@@ -474,235 +515,41 @@ main {
 
 .home-coming h2 {
   font-size:18px;
-  margin:0 0 8px;
+  margin:0 0 var(--space-2);
 }
 
 .home-coming p {
-  font-size:14px;
+  font-size:var(--type-body);
   color:var(--muted);
-  margin:0 0 16px;
+  margin:0 0 var(--space-4);
 }
 
 .home-coming button {
   width:100%;
-  min-height:44px;
+  min-height:var(--touch-target);
   background:var(--accent);
   color:var(--on-accent);
   border-radius:var(--radius-control);
-  font-weight:600;
+  font-weight:var(--weight-medium);
 }
 
-@media(orientation:landscape) and (min-width:700px) {
+/* One responsive Home measurement policy; cards grow with content and available space. */
+@media (orientation:landscape) and (min-width:700px) {
   .home-dashboard {
     grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);
-    grid-template-rows:minmax(280px,1fr);
+    grid-template-rows:minmax(min-content,1fr);
     align-items:stretch;
   }
-
-  .home-primary,.home-support {
-    align-content:stretch;
-  }
-
-  .home-streak-card {
-    height:100%;
-  }
-
-  .home-day-dot {
-    width:clamp(26px,4vw,40px);
-  }
+  .home-primary,.home-support { align-content:stretch; }
 }
-
-@media(max-height:650px) {
-  .home-page {
-    gap:12px;
-  }
-
-  .home-dashboard {
-    gap:12px;
-  }
-
-  .home-workout-card {
-    padding:var(--card-padding);
-    min-height:150px;
-  }
-
-  .home-streak-card {
-    padding:var(--card-padding-compact);
-    min-height:150px;
-  }
-
-  .home-days {
-    margin:10px 0;
-  }
-
-  .home-day-dot {
-    width:26px;
-  }
+@media (max-height:650px) {
+  .home-page,.home-dashboard { gap:var(--space-3); }
+  .home-header { margin-bottom:var(--space-2); }
+  .home-workout-card,.home-streak-card { padding:var(--card-padding-compact); }
+  .home-streak-card .home-days { margin-block:var(--space-2); }
 }
-
-@media(max-width:360px) {
-  .home-workout-copy strong {
-    font-size:21px;
-  }
-
-  .home-streak-card {
-    padding:var(--card-padding-compact);
-  }
-}
-
-.home-page {
-  width:100%;
-  max-width:960px;
-  margin-inline:auto;
-  min-height:100%;
-  gap:var(--card-gap);
-}
-
-.home-header {
-  align-items:start;
-}
-
-.home-brand .brand {
-  font-size:34px;
-  line-height:1.1;
-}
-
-.home-date strong {
-  font-size:16px;
-  line-height:44px;
-  font-weight:650;
-}
-
-.home-greeting {
-  margin-top:2px;
-}
-
-.home-dashboard {
-  grid-template-rows:minmax(170px,1fr) minmax(170px,1fr);
-  gap:14px;
-}
-
-.home-workout-card {
-  grid-template-rows:auto minmax(0,1fr) auto;
-  min-height:170px;
-  border-radius:var(--radius-card);
-  padding:var(--card-padding-large);
-}
-
-.home-workout-copy strong {
-  font-size:23px;
-  line-height:1.2;
-}
-
-.home-streak-card {
-  border:1px solid var(--line);
-  box-shadow:0 2px 12px #00000006;
-}
-
-.home-streak-title {
-  gap:9px;
-}
-
-.home-streak-title svg {
-  width:19px;
-  height:19px;
-}
-
-.home-days {
-  margin:14px 0;
-}
-
-.home-day-dot {
-  width:clamp(25px,7vw,34px);
-}
-
-@media(orientation:landscape) and (min-width:700px) {
-  .home-dashboard {
-    grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);
-    grid-template-rows:minmax(250px,1fr);
-  }
-}
-
-@media(max-height:650px) {
-  .home-page {
-    gap:10px;
-  }
-
-  .home-dashboard {
-    grid-template-rows:minmax(145px,1fr) minmax(145px,1fr);
-    gap:10px;
-  }
-
-  .home-workout-card {
-    min-height:145px;
-    padding:var(--card-padding);
-  }
-
-  .home-streak-card {
-    min-height:145px;
-  }
-
-  .home-days {
-    margin:8px 0;
-  }
-}
-
-.home-dashboard {
-  grid-template-rows:minmax(0,45fr) minmax(0,55fr);
-  gap:var(--card-gap);
-}
-
-.home-workout-card {
-  min-height:0;
-  padding:var(--card-padding-large);
-  grid-template-rows:auto minmax(0,1fr) auto;
-}
-
-.home-streak-card {
-  min-height:0;
-  padding:var(--card-padding);
-}
-
-.home-streak-card .home-days {
-  flex:1 1 auto;
-  align-items:center;
-  margin:16px 0;
-}
-
-.home-greeting {
-  font-size:20px;
-  line-height:1.3;
-  font-weight:650;
-  margin-bottom:8px;
-}
-
-.home-header {
-  margin-bottom:16px;
-}
-
-.home-brand .brand {
-  font-size:34px;
-  letter-spacing:-1.4px;
-}
-
-.home-brand .tagline {
-  font-size:13px;
-  line-height:18px;
-}
-
-.home-workout-copy strong {
-  font-size:24px;
-  line-height:1.2;
-}
-
-@media(max-height:650px) {
-  .home-dashboard {
-    grid-template-rows:minmax(132px,45fr) minmax(180px,55fr);
-  }
-
-  .home-streak-card .home-days {
-    margin:10px 0;
-  }
+@media (max-width:360px) {
+  .home-streak-card { padding:var(--card-padding-compact); }
 }
 
 /* Single static navigation shell: content scrolls independently. */
@@ -886,13 +733,13 @@ body[data-layout=folded-portrait] main {
 </style></head>
 <body>
 <main></main>
-<div id="build-tools"><span id="build-number">Build 82</span><button id="quick-check" type="button">Check</button><button id="quick-update" type="button">Update</button><span id="update-status" role="status" aria-live="polite"></span></div>
+<div id="build-tools"><span id="build-number">Build 83</span><button id="quick-check" type="button">Check</button><button id="quick-update" type="button">Update</button><span id="update-status" role="status" aria-live="polite"></span></div>
 <nav class="nav" aria-label="Main navigation"></nav>
 <dialog class="dev-dialog" id="developer"></dialog>
 <dialog class="home-coming" id="home-coming"><h2>Coming next</h2><p>We’re building the workout and activity features on this clean FORM foundation.</p><button id="home-coming-close">Done</button></dialog>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD=82;
+const BUILD=83;
 const UPDATE_INTERVAL_MS = 5000;
 const tabs=['Home','Workouts','Progress','Profile'];
 const glyphs={home:'M3 11 12 3l9 8v9h-6v-7H9v7H3z',workouts:'M3 10h18v4H3zM7 6v12M17 6v12',progress:'M3 20h18M5 15l4-5 4 3 6-9',profile:'M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8M4 21v-2a8 8 0 0 1 16 0v2',exercise:'M3 10h18v4H3zM6 7v10M18 7v10',timer:'M12 7v6l4 2M9 2h6M12 4a9 9 0 1 0 0 18 9 9 0 0 0 0-18',records:'M5 20V9h14v11M8 9V5h8v4M9 14h6',library:'M4 4h6v16H4zM14 4h6v16h-6z',plus:'M12 4v16M4 12h16',swap:'M4 7h15l-4-4m5 14H5l4 4',rest:'M4 3h16v18H4zM8 8h8M8 12h8M8 16h5',calendar:'M3 5h18v16H3zM7 3v4m10-4v4M3 10h18',heart:'M20 8c0 5-8 11-8 11S4 13 4 8a4 4 0 0 1 8-1 4 4 0 0 1 8 1'};
