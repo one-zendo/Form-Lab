@@ -6,7 +6,7 @@ FORM strength-training companion prototype and design system.
 
 The `duo-pwa-fullscreen-test` branch adds a lightweight responsive PWA test surface:
 
-- `index.html` — edge-to-edge dashboard, safe-area padding and live viewport diagnostics
+- `index.html` — responsive dashboard, safe-area padding and live viewport diagnostics\n- `edge-to-edge.html` — full-bleed active workout sample with safe-area-aware controls and interactive set completion
 - `manifest.webmanifest` — standalone app launch configuration
 - `sw.js` — basic offline shell cache
 - `icon.svg` — app icon
@@ -24,7 +24,7 @@ For a Home Screen test:
 
 The page uses `viewport-fit=cover`, dynamic viewport sizing, safe-area environment variables, and responsive layouts. iOS keeps system status indicators; standalone mode removes Safari's browser chrome, not the operating-system status bar.
 
-The dashboard contains illustrative values only. It is a layout/PWA test, not the production workout tracker. Validate actual viewport dimensions and safe areas on the target hardware before treating the provisional layout thresholds as final.
+The dashboard and active workout sample contain illustrative values only. Open **Edge-to-edge workout sample** from the dashboard to preview the full-bleed workout screen. The sample includes interactive set completion and a rest countdown; it does not save workout data. It is a layout/PWA test, not the production workout tracker. Validate actual viewport dimensions and safe areas on the target hardware before treating the provisional layout thresholds as final.
 
 ## Design references
 
