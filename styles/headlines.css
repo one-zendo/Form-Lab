@@ -13,3 +13,9 @@
 /* Keep headline text visible inside the optional navigation trigger. */
 .workouts-header h1{flex:1;min-width:0}
 body[data-layout=folded-portrait] nav.nav button span{display:none}
+
+/* Build 185: common viewport-relative headline geometry, excluding manual calibration. */
+:root{--headline-center-default:48px;--headline-center:var(--headline-center-default);--headline-top:calc(var(--headline-center) - var(--headline-height)/2)}
+body:is([data-duo-orientation=FP],[data-duo-orientation=FL1],[data-duo-orientation=FL2],[data-duo-orientation=UP],[data-duo-orientation=UL]):not([data-calibrating=true]) main{padding-top:max(var(--safe-top),var(--headline-top))}
+body:is([data-duo-orientation=FP],[data-duo-orientation=FL1],[data-duo-orientation=FL2],[data-duo-orientation=UP],[data-duo-orientation=UL]) main>.page{margin-block:0}
+.home-header .brand{align-items:center}.home-header .home-date strong{align-self:center}
