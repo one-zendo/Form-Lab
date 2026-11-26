@@ -81,3 +81,6 @@ DUO_REFERENCE.md supplies five measured viewport signatures. Match within 8 CSS 
 
 ## Build 168 — adaptive viewport contract
 Remove exact measured signatures and tolerance from runtime. Existing broad compact breakpoints and screen ratio heuristic retained (not hardware identification); rotation labels FL1/FL2; both UL rotations supported. Landscape shell uses layout category, shared spacing, live four safe insets, flexible card tracks. Reuse existing overlay for inset reading instead of allocating probe each layout. No physical strip subtraction. Preserve calibration fallback and hinge motion. DUO_REFERENCE.md is regression reference only. JS syntax and ten isolated classifier cases passed; regression test added, full suite/browser/deployment not verified.
+
+## Build 169 — shared layout foundation
+Remove old fixed production landscape offsets; retain developer calibration and explicit column rail. Add opt-in .form-page, .form-stack, .form-grid, .form-card with shared tokens and intrinsic responsive tracks. Existing Home and hinge rules remain unchanged. New primitives are not yet migrated into existing pages. Hardware SVG assets and device verification remain pending. JS syntax checked; regression definitions added, full suite not run.
