@@ -5,6 +5,7 @@ import vm from 'node:vm';
 const js=fs.readFileSync(new URL('../core/app.js',import.meta.url),'utf8');
 const html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const css=fs.readFileSync(new URL('../styles/app.css',import.meta.url),'utf8');
+const headlineCss=fs.readFileSync(new URL('../styles/headlines.css',import.meta.url),'utf8');
 const manifest=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8'));
 test('script parses and build versions match',()=>{new vm.Script(js);assert.equal(Number(js.match(/const BUILD=(\d+)/)[1]),manifest.build);assert.ok(html.includes('id="build-number">Build '+manifest.build));assert.ok(html.includes('app.js?v='+manifest.build));assert.ok(html.includes('app.css?v='+manifest.build))});
 const storageCode=fs.readFileSync(new URL('../core/storage.js',import.meta.url),'utf8')+'\n'+js.slice(js.indexOf("const WORKOUT_STORAGE="),js.indexOf("const setCount="));
@@ -63,3 +64,18 @@ test('FORM headline toggles diagnostics without navigation menu',()=>{assert.ok(
 test('Home uses shared numeric typography and semantic date and button markup',()=>{assert.ok(js.includes('home-streak-number form-numeric'));assert.ok(js.includes('home-streak-footer form-numeric'));assert.ok(js.includes('class="home-date" datetime='));assert.ok(js.includes('type="button" id="home-calendar"'))});
 
 test('normalized shared tokens preserve approved runtime values',()=>{for(const token of ['--motion-standard:320ms','--motion-duration:var(--motion-standard)','--motion-color-duration:var(--motion-swipe)','--motion-hinge-retarget-ms:500','--routine-row-min:76px','--exercise-picker-max:560px','--dialog-compact-max:320px'])assert.ok(css.includes(token));assert.ok(js.includes('LAYOUT_THRESHOLDS.compactShort'));assert.ok(js.includes("getPropertyValue('--motion-hinge-retarget-ms')"));assert.ok(css.includes('pointer-events:none;background:none'))});
+
+
+test('approved Duo headline and FL1 content calibration matches CSS tokens',()=>{
+ assert.ok(headlineCss.includes('--headline-optical-gap:10.5px'));
+ assert.ok(headlineCss.includes('--fl1-native-headline-inset:84px'));
+ assert.ok(headlineCss.includes('--fl1-native-content-inset:29.5px'));
+ assert.ok(headlineCss.includes('--fl1-safari-excluded:84px'));
+ assert.ok(headlineCss.includes('--fl1-safari-content-inset:max(0px,calc(var(--fl1-native-content-inset) - var(--fl1-safari-excluded)))'));
+});
+test('Duo hardware notes defer to the approved camera and diagnostics standard',()=>{
+ const notes=fs.readFileSync(new URL('../DUO_HARDWARE.md',import.meta.url),'utf8');
+ assert.ok(notes.includes('FP (418,48), FL1 (48,48), FL2 (630,418)'));
+ assert.ok(notes.includes('Guides are diagnostics-only'));
+ assert.ok(!notes.includes('Provisional FL1 camera center (48,42), FP (424,48), FL2 (630,424)'));
+});
