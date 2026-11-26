@@ -69,3 +69,6 @@ Developer settings toggle shows black bars for all four CSS env safe-area insets
 
 ## Build 164 — diagnostics toggle
 Added direct Diagnostics button beside headline build label and Close diagnostics on diagnostic page. Both use shared persisted state setter; existing developer checkbox remains. Navigation and safe-area overlay unchanged. JS syntax verified; headline fit and device behavior not tested.
+
+## Build 165 — automatic diagnostic bars
+Diagnostics automatically enables existing four-edge safe-area overlay via render state. Closing diagnostics clears manual overlay state; optional developer toggle remains for normal mode. CSS env values adapt to orientation/posture; diagnostics adds rotation angle. Bars represent reported safe-area insets, not a measured touch exclusion map; zero insets and browser-excluded regions cannot be visualized by this method. No layout changes. JS syntax checked; device and deployment unverified.
