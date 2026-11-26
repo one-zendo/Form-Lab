@@ -15,3 +15,8 @@ h2{font-size:var(--type-section);font-weight:var(--weight-section)}
 [data-guides="true"] .headline{outline:1px dashed #af52de;outline-offset:-1px}
 [data-guides="true"] .content{outline:1px dashed #34c759;outline-offset:-1px}
 #shell>section{margin:var(--space-16) auto;padding:var(--space-16);width:min(100%,420px)}
+
+/* Folded posture overrides orientation grid. Equal tracks are a fallback, not measured hinge geometry. */
+body[data-hinge="book"] .sample-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-columns:minmax(0,calc(env(viewport-segment-right 0 0,50%) - var(--layout-content))) minmax(0,1fr)}
+body[data-hinge="book"] .sample-grid .sample{min-width:0}
+body[data-hinge="laptop"] .sample-grid{grid-template-columns:minmax(0,1fr)}
