@@ -5,3 +5,5 @@ Read docs/README.md and relevant canonical specifications before work. Use desig
 Record user-confirmed device results, approved design decisions, calibration changes, stable milestones and unresolved issues in the relevant existing documentation as they occur. Verify documentation writes. Distinguish user reports from automated and exhaustive device testing. Documentation-only updates do not increment the application build number.
 
 For each application build, keep the HTML form-build meta, visible build label, asset versions and version.json synchronized. Preserve Lab's five-second deployment polling; protect unsaved edits and active workouts before extending automatic reload to stateful pages.
+
+Continue implementing agreed roadmap stages when the user requests progression; do not stop at proposals. Preserve preview-only requests as non-mutating and surface unresolved conflicts or device checks.

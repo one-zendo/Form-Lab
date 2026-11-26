@@ -36,3 +36,6 @@ Reference: one-zendo/One@e4a038bc5556f53e6ea25ca9953d5c7750675471, src/index.js,
 
 ## Build 4 — Stage 2 foundation
 Implemented foundation/tokens.css and migrated temporary shell styling to shared tokens. Native-first design, Safari-only current device testing; native/PWA runtime detection deferred. Inter uses system fallback until font assets are approved. Dock icon size and completion color conflicts remain unresolved and intentionally not implemented. Graphite Lime tokens available but no theme switch yet. Motion values defined, no rotation animation or posture behavior changes. Temporary shell width 420px remains a diagnostic-only structural exception. Browser verification pending.
+
+## Build 9 — component playground
+Shared card, stack, grid, primary/secondary buttons, numeric inputs, selection, native dialog/sheet, expandable details and deadline-based sample timer. Test-only inputs and timer are ephemeral and may reset on deployment reload; no workout records created. Swipe/drag, production timer persistence, sheet animation and full hinge-safe modal positioning deferred. Backdrop and focus outline are provisional structural visual values. Existing shell/navigation/posture code unchanged. JS parsed; device testing pending.
