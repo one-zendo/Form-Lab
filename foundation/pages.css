@@ -55,3 +55,8 @@ body[data-page=Home] #headline-build{display:inline-flex;align-items:center;font
 .headline{position:relative;top:calc(var(--layout-center) - var(--layout-content-center));z-index:20;flex:0 0 var(--headline-height);min-height:var(--headline-height);max-height:var(--headline-height)}
 .content{position:relative;flex:1 1 0;height:0;min-height:0;max-height:100%;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-width:none}
 .content::-webkit-scrollbar{display:none}
+
+/* Build 29: subtle glass fade below the persistent shared headline. */
+.headline{isolation:isolate;z-index:30}
+.headline::after{content:"";position:absolute;z-index:1;pointer-events:none;top:100%;left:calc(-1 * var(--layout-headline));right:0;height:18px;background:linear-gradient(to bottom,color-mix(in srgb,var(--canvas) 78%,transparent),transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.headline::after{background:linear-gradient(to bottom,var(--canvas),transparent)}}

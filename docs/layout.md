@@ -40,3 +40,7 @@ Reduced Home date typography to 14 pt weekday and 10 pt calendar date. The share
 
 ## Build 28 — single scroll owner
 Locked html and body to the viewport with overflow hidden and overscroll containment. Constrained #shell to the dynamic viewport and retained its existing orientation-aware navigation clearance. The calibrated shell remains a fixed-height flex column: the headline is a non-shrinking fixed-height row, while .content is the sole vertical scroll container with a zero flex basis and min-height:0. Preserved the existing calibrated headline offset, date sizing, safe-area and Duo geometry tokens. Added regression coverage for root scroll locking and the single internal scroll owner. Real Safari rubber-band/visual-viewport behavior and Duo hardware still require device validation.
+
+
+## Build 29 — Headline glass fade
+Added an 18px translucent backdrop-blur fade immediately below the shared headline using a pointer-events-none ::after layer. The strip overlays the top edge of the scrolling content, allowing content to soften as it passes underneath. It does not participate in layout and does not change the calibrated headline height, headline position, content scroll ownership, safe areas, navigation, or device geometry. Includes a CSS fallback for browsers without backdrop-filter and a regression test for the effect.
