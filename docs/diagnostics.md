@@ -1,0 +1,2 @@
+# Diagnostics
+Independent overlay layer: orange camera boundaries derived from hardware, purple headline axes, blue Safari drawable viewport, green content/card alignment, gray unavailable regions and safe areas. Native/Safari simulation switch; independently toggle viewport outline, grid and camera guides. Show physical and drawable dimensions, measured offsets in points. Never change layout to fit overlay. Distinguish measured, simulated and unresolved values; device validation required.
