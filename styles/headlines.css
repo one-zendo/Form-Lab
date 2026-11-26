@@ -38,3 +38,6 @@ body:is([data-duo-orientation=FP],[data-duo-orientation=FL1],[data-duo-orientati
 body[data-layout=folded-landscape]:not([data-calibrating=true]) .home-header{--fl-headline-offset:0px;--fl-date-offset:0px}
 body[data-layout=folded-landscape]:not([data-calibrating=true]) .home-header .brand,body[data-layout=folded-landscape]:not([data-calibrating=true]) .home-header .tagline{margin-inline-start:var(--fl-headline-offset)}
 body[data-layout=folded-landscape]:not([data-calibrating=true]) .home-date strong,body[data-layout=folded-landscape]:not([data-calibrating=true]) .home-date span{margin-inline-end:var(--fl-date-offset)}
+
+/* Shared Home-style headline anchor for every main page. */
+.page-headline{display:block;min-width:0;margin:0 0 var(--card-gap,16px)}.page-headline .brand{display:flex;align-items:center;gap:0;font:var(--headline-weight) var(--headline-size)/var(--headline-height) var(--headline-family);letter-spacing:var(--headline-tracking);height:var(--headline-height);min-height:var(--headline-height);min-width:0;margin:0;padding:0;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
