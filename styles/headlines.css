@@ -41,3 +41,7 @@ body[data-layout=folded-landscape]:not([data-calibrating=true]) .home-date stron
 
 /* Shared Home-style headline anchor for every main page. */
 .page-headline{display:block;min-width:0;margin:0 0 var(--card-gap,16px)}.page-headline .brand{display:flex;align-items:center;gap:0;font:var(--headline-weight) var(--headline-size)/var(--headline-height) var(--headline-family);letter-spacing:var(--headline-tracking);height:var(--headline-height);min-height:var(--headline-height);min-width:0;margin:0;padding:0;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Build 193: all destinations reuse the Home headline component and orientation geometry. */
+.page>.home-header{width:100%;}
+.page-section-title{margin:var(--space-3) 0 0;font:var(--headline-weight) var(--headline-size)/var(--headline-height) var(--headline-family);letter-spacing:var(--headline-tracking);color:var(--ink);}
