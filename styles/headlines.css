@@ -27,3 +27,6 @@ body[data-duo-orientation=FL1]:not([data-calibrating=true]) .home-header{padding
 body[data-duo-orientation=FL1] .home-brand .brand-signature{justify-items:start}
 body[data-duo-orientation=FL1] .home-dashboard{grid-template-columns:minmax(0,var(--fl1-workout-share)) minmax(0,var(--fl1-streak-share))}
 #fl1-preview{margin:8px 0;padding:8px;border:1px solid #ccd4df;border-radius:12px}#fl1-preview svg{display:block;width:100%;height:auto;margin-top:8px}#fl1-preview select{font:inherit;margin-left:8px}
+
+/* Resolve the FL1 adapter from the incoming viewport as well as the JS orientation. On this device FL1 is the positive 90-degree landscape. */
+@media (orientation:landscape) and (max-height:530px) and (max-width:760px){body[data-duo-device=true][data-landscape-side=left]:not([data-calibrating=true]) main{padding-left:max(var(--safe-left),var(--fl1-safari-content-inset));transition-property:none}body[data-duo-device=true][data-landscape-side=left] .home-brand .brand-signature{justify-items:start}}
