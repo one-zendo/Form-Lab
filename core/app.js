@@ -1,5 +1,5 @@
 
-const BUILD=154;
+const BUILD=155;
 const appearanceKey='form.lab.appearance.v1';
 let appearance='system';try{const saved=localStorage.getItem(appearanceKey);if(['system','studio','graphite'].includes(saved))appearance=saved}catch{}
 function applyAppearance(){if(appearance==='system')delete document.documentElement.dataset.theme;else document.documentElement.dataset.theme=appearance;document.querySelectorAll('meta[name="theme-color"]').forEach(m=>{if(!m.dataset.originalColor)m.dataset.originalColor=m.content;m.content=appearance==='studio'?'#F2F2F7':appearance==='graphite'?'#17171F':m.dataset.originalColor})}
@@ -190,25 +190,30 @@ document.getElementById('rail-reset').onclick=()=>{railSet(24);formSet(16);formS
 document.getElementById('rail-done').onclick=()=>{railPanel.hidden=true;};
 /* One synchronous geometry pass per distinct viewport state; no animation or frame delay. */
 let lastLayoutSignature=null;
-let previousHingeMode=null,previousHingeRotation=null,hingeAnimations=[];
+let previousHingeMode=null,previousHingeRotation=null,hingeAnimations=[],hingeRects=[],hingeUntil=0;
 function detectRotation(){
  const root=document.documentElement,v=window.visualViewport;
  const signature=JSON.stringify([root.clientWidth,root.clientHeight,screen.width,screen.height,currentRotation(),navigator.devicePosture?.type,matchMedia('(device-posture: folded)').matches,v?.width,v?.height,v?.scale,FormPosture.read()]);
  if(signature===lastLayoutSignature)return;
  lastLayoutSignature=signature;
  const posture=FormPosture.read(),rotation=currentRotation(),hingeChanged=previousHingeMode!==null&&previousHingeMode!==posture.mode&&previousHingeRotation===rotation;
+ const rotated=previousHingeRotation!==null&&previousHingeRotation!==rotation;
+ if(rotated)hingeUntil=0;
+ if(hingeChanged)hingeUntil=performance.now()+500;
+ const animateHinge=!rotated&&performance.now()<hingeUntil&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
  previousHingeMode=posture.mode;previousHingeRotation=rotation;
  const cards=[...main.querySelectorAll('.home-workout-card,.home-streak-card')];
- const before=hingeChanged?cards.map(el=>el.getBoundingClientRect()):[];
- hingeAnimations.forEach(a=>a.cancel());hingeAnimations=[];
+ const before=animateHinge?cards.map((el,i)=>hingeChanged&&hingeRects[i]?.el===el?hingeRects[i].rect:el.getBoundingClientRect()):[];
+ if(animateHinge||rotated){hingeAnimations.forEach(a=>a.cancel());hingeAnimations=[];}
  layout();adaptWorkoutsOrientation();installHeadingNavigation();
- if(hingeChanged&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
- const tokens=getComputedStyle(document.documentElement),duration=parseFloat(tokens.getPropertyValue('--hinge-motion-ms'))||320,easing=tokens.getPropertyValue('--hinge-motion-easing').trim()||'ease-out';
+ hingeRects=cards.map(el=>({el,rect:el.getBoundingClientRect()}));
+ if(animateHinge){
+ const tokens=getComputedStyle(document.documentElement),duration=parseFloat(tokens.getPropertyValue(posture.mode==='flat'?'--unfold-motion-ms':'--hinge-motion-ms'))||320,easing=tokens.getPropertyValue(posture.mode==='flat'?'--unfold-motion-easing':'--hinge-motion-easing').trim()||'ease-out';
  cards.forEach((el,i)=>{const old=before[i],next=el.getBoundingClientRect();if(!old||!next.width||!next.height||!el.isConnected||!el.animate)return;
  const dx=old.left-next.left,dy=old.top-next.top,sx=old.width/next.width,sy=old.height/next.height;
  if(Math.abs(dx)+Math.abs(dy)+Math.abs(sx-1)*100+Math.abs(sy-1)*100<1)return;
  hingeAnimations.push(el.animate([{transformOrigin:'top left',transform:'translate('+dx+'px,'+dy+'px) scale('+sx+','+sy+')'},{transformOrigin:'top left',transform:'none'}],{duration,easing}));
- });main.querySelectorAll('.home-month,.home-workout-expanded').forEach(el=>{if(el.getClientRects().length&&el.animate)hingeAnimations.push(el.animate([{opacity:.45},{opacity:1}],{duration,easing}))});
+ });if(hingeChanged)main.querySelectorAll('.home-month,.home-workout-expanded').forEach(el=>{if(el.getClientRects().length&&el.animate)hingeAnimations.push(el.animate([{opacity:.45},{opacity:1}],{duration,easing}))});
  }
  if(document.body.dataset.layout!=='folded-landscape'){
   railPanel.hidden=true;delete document.body.dataset.calibrating;document.body.style.removeProperty('--calibration-right');
