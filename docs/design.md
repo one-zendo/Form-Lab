@@ -33,3 +33,6 @@ Baseline: Build 83 adaptive measurement system. Read the current source before i
 
 # ONE UI alignment
 Reference: one-zendo/One@e4a038bc5556f53e6ea25ca9953d5c7750675471, src/index.js, src/styles.css, src/browser.js.txt. Adapted routine list selection marker, 76px card hierarchy, shared routine detail/edit header, collapsible exercise cards, compact set rows, inline picker. Lab retains its data and layout engine. Rest remains seconds, set type and replacement controls are retained; active workout picker remains modal. No claim of pixel parity; device testing required.
+
+## Build 4 — Stage 2 foundation
+Implemented foundation/tokens.css and migrated temporary shell styling to shared tokens. Native-first design, Safari-only current device testing; native/PWA runtime detection deferred. Inter uses system fallback until font assets are approved. Dock icon size and completion color conflicts remain unresolved and intentionally not implemented. Graphite Lime tokens available but no theme switch yet. Motion values defined, no rotation animation or posture behavior changes. Temporary shell width 420px remains a diagnostic-only structural exception. Browser verification pending.
