@@ -58,3 +58,8 @@ Branch: checkpoint/build-159-device-confirmed
 - Removed legacy 46px bottom reserve for FL Home only; use 12px clearance plus safe bottom inset once. Allow vertical scroll as a fallback for constrained height or larger text.
 - Use intrinsic minimum dashboard/section rows and nonshrinking footer, compact weekly spacing, equal-height stretched cards. Preserve 40:60 columns.
 - Source comparison confirms CSS outside FL Home rules and tokens unchanged, including calibrated rail and rotation offsets. App logic unchanged except build number; syntax and new source assertion passed. Actual browser geometry and both device rotations still require verification; full regression suite not rerun.
+
+## Build 162 — FL1 edge-to-edge
+- FL1 is right-dominant resolved horizontal safe-area inset; left-dominant is FL2; equal/near-equal is unknown and retains baseline. No guessed angle mapping.
+- FL1 Home only: 6px inner left margin, top max(12px,safe top), bottom 8px plus safe inset. Existing horizontal reserve, 40:60 columns and rail calibration unchanged. Diagnostics reports island side.
+- All baseline CSS preserved byte-for-byte; JS syntax and five isolated classifier cases passed. Actual Safari safe-area asymmetry, physical geometry, native CI and live deployment unverified. If Safari reports equal insets, optimization intentionally does not activate; inspect diagnostics before adjusting.
