@@ -28,3 +28,5 @@ test('Headlines use an opaque canvas without frosting or feathered masks',()=>{c
 
 
 test('Single original weather style at 80 percent with persistent master switch',()=>{const j=read('foundation/atmosphere.js');assert.match(html,/id="weather-enabled"/);assert.match(html,/id="weather-preview-enabled"/);assert.doesNotMatch(html,/id="atmosphere-style"|id="themes-dialog"/);assert.match(j,/ART_SCALE=\.8/);assert.match(j,/form\.atmosphere\.v2/);assert.match(j,/localStorage.setItem\(key/);assert.match(j,/if\(!pref.enabled\)return null/);assert.match(j,/navigator.geolocation.getCurrentPosition/);assert.match(j,/prefers-reduced-motion/);assert.doesNotMatch(j,/function glow|sculptural|orbital/)});
+
+test('training screens preserve responsive composition and isolated persistence',()=>{const j=read('foundation/training.js'),c=read('foundation/training.css');assert.match(html,/data-screen="Routine"/);assert.match(html,/data-screen="Workout"/);assert.match(c,/minmax\(0,2fr\) minmax\(0,3fr\)/);assert.match(j,/form\.training\.demo\.v1/);assert.match(j,/blocksReload/);assert.match(read('foundation/update.js'),/FormTraining\?\.blocksReload/)});

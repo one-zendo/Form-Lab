@@ -1,0 +1,41 @@
+/* Dedicated training screens. Existing shell and calibrated anchors remain authoritative. */
+.training-page[hidden],.training-action[hidden],#rest-options[hidden],#resume-workout[hidden]{display:none!important}
+.routine-open{font:inherit;color:var(--ink);border:0;text-align:start;width:100%;cursor:pointer}
+.training-page{width:100%;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;grid-template-areas:"overview" "list" "action";gap:var(--space-12);min-height:0}
+.training-overview{grid-area:overview;min-width:0;display:flex;flex-direction:column;gap:var(--space-8)}
+.training-overview h2{font-size:var(--type-page);margin:0;overflow-wrap:anywhere}
+.training-overview p{margin:0}
+.training-list{grid-area:list;min-height:0;min-width:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:none}
+.training-list h2{font-size:var(--type-headline);margin:0 0 var(--space-12)}
+.training-action{grid-area:action;min-width:0}
+.training-link{border:0;background:transparent;color:var(--action);font:inherit;font-size:var(--type-support);font-weight:var(--weight-headline);min-height:var(--target-min);text-align:start;padding:0;cursor:pointer}
+.training-stats{display:flex;flex-wrap:wrap;gap:var(--space-12);font-size:var(--type-caption);color:var(--muted)}
+.training-stats strong{display:block;color:var(--ink);font-size:var(--type-section)}
+.training-exercise{padding:var(--space-16)}
+.training-exercise summary{display:flex;align-items:center;gap:var(--space-12);list-style:none;min-width:0}
+.training-exercise summary::-webkit-details-marker{display:none}
+.training-thumb{flex:none;width:44px;height:44px;background:var(--elevated);border-radius:var(--radius-control);display:grid;place-items:center;color:var(--muted)}
+.training-thumb svg{width:24px;height:24px;stroke-width:var(--icon-stroke)}
+.training-copy{flex:1;min-width:0;overflow-wrap:anywhere}
+.training-copy small{display:block;color:var(--muted);font-size:var(--type-caption)}
+.training-set-grid{display:grid;grid-template-columns:minmax(24px,.6fr) minmax(36px,1fr) minmax(42px,1fr) minmax(42px,1fr) minmax(44px,.8fr);gap:var(--space-4);align-items:center;text-align:center;margin-top:var(--space-8);font-size:var(--type-caption)}
+.training-set-grid input{width:100%;min-width:0;min-height:var(--target-min);border:0;border-radius:var(--radius-small);background:var(--elevated);color:var(--ink);font:inherit;text-align:center}
+.training-set-grid button{min-height:var(--target-min);border:0;border-radius:var(--radius-small);background:var(--elevated);color:var(--ink);font:inherit}
+.training-set-grid[data-done=true] button{background:#248A3D;color:white}
+.training-set-grid[data-next=true] input{outline:1px solid var(--action)}
+.training-rest{display:flex;align-items:center;gap:var(--space-12)}
+.training-rest>div{flex:1}.training-rest p{margin:0}
+#rest-count,#workout-elapsed{font-size:var(--type-section);font-weight:var(--weight-bold);color:var(--action)}
+#workout-rest{background:var(--paper);border-radius:var(--radius-card);padding:var(--space-12)}
+#rest-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4)}
+#workout-progress{width:100%;accent-color:var(--action)}
+body:is([data-page=Routine],[data-page=Workout]) .content{display:flex;flex-direction:column;padding-bottom:calc(var(--home-dock-clearance,var(--dock-reserve)) + var(--space-12))}
+body:is([data-page=Routine],[data-page=Workout]) #app-pages{flex:1;min-height:0;display:flex;flex-direction:column}
+body:is([data-page=Routine],[data-page=Workout]) .training-page{flex:1}
+body:is([data-page=Routine],[data-page=Workout]) .dock-material{display:none}
+body:is([data-page=Routine],[data-page=Workout])[data-nav=rail] .content{padding-bottom:var(--space-16);padding-inline-end:calc(var(--home-dock-clearance,var(--dock-reserve)) + var(--space-12))}
+[data-landscape=true] .training-page,body[data-hinge=book] .training-page{grid-template-columns:minmax(0,2fr) minmax(0,3fr);grid-template-rows:minmax(0,1fr) auto;grid-template-areas:"overview list" "action list"}
+body[data-hinge=laptop] .training-page{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;grid-template-areas:"overview" "list" "action"}
+@media(prefers-reduced-transparency:reduce){body:is([data-page=Routine],[data-page=Workout]) .content{padding-bottom:var(--space-12)}body:is([data-page=Routine],[data-page=Workout])[data-nav=rail] .content{padding-inline-end:0}}
+.training-page :focus-visible{outline:var(--focus-width) solid var(--brand);outline-offset:var(--focus-offset)}
+@media(max-height:390px){.training-page{min-height:320px}.training-list{min-height:150px}}
