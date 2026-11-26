@@ -1,0 +1,21 @@
+{
+  "id": "./",
+  "name": "FORM — Strength Training",
+  "short_name": "FORM",
+  "description": "Train with focus, follow your progress.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#17171f",
+  "theme_color": "#17171f",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
