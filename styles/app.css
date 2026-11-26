@@ -117,6 +117,14 @@ main::-webkit-scrollbar {
   display:none;
 }
 
+/* Shared layout primitives. Low-specificity defaults; page-specific layout and hinge rules take precedence. */
+:root{--layout-page-max:var(--content-max);--layout-gap:var(--card-gap);--layout-card-min:var(--home-card-min-inline);--layout-card-padding:var(--card-padding)}
+:where(.form-page){width:100%;max-width:var(--layout-page-max);min-width:0;margin-inline:auto}
+:where(.form-stack){display:grid;grid-template-columns:minmax(0,1fr);gap:var(--layout-gap);min-width:0}
+:where(.form-grid){display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--layout-card-min)),1fr));gap:var(--layout-gap);min-width:0;align-items:stretch}
+:where(.form-grid)>* ,:where(.form-stack)>*{min-width:0}
+:where(.form-card){min-width:0;padding:var(--layout-card-padding);border-radius:var(--radius-card);background:var(--surface);overflow-wrap:anywhere}
+
 .page {
   max-width:var(--content-max);
   margin:auto;
@@ -919,7 +927,7 @@ body[data-dock=bottom] #public-build-number{bottom:calc(var(--safe-bottom) + var
 .home-day-dot.today{position:relative;outline:none}.home-day-dot.today::after{content:"";position:absolute;inset:calc(-1 * var(--day-ring-offset));border:var(--day-ring-width) solid var(--streak-accent);border-radius:50%;pointer-events:none}.home-day-dot.breathing::after{animation:form-day-breathe var(--motion-breathe-duration) var(--motion-breathe-easing) infinite}.home-day-dot.recovery{background:var(--canvas);color:var(--muted)}
 @keyframes form-day-breathe{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(var(--motion-breathe-scale));opacity:var(--motion-breathe-opacity)}}
 @media(prefers-reduced-motion:reduce){.home-day-dot.breathing::after{animation:none}}
-.home-page{container-type:inline-size}.home-dashboard{grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--home-card-min-inline)),1fr));grid-template-rows:auto;gap:var(--home-card-fluid-gap)}.home-primary,.home-support{min-width:0}.home-workout-card,.home-streak-card{min-width:0;overflow-wrap:anywhere}
+.home-page{container-type:inline-size}.home-dashboard{--layout-card-min:var(--home-card-min-inline);--layout-gap:var(--home-card-fluid-gap);grid-template-rows:auto;gap:var(--layout-gap)}.home-primary,.home-support{min-width:0}.home-workout-card,.home-streak-card{min-width:0;overflow-wrap:anywhere}
 
 /* Build 150: physical hinge-aware Home layout; no navigation changes. */
 :root{--hinge-clearance:var(--space-3)}
@@ -979,7 +987,7 @@ body[data-layout^=folded-] .home-month,body[data-layout^=folded-] .home-workout-
 body[data-layout^=folded-] .home-streak-card .home-days{display:grid}
 body[data-layout=folded-portrait] .home-dashboard{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(var(--home-workout-min),auto) minmax(var(--home-streak-min),1fr)}
 body[data-layout=folded-landscape] main:has(.home-page){overflow-y:auto;padding-bottom:calc(var(--fl-bottom-clearance) + var(--safe-bottom))}
-body[data-layout=folded-landscape] .home-page{box-sizing:border-box;height:100%;min-height:0;max-height:100%;padding-inline-start:var(--fl-home-edge);padding-bottom:0;gap:var(--fl-home-gap)}
+body[data-layout=folded-landscape] .home-page{box-sizing:border-box;height:100%;min-height:0;max-height:100%;padding-inline-start:0;padding-bottom:0;gap:var(--fl-home-gap)}
 body[data-layout=folded-landscape] .home-header,body[data-layout=folded-landscape] .home-greeting{flex:none}
 body[data-layout=folded-landscape] .home-dashboard{flex:1 0 auto;min-height:min-content;grid-template-columns:minmax(0,var(--fl-workout-share)) minmax(0,var(--fl-streak-share));grid-template-rows:minmax(min-content,1fr);gap:var(--fl-home-gap)}
 body[data-layout=folded-landscape] .home-primary,body[data-layout=folded-landscape] .home-support{grid-template-rows:minmax(min-content,1fr)}
@@ -1037,16 +1045,9 @@ body[data-diagnostics=true] main,body[data-diagnostics=true] nav.nav{visibility:
 #safe-area-overlay i:nth-child(1){height:env(safe-area-inset-top,0px)}#safe-area-overlay i:nth-child(2){width:env(safe-area-inset-right,0px)}#safe-area-overlay i:nth-child(3){height:env(safe-area-inset-bottom,0px)}#safe-area-overlay i:nth-child(4){width:env(safe-area-inset-left,0px)}
 
 
-/* Shared layout primitives. Opt-in for new pages; existing card visuals unchanged. */
-:root{--layout-page-max:var(--content-max);--layout-gap:var(--card-gap);--layout-card-min:var(--home-card-min-inline,240px);--layout-card-padding:var(--card-padding)}
-.form-page{width:100%;max-width:var(--layout-page-max);min-width:0;margin-inline:auto;container-type:inline-size}
-.form-stack{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--layout-gap);min-width:0}
-.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--layout-card-min)),1fr));gap:var(--layout-gap);min-width:0;align-items:stretch}
-.form-grid>* ,.form-stack>*{min-width:0}
-.form-card{min-width:0;padding:var(--layout-card-padding);border-radius:var(--radius-card);background:var(--surface);overflow-wrap:anywhere}
 /* Adaptive landscape shell: viewport-relative, independent of measured signatures. */
 :root{--fl-shell-edge:var(--space-3);--fl-shell-gap:var(--space-3);--fl-shell-rail:var(--dock-width)}
 body[data-layout=folded-landscape]:not([data-calibrating=true]) main{inset:0;width:auto;height:auto;transform:none;padding:calc(var(--fl-shell-edge) + var(--safe-top)) calc(var(--fl-shell-edge) + var(--fl-shell-rail) + var(--fl-shell-gap) + var(--safe-right)) calc(var(--safe-bottom) + var(--fl-shell-edge)) calc(var(--fl-shell-edge) + var(--safe-left));overflow-x:hidden}
 body[data-layout=folded-landscape]:not([data-calibrating=true]) main:has(.home-page){padding-bottom:calc(var(--safe-bottom) + var(--fl-shell-edge))}
-body[data-layout=folded-landscape]:not([data-calibrating=true]) .home-page{padding-inline-start:0}
+
 body[data-layout=folded-landscape]:not([data-calibrating=true]) nav.nav{flex-direction:column;right:calc(var(--fl-shell-edge) + var(--safe-right));top:calc((100% + var(--safe-top) - var(--safe-bottom))/2);bottom:auto;left:auto;transform:translateY(-50%);width:var(--fl-shell-rail);box-sizing:border-box}
