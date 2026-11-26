@@ -32,3 +32,9 @@ body:is([data-duo-orientation=FP],[data-duo-orientation=FL1],[data-duo-orientati
  body[data-duo-device=true] .home-brand .brand-signature{justify-items:start}
  body[data-duo-device=true] .home-dashboard{grid-template-columns:minmax(0,var(--fl1-workout-share)) minmax(0,var(--fl1-streak-share))}
 }
+
+/* Independent native geometry; browser retains its measured safe-area adapter. */
+:root{--fl2-native-headline-inset:16px;--fl2-safari-excluded:84px;--fl-native-date-gap:16px;--fl-native-rail-edge:16px}
+body[data-layout=folded-landscape]:not([data-calibrating=true]) .home-header{--fl-headline-offset:0px;--fl-date-offset:0px}
+body[data-layout=folded-landscape]:not([data-calibrating=true]) .home-header .brand,body[data-layout=folded-landscape]:not([data-calibrating=true]) .home-header .tagline{margin-inline-start:var(--fl-headline-offset)}
+body[data-layout=folded-landscape]:not([data-calibrating=true]) .home-date strong,body[data-layout=folded-landscape]:not([data-calibrating=true]) .home-date span{margin-inline-end:var(--fl-date-offset)}
