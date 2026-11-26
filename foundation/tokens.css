@@ -19,3 +19,7 @@
 @media(prefers-reduced-motion:reduce){:root{--motion-feedback:0ms}}
 
 :root{--diag-camera:#ff9500;--diag-headline:#af52de;--diag-viewport:#0088ff;--diag-content:#34c759;--diag-safe:#8e8e93}
+
+/* FORM Glass — web material; independent of hardware geometry. */
+:root{--glass-tint:rgba(242,242,247,.35);--glass-dock-tint:rgba(255,255,255,.64);--glass-highlight:rgba(255,255,255,.65);--glass-filter:blur(10px) saturate(1.4);--glass-edge:12px}
+[data-theme="graphite-lime"]{--glass-tint:rgba(23,23,31,.35);--glass-dock-tint:rgba(36,36,46,.72);--glass-highlight:rgba(255,255,255,.12)}

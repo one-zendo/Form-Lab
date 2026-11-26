@@ -58,3 +58,7 @@ Build 32: user screenshot confirms Build 31 glass not visibly working. Replaced 
 
 ### Build 32 — user-approved headline material
 User confirmed the visible glass effect in a folded-landscape device screenshot and expressed approval. Retain the independent headline material layer, translucent 35% canvas tint, 10px backdrop blur, saturation 1.4, stationary foreground and subtle bottom separator as the shared web headline material baseline. This is a Liquid Glass-inspired web treatment, not native Apple Liquid Glass. Other orientations and dark appearance still require visual validation. Documentation-only approval; no application build increment.
+
+
+## Build 33 — FORM Glass refinement
+User approved progressive glass edge, removal of separator and matching dock material. Retained Build 32 independent material geometry, 35% headline tint and 10px/1.4 filter; feather final 12 CSS px using a mask (progressive opacity, not variable blur radius). Dock uses same filter, 64% light/72% dark tint and inset highlight without changing navigation geometry or scroll clearance. No additional scroll overlap behind dock was introduced; its visible blur depends on underlying content. Reduced-transparency and unsupported-filter fallbacks provided. Material values provisional until physical Safari review. No geometry or navigation logic changes.

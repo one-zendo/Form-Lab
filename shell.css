@@ -25,7 +25,7 @@ body[data-hinge="laptop"] .sample-grid{grid-template-columns:minmax(0,1fr)}
 :root{--dock-target:var(--target-min);--dock-pad:var(--space-4);--dock-edge:var(--space-8);--dock-icon:var(--icon-profile);--dock-reserve:calc(var(--dock-target) + var(--dock-pad)*2 + var(--dock-edge)*2)}
 html,body{touch-action:pan-x pan-y}
 button{touch-action:manipulation}
-#dock{position:fixed;z-index:10;display:flex;gap:var(--dock-pad);padding:var(--dock-pad);border-radius:var(--radius-pill);background:var(--paper);box-shadow:0 2px 12px #00000015;bottom:max(var(--dock-edge),env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);max-width:calc(100% - var(--space-16))}
+#dock{position:fixed;z-index:10;display:flex;gap:var(--dock-pad);padding:var(--dock-pad);border-radius:var(--radius-pill);background:var(--paper);box-shadow:inset 0 0 0 1px var(--glass-highlight),0 2px 12px #00000015;bottom:max(var(--dock-edge),env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);max-width:calc(100% - var(--space-16))}
 #dock button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-4);min-width:var(--dock-target);min-height:var(--dock-target);padding:var(--space-4) var(--space-8);border:0;border-radius:var(--radius-pill);background:transparent;color:var(--muted);font:var(--type-caption) var(--font);cursor:pointer}
 #dock button[aria-pressed="true"]{background:var(--elevated);color:var(--action)}
 #dock svg{width:var(--dock-icon);height:var(--dock-icon);stroke-width:var(--icon-stroke)}
@@ -43,3 +43,7 @@ body[data-nav="rail"] #shell{padding-right:calc(var(--dock-reserve) + env(safe-a
 /* Build 28: lock document scrolling; the content pane is the sole scroll owner. */
 html,body{width:100%;height:100%;min-height:0;max-height:100%;overflow:hidden;overscroll-behavior:none}
 #shell{position:relative;width:100%;height:100dvh;min-height:0;max-height:100dvh;overflow:hidden;box-sizing:border-box}
+
+/* FORM Glass dock material; existing dimensions and anchor are unchanged. */
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){#dock{background:var(--glass-dock-tint);-webkit-backdrop-filter:var(--glass-filter);backdrop-filter:var(--glass-filter)}}
+@media(prefers-reduced-transparency:reduce){#dock{background:var(--paper);-webkit-backdrop-filter:none;backdrop-filter:none}}
