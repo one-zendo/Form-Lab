@@ -1,5 +1,5 @@
 
-const BUILD=115;
+const BUILD=116;
 const UPDATE_INTERVAL_MS = 5000;
 const tabs=['Home','Workouts','Progress','Profile'];
 const glyphs={home:'M3 11 12 3l9 8v9h-6v-7H9v7H3z',workouts:'M3 10h18v4H3zM7 6v12M17 6v12',progress:'M3 20h18M5 15l4-5 4 3 6-9',profile:'M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8M4 21v-2a8 8 0 0 1 16 0v2',exercise:'M3 10h18v4H3zM6 7v10M18 7v10',timer:'M12 7v6l4 2M9 2h6M12 4a9 9 0 1 0 0 18 9 9 0 0 0 0-18',records:'M5 20V9h14v11M8 9V5h8v4M9 14h6',library:'M4 4h6v16H4zM14 4h6v16h-6z',plus:'M12 4v16M4 12h16',swap:'M4 7h15l-4-4m5 14H5l4 4',rest:'M4 3h16v18H4zM8 8h8M8 12h8M8 16h5',calendar:'M3 5h18v16H3zM7 3v4m10-4v4M3 10h18',heart:'M20 8c0 5-8 11-8 11S4 13 4 8a4 4 0 0 1 8-1 4 4 0 0 1 8 1'};
@@ -104,7 +104,7 @@ let holdTimer=null,held=false,origin=null;function cancelHold(){clearTimeout(hol
 document.addEventListener('pointerdown',e=>{if(!e.target.closest('button[data-go="Profile"]'))return;held=false;origin=[e.clientX,e.clientY];cancelHold();holdTimer=setTimeout(()=>{held=true;openDeveloper()},3000)});document.addEventListener('pointermove',e=>{if(origin&&Math.hypot(e.clientX-origin[0],e.clientY-origin[1])>12)cancelHold()});for(const ev of ['pointerup','pointercancel','lostpointercapture'])document.addEventListener(ev,()=>{cancelHold();origin=null});document.addEventListener('contextmenu',e=>{if(e.target.closest('button[data-go="Profile"]'))e.preventDefault()});document.addEventListener('click',e=>{if(held&&e.target.closest('button[data-go="Profile"]')){held=false;e.preventDefault();e.stopImmediatePropagation()}},true);
 document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.go){go(b.dataset.go);return}if(b.id==='check-update'||b.id==='dev-update'){update(true);return}if(b.id==='dev-close')dev.close();if(b.id==='home-coming-close')document.getElementById('home-coming').close()});dev.addEventListener('change',e=>{if(e.target.id==='show-diagnostics'){showDiagnostics=e.target.checked;try{localStorage.setItem('form.diagnostics',String(showDiagnostics))}catch{}render()}});
 function adaptWorkoutsOrientation(){if(page!=='Workouts'||showDiagnostics||workoutsWide===isWorkoutsWide())return;const active=document.activeElement,field=active?.dataset?.wField,search=active?.id==='workouts-search',e=active?.dataset?.e,j=active?.dataset?.s,scroll=main.scrollTop;render();main.scrollTop=scroll;if(search)document.getElementById('workouts-search')?.focus({preventScroll:true});else if(field){const match=[...main.querySelectorAll('[data-w-field]')].find(t=>t.dataset.wField===field&&t.dataset.e===e&&t.dataset.s===j);match?.focus({preventScroll:true})}}
-addEventListener('resize',()=>{if(typeof detectRotation==='function')detectRotation()});window.visualViewport?.addEventListener('resize',diagnostics);navigator.devicePosture?.addEventListener('change',()=>detectRotation());matchMedia('(device-posture: folded)').addEventListener('change',()=>detectRotation());main.addEventListener('scroll',diagnostics,{passive:true});
+main.addEventListener('scroll',diagnostics,{passive:true});
 let updateRequest=null,reloading=false;
 function reloadLatest(){if(reloading)return;reloading=true;const target=new URL('index.html',location.href);target.searchParams.set('refresh',Date.now());location.replace(target.href)}
 async function update(manual=false){if(reloading||(!manual&&document.hidden))return;const status=document.getElementById('update-status');if(manual)status.textContent='Checking…';if(!updateRequest){updateRequest=(async()=>{const url=new URL('index.html',location.href);url.searchParams.set('check',Date.now());const response=await fetch(url,{cache:'no-store'});if(!response.ok)throw Error('HTTP '+response.status);const source=await response.text(),latest=Number(source.match(/const BUILD=(\d+)/)?.[1]);if(!latest)throw Error('Build not found');return latest})().finally(()=>{updateRequest=null})}try{const latest=await updateRequest;if(latest>BUILD){status.textContent='Updating to Build '+latest+'…';reloadLatest();}else if(manual)status.textContent='Up to date · '+latest}catch(e){if(manual)status.textContent='Check failed · '+e.message}}
@@ -116,12 +116,7 @@ for(const type of ['touchend','touchcancel'])document.addEventListener(type,()=>
 document.getElementById('quick-check').onclick=()=>update(true);document.getElementById('quick-update').onclick=reloadLatest;
 addEventListener('pageshow',()=>update());addEventListener('focus',()=>update());document.addEventListener('visibilitychange',()=>update());addEventListener('online',()=>update());setInterval(()=>update(),UPDATE_INTERVAL_MS);document.getElementById('build-number').textContent='Build '+BUILD;render();layout();update();
 /* Native device rotation; responsive geometry updates without custom animation. */
-function detectRotation(){layout();adaptWorkoutsOrientation()}
-screen.orientation?.addEventListener('change',detectRotation);
-addEventListener('orientationchange',detectRotation);
-matchMedia('(orientation:landscape)').addEventListener('change',detectRotation);
-window.visualViewport?.addEventListener('resize',detectRotation);
-addEventListener('pageshow',detectRotation);
+
 const railPanel=document.getElementById('rail-panel'),railSlider=document.getElementById('rail-slider'),railReading=document.getElementById('rail-reading');
 const formSlider=document.getElementById('form-slider'),formReading=document.getElementById('form-reading');
 function formSet(v){formSlider.value=v;document.body.style.setProperty('--calibration-left',formSlider.value+'px');formReading.textContent='FORM left edge: '+formSlider.value+'px';}
@@ -135,4 +130,22 @@ document.getElementById('rail-calibrate').onclick=()=>{const n=nav.getBoundingCl
 railSlider.oninput=()=>railSet(railSlider.value);
 document.getElementById('rail-reset').onclick=()=>{railSet(24);formSet(16);formSetY(20)};
 document.getElementById('rail-done').onclick=()=>{railPanel.hidden=true;};
-addEventListener('resize',()=>{if(document.body.dataset.layout!=='folded-landscape'){railPanel.hidden=true;delete document.body.dataset.calibrating;document.body.style.removeProperty('--calibration-right')}else if(document.body.dataset.calibrating)railMeasure()});
+/* One synchronous geometry pass per distinct viewport state; no animation or frame delay. */
+let lastLayoutSignature=null;
+function detectRotation(){
+ const root=document.documentElement,v=window.visualViewport;
+ const signature=JSON.stringify([root.clientWidth,root.clientHeight,screen.width,screen.height,currentRotation(),navigator.devicePosture?.type,matchMedia('(device-posture: folded)').matches,v?.width,v?.height,v?.scale]);
+ if(signature===lastLayoutSignature)return;
+ lastLayoutSignature=signature;
+ layout();adaptWorkoutsOrientation();
+ if(document.body.dataset.layout!=='folded-landscape'){
+  railPanel.hidden=true;delete document.body.dataset.calibrating;document.body.style.removeProperty('--calibration-right');
+ }else if(document.body.dataset.calibrating)railMeasure();
+}
+for(const type of ['resize','orientationchange','pageshow'])addEventListener(type,detectRotation);
+screen.orientation?.addEventListener('change',detectRotation);
+window.visualViewport?.addEventListener('resize',detectRotation);
+navigator.devicePosture?.addEventListener('change',detectRotation);
+matchMedia('(orientation:landscape)').addEventListener('change',detectRotation);
+matchMedia('(device-posture: folded)').addEventListener('change',detectRotation);
+detectRotation();
