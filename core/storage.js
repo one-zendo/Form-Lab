@@ -1,0 +1,4 @@
+/* Shared storage validation, independent of DOM. */
+const validRecord=r=>r&&typeof r.id==='string'&&typeof r.name==='string'&&Array.isArray(r.exercises)&&r.exercises.every(e=>e&&typeof e.name==='string'&&Array.isArray(e.sets)&&e.sets.every(t=>t&&typeof t==='object'&&!Array.isArray(t)&&['weight','reps','rest'].every(k=>t[k]==null||(typeof t[k]==='number'&&Number.isFinite(t[k])&&t[k]>=0))));
+const validWorkoutData=d=>d&&typeof d==='object'&&!Array.isArray(d)&&(!('schemaVersion' in d)||d.schemaVersion===1)&&Array.isArray(d.routines)&&d.routines.every(validRecord)&&Array.isArray(d.history)&&d.history.every(validRecord)&&(d.session==null||validRecord(d.session));
+function readWorkoutData(raw){const d=JSON.parse(raw);if(!validWorkoutData(d))throw Error('Invalid workout data');return {routines:d.routines,history:d.history,session:d.session||null}}
