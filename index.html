@@ -777,11 +777,16 @@ body[data-layout=folded-portrait] main {
   color:var(--on-accent);
 }
 /* Floating accessible navigation: independent of the protected physical dock. */
-:root{--floating-nav-size:calc(var(--touch-target) + var(--space-2));--floating-menu-width:calc(var(--touch-target) * 3.5);--floating-nav-edge:var(--space-2)}
+:root{--floating-nav-size:calc(var(--touch-target) + var(--space-2));--floating-menu-width:calc(var(--touch-target) * 3.5);--floating-nav-edge:var(--space-2);--floating-glass:linear-gradient(150deg,#ffffff30,#ffffff12);--floating-ink:var(--ink)}
 .nav-touch-mirror{display:none}
 body[data-layout=folded-portrait] .nav-touch-mirror{display:block;position:absolute;left:0;top:0;z-index:1003;width:var(--floating-nav-size);height:var(--floating-nav-size);pointer-events:none}
-.floating-nav-trigger{display:grid;place-items:center;width:100%;height:100%;border-radius:var(--radius-pill);background:var(--raised);color:var(--accent);border:1px solid var(--line);box-shadow:var(--elevation-card);touch-action:none;pointer-events:auto;cursor:grab;user-select:none;-webkit-user-select:none}
+.floating-nav-trigger{display:grid;place-items:center;width:100%;height:100%;border-radius:var(--radius-pill);background:var(--floating-glass);color:var(--floating-ink);border:1px solid var(--line);box-shadow:var(--elevation-card);touch-action:none;pointer-events:auto;cursor:grab;user-select:none;-webkit-user-select:none}
 .floating-nav-trigger:active{cursor:grabbing}
+.floating-nav-trigger{backdrop-filter:blur(24px) saturate(165%);-webkit-backdrop-filter:blur(24px) saturate(165%)}
+.floating-nav-trigger[aria-expanded=true] svg{animation:floating-sparkle var(--motion-duration) var(--motion-spring)}
+@keyframes floating-sparkle{0%,100%{transform:scale(1)}50%{transform:scale(1.14) rotate(10deg)}}
+@media(prefers-color-scheme:light){:root{--floating-glass:linear-gradient(145deg,#ffffffd9,#ffffff80)}}
+@media(prefers-reduced-transparency:reduce){.floating-nav-trigger{background:var(--raised);backdrop-filter:none;-webkit-backdrop-filter:none}}
 .floating-nav-trigger svg{width:var(--icon-default);height:var(--icon-default)}
 .floating-nav-menu{position:absolute;display:grid;gap:var(--space-1);width:var(--floating-menu-width);max-width:calc(100vw - var(--space-4));padding:var(--space-1);border-radius:var(--radius-card);background:var(--surface);border:1px solid var(--line);box-shadow:var(--elevation-card);pointer-events:auto;animation:enter var(--motion-duration) var(--motion-ease)}
 .floating-nav-menu[hidden]{display:none}
@@ -791,14 +796,14 @@ body[data-layout=folded-portrait] .nav-touch-mirror{display:block;position:absol
 </style></head>
 <body>
 <main></main>
-<div id="build-tools"><span id="build-number">Build 87</span><button id="quick-check" type="button">Check</button><button id="quick-update" type="button">Update</button><span id="update-status" role="status" aria-live="polite"></span></div>
+<div id="build-tools"><span id="build-number">Build 88</span><button id="quick-check" type="button">Check</button><button id="quick-update" type="button">Update</button><span id="update-status" role="status" aria-live="polite"></span></div>
 <nav class="nav" aria-label="Main navigation"></nav>
 <nav class="nav-touch-mirror" aria-label="Floating navigation"><button class="floating-nav-trigger" id="floating-nav-trigger" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="floating-nav-menu"></button><div class="floating-nav-menu" id="floating-nav-menu" hidden></div></nav>
 <dialog class="dev-dialog" id="developer"></dialog>
 <dialog class="home-coming" id="home-coming"><h2>Coming next</h2><p>We’re building the workout and activity features on this clean FORM foundation.</p><button id="home-coming-close">Done</button></dialog>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD=87;
+const BUILD=88;
 const UPDATE_INTERVAL_MS = 5000;
 const tabs=['Home','Workouts','Progress','Profile'];
 const glyphs={home:'M3 11 12 3l9 8v9h-6v-7H9v7H3z',workouts:'M3 10h18v4H3zM7 6v12M17 6v12',progress:'M3 20h18M5 15l4-5 4 3 6-9',profile:'M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8M4 21v-2a8 8 0 0 1 16 0v2',exercise:'M3 10h18v4H3zM6 7v10M18 7v10',timer:'M12 7v6l4 2M9 2h6M12 4a9 9 0 1 0 0 18 9 9 0 0 0 0-18',records:'M5 20V9h14v11M8 9V5h8v4M9 14h6',library:'M4 4h6v16H4zM14 4h6v16h-6z',plus:'M12 4v16M4 12h16',swap:'M4 7h15l-4-4m5 14H5l4 4',rest:'M4 3h16v18H4zM8 8h8M8 12h8M8 16h5',calendar:'M3 5h18v16H3zM7 3v4m10-4v4M3 10h18',heart:'M20 8c0 5-8 11-8 11S4 13 4 8a4 4 0 0 1 8-1 4 4 0 0 1 8 1'};
@@ -886,7 +891,7 @@ function go(t){taps++;if(page!==t){page=t;render()}}
 nav.innerHTML=tabs.map((t,i)=>'<button aria-label="'+t+'" title="'+t+'" data-go="'+t+'">'+icon(['home','workouts','progress','profile'][i])+'</button>').join('');
 
 const floatingNav=document.querySelector('.nav-touch-mirror'),floatingTrigger=document.getElementById('floating-nav-trigger'),floatingMenu=document.getElementById('floating-nav-menu');
-floatingTrigger.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" data-lucide="grid-2x2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>';
+floatingTrigger.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" data-lucide="sparkles"><path d="M9.9 10.5 12 4l2.1 6.5L20 13l-5.9 2.5L12 22l-2.1-6.5L4 13l5.9-2.5ZM5 3v4M3 5h4M19 2v6M16 5h6"/></svg>';
 floatingMenu.innerHTML=tabs.map((t,i)=>'<button type="button" data-go="'+t+'">'+icon(['home','workouts','progress','profile'][i])+'<span>'+t+'</span></button>').join('');
 let floatingPosition={x:1,y:.5},floatingDrag=null;
 try{const saved=JSON.parse(localStorage.getItem('form.floatingNavPosition')||'null');if(saved&&Number.isFinite(saved.x)&&Number.isFinite(saved.y))floatingPosition={x:Math.max(0,Math.min(1,saved.x)),y:Math.max(0,Math.min(1,saved.y))}}catch{}
