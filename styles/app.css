@@ -983,7 +983,7 @@ body[data-layout=unfolded-landscape] .home-month-grid{row-gap:clamp(2px,.8vh,var
 
 /* Build 156: suppress WebKit native tap flash; preserve keyboard focus. */
 html,body,button,a,[role=button],input,select,textarea,label{-webkit-tap-highlight-color:transparent}
-button:focus-visible,a:focus-visible,[role=button]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button:focus-visible,a:focus-visible,[role=button]:focus-visible,:where(.form-input):focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 /* Build 157: square calendar markers independent of grid row stretch. */
 body[data-layout=unfolded-landscape] .home-month-grid{container-type:size}
@@ -1046,7 +1046,8 @@ body[data-safe-overlay=true] #safe-area-overlay,body[data-diagnostics=true] #saf
 #viewport-lab[hidden]{display:none!important}
 body[data-diagnostics=true] main,body[data-diagnostics=true] nav.nav{visibility:hidden!important}
 #viewport-lab{position:fixed;inset:0;z-index:100000;box-sizing:border-box;background:#e8edf3;color:#111;overflow:hidden;font:12px system-ui,sans-serif;isolation:isolate}
-.viewport-grid{position:absolute;inset:0;border:2px solid #0088ff;background-image:linear-gradient(to right,#0088ff26 1px,transparent 1px),linear-gradient(to bottom,#0088ff26 1px,transparent 1px);background-size:20px 20px;pointer-events:none}
+:root{--viewport-outline-color:#0088ff;--viewport-outline-width:2px}
+.viewport-grid{position:absolute;inset:0;border:var(--viewport-outline-width) solid var(--viewport-outline-color);background-image:linear-gradient(to right,#0088ff26 1px,transparent 1px),linear-gradient(to bottom,#0088ff26 1px,transparent 1px);background-size:20px 20px;pointer-events:none}
 .viewport-readings{position:absolute;inset:calc(env(safe-area-inset-top,0px) + 12px) calc(env(safe-area-inset-right,0px) + 12px) calc(env(safe-area-inset-bottom,0px) + 12px) calc(env(safe-area-inset-left,0px) + 12px);max-width:440px;margin:auto;max-height:max-content;overflow:auto;background:#fffffff0;border:1px solid #ccd5df;border-radius:12px;padding:12px;box-sizing:border-box}
 .viewport-readings header,.viewport-reading{display:flex;justify-content:space-between;align-items:center;gap:8px}.viewport-reading{padding:4px 0;border-bottom:1px solid #dde3ea}.viewport-readings header button{border:0;background:#0066cc;color:white;padding:8px 14px;border-radius:8px;font:inherit}.viewport-readings p{margin:8px 0 0;font-size:11px}
 #safe-area-overlay{padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
@@ -1066,3 +1067,7 @@ body[data-layout=folded-landscape]:not([data-calibrating=true]) nav.nav{flex-dir
 :where(.form-button):disabled{opacity:.5;cursor:default}
 :where(.form-section-heading){font-size:var(--type-heading);font-weight:var(--weight-medium);line-height:var(--line-heading);margin:0}
 :where(.form-numeric){font-variant-numeric:tabular-nums}
+
+/* Persistent Lab viewport boundary: never participates in layout or hit testing. */
+#viewport-outline{position:fixed;inset:0;z-index:99999;box-sizing:border-box;border:var(--viewport-outline-width) solid var(--viewport-outline-color);pointer-events:none;background:none}
+body[data-diagnostics=true] #viewport-outline{visibility:hidden}
