@@ -68,3 +68,6 @@ Build 34: user screenshot shows readable History text overlapping headline in Bu
 
 
 Build 35: approved stronger headline frosting (20px blur, 65% tint in both themes) with existing 24px feather and lead. Separate headline filter token preserves dock material. Content initial padding includes glass lead so section headings start beyond material at rest; scrolling remains underneath. Headline signature, geometry, navigation, typography and separator-free treatment unchanged. Physical Safari visual and fit validation pending.
+
+
+Build 37: user requested equal Home dashboard occupancy of remaining drawable content area. Home alone expands to full available content width and height after tagline/greeting and existing glass/navigation clearances. FP/UP stack equal flexible rows; FL1/FL2/UL use equal flexible columns via calibrated landscape flag; book uses two columns and laptop stacks. Existing card minimum heights protect content, with scrolling fallback if intrinsic content exceeds available space. Equal sizing supersedes previous 45:55 weighting for Home only. No changes to headline, glass, navigation, orientation or geometry sources. Physical fit pending Safari review.
