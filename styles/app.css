@@ -1050,9 +1050,10 @@ body[data-diagnostics=true] main,body[data-diagnostics=true] nav.nav{visibility:
 #safe-area-overlay{padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
 #safe-area-overlay i:nth-child(1){height:env(safe-area-inset-top,0px)}#safe-area-overlay i:nth-child(2){width:env(safe-area-inset-right,0px)}#safe-area-overlay i:nth-child(3){height:env(safe-area-inset-bottom,0px)}#safe-area-overlay i:nth-child(4){width:env(safe-area-inset-left,0px)}
 
-/* Measured Duo viewports: system strip already excluded by Safari. */
-:root{--measured-fl-edge:var(--space-3);--measured-fl-rail-width:var(--dock-width);--measured-fl-gap:var(--space-3)}
-body:is([data-duo-orientation=FL1],[data-duo-orientation=FL2]):not([data-calibrating=true]) main{inset:0 0 0 0;width:auto;height:auto;transform:none;padding:var(--measured-fl-edge) calc(var(--measured-fl-edge) + var(--measured-fl-rail-width) + var(--measured-fl-gap)) calc(var(--safe-bottom) + var(--measured-fl-edge)) var(--measured-fl-edge);overflow-x:hidden}
-body:is([data-duo-orientation=FL1],[data-duo-orientation=FL2]):not([data-calibrating=true]) main:has(.home-page){padding-bottom:calc(var(--safe-bottom) + var(--measured-fl-edge))}
-body:is([data-duo-orientation=FL1],[data-duo-orientation=FL2]):not([data-calibrating=true]) .home-page{padding-inline-start:0}
-body:is([data-duo-orientation=FL1],[data-duo-orientation=FL2]):not([data-calibrating=true]) nav.nav{right:var(--measured-fl-edge);top:calc((100% - var(--safe-bottom))/2);bottom:auto;left:auto;transform:translateY(-50%);width:var(--measured-fl-rail-width);box-sizing:border-box}
+
+/* Adaptive landscape shell: viewport-relative, independent of measured signatures. */
+:root{--fl-shell-edge:var(--space-3);--fl-shell-gap:var(--space-3);--fl-shell-rail:var(--dock-width)}
+body[data-layout=folded-landscape]:not([data-calibrating=true]) main{inset:0;width:auto;height:auto;transform:none;padding:calc(var(--fl-shell-edge) + var(--safe-top)) calc(var(--fl-shell-edge) + var(--fl-shell-rail) + var(--fl-shell-gap) + var(--safe-right)) calc(var(--safe-bottom) + var(--fl-shell-edge)) calc(var(--fl-shell-edge) + var(--safe-left));overflow-x:hidden}
+body[data-layout=folded-landscape]:not([data-calibrating=true]) main:has(.home-page){padding-bottom:calc(var(--safe-bottom) + var(--fl-shell-edge))}
+body[data-layout=folded-landscape]:not([data-calibrating=true]) .home-page{padding-inline-start:0}
+body[data-layout=folded-landscape]:not([data-calibrating=true]) nav.nav{right:calc(var(--fl-shell-edge) + var(--safe-right));top:calc((100% + var(--safe-top) - var(--safe-bottom))/2);bottom:auto;left:auto;transform:translateY(-50%);width:var(--fl-shell-rail);box-sizing:border-box}
