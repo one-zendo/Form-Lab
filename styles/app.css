@@ -954,3 +954,17 @@ body[data-dock=bottom] main:has(.home-page){padding-bottom:calc(var(--bottom-bar
 @media(horizontal-viewport-segments:2){body[data-hinge=book] .home-dashboard{grid-template-columns:minmax(0,calc(env(viewport-segment-right 0 0,50vw) - var(--home-origin-x,0px) - var(--home-segment-edge))) minmax(0,1fr);grid-template-rows:minmax(min-content,1fr)}}
 @media(vertical-viewport-segments:2){body[data-hinge=laptop] .home-dashboard{grid-template-rows:auto auto}}
 .headline-build{flex:none;margin-inline-start:var(--headline-build-gap);padding:0;border:0;background:transparent;color:var(--muted);font:400 var(--headline-build-size)/1.2 var(--headline-family);letter-spacing:0;font-variant-numeric:tabular-nums;min-height:24px;cursor:pointer}
+
+/* Build 153: stationary headlines and viewport-filling unfolded Home. */
+main{--headline-sticky-top:0px;overscroll-behavior:none}
+.home-header,.page:not(.home-page):not(.workouts-page)>.brand,.workouts-stack>.workouts-header{position:sticky;top:var(--headline-sticky-top);z-index:5;background:var(--canvas)}
+body[data-layout=unfolded-landscape] main:has(.home-page){overflow:hidden;touch-action:none}
+body[data-layout=unfolded-landscape] .home-page{height:100%;min-height:0;max-height:100%;margin-block:0}
+body[data-layout=unfolded-landscape] .home-header,body[data-layout=unfolded-landscape] .home-greeting{flex:none}
+body[data-layout=unfolded-landscape] .home-dashboard{flex:1 1 0;min-height:0;grid-template-rows:minmax(0,1fr);align-items:stretch}
+body[data-layout=unfolded-landscape] .home-primary,body[data-layout=unfolded-landscape] .home-support{min-height:0;grid-template-rows:minmax(0,1fr)}
+body[data-layout=unfolded-landscape] .home-workout-card,body[data-layout=unfolded-landscape] .home-streak-card{height:100%;min-height:0;overflow:hidden;box-sizing:border-box}
+body[data-layout=unfolded-landscape] .home-month-grid{gap:clamp(1px,.5vh,var(--space-1))}
+body[data-layout=unfolded-landscape] .home-month-day{width:min(100%,var(--home-month-cell),4.3vh)}
+body[data-layout=unfolded-landscape] .home-streak-card{gap:var(--space-2)}
+@media(vertical-viewport-segments:2){body[data-layout=unfolded-landscape][data-hinge=laptop] .home-dashboard{grid-template-rows:minmax(0,1fr) minmax(0,1fr)}}
