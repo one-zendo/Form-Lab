@@ -84,3 +84,6 @@ Remove exact measured signatures and tolerance from runtime. Existing broad comp
 
 ## Build 169 — shared layout foundation
 Remove old fixed production landscape offsets; retain developer calibration and explicit column rail. Add opt-in .form-page, .form-stack, .form-grid, .form-card with shared tokens and intrinsic responsive tracks. Existing Home and hinge rules remain unchanged. New primitives are not yet migrated into existing pages. Hardware SVG assets and device verification remain pending. JS syntax checked; regression definitions added, full suite not run.
+
+## Build 170 — layout integration
+Apply form-page to Home, Workouts and generic pages, form-grid to Home dashboard, form-card to streak and standard workout cards. Shared primitives use :where() specificity and precede specialized rules; container query containment stays Home-only. Consolidate default Home grid track and landscape page inset. Preserve hinge segment calculations, navigation and motion source. Calibration Home inset now zero as in production; developer main calibration retained. JS syntax checked; source regression definitions updated. Browser and physical device verification pending.
