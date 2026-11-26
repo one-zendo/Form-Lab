@@ -12,8 +12,12 @@
   --radius-control:12px;
   --radius-pill:999px;
   --card-padding:16px;
+  --card-padding-large:20px;
+  --card-padding-compact:12px;
   --card-gap:16px;
   --motion-duration:320ms;
+  --motion-spring:cubic-bezier(.2,.8,.2,1.15);
+  --motion-color-duration:260ms;
   --motion-ease:cubic-bezier(.2,.8,.2,1);
 }
 
@@ -120,13 +124,13 @@ main::-webkit-scrollbar {
   padding:16px;
   margin-top:10px;
   background:var(--raised);
-  border-radius:12px;
+  border-radius:var(--radius-control);
 }
 
 #check-update,.dev-dialog button {
   min-height:44px;
   padding:0 14px;
-  border-radius:12px;
+  border-radius:var(--radius-control);
   background:var(--raised);
   width:100%;
   margin-top:10px;
@@ -136,7 +140,7 @@ main::-webkit-scrollbar {
   color:var(--ink);
   background:var(--surface);
   border:1px solid var(--raised);
-  border-radius:20px;
+  border-radius:var(--radius-card);
   padding:18px;
   width:min(320px,90%);
 }
@@ -218,7 +222,7 @@ main {
   min-height:100%;
   display:flex;
   flex-direction:column;
-  gap:16px;
+  gap:var(--card-gap);
 }
 
 .home-header {
@@ -274,7 +278,7 @@ main {
   display:grid;
   grid-template-columns:minmax(0,1fr);
   grid-template-rows:minmax(190px,45fr) minmax(190px,55fr);
-  gap:16px;
+  gap:var(--card-gap);
   flex:1;
   min-height:0;
 }
@@ -294,13 +298,13 @@ main {
   width:100%;
   height:100%;
   min-height:190px;
-  padding:20px;
+  padding:var(--card-padding-large);
   border:0;
-  border-radius:20px;
+  border-radius:var(--radius-card);
   background:var(--workout-bg);
   color:var(--workout-ink);
   text-align:left;
-  transition:transform 320ms cubic-bezier(.2,.8,.2,1.15),background 260ms ease;
+  transition:transform var(--motion-duration) var(--motion-spring),background var(--motion-color-duration) ease;
 }
 
 .home-workout-card:active {
@@ -333,7 +337,7 @@ main {
   min-width:88px;
   min-height:44px;
   padding:8px 16px;
-  border-radius:999px;
+  border-radius:var(--radius-pill);
   background:var(--workout-pill);
   color:var(--workout-ink);
   font-weight:600;
@@ -349,9 +353,9 @@ main {
   flex-direction:column;
   justify-content:space-between;
   min-height:190px;
-  padding:16px;
+  padding:var(--card-padding);
   background:var(--surface);
-  border-radius:20px;
+  border-radius:var(--radius-card);
   box-shadow:0 2px 12px #00000008;
 }
 
@@ -422,7 +426,7 @@ main {
 .home-day-dot {
   width:clamp(26px,8vw,36px);
   aspect-ratio:1;
-  border-radius:999px;
+  border-radius:var(--radius-pill);
   background:var(--canvas);
   display:grid;
   place-items:center;
@@ -457,7 +461,7 @@ main {
 
 .home-coming {
   border:1px solid var(--line);
-  border-radius:20px;
+  border-radius:var(--radius-card);
   background:var(--surface);
   color:var(--ink);
   padding:22px;
@@ -484,7 +488,7 @@ main {
   min-height:44px;
   background:var(--accent);
   color:var(--on-accent);
-  border-radius:12px;
+  border-radius:var(--radius-control);
   font-weight:600;
 }
 
@@ -518,12 +522,12 @@ main {
   }
 
   .home-workout-card {
-    padding:16px;
+    padding:var(--card-padding);
     min-height:150px;
   }
 
   .home-streak-card {
-    padding:12px;
+    padding:var(--card-padding-compact);
     min-height:150px;
   }
 
@@ -542,7 +546,7 @@ main {
   }
 
   .home-streak-card {
-    padding:12px;
+    padding:var(--card-padding-compact);
   }
 }
 
@@ -551,7 +555,7 @@ main {
   max-width:960px;
   margin-inline:auto;
   min-height:100%;
-  gap:16px;
+  gap:var(--card-gap);
 }
 
 .home-header {
@@ -581,8 +585,8 @@ main {
 .home-workout-card {
   grid-template-rows:auto minmax(0,1fr) auto;
   min-height:170px;
-  border-radius:20px;
-  padding:20px;
+  border-radius:var(--radius-card);
+  padding:var(--card-padding-large);
 }
 
 .home-workout-copy strong {
@@ -631,7 +635,7 @@ main {
 
   .home-workout-card {
     min-height:145px;
-    padding:16px;
+    padding:var(--card-padding);
   }
 
   .home-streak-card {
@@ -645,18 +649,18 @@ main {
 
 .home-dashboard {
   grid-template-rows:minmax(0,45fr) minmax(0,55fr);
-  gap:16px;
+  gap:var(--card-gap);
 }
 
 .home-workout-card {
   min-height:0;
-  padding:20px;
+  padding:var(--card-padding-large);
   grid-template-rows:auto minmax(0,1fr) auto;
 }
 
 .home-streak-card {
   min-height:0;
-  padding:16px;
+  padding:var(--card-padding);
 }
 
 .home-streak-card .home-days {
@@ -748,7 +752,7 @@ nav.nav {
   left:50%;
   transform:translateX(-50%);
   border:1px solid #ffffff35;
-  border-radius:999px;
+  border-radius:var(--radius-pill);
   background:linear-gradient(150deg,#ffffff28,#ffffff0e 48%,#ffffff20);
   box-shadow:inset 0 1px 1px #ffffff35,inset 0 -1px 1px #ffffff14,0 8px 28px #0003;
   -webkit-backdrop-filter:blur(24px) saturate(165%);
@@ -882,13 +886,13 @@ body[data-layout=folded-portrait] main {
 </style></head>
 <body>
 <main></main>
-<div id="build-tools"><span id="build-number">Build 81</span><button id="quick-check" type="button">Check</button><button id="quick-update" type="button">Update</button><span id="update-status" role="status" aria-live="polite"></span></div>
+<div id="build-tools"><span id="build-number">Build 82</span><button id="quick-check" type="button">Check</button><button id="quick-update" type="button">Update</button><span id="update-status" role="status" aria-live="polite"></span></div>
 <nav class="nav" aria-label="Main navigation"></nav>
 <dialog class="dev-dialog" id="developer"></dialog>
 <dialog class="home-coming" id="home-coming"><h2>Coming next</h2><p>We’re building the workout and activity features on this clean FORM foundation.</p><button id="home-coming-close">Done</button></dialog>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD=81;
+const BUILD=82;
 const UPDATE_INTERVAL_MS = 5000;
 const tabs=['Home','Workouts','Progress','Profile'];
 const glyphs={home:'M3 11 12 3l9 8v9h-6v-7H9v7H3z',workouts:'M3 10h18v4H3zM7 6v12M17 6v12',progress:'M3 20h18M5 15l4-5 4 3 6-9',profile:'M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8M4 21v-2a8 8 0 0 1 16 0v2',exercise:'M3 10h18v4H3zM6 7v10M18 7v10',timer:'M12 7v6l4 2M9 2h6M12 4a9 9 0 1 0 0 18 9 9 0 0 0 0-18',records:'M5 20V9h14v11M8 9V5h8v4M9 14h6',library:'M4 4h6v16H4zM14 4h6v16h-6z',plus:'M12 4v16M4 12h16',swap:'M4 7h15l-4-4m5 14H5l4 4',rest:'M4 3h16v18H4zM8 8h8M8 12h8M8 16h5',calendar:'M3 5h18v16H3zM7 3v4m10-4v4M3 10h18',heart:'M20 8c0 5-8 11-8 11S4 13 4 8a4 4 0 0 1 8-1 4 4 0 0 1 8 1'};
