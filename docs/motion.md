@@ -7,3 +7,6 @@ Build 10: approved 150ms immediate feedback token for frequent actions; existing
 
 
 Build 41: user approved continuous glass selection capsule. Tap, press, drag horizontally/vertically, release to select nearest destination, cancel returns to committed selection. Measured button rectangles interpolate lens position and width/height; 260ms shared selection spring, 1.06 press lift, stationary icons with preview tint. Reduced motion suppresses moving lens during drag and snaps on release. Rotation cancels active gesture and reanchors without transition. Overflowing dock retains native scrolling and click selection rather than hijacking swipe. No velocity projection, native optical refraction or haptics implemented. Pointer-device verification pending.
+
+
+Build 42: Atmosphere uses slow ambient drift, layered light, orbital motion, precipitation, and 700ms crossfade between conditions/styles. Canvas capped at approximately 30fps and 2x pixel density; paused outside Home and hidden documents; reduced motion renders static scene. Optional ambient motion switch. Low Power Mode not exposed reliably in Safari; no detection claim. Device performance pending.
