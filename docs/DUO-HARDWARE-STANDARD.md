@@ -28,3 +28,6 @@ Use the five canonical SVGs in design/duo for all Duo previews. Default to compa
 
 ## Device-reported rotation calibration (Build 3)
 User observed FL1 = 90 degrees, FL2 = 270 degrees; landscape angles 90/270 and portrait angles 0/180. Use angle only after viewport classification establishes folded landscape. Unavailable angle retains ambiguity; inverted portrait is not a new calibrated hardware orientation. Browser/device verification of updated implementation pending.
+
+## Build 16 — approved FP headline refinement
+FP Native and Safari target: leading signature X16 pt, signature top Y16 pt, center Y32 pt, signature height32 pt; headline moves up16 pt independently of content flow. Other orientations retain prior anchors. Build label follows shared headline, derived from build metadata. User approved visual proposal; device validation pending. Native is a reference target, not a verified SwiftUI layout.

@@ -34,3 +34,8 @@ body[data-nav="rail"] #dock{flex-direction:column;left:auto;right:max(var(--dock
 body[data-nav="rail"] #dock button span{display:none}
 body[data-nav="rail"] #dock button{padding:var(--space-4)}
 body[data-nav="rail"] #shell{padding-right:calc(var(--dock-reserve) + env(safe-area-inset-right));padding-bottom:0}
+
+/* Build 16: headline anchor independent of content flow. */
+#calibration{--layout-content-center:48px;padding-top:calc(var(--layout-content-center) - var(--headline-height)/2)}
+.headline{position:relative;top:calc(var(--layout-center) - var(--layout-content-center))}
+.headline .signature{flex-shrink:0}#headline-build{font-size:var(--type-caption);font-weight:var(--weight-body);color:var(--muted);white-space:nowrap;flex-shrink:0}
