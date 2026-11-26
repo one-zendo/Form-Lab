@@ -1,5 +1,5 @@
 
-const BUILD=159;
+const BUILD=160;
 const appearanceKey='form.lab.appearance.v1';
 let appearance='system';try{const saved=localStorage.getItem(appearanceKey);if(['system','studio','graphite'].includes(saved))appearance=saved}catch{}
 function applyAppearance(){if(appearance==='system')delete document.documentElement.dataset.theme;else document.documentElement.dataset.theme=appearance;document.querySelectorAll('meta[name="theme-color"]').forEach(m=>{if(!m.dataset.originalColor)m.dataset.originalColor=m.content;m.content=appearance==='studio'?'#F2F2F7':appearance==='graphite'?'#17171F':m.dataset.originalColor})}
