@@ -975,3 +975,6 @@ body[data-layout=unfolded-landscape] .home-streak-card{gap:var(--space-2)}
 .home-header{align-items:baseline}.home-header .brand{align-items:baseline}.home-header .brand-signature,.home-header .headline-build{align-self:center}.home-header .page-tab-trigger,.home-header .page-tab-trigger>span{align-items:baseline}.home-header .home-date strong{align-self:baseline}.home-header .tagline,.home-header .home-date span{align-self:baseline}
 @container (min-width:650px){.home-month{flex:1 1 auto;min-height:0;grid-template-rows:auto minmax(0,1fr);gap:var(--home-month-row-gap)}.home-month-grid{min-height:0;grid-auto-rows:minmax(0,1fr);row-gap:var(--home-month-row-gap);column-gap:var(--space-1)}.home-month-day{width:min(100%,var(--home-month-cell-expanded));max-height:100%;height:auto}.home-streak-footer{margin-top:auto}}
 body[data-layout=unfolded-landscape] .home-month-grid{row-gap:clamp(2px,.8vh,var(--home-month-row-gap))}body[data-layout=unfolded-landscape] .home-month-day{width:min(100%,var(--home-month-cell-expanded),5.2vh)}
+
+/* Build 155: gentler return to flat posture. */
+:root{--unfold-motion-ms:460;--unfold-motion-easing:cubic-bezier(.2,.75,.2,1)}
