@@ -8,3 +8,5 @@ Build 8 user feedback (2026-11-26): user reported “Yes, it’s working.” Rec
 
 ## Build 14 — approved FP Safari exception
 FP Safari-sized viewport uses bottom floating dock; FP Native-sized target retains right rail. FL1/FL2/UL right, UP bottom; book right and laptop bottom override environment. Uses detected viewport size, not proof of native runtime. Unmatched/manual overrides do not simulate a different environment. Existing dock styling and motion unchanged. JS syntax checked; device validation pending.
+
+Build 15: Lab-only fifth Diagnostics destination; public app remains four tabs. Compact labels provisionally 10 CSS px to fit five targets; verify accessibility and device fit.
