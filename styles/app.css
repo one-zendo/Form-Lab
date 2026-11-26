@@ -1092,3 +1092,6 @@ body[data-diagnostics=true] #viewport-outline{visibility:hidden}
 /* Build 182: bounded native diagnostic scrolling, independent of app swipe gestures. */
 .viewport-readings{max-height:none;min-height:0;margin:0 auto;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y}
 #camera-calibration input[type=range]{touch-action:pan-y}
+
+/* Camera calibration overlay is independent of diagnostic visibility. */
+#camera-guides{position:fixed;inset:0;z-index:100001;pointer-events:none}body[data-diagnostics=true] #camera-guides{z-index:100001}
