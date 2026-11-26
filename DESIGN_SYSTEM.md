@@ -213,3 +213,5 @@ Shared 44px headline row; default viewport-relative center 48px, top = center âˆ
 
 ## Build 186 native-first FL1
 Native physical headline inset 84px, content inset 16px; Safari adapter subtracts excluded 84px and clamps to zero, respecting reported safe left. Independent tokens, 2:3 dashboard tracks. Diagnostic preview switch uses simulated physical SVG, not native rendering. Other orientations and navigation unchanged. Native drawable area remains unverified.
+
+Build 187: early CSS FL1 inset adapter for compact landscape using remembered landscape side; synchronous rotation handler updates side before layout reads. Initial unknown side defaults left until angle is reported. No rotation animation added; device verification pending.
