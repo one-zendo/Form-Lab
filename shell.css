@@ -57,3 +57,15 @@ body[data-nav="rail"] #shell{padding-right:0}
 body[data-nav="rail"] .dock-material{display:block;position:fixed;inset:0 0 0 auto;width:calc(var(--dock-reserve) + env(safe-area-inset-right) + var(--glass-lead));z-index:9;pointer-events:none;background:var(--glass-tint);-webkit-backdrop-filter:var(--glass-headline-filter);backdrop-filter:var(--glass-headline-filter);-webkit-mask-image:linear-gradient(to left,#000 0%,#000 calc(100% - var(--glass-edge)),rgba(0,0,0,.8) calc(100% - 16px),rgba(0,0,0,.35) calc(100% - 8px),transparent 100%);mask-image:linear-gradient(to left,#000 0%,#000 calc(100% - var(--glass-edge)),rgba(0,0,0,.8) calc(100% - 16px),rgba(0,0,0,.35) calc(100% - 8px),transparent 100%)}
 }
 @media(prefers-reduced-transparency:reduce){body:not([data-nav="rail"]) #shell{padding-bottom:calc(var(--dock-reserve) + env(safe-area-inset-bottom))}body[data-nav="rail"] #shell{padding-right:calc(var(--dock-reserve) + env(safe-area-inset-right))}body .dock-material{display:none!important}}
+
+/* Material-only refinements: no changes to anchors, dimensions or hit targets. */
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+.headline-material{background:var(--glass-scroll-tint)!important}
+body:not([data-nav="rail"]) .dock-material{background:var(--glass-scroll-bottom)}
+body[data-nav="rail"] .dock-material{background:var(--glass-scroll-right)}
+#dock{background:linear-gradient(145deg,var(--glass-sheen),transparent 45%,var(--glass-sheen-end)),var(--glass-dock-tint);box-shadow:inset 0 1px 1px var(--glass-rim),inset 0 -1px 1px var(--glass-rim-shade),inset 0 0 0 1px var(--glass-highlight),var(--glass-depth)}
+#dock button{transition:background-color var(--motion-feedback) var(--ease-standard),color var(--motion-feedback) var(--ease-standard)}
+#dock button[aria-pressed="true"]{background:var(--glass-selection)}
+#dock button:active{background:var(--glass-press)}
+}
+@media(prefers-reduced-transparency:reduce){.headline-material{background:var(--canvas)!important}#dock{background:var(--paper);box-shadow:inset 0 0 0 1px var(--glass-highlight),var(--glass-depth)}#dock button[aria-pressed="true"],#dock button:active{background:var(--elevated)}}
