@@ -43,7 +43,7 @@ body[data-page=Home] #headline-build{display:inline-flex;align-items:center;font
 
 /* Build 27: compact date scale and shared fixed headline across every page. */
 #calibration{height:100%;min-height:0;overflow:hidden}
-.headline{position:relative;z-index:20;flex:0 0 var(--headline-height);isolation:isolate}
+.headline{position:relative;z-index:20;flex:0 0 var(--headline-height)}
 .home-date{align-self:stretch;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;gap:0;min-width:0;max-width:fit-content;line-height:1.15}
 .home-date span:first-child{font-size:14px;font-weight:var(--weight-headline);line-height:1.15;white-space:nowrap}
 .home-date span:last-child{font-size:10px;font-weight:var(--weight-body);line-height:1.2;white-space:nowrap}
@@ -57,45 +57,11 @@ body[data-page=Home] #headline-build{display:inline-flex;align-items:center;font
 .content::-webkit-scrollbar{display:none}
 
 
-/* Build 30: frosted headline bar ends at its bottom separator line. */
-.headline{
-  position:relative;
-  z-index:30;
-  isolation:isolate;
-  background:color-mix(in srgb,var(--canvas) 76%,transparent);
-  -webkit-backdrop-filter:blur(18px) saturate(1.18);
-  backdrop-filter:blur(18px) saturate(1.18);
-  border-bottom:1px solid color-mix(in srgb,var(--muted) 16%,transparent);
-}
-.headline::after{content:none}
-@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-  .headline{background:var(--canvas)}
-}
 
-/* Build 31: scrolling content passes behind the fixed frosted headline. */
-#calibration{position:relative}
-.headline{
-  position:relative;
-  z-index:30;
-  isolation:isolate;
-  background:color-mix(in srgb,var(--canvas) 68%,transparent);
-  -webkit-backdrop-filter:blur(20px) saturate(1.2);
-  backdrop-filter:blur(20px) saturate(1.2);
-  border-bottom:1px solid color-mix(in srgb,var(--muted) 16%,transparent);
-}
-.headline::after{content:none}
-.content{
-  position:relative;
-  z-index:0;
-  flex:1 1 0;
-  margin-top:calc(-1 * var(--headline-height));
-  padding-top:calc(var(--headline-height) + var(--space-16));
-  min-height:0;
-  height:0;
-  overflow-x:hidden;
-  overflow-y:auto;
-  overscroll-behavior-y:contain;
-  -webkit-overflow-scrolling:touch;
-  touch-action:pan-y;
-  scrollbar-width:none;
-}
+/* Build 32: independent full-width glass layer, with content scrolling under it. */
+#calibration{position:relative;padding-top:0}
+.headline{position:absolute;top:calc(var(--layout-center) - var(--headline-height)/2);left:0;right:0;z-index:21;background:transparent;isolation:auto}
+.headline-material{position:absolute;inset:0 0 auto;height:calc(var(--layout-center) + var(--headline-height)/2);z-index:20;pointer-events:none;background:rgba(242,242,247,.35);-webkit-backdrop-filter:blur(10px) saturate(1.4);backdrop-filter:blur(10px) saturate(1.4);border-bottom:1px solid rgba(99,99,102,.16)}
+[data-theme="graphite-lime"] .headline-material{background:rgba(23,23,31,.35)}
+.content{position:relative;z-index:auto;flex:1 1 0;height:0;min-height:0;margin-top:0;padding-top:calc(var(--layout-center) + var(--headline-height)/2);overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;touch-action:pan-y;scrollbar-width:none}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.headline-material{background:var(--canvas)}}
