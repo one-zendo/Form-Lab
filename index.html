@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#17171f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="FORM">
+  <meta name="description" content="FORM full-screen and responsive layout test for iPhone Duo.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <title>FORM — Duo Full-Screen Test</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    :root {
+      color-scheme: dark;
+      --canvas:#17171f; --surface:#24242e; --raised:#30303c;
+      --text:#f5f5f5; --muted:#a3a3a3; --accent:#b0ff00;
+      --blue:#0088ff; --line:rgba(255,255,255,.09);
+      --fast:180ms; --tab:220ms; --standard:320ms;
+      --ease:cubic-bezier(.2,.75,.2,1);
+      --safe-top:env(safe-area-inset-top,0px);
+      --safe-bottom:env(safe-area-inset-bottom,0px);
+      --safe-left:env(safe-area-inset-left,0px);
+      --safe-right:env(safe-area-inset-right,0px);
+      font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;width:100%;min-height:100%;background:var(--canvas);color:var(--text)}
+    body{min-height:100vh;min-height:100dvh}
+    button{font:inherit;color:inherit;cursor:pointer}
+    .app{min-height:100vh;min-height:100dvh;padding:calc(18px + var(--safe-top)) calc(20px + var(--safe-right)) calc(104px + var(--safe-bottom)) calc(20px + var(--safe-left));}
+    .topbar{height:44px;display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto 26px}
+    .wordmark{font-size:28px;font-weight:700;letter-spacing:-1.5px}
+    .status{font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:center}
+    .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block}
+    main{max-width:1200px;margin:0 auto}
+    .eyebrow{color:var(--muted);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+    h1{font-size:clamp(30px,5vw,38px);line-height:1.08;letter-spacing:-1.5px;margin:9px 0 8px}
+    .sub{font-size:15px;color:var(--muted);margin:0 0 24px}
+    .hero{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px;margin-bottom:14px}
+    .hero-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}
+    .pill{font-size:12px;color:var(--accent);background:rgba(176,255,0,.1);padding:7px 10px;border-radius:999px;white-space:nowrap}
+    .workout-name{font-size:22px;font-weight:650;margin:0 0 7px}
+    .muted{color:var(--muted);font-size:14px}
+    .hero-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:22px}
+    .primary{background:var(--accent);color:#17171f;border:0;border-radius:12px;min-height:48px;padding:0 20px;font-weight:700;transition:transform var(--fast) var(--ease),opacity var(--fast)}
+    .primary:active{transform:scale(.97)}
+    .metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:14px}
+    .metric,.panel{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px}
+    .metric strong{display:block;font-size:26px;letter-spacing:-1px;margin:8px 0 3px;font-variant-numeric:tabular-nums}
+    .metric span{font-size:12px;color:var(--muted)}
+    .lower{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .panel h2{font-size:17px;margin:0 0 16px}
+    .activity{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-top:1px solid var(--line);font-size:14px}
+    .activity:first-of-type{border-top:0}
+    .bar{height:7px;background:var(--raised);border-radius:10px;overflow:hidden;margin-top:12px}
+    .bar i{display:block;height:100%;width:72%;background:var(--accent);border-radius:10px}
+    .debug{margin-top:14px;background:var(--raised);border-radius:14px;padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .debug div{min-width:0}.debug small{display:block;color:var(--muted);font-size:11px;margin-bottom:4px}.debug b{font-size:13px;font-variant-numeric:tabular-nums}
+    .dock{position:fixed;z-index:5;bottom:calc(14px + var(--safe-bottom));left:50%;transform:translateX(-50%);display:flex;gap:4px;padding:7px;background:rgba(48,48,60,.94);border:1px solid rgba(255,255,255,.1);border-radius:999px;box-shadow:0 8px 28px rgba(0,0,0,.25);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+    .dock button{border:0;background:transparent;color:var(--muted);min-width:64px;min-height:48px;border-radius:999px;font-size:11px;font-weight:600;display:grid;place-items:center;gap:2px;padding:5px 9px}
+    .dock button[aria-current="page"]{background:var(--accent);color:#17171f}
+    .dock .glyph{font-size:18px;line-height:1}
+    .notice{margin-top:14px;color:var(--muted);font-size:12px;line-height:1.5;text-align:center}
+    @media(min-width:650px){
+      .app{padding-left:calc(28px + var(--safe-left));padding-right:calc(28px + var(--safe-right))}
+      .hero{padding:26px}
+      .dashboard{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:14px;align-items:start}
+      .hero{grid-row:span 2;margin:0}
+      .metrics{margin:0}
+      .lower{grid-column:2;grid-template-columns:1fr}
+    }
+    @media(min-width:820px) and (orientation:landscape){
+      .dashboard{grid-template-columns:minmax(280px,.9fr) minmax(320px,1.1fr)}
+      .hero{grid-row:span 2}
+      .lower{grid-column:2;grid-template-columns:1fr 1fr}
+      .app{padding-top:calc(12px + var(--safe-top));padding-bottom:calc(88px + var(--safe-bottom))}
+      .topbar{margin-bottom:16px}
+      .sub{margin-bottom:16px}
+    }
+    @media(max-width:380px){
+      .app{padding-left:16px;padding-right:16px}
+      .metrics{gap:8px}
+      .metric{padding:14px 12px}
+      .metric strong{font-size:22px}
+      .dock button{min-width:58px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+    }
+    @media(prefers-reduced-transparency:reduce){
+      .dock{background:var(--raised);backdrop-filter:none;-webkit-backdrop-filter:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="wordmark">FORM</div>
+      <div class="status"><span class="dot"></span><span id="launch-mode">WEB VIEW</span></div>
+    </header>
+    <main>
+      <div class="eyebrow">Tuesday · Training overview</div>
+      <h1>Train with focus.</h1>
+      <p class="sub">A full-screen layout test for iPhone Duo.</p>
+      <section class="dashboard" aria-label="Workout dashboard">
+        <article class="hero">
+          <div class="hero-head"><span class="eyebrow">Today's session</span><span class="pill">READY</span></div>
+          <p class="workout-name">Upper body strength</p>
+          <div class="muted">6 exercises · About 45 minutes</div>
+          <div class="hero-foot"><div><div class="eyebrow">Next up</div><div style="font-weight:600;margin-top:5px">Bench press</div></div><button class="primary" id="start">Start workout</button></div>
+        </article>
+        <section class="metrics" aria-label="Weekly summary">
+          <article class="metric"><span>Workouts</span><strong>3</strong><span>This week</span></article>
+          <article class="metric"><span>Volume</span><strong>4.8k</strong><span>kg lifted</span></article>
+          <article class="metric"><span>Time</span><strong>2h 15</strong><span>Training</span></article>
+        </section>
+        <section class="lower">
+          <article class="panel"><h2>Weekly activity</h2><div class="muted">3 of 4 planned sessions</div><div class="bar"><i></i></div></article>
+          <article class="panel"><h2>Recent activity</h2><div class="activity"><span>Lower body</span><span class="muted">Yesterday</span></div><div class="activity"><span>Pull day</span><span class="muted">Mon</span></div></article>
+        </section>
+      </section>
+      <section class="debug" aria-label="Live viewport diagnostics">
+        <div><small>VIEWPORT</small><b id="viewport">—</b></div>
+        <div><small>LAYOUT MODE</small><b id="layout">—</b></div>
+        <div><small>DISPLAY MODE</small><b id="display">—</b></div>
+        <div><small>SAFE AREA</small><b id="safe">CSS env()</b></div>
+      </section>
+      <p class="notice">Illustrative dashboard data for layout testing only. Viewport readings update as the device folds or rotates.</p>
+    </main>
+  </div>
+  <nav class="dock" aria-label="Primary navigation">
+    <button aria-current="page"><span class="glyph">⌂</span>Home</button>
+    <button><span class="glyph">▤</span>Workouts</button>
+    <button><span class="glyph">↗</span>Progress</button>
+    <button><span class="glyph">○</span>Profile</button>
+  </nav>
+  <script>
+    const $=id=>document.getElementById(id);
+    function updateViewport(){
+      const w=Math.round(window.visualViewport?.width||window.innerWidth);
+      const h=Math.round(window.visualViewport?.height||window.innerHeight);
+      const mode=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone?'STANDALONE':'BROWSER';
+      const layout=window.matchMedia('(min-width: 820px) and (orientation: landscape)').matches?'UNFOLDED LANDSCAPE':w>=650?'UNFOLDED PORTRAIT':'COMPACT';
+      $('viewport').textContent=w+' × '+h+' CSS px';
+      $('layout').textContent=layout;
+      $('display').textContent=mode;
+      $('launch-mode').textContent=mode==='STANDALONE'?'APP MODE':'WEB VIEW';
+    }
+    window.addEventListener('resize',updateViewport);
+    window.visualViewport?.addEventListener('resize',updateViewport);
+    updateViewport();
+    $('start').addEventListener('click',()=>{$('start').textContent='Workout ready';$('start').setAttribute('aria-pressed','true')});
+    document.querySelectorAll('.dock button').forEach(btn=>btn.addEventListener('click',()=>{
+      document.querySelectorAll('.dock button').forEach(b=>b.removeAttribute('aria-current'));
+      btn.setAttribute('aria-current','page');
+    }));
+    if('serviceWorker' in navigator && location.protocol.startsWith('http')) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+  </script>
+</body>
+</html>
