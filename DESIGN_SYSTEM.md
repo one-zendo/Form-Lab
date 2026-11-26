@@ -1,10 +1,10 @@
 # FORM — Design System & Motion Tokens
 
-**Source of truth:** `one-zendo/One` → `DESIGN.md` and `src/styles.css`  
+**Source of truth:** FORM Lab's `DESIGN.md` and this token specification  
 **Transfer target:** `one-zendo/Form-Lab`  
 **Baseline reviewed:** 2026-11-25
 
-This document transfers FORM's approved visual principles, semantic design tokens, and motion rules into Lab. When a value is refined in the source repository, update this document and Lab's implementation together. Do not invent parallel component styles or motion values.
+This document records FORM Lab's approved visual principles, semantic design tokens, and motion rules. ONE is a visual reference only, not an implementation or token authority. Update this document and Lab's implementation together when approved values change. Do not invent parallel component styles or motion values.
 
 ## 1. Design principles
 
