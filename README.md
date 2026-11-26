@@ -1,6 +1,6 @@
 # FORM Lab
 
-Current baseline: Build 118 — refactored application and QA checks. Build 113 is preserved on checkpoint/build-113.
+Current baseline: Build 119 — refactored application and QA checks. Build 113 is preserved on checkpoint/build-113.
 
 FORM Lab owns its implementation and tokens. ONE is a visual reference only.
 
@@ -16,3 +16,5 @@ FORM Lab owns its implementation and tokens. ONE is a visual reference only.
 Physical Duo and browser interaction testing are still required; source checks alone do not establish device compatibility.
 
 Preview: https://one-zendo.github.io/Form-Lab/
+
+GitHub Actions runs syntax and regression checks on pushes and pull requests. A passing workflow is required for release confidence; branch protection is not configured by this workflow.
