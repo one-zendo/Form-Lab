@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#17171f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="FORM">
+  <meta name="description" content="FORM main-screen edge-to-edge and responsive layout test for iPhone Duo.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <title>FORM — Home</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700&display=swap');
+    :root {
+      color-scheme: dark;
+      --canvas:#17171f; --surface:#24242e; --raised:#30303c;
+      --text:#f5f5f5; --muted:#a3a3a3; --lime:#b0ff00;
+      --line:rgba(255,255,255,.09);
+      --safe-t:env(safe-area-inset-top,0px); --safe-r:env(safe-area-inset-right,0px);
+      --safe-b:env(safe-area-inset-bottom,0px); --safe-l:env(safe-area-inset-left,0px);
+      --ease:cubic-bezier(.2,.75,.2,1);
+      font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--canvas); color:var(--text);
+    }
+    *{box-sizing:border-box}
+    html{margin:0;min-height:100%;background:var(--canvas);overscroll-behavior-y:none}
+    body{margin:0;min-width:320px;min-height:100vh;min-height:100svh;min-height:100dvh;background:var(--canvas);color:var(--text);overflow-x:hidden}
+    button{font:inherit;color:inherit;cursor:pointer}
+    button:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
+    .app{min-height:100vh;min-height:100svh;min-height:100dvh;display:flex;flex-direction:column;padding-bottom:calc(94px + var(--safe-b))}
+    .topbar{min-height:calc(64px + var(--safe-t));padding:var(--safe-t) max(22px,var(--safe-r)) 0 max(22px,var(--safe-l));display:flex;align-items:center;justify-content:space-between;background:var(--canvas);border-bottom:1px solid var(--line)}
+    .brand{font-size:28px;font-weight:700;letter-spacing:-1.5px}
+    .top-actions{display:flex;align-items:center;gap:10px}
+    .date{font-size:13px;color:var(--muted)}
+    .icon-button{width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:var(--surface);display:grid;place-items:center;font-size:19px}
+    main{width:100%;max-width:1180px;margin:0 auto;padding:26px max(20px,var(--safe-r)) 30px max(20px,var(--safe-l));flex:1}
+    .intro{margin-bottom:22px}
+    .eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+    h1{font-size:clamp(32px,6vw,42px);line-height:1.05;letter-spacing:-1.8px;margin:8px 0}
+    .tagline{margin:0;color:var(--muted);font-size:15px}
+    .dashboard{display:grid;gap:14px}
+    .card{min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px}
+    .session{background:var(--lime);color:#17171f;border:0;padding:22px}
+    .session-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .session .eyebrow{color:#17171f;opacity:.65}
+    .pill{border-radius:999px;padding:7px 10px;background:#17171f18;font-size:11px;font-weight:700}
+    .session h2{font-size:25px;line-height:1.1;letter-spacing:-.8px;margin:20px 0 7px}
+    .session-meta{font-size:13px;opacity:.72}
+    .session-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:24px}
+    .next-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;opacity:.62}
+    .next-name{font-size:14px;font-weight:650;margin-top:4px}
+    .start{min-height:48px;border:0;border-radius:12px;background:#17171f;color:#b0ff00;padding:0 18px;font-weight:700;transition:transform 180ms var(--ease)}
+    .start:active{transform:scale(.97)}
+    .section-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:2px 0 12px}
+    h3{font-size:17px;letter-spacing:-.3px;margin:0}
+    .subtle{font-size:12px;color:var(--muted)}
+    .metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .metric{padding:16px 13px}
+    .metric strong{display:block;font-size:clamp(22px,4vw,28px);letter-spacing:-1px;font-variant-numeric:tabular-nums;margin:9px 0 3px}
+    .metric span{font-size:11px;color:var(--muted)}
+    .right-stack{display:grid;gap:14px;min-width:0}.activity-card{display:grid;gap:0}
+    .activity-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-top:1px solid var(--line);font-size:14px}
+    .activity-row:first-of-type{margin-top:8px}
+    .activity-row span:last-child{font-size:12px;color:var(--muted)}
+    .progress-card .progress-copy{display:flex;justify-content:space-between;gap:10px;font-size:13px;margin-top:14px}
+    .track{height:7px;border-radius:99px;background:var(--raised);overflow:hidden;margin-top:10px}
+    .track span{display:block;width:75%;height:100%;border-radius:inherit;background:var(--lime)}
+    .dock-wrap{position:fixed;z-index:10;left:0;right:0;bottom:0;padding:8px max(12px,var(--safe-r)) calc(8px + var(--safe-b)) max(12px,var(--safe-l));pointer-events:none}
+    .dock{width:min(100%,430px);margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:6px;background:rgba(48,48,60,.96);border:1px solid rgba(255,255,255,.1);border-radius:20px;box-shadow:0 8px 28px #0004;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);pointer-events:auto}
+    .dock button{min-width:0;min-height:54px;border:0;border-radius:14px;background:transparent;color:var(--muted);display:grid;align-content:center;justify-items:center;gap:3px;font-size:10px;font-weight:600}
+    .dock button[aria-current=page]{background:var(--lime);color:#17171f}
+    .glyph{font-size:19px;line-height:1}
+    .diagnostics{margin-top:16px;padding:12px 14px;background:var(--raised);border-radius:14px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .diagnostics small{display:block;color:var(--muted);font-size:10px;letter-spacing:.06em;margin-bottom:3px}
+    .diagnostics b{font-size:12px;font-variant-numeric:tabular-nums}
+    .footnote{margin:12px 4px 0;color:var(--muted);font-size:11px;line-height:1.5}
+    @media(min-width:600px){
+      main{padding-top:34px;padding-left:max(28px,var(--safe-l));padding-right:max(28px,var(--safe-r))}
+      .dashboard{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:stretch}
+      .session{grid-row:span 2;display:flex;flex-direction:column;justify-content:space-between;min-height:260px}
+      .metrics{gap:12px}
+      .metric{padding:18px 14px}
+      .activity-card,.progress-card{min-height:0}
+      .dock{width:460px}
+    }
+    @media(min-width:850px) and (orientation:landscape){
+      .topbar{min-height:calc(58px + var(--safe-t))}
+      main{padding-top:22px;padding-bottom:20px}
+      .intro{margin-bottom:16px}
+      .dashboard{grid-template-columns:minmax(300px,.95fr) minmax(0,1.05fr);grid-template-rows:auto auto}
+      .session{grid-row:1 / span 2;min-height:310px}
+      .right-stack{display:grid;grid-template-columns:1fr 1fr;gap:14px;min-width:0}
+      .metrics{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .dock-wrap{padding-top:5px}
+      .dock{width:440px}
+    }
+    @media(max-width:380px){
+      main{padding-left:16px;padding-right:16px}
+      .card{padding:16px}
+      .session{padding:18px}
+      .metric{padding:13px 10px}
+      .dock{border-radius:17px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+    }
+    @media(prefers-reduced-transparency:reduce){
+      .dock{background:var(--raised);backdrop-filter:none;-webkit-backdrop-filter:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">FORM</div>
+      <div class="top-actions"><span class="date" id="today">TODAY</span><button class="icon-button" type="button" aria-label="Notifications">⌁</button></div>
+    </header>
+    <main>
+      <section class="intro">
+        <div class="eyebrow">Your training space</div>
+        <h1>Train with focus.</h1>
+        <p class="tagline">Train with focus, follow your progress.</p>
+      </section>
+      <section class="dashboard" aria-label="Home dashboard">
+        <article class="card session">
+          <div>
+            <div class="session-top"><span class="eyebrow">Today's session</span><span class="pill">READY</span></div>
+            <h2>Upper body strength</h2>
+            <p class="session-meta">6 exercises&nbsp; · &nbsp;About 45 minutes</p>
+          </div>
+          <div class="session-bottom">
+            <div><div class="next-label">First exercise</div><div class="next-name">Bench press</div></div>
+            <button class="start" id="start" type="button">Start workout</button>
+          </div>
+        </article>
+        <section class="metrics" aria-label="Weekly summary">
+          <article class="card metric"><span>Workouts</span><strong>3</strong><span>This week</span></article>
+          <article class="card metric"><span>Volume</span><strong>4.8k</strong><span>kg lifted</span></article>
+          <article class="card metric"><span>Time</span><strong>2h 15</strong><span>Training</span></article>
+        </section>
+        <div class="right-stack">
+          <article class="card activity-card">
+            <div class="section-heading"><h3>Recent activity</h3><span class="subtle">This week</span></div>
+            <div class="activity-row"><span>Lower body</span><span>Yesterday</span></div>
+            <div class="activity-row"><span>Pull day</span><span>Monday</span></div>
+          </article>
+          <article class="card progress-card">
+            <div class="section-heading"><h3>Weekly goal</h3><span class="subtle">3 of 4 sessions</span></div>
+            <div class="progress-copy"><span>Consistency</span><strong>75%</strong></div>
+            <div class="track" role="progressbar" aria-label="Weekly goal progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75"><span></span></div>
+          </article>
+        </div>
+      </section>
+      <section class="diagnostics" aria-label="Live device diagnostics">
+        <div><small>VIEWPORT</small><b id="viewport">—</b></div>
+        <div><small>LAYOUT</small><b id="layout">—</b></div>
+        <div><small>DISPLAY</small><b id="display">—</b></div>
+        <div><small>SAFE AREA</small><b id="safe">—</b></div>
+      </section>
+      <p class="footnote">Layout test only · Sample training values · Viewport readings update when you rotate or resize the screen.</p>
+    </main>
+    <div class="dock-wrap">
+      <nav class="dock" aria-label="Primary navigation">
+        <button type="button" aria-current="page"><span class="glyph">⌂</span>Home</button>
+        <button type="button"><span class="glyph">▤</span>Workouts</button>
+        <button type="button"><span class="glyph">↗</span>Progress</button>
+        <button type="button"><span class="glyph">○</span>Profile</button>
+      </nav>
+    </div>
+  </div>
+  <script>
+    const $=id=>document.getElementById(id);
+    $('today').textContent=new Intl.DateTimeFormat(undefined,{weekday:'short',month:'short',day:'numeric'}).format(new Date()).toUpperCase();
+    function updateViewport(){
+      const vv=window.visualViewport;
+      const w=Math.round(vv?.width||window.innerWidth);
+      const h=Math.round(vv?.height||window.innerHeight);
+      const standalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+      const layout=w>=850&&w>h?'UNFOLDED LANDSCAPE':w>=600?'UNFOLDED PORTRAIT':'COMPACT';
+      $('viewport').textContent=w+' × '+h+' CSS px';
+      $('layout').textContent=layout;
+      $('display').textContent=standalone?'STANDALONE':'BROWSER';
+      const css=getComputedStyle(document.documentElement);
+      $('safe').textContent=['top','right','bottom','left'].map(k=>Math.round(parseFloat(css.getPropertyValue('--safe-'+({top:'t',right:'r',bottom:'b',left:'l'}[k])))||0)).join(' / ')+' px';
+    }
+    addEventListener('resize',updateViewport);
+    window.visualViewport?.addEventListener('resize',updateViewport);
+    updateViewport();
+    $('start').addEventListener('click',()=>{$('start').textContent='Ready to train';$('start').setAttribute('aria-pressed','true')});
+    document.querySelectorAll('.dock button').forEach(button=>button.addEventListener('click',()=>{
+      document.querySelectorAll('.dock button').forEach(item=>item.removeAttribute('aria-current'));
+      button.setAttribute('aria-current','page');
+    }));
+    if('serviceWorker' in navigator&&location.protocol.startsWith('http'))addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+  </script>
+</body>
+</html>
