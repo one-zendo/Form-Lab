@@ -52,3 +52,9 @@ Branch: checkpoint/build-159-device-confirmed
 - App logic identical to Build 159 except build number; CSS outside targeted token blocks identical after whitespace normalization. Corrected stale initial diagnostic build label.
 - All 10 local scripts parsed; 21 regression assertions passed in an adapted V8 harness using in-memory filesystem/storage and VM substitutes. Native Node CI and browser/device tests not executed here.
 - Deferred broader cascade and component restructuring until visual regression coverage exists. No changes to persistence or hinge algorithms.
+
+## Build 161 — FL Home sizing
+- User screenshots of both FL rotations on Build 159 showed personal-best footer outside the card and unused bottom space.
+- Removed legacy 46px bottom reserve for FL Home only; use 12px clearance plus safe bottom inset once. Allow vertical scroll as a fallback for constrained height or larger text.
+- Use intrinsic minimum dashboard/section rows and nonshrinking footer, compact weekly spacing, equal-height stretched cards. Preserve 40:60 columns.
+- Source comparison confirms CSS outside FL Home rules and tokens unchanged, including calibrated rail and rotation offsets. App logic unchanged except build number; syntax and new source assertion passed. Actual browser geometry and both device rotations still require verification; full regression suite not rerun.
