@@ -1,5 +1,5 @@
 
-const BUILD=130;
+const BUILD=131;
 const UPDATE_INTERVAL_MS = 30000;
 const tabs=['Home','Workouts','Progress','Profile'];
 const glyphs={home:'M3 11 12 3l9 8v9h-6v-7H9v7H3z',workouts:'M3 10h18v4H3zM7 6v12M17 6v12',progress:'M3 20h18M5 15l4-5 4 3 6-9',profile:'M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8M4 21v-2a8 8 0 0 1 16 0v2',exercise:'M3 10h18v4H3zM6 7v10M18 7v10',timer:'M12 7v6l4 2M9 2h6M12 4a9 9 0 1 0 0 18 9 9 0 0 0 0-18',records:'M5 20V9h14v11M8 9V5h8v4M9 14h6',library:'M4 4h6v16H4zM14 4h6v16h-6z',plus:'M12 4v16M4 12h16',swap:'M4 7h15l-4-4m5 14H5l4 4',rest:'M4 3h16v18H4zM8 8h8M8 12h8M8 16h5',calendar:'M3 5h18v16H3zM7 3v4m10-4v4M3 10h18',heart:'M20 8c0 5-8 11-8 11S4 13 4 8a4 4 0 0 1 8-1 4 4 0 0 1 8 1'};
@@ -16,7 +16,7 @@ const WORKOUT_STORAGE='form.lab.workouts.v1';
 let workoutData={routines:[],history:[],session:null},workoutView='routines',workoutQuery='',workoutDetail=null,workoutDraft=null,workoutNotice='';
 const WORKOUT_BACKUP=WORKOUT_STORAGE+'.backup';
 let storageReadBlocked=false,storageDirty=false;
-const validRecord=r=>r&&typeof r.id==='string'&&typeof r.name==='string'&&Array.isArray(r.exercises)&&r.exercises.every(e=>e&&typeof e.name==='string'&&Array.isArray(e.sets)&&e.sets.every(t=>t&&typeof t==='object'&&!Array.isArray(t)));
+const validRecord=r=>r&&typeof r.id==='string'&&typeof r.name==='string'&&Array.isArray(r.exercises)&&r.exercises.every(e=>e&&typeof e.name==='string'&&Array.isArray(e.sets)&&e.sets.every(t=>t&&typeof t==='object'&&!Array.isArray(t)&&['weight','reps','rest'].every(k=>t[k]==null||(typeof t[k]==='number'&&Number.isFinite(t[k])&&t[k]>=0))));
 const validWorkoutData=d=>d&&typeof d==='object'&&!Array.isArray(d)&&(!('schemaVersion' in d)||d.schemaVersion===1)&&Array.isArray(d.routines)&&d.routines.every(validRecord)&&Array.isArray(d.history)&&d.history.every(validRecord)&&(d.session==null||validRecord(d.session));
 function readWorkoutData(raw){const d=JSON.parse(raw);if(!validWorkoutData(d))throw Error('Invalid workout data');return {routines:d.routines,history:d.history,session:d.session||null}}
 try{
@@ -87,7 +87,7 @@ function workoutsMarkup(){
  return '<div class="page workouts-page enter">'+(workoutNotice?'<p role="status" class="workouts-muted">'+escapeWorkout(workoutNotice)+'</p>':'')+'<div class="workouts-layout" data-wide="'+(wide&&!workoutData.session)+'">'+(!detail||wide&&!workoutData.session?workoutListMarkup():'')+detail+(!detail&&wide?'<section class="workouts-detail"><article class="workouts-card workouts-idle"><h3>'+(workoutView==='history'?'Workout details':'Routine details')+'</h3><p class="workouts-muted">Select '+(workoutView==='history'?'a workout':'a routine')+' to view its details.</p></article></section>':'')+'</div></div>';
 }
 function workoutRefresh(){persistDraft();const scroll=main.scrollTop;render();main.scrollTop=scroll}
-function workoutStart(r){workoutData.session={id:workoutId(),name:r.name,description:r.description||'',exercises:workoutClone(r.exercises),started:Date.now()};saveWorkouts();workoutRefresh()}
+function workoutStart(r){const previous=workoutData.session;workoutData.session={id:workoutId(),name:r.name,description:r.description||'',exercises:workoutClone(r.exercises),started:Date.now()};if(!saveWorkouts())workoutData.session=previous;workoutRefresh()}
 function handleWorkoutAction(b){
  const action=b.dataset.wAction,e=Number(b.dataset.e),j=Number(b.dataset.s),id=b.dataset.id;
  if(workoutData.session&&!['session-exercise','finish-workout','discard-workout'].includes(action))return;
@@ -106,19 +106,19 @@ function handleWorkoutAction(b){
  case 'add-set':workoutDraft.exercises[e].sets.push({...workoutDraft.exercises[e].sets.at(-1)||{weight:0,reps:10,rest:90}});break;
  case 'remove-set':if(workoutDraft.exercises[e].sets.length>1)workoutDraft.exercises[e].sets.splice(j,1);else workoutNotice='Keep at least one set per exercise.';break;
  case 'save-routine':{const d=workoutDraft;if(!d.name.trim()||d.exercises.some(x=>!x.name.trim()||!x.sets.length)){workoutNotice='Enter a routine name and give each exercise a name and at least one set.';break}d.name=d.name.trim();const i=workoutData.routines.findIndex(r=>r.id===d.id);const previous=workoutData.routines[i];if(i<0)workoutData.routines.push(d);else workoutData.routines[i]=d;if(saveWorkouts()){workoutDetail=d;workoutDraft=null}else{if(i<0)workoutData.routines.pop();else workoutData.routines[i]=previous; }break}
- case 'delete-routine':if(!confirm('Delete this routine?'))return;workoutData.routines=workoutData.routines.filter(r=>r.id!==workoutDraft.id);workoutDraft=null;workoutDetail=null;saveWorkouts();break;
+ case 'delete-routine':if(!confirm('Delete this routine?'))return;{const previous=workoutData.routines;workoutData.routines=previous.filter(r=>r.id!==workoutDraft.id);if(saveWorkouts()){workoutDraft=null;workoutDetail=null}else workoutData.routines=previous;break;}
  case 'start-routine':if(!workoutDetail.exercises.length){workoutNotice='Add an exercise before starting.';break}workoutStart(workoutDetail);return;
  case 'empty-workout':workoutDraft=null;workoutDetail=null;workoutStart({name:'Workout',exercises:[]});return;
- case 'session-exercise':{const session=workoutData.session;openFormExercisePicker(xs=>{if(workoutData.session!==session)return;session.exercises.push(...xs.map(x=>({...x,sets:[{weight:0,reps:10,rest:90,done:false}]})));saveWorkouts();workoutRefresh()});return;}
- case 'finish-workout':{const r=workoutData.session,completed=r.exercises.map(x=>({...x,sets:x.sets.filter(t=>t.done)})).filter(x=>x.sets.length);if(!completed.length){workoutNotice='Complete at least one set before finishing.';break}workoutData.history.unshift({...r,exercises:completed,finished:Date.now()});workoutData.session=null;workoutDetail=null;workoutView='history';workoutQuery='';saveWorkouts();break}
- case 'discard-workout':if(!confirm('Discard this workout?'))return;workoutData.session=null;saveWorkouts();break;
+ case 'session-exercise':{const session=workoutData.session;openFormExercisePicker(xs=>{if(workoutData.session!==session)return;const previous=session.exercises.slice();session.exercises.push(...xs.map(x=>({...x,sets:[{weight:0,reps:10,rest:90,done:false}]})));if(!saveWorkouts())session.exercises=previous;workoutRefresh()});return;}
+ case 'finish-workout':{const r=workoutData.session,completed=r.exercises.map(x=>({...x,sets:x.sets.filter(t=>t.done)})).filter(x=>x.sets.length);if(!completed.length){workoutNotice='Complete at least one set before finishing.';break}const previous=workoutData.history;workoutData.history=[{...r,exercises:completed,finished:Date.now()},...previous];workoutData.session=null;if(saveWorkouts()){workoutDetail=null;workoutView='history';workoutQuery=''}else{workoutData.history=previous;workoutData.session=r}break}
+ case 'discard-workout':if(!confirm('Discard this workout?'))return;{const previous=workoutData.session;workoutData.session=null;if(!saveWorkouts())workoutData.session=previous;break;}
  default:return;
  }
  workoutRefresh();
 }
 document.addEventListener('click',e=>{const b=e.target.closest('[data-w-action]');if(b&&page==='Workouts')handleWorkoutAction(b)});
 document.addEventListener('input',e=>{const t=e.target;if(t.id==='workouts-search'){workoutQuery=t.value;const {cards,count}=workoutListItems();document.getElementById('workouts-items').innerHTML=cards;document.getElementById('workouts-count').textContent=count;return}if(!workoutDraft||!t.dataset.wField)return;const k=t.dataset.wField,i=Number(t.dataset.e),j=Number(t.dataset.s);if(k==='name'||k==='description')workoutDraft[k]=t.value;else if(k==='exercise'){const ex=workoutDraft.exercises[i];if(ex.name!==t.value){delete ex.exerciseId;delete ex.muscle;delete ex.equipment}ex.name=t.value;}else if(k==='type')workoutDraft.exercises[i].sets[j].type=t.value;else workoutDraft.exercises[i].sets[j][k]=Math.max(0,Number(t.value)||0);persistDraft()});
-document.addEventListener('change',e=>{const t=e.target;if(!t.dataset.wSession||!workoutData.session)return;const [i,j]=t.dataset.wSession.split(':').map(Number);workoutData.session.exercises[i].sets[j].done=t.checked;if(!saveWorkouts())workoutRefresh()});
+document.addEventListener('change',e=>{const t=e.target;if(!t.dataset.wSession||!workoutData.session)return;const [i,j]=t.dataset.wSession.split(':').map(Number);const set=workoutData.session.exercises[i].sets[j],previous=set.done;set.done=t.checked;if(!saveWorkouts()){set.done=previous;workoutRefresh()}});
 
 function importHevy(raw){if(demoMode)throw Error('Turn off Demo Mode before importing.');
  if(workoutDraft||workoutData.session||storageReadBlocked||storageDirty)throw Error('Finish or save current work before importing.');
