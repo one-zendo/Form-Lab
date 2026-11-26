@@ -42,3 +42,6 @@ Shared card, stack, grid, primary/secondary buttons, numeric inputs, selection, 
 
 ## Build 10 — approved measurement refinements
 Retain existing baseline. Add optional 56 CSS px workout action height (timer playground demonstrates it), 150ms immediate button feedback, 480 CSS px maximum dialog width on flat UP/UL; compact and partially folded postures retain 360 maximum. Expanded width is a new design choice within user-approved adaptive sizing, not a measured device calibration. Centralize focus and backdrop tokens. Exact hinge-safe modal placement remains pending. Browser/device verification required.
+
+## Build 19 — design compliance gate
+Official Lucide 0.456.0 SVGs and ISC license vendored from upstream; dock inline geometry matches these assets, with FORM stroke token 1.75 and existing 20px dock size preserved provisionally (20/22 conflict unresolved). No external runtime dependency. CI checks dock geometry, icon tokens, build metadata and JS syntax. New icons must be sourced from pinned official assets and added to compliance coverage. Before every commit review canonical design, layout, motion, accessibility and protected shell behavior; document exceptions and run relevant tests. Static checks do not replace visual/device review. CI is not confirmed a required branch protection gate.

@@ -8,4 +8,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: node --check shell.js && node --check foundation/posture.js && node --test tests/orientation.test.cjs
+      - run: for file in shell.js foundation/*.js; do node --check "$file" || exit 1; done
+      - run: node --test tests/*.test.cjs
