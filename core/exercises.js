@@ -13,8 +13,8 @@ const key='form.lab.custom-exercises.v1';
 const built=rows.map(([id,name,muscle,equipment])=>Object.freeze({exerciseId:'form-'+id,name,muscle,equipment}));
 let custom=[],blocked=false;
 try{const raw=localStorage.getItem(key);if(raw){const data=JSON.parse(raw);if(!Array.isArray(data)||data.some(e=>!e||!['exerciseId','name','muscle','equipment'].every(k=>typeof e[k]==='string')||!e.exerciseId.startsWith('custom-'))||new Set(data.map(e=>e.exerciseId)).size!==data.length)throw Error('Invalid catalog');custom=data}}catch{blocked=true}
-const all=()=>[...built,...custom].map(e=>({...e}));
-function create(name,muscle,equipment){name=name.trim();if(!name||blocked)throw Error(blocked?'Custom exercise storage unavailable':'Enter a name');if(!muscles.includes(muscle)||!equipmentTypes.includes(equipment))throw Error('Invalid category');const e={exerciseId:'custom-'+crypto.randomUUID(),name,muscle,equipment};localStorage.setItem(key,JSON.stringify([...custom,e]));custom.push(e);return {...e}}
+let demoCustom=[];const all=()=>[...built,...(root.formDemoMode?demoCustom:custom)].map(e=>({...e}));
+function create(name,muscle,equipment){name=name.trim();if(!name||blocked)throw Error(blocked?'Custom exercise storage unavailable':'Enter a name');if(!muscles.includes(muscle)||!equipmentTypes.includes(equipment))throw Error('Invalid category');const e={exerciseId:'custom-'+crypto.randomUUID(),name,muscle,equipment};if(root.formDemoMode){demoCustom.push(e)}else{localStorage.setItem(key,JSON.stringify([...custom,e]));custom.push(e)}return {...e}}
 const muscles=[...new Set(built.map(e=>e.muscle)),'Other'].sort();
 const equipmentTypes=[...new Set(built.map(e=>e.equipment)),'Other'].sort();
 function search(query='',muscle='',equipment=''){const q=query.trim().toLowerCase();return all().filter(e=>(!muscle||e.muscle===muscle)&&(!equipment||e.equipment===equipment)&&[e.name,e.muscle,e.equipment].some(v=>v.toLowerCase().includes(q))).sort((a,b)=>a.name.localeCompare(b.name))}
