@@ -65,3 +65,6 @@ Profile > Themes > Weather themes: Soft Sculptural + Ambient Light (default styl
 
 
 Build 43: user requested original Atmosphere concept shown in screenshot as additional selectable weather theme. Soft Weather (Original) retains translucent overlapping circular clouds, diffuse gray-blue glow, drifting sun with rotating rays, rain streaks, snow particles and moon/stars. Extends decorative fade behind tagline/greeting without changing layout or existing three styles. Same live source, diagnostics, time phase, preference persistence, reduced-motion and visibility behavior. Original preview adapted proportionally to available canvas; pixel parity and physical device rendering not verified.
+
+
+Build 45 overrides prior headline glass treatment: plain opaque canvas behind all stationary headlines, no headline backdrop blur or feather. Weather artwork retains its own artistic gradients; navigation Liquid Glass remains separate. Preserve calibrated anchors and spacing.

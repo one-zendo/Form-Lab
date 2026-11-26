@@ -60,7 +60,6 @@ body[data-nav="rail"] .dock-material{display:block;position:fixed;inset:0 0 0 au
 
 /* Material-only refinements: no changes to anchors, dimensions or hit targets. */
 @supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-.headline-material{background:var(--glass-scroll-tint)!important}
 body:not([data-nav="rail"]) .dock-material{background:var(--glass-scroll-bottom)}
 body[data-nav="rail"] .dock-material{background:var(--glass-scroll-right)}
 #dock{background:linear-gradient(145deg,var(--glass-sheen),transparent 45%,var(--glass-sheen-end)),var(--glass-dock-tint);box-shadow:inset 0 1px 1px var(--glass-rim),inset 0 -1px 1px var(--glass-rim-shade),inset 0 0 0 1px var(--glass-highlight),var(--glass-depth)}
@@ -68,7 +67,7 @@ body[data-nav="rail"] .dock-material{background:var(--glass-scroll-right)}
 #dock button[aria-pressed="true"]{background:var(--glass-selection)}
 #dock button:active{background:var(--glass-press)}
 }
-@media(prefers-reduced-transparency:reduce){.headline-material{background:var(--canvas)!important}#dock{background:var(--paper);box-shadow:inset 0 0 0 1px var(--glass-highlight),var(--glass-depth)}#dock button[aria-pressed="true"],#dock button:active{background:var(--elevated)}}
+@media(prefers-reduced-transparency:reduce){#dock{background:var(--paper);box-shadow:inset 0 0 0 1px var(--glass-highlight),var(--glass-depth)}#dock button[aria-pressed="true"],#dock button:active{background:var(--elevated)}}
 
 /* Narrow viewports retain every reachable target rather than clip labels. */
 #dock{overflow-x:auto;scrollbar-width:none}#dock::-webkit-scrollbar{display:none}

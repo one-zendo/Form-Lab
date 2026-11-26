@@ -77,3 +77,6 @@ Build 38: user approved equal Home cards and a 12pt card-to-dock gap. Home uses 
 
 
 Build 44: user screenshot of Build 43 shows bottom streak card fading despite stationary Home layout. Home scroll-edge material is transparent by default; enable only in bottom-dock mode when live dashboard bounds intersect the dock's vertical region and the content pane has actual scroll overflow. Re-evaluate on scroll, resize, page/orientation/posture changes and ResizeObserver. Rail Home does not use surrounding edge frosting because it has no horizontal content scroll. Other pages retain prior scroll-edge material; dock capsule and selection lens remain unchanged. No changes to geometry, card clearance, weather or navigation gestures. Reduced-motion removes opacity transition. Physical Safari review pending.
+
+
+Build 45: user requests removal of all headline blur effects. Shared headline backing is now solid canvas with no backdrop filter, gradient tint or feather mask; retains existing height and initial content clearance so scrolling text cannot overlap foreground headline. Atmosphere artwork remains independent above backing. Navigation materials, dimensions, gestures and Home sizing unchanged. Visual device verification pending.
