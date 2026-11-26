@@ -63,3 +63,6 @@ Branch: checkpoint/build-159-device-confirmed
 - FL1 is right-dominant resolved horizontal safe-area inset; left-dominant is FL2; equal/near-equal is unknown and retains baseline. No guessed angle mapping.
 - FL1 Home only: 6px inner left margin, top max(12px,safe top), bottom 8px plus safe inset. Existing horizontal reserve, 40:60 columns and rail calibration unchanged. Diagnostics reports island side.
 - All baseline CSS preserved byte-for-byte; JS syntax and five isolated classifier cases passed. Actual Safari safe-area asymmetry, physical geometry, native CI and live deployment unverified. If Safari reports equal insets, optimization intentionally does not activate; inspect diagnostics before adjusting.
+
+## Build 163 — safe-area visualization
+Developer settings toggle shows black bars for all four CSS env safe-area insets. Fixed noninteractive overlay, off by default, session-only. Diagnostics reports resolved top/right/bottom/left values. Does not change content or rail geometry. Zero inset produces no bar; browser-excluded screen regions cannot be painted by the app. JS syntax checked; physical device and deployment unverified.
