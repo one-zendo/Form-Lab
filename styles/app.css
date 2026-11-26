@@ -203,21 +203,7 @@ main::-webkit-scrollbar {
   height:var(--icon-default);
 }
 
-.enter {
-  animation:enter var(--motion-duration) var(--motion-ease);
-}
-
-@keyframes enter {
-  from {
-    opacity:.4;
-    transform:translateY(8px);
-  }
-
-  to {
-    opacity:1;
-    transform:none;
-  }
-}
+/* Motion policy: page changes are immediate; animate local interactions only. */
 
 @media(prefers-reduced-motion:reduce) {
   * {
