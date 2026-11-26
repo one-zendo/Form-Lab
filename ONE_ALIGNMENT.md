@@ -1,0 +1,2 @@
+# ONE UI alignment
+Reference: one-zendo/One@e4a038bc5556f53e6ea25ca9953d5c7750675471, src/index.js, src/styles.css, src/browser.js.txt. Adapted routine list selection marker, 76px card hierarchy, shared routine detail/edit header, collapsible exercise cards, compact set rows, inline picker. Lab retains its data and layout engine. Rest remains seconds, set type and replacement controls are retained; active workout picker remains modal. No claim of pixel parity; device testing required.
