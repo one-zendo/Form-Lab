@@ -887,7 +887,7 @@ body[data-dock=bottom] #build-tools{bottom:calc(var(--bottom-bar-height) + var(-
 .appearance-options svg{width:20px;height:20px;color:var(--accent)}
 
 /* Build 139: compact card-aligned bottom dock, independent of side rail. */
-:root{--bottom-bar-height:56px;--bottom-bar-icon:22px;--bottom-bar-capsule-width:54px;--bottom-bar-capsule-height:40px;--bottom-bar-padding:4px;--bottom-bar-edge:var(--content-edge);--bottom-bar-offset:8px}
+:root{--bottom-bar-height:56px;--bottom-bar-icon:22px;--bottom-bar-capsule-width:54px;--bottom-bar-capsule-height:40px;--bottom-bar-padding:4px;--bottom-bar-edge:var(--content-edge);--bottom-bar-offset:4px}
 body[data-dock=bottom] nav.nav,body[data-layout=folded-portrait][data-dock=bottom] nav.nav{inset:auto calc(var(--bottom-bar-edge) + var(--safe-right)) calc(var(--bottom-bar-offset) + var(--safe-bottom)) calc(var(--bottom-bar-edge) + var(--safe-left));width:auto;height:var(--bottom-bar-height);padding:var(--bottom-bar-padding) max(var(--space-1),calc((100% - var(--bottom-bar-content-max))/2));border:1px solid var(--line);border-radius:var(--radius-card);grid-template-columns:repeat(4,minmax(0,1fr));}
 body[data-dock=bottom] main,body[data-layout=folded-portrait][data-dock=bottom] main{padding-bottom:calc(var(--bottom-bar-height) + var(--bottom-bar-offset) + var(--safe-bottom) + var(--space-4))}
 body[data-dock=bottom] #build-tools{bottom:calc(var(--bottom-bar-height) + var(--bottom-bar-offset) + var(--safe-bottom));}
@@ -908,3 +908,6 @@ body[data-dock=bottom] #build-tools{bottom:calc(var(--bottom-bar-height) + var(-
 #public-build-number{position:fixed;z-index:999;left:calc(var(--space-3) + var(--safe-left));bottom:calc(var(--safe-bottom) + 1px);font-size:9px;line-height:10px;color:var(--muted);pointer-events:none;white-space:nowrap}
 body[data-dock=bottom] #public-build-number{left:calc(50% + (var(--safe-left) - var(--safe-right))/2);transform:translateX(-50%);bottom:var(--safe-bottom);line-height:8px;font-size:8px}
 body:not([data-layout]) #public-build-number,body:has(#build-tools:not([hidden])) #public-build-number{visibility:hidden}
+
+/* Build 142: lower dock; passive label sits in the content gap above it. */
+body[data-dock=bottom] #public-build-number{bottom:calc(var(--safe-bottom) + var(--bottom-bar-offset) + var(--bottom-bar-height) + 2px);left:auto;right:calc(var(--bottom-bar-edge) + var(--safe-right) + var(--space-2));transform:none;line-height:10px;font-size:8px}
