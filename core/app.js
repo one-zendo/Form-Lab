@@ -1,5 +1,5 @@
 
-const BUILD=133;
+const BUILD=134;
 const UPDATE_INTERVAL_MS = 30000;
 const tabs=['Home','Workouts','Progress','Profile'];
 const glyphs={home:'M3 11 12 3l9 8v9h-6v-7H9v7H3z',workouts:'M3 10h18v4H3zM7 6v12M17 6v12',progress:'M3 20h18M5 15l4-5 4 3 6-9',profile:'M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8M4 21v-2a8 8 0 0 1 16 0v2',exercise:'M3 10h18v4H3zM6 7v10M18 7v10',timer:'M12 7v6l4 2M9 2h6M12 4a9 9 0 1 0 0 18 9 9 0 0 0 0-18',records:'M5 20V9h14v11M8 9V5h8v4M9 14h6',library:'M4 4h6v16H4zM14 4h6v16h-6z',plus:'M12 4v16M4 12h16',swap:'M4 7h15l-4-4m5 14H5l4 4',rest:'M4 3h16v18H4zM8 8h8M8 12h8M8 16h5',calendar:'M3 5h18v16H3zM7 3v4m10-4v4M3 10h18',heart:'M20 8c0 5-8 11-8 11S4 13 4 8a4 4 0 0 1 8-1 4 4 0 0 1 8 1'};
@@ -16,9 +16,6 @@ const WORKOUT_STORAGE='form.lab.workouts.v1';
 let workoutData={routines:[],history:[],session:null},workoutView='routines',workoutQuery='',workoutDetail=null,workoutDraft=null,workoutNotice='';
 const WORKOUT_BACKUP=WORKOUT_STORAGE+'.backup';
 let storageReadBlocked=false,storageDirty=false;
-const validRecord=r=>r&&typeof r.id==='string'&&typeof r.name==='string'&&Array.isArray(r.exercises)&&r.exercises.every(e=>e&&typeof e.name==='string'&&Array.isArray(e.sets)&&e.sets.every(t=>t&&typeof t==='object'&&!Array.isArray(t)&&['weight','reps','rest'].every(k=>t[k]==null||(typeof t[k]==='number'&&Number.isFinite(t[k])&&t[k]>=0))));
-const validWorkoutData=d=>d&&typeof d==='object'&&!Array.isArray(d)&&(!('schemaVersion' in d)||d.schemaVersion===1)&&Array.isArray(d.routines)&&d.routines.every(validRecord)&&Array.isArray(d.history)&&d.history.every(validRecord)&&(d.session==null||validRecord(d.session));
-function readWorkoutData(raw){const d=JSON.parse(raw);if(!validWorkoutData(d))throw Error('Invalid workout data');return {routines:d.routines,history:d.history,session:d.session||null}}
 try{
  const raw=localStorage.getItem(WORKOUT_STORAGE);
  if(raw!==null)workoutData=readWorkoutData(raw);
