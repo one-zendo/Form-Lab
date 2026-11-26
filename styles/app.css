@@ -978,3 +978,7 @@ body[data-layout=unfolded-landscape] .home-month-grid{row-gap:clamp(2px,.8vh,var
 
 /* Build 155: gentler return to flat posture. */
 :root{--unfold-motion-ms:460;--unfold-motion-easing:cubic-bezier(.2,.75,.2,1)}
+
+/* Build 156: suppress WebKit native tap flash; preserve keyboard focus. */
+html,body,button,a,[role=button],input,select,textarea,label{-webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible,[role=button]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
