@@ -86,3 +86,8 @@ body[data-nav="rail"] .dock-material{background:var(--glass-scroll-right)}
 #dock[data-overflow=true]{touch-action:pan-x}body[data-nav=rail] #dock[data-overflow=true]{touch-action:pan-y}
 @media(prefers-reduced-motion:reduce){#dock .dock-lens,#dock .dock-lens>div{transition:none!important}#dock[data-dragging=true] .dock-lens>div{transform:none}}
 @media(prefers-reduced-transparency:reduce){#dock .dock-lens>div{background:var(--elevated);box-shadow:none}}
+
+/* Build 44: scroll-edge glass is independent of the floating dock. Home at rest is crisp. */
+body[data-page=Home] .dock-material{opacity:0;transition:opacity var(--motion-feedback) var(--ease-standard)}
+body[data-page=Home][data-nav-edge-overlap=true] .dock-material{opacity:1}
+@media(prefers-reduced-motion:reduce){body[data-page=Home] .dock-material{transition:none}}
