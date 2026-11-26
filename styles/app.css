@@ -988,20 +988,23 @@ body[data-layout=unfolded-landscape] .home-month-grid{container-type:size}
 body[data-layout=unfolded-landscape] .home-month-day{--month-marker-size:min(var(--home-month-cell-expanded),calc((100cqh - 6 * clamp(2px,.8vh,var(--home-month-row-gap)))/7),calc((100cqw - 6 * var(--space-1))/7));width:var(--month-marker-size);height:var(--month-marker-size);max-width:none;max-height:none;min-width:0;min-height:0;aspect-ratio:1;box-sizing:border-box;border-radius:50%;align-self:center;justify-self:center}
 
 /* Build 158: posture-specific dashboard rules, independent of content breakpoint. */
-:root{--fl-home-edge:12px;--fl-home-gap:12px;--fl-workout-share:2fr;--fl-streak-share:3fr;--fl-home-padding:12px;--fl-day-size:28px}
+:root{--fl-home-edge:12px;--fl-home-gap:12px;--fl-workout-share:2fr;--fl-streak-share:3fr;--fl-home-padding:12px;--fl-day-size:28px;--fl-bottom-clearance:var(--space-3);--fl-streak-gap:var(--space-2)}
 body[data-layout^=folded-] .home-month,body[data-layout^=folded-] .home-workout-expanded{display:none}
 body[data-layout^=folded-] .home-streak-card .home-days{display:grid}
 body[data-layout=folded-portrait] .home-dashboard{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(var(--home-workout-min),auto) minmax(var(--home-streak-min),1fr)}
-body[data-layout=folded-landscape] main:has(.home-page){overflow:hidden}
-body[data-layout=folded-landscape] .home-page{box-sizing:border-box;height:100%;min-height:0;max-height:100%;padding-inline-start:var(--fl-home-edge);padding-bottom:max(var(--space-2),var(--safe-bottom));gap:var(--fl-home-gap)}
+body[data-layout=folded-landscape] main:has(.home-page){overflow-y:auto;padding-bottom:calc(var(--fl-bottom-clearance) + var(--safe-bottom))}
+body[data-layout=folded-landscape] .home-page{box-sizing:border-box;height:100%;min-height:0;max-height:100%;padding-inline-start:var(--fl-home-edge);padding-bottom:0;gap:var(--fl-home-gap)}
 body[data-layout=folded-landscape] .home-header,body[data-layout=folded-landscape] .home-greeting{flex:none}
-body[data-layout=folded-landscape] .home-dashboard{flex:1 1 0;min-height:0;grid-template-columns:minmax(0,var(--fl-workout-share)) minmax(0,var(--fl-streak-share));grid-template-rows:minmax(0,1fr);gap:var(--fl-home-gap)}
-body[data-layout=folded-landscape] .home-primary,body[data-layout=folded-landscape] .home-support{grid-template-rows:minmax(0,1fr)}
+body[data-layout=folded-landscape] .home-dashboard{flex:1 0 auto;min-height:min-content;grid-template-columns:minmax(0,var(--fl-workout-share)) minmax(0,var(--fl-streak-share));grid-template-rows:minmax(min-content,1fr);gap:var(--fl-home-gap)}
+body[data-layout=folded-landscape] .home-primary,body[data-layout=folded-landscape] .home-support{grid-template-rows:minmax(min-content,1fr)}
 body[data-layout=folded-landscape] .home-workout-card,body[data-layout=folded-landscape] .home-streak-card{min-height:0;height:100%;padding:var(--fl-home-padding);gap:var(--space-2)}
 body[data-layout=folded-landscape] .home-workout-card{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;align-content:stretch}
 body[data-layout=folded-landscape] .home-workout-copy{grid-column:1;align-self:start}
 body[data-layout=folded-landscape] .home-workout-cta{grid-column:1;justify-self:end;align-self:end}
-body[data-layout=folded-landscape] .home-days{margin:var(--space-2) 0;gap:var(--space-1)}
+body[data-layout=folded-landscape] .home-streak-card{height:auto;align-self:stretch;justify-content:space-between;gap:var(--fl-streak-gap)}
+body[data-layout=folded-landscape] .home-days{flex:0 0 auto;margin:0;gap:var(--space-1)}
+body[data-layout=folded-landscape] .home-day{gap:var(--space-1)}
+body[data-layout=folded-landscape] .home-streak-footer{flex:none;padding-top:var(--space-2);margin-top:0}
 body[data-layout=folded-landscape] .home-day-dot{width:min(100%,var(--fl-day-size));aspect-ratio:1}
 body[data-layout=folded-landscape] .home-streak-title h2{font-size:var(--type-date)}
 body[data-layout=folded-landscape] .home-streak-top{gap:var(--space-1)}
