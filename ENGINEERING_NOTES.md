@@ -99,3 +99,6 @@ Share existing workout button and input declarations with low-specificity univer
 
 ## Build 174 — interaction component foundation
 Add opt-in dialog, sheet, menu and selection primitives; classify five existing dialogs as legacy to avoid altering geometry or backdrop. Share page menu grid. No lifecycle, hinge, navigation or motion policy changes. JS syntax checked; regression definition added. New sheet and selection variants not yet used in runtime; device testing pending.
+
+## Build 175 — persistent viewport outline and component audit
+User requested always-visible diagnostic blue boundary in normal app. Add fixed 2px outline sharing diagnostic color/width, pointer-events none, aria-hidden, no grid or layout space. Diagnostic mode retains its own outline. Native modal top layer may cover/dim normal overlay. Extend focus-visible style to universal fields. Keep existing dialog and motion rules until device validation; no speculative migrations. JS syntax checked; regression definition added.
