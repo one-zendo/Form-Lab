@@ -8,3 +8,5 @@ Build 6 user feedback (2026-11-26): user reported “You nailed it” after the 
 
 ## Build 7 — posture response
 User reported Hinge = Book when partially folded. Existing detection therefore works for book posture on their Safari device. Added book two-column and laptop stacked sample layouts, with posture-specific labels. Book uses viewport segment boundary when exposed, otherwise approximate equal tracks; not a calibrated hinge gap or full segment-safe layout. Laptop detection and layout not yet device confirmed. No new motion or rotation changes.
+
+Build 7 user confirmed hinge response working; precise segment clearance and laptop testing remain unverified.
