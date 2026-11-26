@@ -296,8 +296,8 @@ main {
   font-size:var(--type-brand);
   line-height:var(--brand-line-height);
 }
-.home-brand .page-tab-trigger { gap:var(--signature-gap); }
-.home-brand .page-tab-trigger > span { display:inline-flex; align-items:center; gap:var(--signature-gap); }
+
+
 .home-brand .brand::before { content:none; }
 .brand-signature {
   display:inline-block;
@@ -801,15 +801,15 @@ body[data-layout=folded-portrait] main {
   color:var(--on-accent);
 }
 /* Heading navigation: shared tokens, no floating control. */
-.page-tab-trigger{display:inline-flex;align-items:center;gap:var(--space-1);background:transparent;color:inherit;font:inherit;letter-spacing:inherit;text-align:left;padding:0;min-height:var(--touch-target)}
 
-.page-tab-menu{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:var(--radius-card);padding:var(--card-padding);width:min(var(--dialog-max),calc(100% - var(--space-8)));max-height:calc(100% - var(--space-8));box-shadow:var(--elevation-card)}
-.page-tab-menu::backdrop{background:#0006}
-.page-tab-menu h2{font-size:var(--type-subtitle);margin:0 0 var(--space-2)}
-:where(.form-menu),.page-tab-options{display:grid;gap:var(--space-1)}
-.page-tab-options button{display:flex;align-items:center;gap:var(--space-3);min-height:var(--touch-target);padding:var(--space-2) var(--space-3);border-radius:var(--radius-control);background:transparent;color:var(--ink);text-align:left;font-size:var(--type-body)}
-.page-tab-options button svg{width:var(--icon-inline);height:var(--icon-inline)}
-.page-tab-options button[aria-current=page]{background:var(--raised);color:var(--accent)}
+
+
+
+
+:where(.form-menu){display:grid;gap:var(--space-1)}
+
+
+
 /* Adaptive dock: preserve folded rail; unfolded uses in-viewport bottom dock. */
 :root{
  --safe-top:env(safe-area-inset-top,0px);
@@ -974,7 +974,7 @@ body[data-layout=unfolded-landscape] .home-streak-card{gap:var(--space-2)}
 /* Build 154: recovery identity, adaptive calendar and shared text baselines. */
 :root{--recovery-accent:#0088FF;--recovery-on-accent:#fff;--hinge-motion-ms:320;--unfold-motion-ms:460;--unfold-motion-easing:cubic-bezier(.2,.75,.2,1);--hinge-motion-easing:cubic-bezier(.22,.8,.25,1);--home-month-cell-expanded:40px;--home-month-row-gap:var(--space-2)}
 .home-day-dot.done.recovered,.home-month-day.achieved.recovered{background:var(--recovery-accent);color:var(--recovery-on-accent)}
-.home-header{align-items:baseline}.home-header .brand{align-items:baseline}.home-header .brand-signature,.home-header .headline-build{align-self:center}.home-header .page-tab-trigger,.home-header .page-tab-trigger>span{align-items:baseline}.home-header .home-date strong{align-self:baseline}.home-header .tagline,.home-header .home-date span{align-self:baseline}
+.home-header{align-items:baseline}.home-header .brand{align-items:baseline}.home-header .brand-signature,.home-header .headline-build{align-self:center}.home-header .home-date strong{align-self:baseline}.home-header .tagline,.home-header .home-date span{align-self:baseline}
 @container (min-width:650px){.home-month{flex:1 1 auto;min-height:0;grid-template-rows:auto minmax(0,1fr);gap:var(--home-month-row-gap)}.home-month-grid{min-height:0;grid-auto-rows:minmax(0,1fr);row-gap:var(--home-month-row-gap);column-gap:var(--space-1)}.home-month-day{width:min(100%,var(--home-month-cell-expanded));max-height:100%;height:auto}.home-streak-footer{margin-top:auto}}
 body[data-layout=unfolded-landscape] .home-month-grid{row-gap:clamp(2px,.8vh,var(--home-month-row-gap))}body[data-layout=unfolded-landscape] .home-month-day{width:min(100%,var(--home-month-cell-expanded),5.2vh)}
 
@@ -1040,7 +1040,7 @@ body[data-safe-overlay=true] #safe-area-overlay,body[data-diagnostics=true] #saf
 #safe-area-overlay i:nth-child(3){inset:auto 0 0;height:var(--safe-bottom)}
 #safe-area-overlay i:nth-child(4){inset:0 auto 0 0;width:var(--safe-left)}
 
-.diagnostics-toggle{font:inherit;font-size:var(--type-caption);font-weight:600;color:var(--accent);background:var(--raised);border:0;border-radius:var(--radius-pill);padding:var(--space-2) var(--space-3);min-height:32px;letter-spacing:0;white-space:nowrap;flex:none}#open-diagnostics{margin-inline-start:var(--space-2)}#close-diagnostics{margin-block:var(--space-2)}
+
 
 /* Independent viewport lab: no FORM content, rail, or calibrated inset. */
 #viewport-lab[hidden]{display:none!important}
@@ -1071,3 +1071,8 @@ body[data-layout=folded-landscape]:not([data-calibrating=true]) nav.nav{flex-dir
 /* Persistent Lab viewport boundary: never participates in layout or hit testing. */
 #viewport-outline{position:fixed;inset:0;z-index:99999;box-sizing:border-box;border:var(--viewport-outline-width) solid var(--viewport-outline-color);pointer-events:none;background:none}
 body[data-diagnostics=true] #viewport-outline{visibility:hidden}
+
+/* FORM wordmark is the diagnostic toggle; normal navigation remains in the dock. */
+.form-diagnostics-headline{display:inline-flex;align-items:center;gap:0;background:transparent;color:inherit;font:inherit;letter-spacing:inherit;padding:0;min-height:var(--touch-target);white-space:nowrap}
+.home-brand .form-diagnostics-headline .brand-signature{align-self:center}
+.viewport-readings header #close-diagnostics{background:transparent;color:#111;padding:0;font:var(--headline-weight) var(--headline-size)/var(--headline-height) var(--headline-family);letter-spacing:var(--headline-tracking)}
