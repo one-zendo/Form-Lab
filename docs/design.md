@@ -1,2 +1,35 @@
 # Design
 FORM — Train with focus, follow your progress. Apple-inspired, calm, focused, private, progressive disclosure. Inter; wordmark 28/700, large title 34/700, page 28/700, section 22/650, headline 17/600, body 17/400, supporting 15/400, caption 12/400; tabular numerals for workout values. Official Lucide only, 1.75 stroke; default 24, Profile 20, chevron 18, action 18; dock 20 or 22 unresolved. Spacing 4/8/12/16/20/24/32/40/48; radii 8 small, 12 control, 20 card, 24 dialog, full pill. Minimum target 44; dialog max 360, primary action 48. Default canvas #F2F2F7, paper #FFFFFF, ink #000000, muted #636366, action #0066CC, brand #0088FF, danger #D51028, insight #B02FC2, elevated #E5E5EA. Graphite Lime canvas #17171F, paper #24242E, elevated #30303C, ink #F5F5F5, muted #A3A3A3, action #B0FF00, danger #FF6961. White on light action, graphite on lime. Rest timer blue #0088FF; completion roles differ by theme and context; reconcile historical exceptions before implementation. WCAG AA, scalable type, focus and non-color cues. Buttons Title Case; headings sentence case. Shared components, no arbitrary local tokens. Preserve detailed approved component decisions in archive/design-history.md; reconcile before rebuilding. Artwork RepDB Standard only with verified license. No fake workout data.
+
+## Component and artwork references
+# FORM universal components
+
+Build 173. Use form-page, form-grid, form-stack, form-card for layout; form-button for filled primary actions, form-secondary for raised secondary actions, form-icon for square icon buttons, form-input for fields, form-section-heading for section titles, form-numeric for tabular figures. Use native semantic elements and accessible names. Existing workout button/input selectors share the same declarations and remain for compatibility. New variants are opt-in; do not change existing controls or add arbitrary colors, spacing or motion. Existing headlines.css and FormUI.icon/dayIndicator remain authoritative implementation for current headings and icons. Dialogs, menus, timer and additional component migrations remain future work. DESIGN_SYSTEM.md defines intended standards; current runtime values are preserved where different (body type, icon defaults, dialog sizing, motion aliases). No global motion changes.
+
+## Interaction surfaces (174)
+Use native dialog.form-dialog for new centered dialogs; add form-sheet for bottom-aligned sheet geometry. form-menu provides grid spacing; form-selection supports aria-pressed/current and existing color-motion tokens. Existing five dialogs carry form-dialog-legacy to preserve their exact sizing, borders and backdrop until individually migrated. Page navigation menu shares form-menu. Native showModal/close and existing handlers unchanged. No custom sheet animation or focus trap introduced.
+
+## Build 175 audit
+Shared focus-visible outline now covers universal input fields. Existing modal dimensions and motion aliases retained pending browser validation. Lab viewport outline shares diagnostic border tokens, fixed to viewport, non-interactive, hidden in diagnostic mode to avoid duplicate outlines. Native modal top layer can cover/dim it; no layout reservation.
+
+# Exercise artwork integration
+
+RepDB Standard is the approved provider. No paid assets, preview assets, or vendor dataset are included. RepDB supplies downloadable files rather than a hosted API (https://repdb.co/). Confirm the commercial license and serving arrangement before importing.
+
+FORM's immutable exerciseId is independent of RepDB's ID. Existing name-only records remain compatible and show the existing exercise icon. Do not infer identity by matching names. A future catalog importer maps FORM IDs to licensed asset paths explicitly. Example synthetic manifest entry: { "exerciseId": "form-example", "male": { "start": "stills/example.webp", "peak": "stills/example-peak.webp", "animation": "animations/example.webp" } }. Optional female entries use the same structure. Call FormArtwork.configure(entries, approvedBaseURL) then FormArtwork.mount(container, exercise, options). Use animation only on demand; reduced motion selects a still. Missing and failed images retain the fallback. No network request occurs before configuration. The current routine-detail markup exposes the component slot; actual catalog selection and mounting lifecycle are future work. Do not commit vendor files to this public repository.
+
+# FORM — Mandatory design system rules
+
+Applies to every new or modified page, component, dialog, sheet, and interaction.
+
+1. FORM's global semantic design and measurement tokens are the source of truth. Use shared tokens for colors, typography, spacing, padding, radii, dimensions, icons, elevation, touch targets and motion. Do not duplicate hardcoded values in components; define or extend semantic tokens centrally when necessary.
+2. Requests to copy or reference One mean adapt its visual composition, hierarchy, layout and interaction patterns to FORM's own tokens and independent implementation. Never import One's styling or measurements wholesale.
+3. Components must adapt to available content space, folded/unfolded screens and orientations. Prefer content-driven sizing, shared responsive tokens and flexible layouts.
+4. Preserve the approved Build 78 Duo navigation geometry and current viewport, gesture and update behavior. Do not modify these protected foundations as a side effect of page work. Existing dock geometry is a documented exception to generic measurement rules.
+5. Before committing, inspect new/modified styles for hardcoded design values, check token references, validate JavaScript syntax, and verify that protected shell behavior is unchanged. Report any exceptions and any device tests not performed.
+6. Treat literal zero, percentages, intrinsic sizing keywords, structural grid fractions, and necessary device-specific geometry as layout mechanics rather than arbitrary design values. Document intentional exceptions.
+
+Baseline: Build 83 adaptive measurement system. Read the current source before implementing changes.
+
+# ONE UI alignment
+Reference: one-zendo/One@e4a038bc5556f53e6ea25ca9953d5c7750675471, src/index.js, src/styles.css, src/browser.js.txt. Adapted routine list selection marker, 76px card hierarchy, shared routine detail/edit header, collapsible exercise cards, compact set rows, inline picker. Lab retains its data and layout engine. Rest remains seconds, set type and replacement controls are retained; active workout picker remains modal. No claim of pixel parity; device testing required.

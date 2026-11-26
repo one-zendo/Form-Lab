@@ -1,10 +1,3 @@
 # FORM Lab reference library
 
-This directory preserves design knowledge for the fresh rebuild. Existing application code remains in place during organization.
-
-- [Hardware calibration](duo-hardware-calibration.md): recorded physical geometry; provisional values require verification.
-- [Design](design.md): historical approved design decisions and refinements.
-- [Design system reference](design-system-reference.md): historical tokens, motion and layout reconciliation through Build 189.
-- [Product](product.md), [Requirements](requirements.md), [UX](ux.md): product scope and journeys.
-
-Historical references contain superseded values and implementation-specific exceptions. Do not treat all values as current. Reconcile conflicts against latest user-approved calibration and source before rebuilding. No app implementation is approved for automatic reuse.
+Start with [hardware standard](DUO-HARDWARE-STANDARD.md) for approved calibration, then hardware.md, layout.md, design.md, motion.md, navigation.md, diagnostics.md, preview.md, product.md and engineering.md. Historical references and reference/ source extracts are evidence, not active implementation. Resolve conflicts explicitly; hardware standard takes priority for geometry. No production app exists yet.
