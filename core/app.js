@@ -1,5 +1,5 @@
 
-const BUILD=117;
+const BUILD=118;
 const UPDATE_INTERVAL_MS = 30000;
 const tabs=['Home','Workouts','Progress','Profile'];
 const glyphs={home:'M3 11 12 3l9 8v9h-6v-7H9v7H3z',workouts:'M3 10h18v4H3zM7 6v12M17 6v12',progress:'M3 20h18M5 15l4-5 4 3 6-9',profile:'M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8M4 21v-2a8 8 0 0 1 16 0v2',exercise:'M3 10h18v4H3zM6 7v10M18 7v10',timer:'M12 7v6l4 2M9 2h6M12 4a9 9 0 1 0 0 18 9 9 0 0 0 0-18',records:'M5 20V9h14v11M8 9V5h8v4M9 14h6',library:'M4 4h6v16H4zM14 4h6v16h-6z',plus:'M12 4v16M4 12h16',swap:'M4 7h15l-4-4m5 14H5l4 4',rest:'M4 3h16v18H4zM8 8h8M8 12h8M8 16h5',calendar:'M3 5h18v16H3zM7 3v4m10-4v4M3 10h18',heart:'M20 8c0 5-8 11-8 11S4 13 4 8a4 4 0 0 1 8-1 4 4 0 0 1 8 1'};
@@ -16,8 +16,8 @@ const WORKOUT_STORAGE='form.lab.workouts.v1';
 let workoutData={routines:[],history:[],session:null},workoutView='routines',workoutQuery='',workoutDetail=null,workoutDraft=null,workoutNotice='';
 const WORKOUT_BACKUP=WORKOUT_STORAGE+'.backup';
 let storageReadBlocked=false,storageDirty=false;
-const validRecord=r=>r&&typeof r.id==='string'&&typeof r.name==='string'&&Array.isArray(r.exercises)&&r.exercises.every(e=>e&&typeof e.name==='string'&&Array.isArray(e.sets)&&e.sets.every(t=>t&&typeof t==='object'));
-const validWorkoutData=d=>d&&(!('schemaVersion' in d)||d.schemaVersion===1)&&Array.isArray(d.routines)&&d.routines.every(validRecord)&&Array.isArray(d.history)&&d.history.every(validRecord)&&(d.session==null||validRecord(d.session));
+const validRecord=r=>r&&typeof r.id==='string'&&typeof r.name==='string'&&Array.isArray(r.exercises)&&r.exercises.every(e=>e&&typeof e.name==='string'&&Array.isArray(e.sets)&&e.sets.every(t=>t&&typeof t==='object'&&!Array.isArray(t)));
+const validWorkoutData=d=>d&&typeof d==='object'&&!Array.isArray(d)&&(!('schemaVersion' in d)||d.schemaVersion===1)&&Array.isArray(d.routines)&&d.routines.every(validRecord)&&Array.isArray(d.history)&&d.history.every(validRecord)&&(d.session==null||validRecord(d.session));
 function readWorkoutData(raw){const d=JSON.parse(raw);if(!validWorkoutData(d))throw Error('Invalid workout data');return {routines:d.routines,history:d.history,session:d.session||null}}
 try{
  const raw=localStorage.getItem(WORKOUT_STORAGE);
@@ -97,7 +97,7 @@ function handleWorkoutAction(b){
  case 'delete-routine':if(!confirm('Delete this routine?'))return;workoutData.routines=workoutData.routines.filter(r=>r.id!==workoutDraft.id);workoutDraft=null;workoutDetail=null;saveWorkouts();break;
  case 'start-routine':if(!workoutDetail.exercises.length){workoutNotice='Add an exercise before starting.';break}workoutStart(workoutDetail);return;
  case 'empty-workout':workoutDraft=null;workoutDetail=null;workoutStart({name:'Workout',exercises:[]});return;
- case 'session-exercise':{const name=prompt('Exercise name');if(!name?.trim())return;const weight=Number(prompt('Weight (kg)','0')),reps=Number(prompt('Reps','10'));if(!Number.isFinite(weight)||!Number.isFinite(reps)||weight<0||reps<0)return;workoutData.session.exercises.push({name:name.trim(),sets:[{weight,reps,rest:90,done:false}]});saveWorkouts();break}
+ case 'session-exercise':{const name=prompt('Exercise name');if(!name?.trim())return;const weightInput=prompt('Weight (kg)','0');if(weightInput===null)return;const repsInput=prompt('Reps','10');if(repsInput===null)return;const weight=Number(weightInput),reps=Number(repsInput);if(!Number.isFinite(weight)||!Number.isFinite(reps)||weight<0||reps<0)return;workoutData.session.exercises.push({name:name.trim(),sets:[{weight,reps,rest:90,done:false}]});saveWorkouts();break}
  case 'finish-workout':{const r=workoutData.session,completed=r.exercises.map(x=>({...x,sets:x.sets.filter(t=>t.done)})).filter(x=>x.sets.length);if(!completed.length){workoutNotice='Complete at least one set before finishing.';break}workoutData.history.unshift({...r,exercises:completed,finished:Date.now()});workoutData.session=null;workoutDetail=null;workoutView='history';workoutQuery='';saveWorkouts();break}
  case 'discard-workout':if(!confirm('Discard this workout?'))return;workoutData.session=null;saveWorkouts();break;
  default:return;
@@ -130,7 +130,7 @@ function adaptWorkoutsOrientation(){if(page!=='Workouts'||showDiagnostics||worko
 main.addEventListener('scroll',diagnostics,{passive:true});
 let updateRequest=null,reloading=false;
 function reloadLatest(){if(reloading)return;if(workoutData.session||workoutDraft||storageDirty||storageReadBlocked){document.getElementById('update-status').textContent='Update deferred · protect workout data';return}reloading=true;const target=new URL('index.html',location.href);target.searchParams.set('refresh',Date.now());location.replace(target.href)}
-async function update(manual=false){if(reloading||(!manual&&document.hidden))return;const status=document.getElementById('update-status');if(manual)status.textContent='Checking…';if(!updateRequest){updateRequest=(async()=>{const url=new URL('version.json',location.href);url.searchParams.set('check',Date.now());const response=await fetch(url,{cache:'no-store'});if(!response.ok)throw Error('HTTP '+response.status);const manifest=await response.json();if(!Number.isSafeInteger(manifest.build)||manifest.build<1)throw Error('Invalid build');return manifest.build})().finally(()=>{updateRequest=null})}try{const latest=await updateRequest;if(latest>BUILD){status.textContent='Updating to Build '+latest+'…';reloadLatest()}else if(manual)status.textContent='Up to date · '+latest}catch(e){if(manual)status.textContent='Check failed · '+e.message}}
+async function update(manual=false){if(reloading||(!manual&&document.hidden))return;const status=document.getElementById('update-status');if(manual)status.textContent='Checking…';if(!updateRequest){updateRequest=(async()=>{const url=new URL('version.json',location.href);url.searchParams.set('check',Date.now());const response=await fetch(url,{cache:'no-store'});if(!response.ok)throw Error('HTTP '+response.status);const manifest=await response.json();if(!manifest||!Number.isSafeInteger(manifest.build)||manifest.build<1)throw Error('Invalid build');return manifest.build})().finally(()=>{updateRequest=null})}try{const latest=await updateRequest;if(latest>BUILD){status.textContent='Updating to Build '+latest+'…';reloadLatest()}else if(manual)status.textContent='Up to date · '+latest}catch(e){if(manual)status.textContent='Check failed · '+e.message}}
 // Prevent horizontal touch panning in the static preview, without clipping the dock.
 let swipeOrigin=null;
 document.addEventListener('touchstart',e=>{swipeOrigin=e.touches.length===1?[e.touches[0].clientX,e.touches[0].clientY]:null},{passive:true});
