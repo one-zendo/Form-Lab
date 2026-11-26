@@ -9,3 +9,9 @@
 .workouts-page .workouts-back>.workouts-round{flex:none;color:var(--accent);background:transparent}
 .workouts-page .workouts-header .one-routine-title{background:transparent;border:0}
 .workouts-page .workouts-heading{font-size:20px;font-weight:600;letter-spacing:-.5px;line-height:1.2}
+
+/* Keep headline text visible inside the optional navigation trigger. */
+.brand .page-tab-trigger,.workouts-header h1 .page-tab-trigger{display:flex;min-width:0;max-width:100%;height:var(--headline-height);line-height:var(--headline-height);font:inherit;overflow:hidden}
+.brand .page-tab-trigger>span,.workouts-header h1 .page-tab-trigger>span{display:flex;align-items:center;gap:0;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.workouts-header h1{flex:1;min-width:0}
+body[data-layout=folded-portrait] nav.nav button span{display:none}
