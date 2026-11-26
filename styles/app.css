@@ -892,21 +892,11 @@ body[data-dock=bottom] nav.nav,body[data-layout=folded-portrait][data-dock=botto
 body[data-dock=bottom] main,body[data-layout=folded-portrait][data-dock=bottom] main{padding-bottom:calc(var(--bottom-bar-height) + var(--bottom-bar-offset) + var(--safe-bottom) + var(--space-4))}
 body[data-dock=bottom] #build-tools{bottom:calc(var(--bottom-bar-height) + var(--bottom-bar-offset) + var(--safe-bottom));}
 
-/* Build 140: Home hierarchy and spacing; retain primary workout surface. */
-.home-page{gap:var(--space-4)}
-.home-header{row-gap:var(--space-1)}
-.home-greeting{font-size:var(--type-body);font-weight:var(--weight-medium);line-height:var(--line-body)}
-.home-dashboard{gap:var(--space-4)}
-.home-streak-card{box-shadow:none;gap:var(--space-3)}
-.home-streak-title svg{color:var(--accent)}
-.home-days{margin-block:var(--space-2)}
-.home-workout-cta{background:transparent;color:var(--workout-ink)}
+/* Shared developer visibility. */
 #build-tools[hidden]{display:none!important}
-@media(max-height:500px){.home-page,.home-dashboard{gap:var(--space-3)}}
 
 /* Build 141: independent passive build label; no dock geometry changes. */
 #public-build-number{position:fixed;z-index:999;left:calc(var(--space-3) + var(--safe-left));bottom:calc(var(--safe-bottom) + 1px);font-size:9px;line-height:10px;color:var(--muted);pointer-events:none;white-space:nowrap}
-body[data-dock=bottom] #public-build-number{left:calc(50% + (var(--safe-left) - var(--safe-right))/2);transform:translateX(-50%);bottom:var(--safe-bottom);line-height:8px;font-size:8px}
 body:not([data-layout]) #public-build-number,body:has(#build-tools:not([hidden])) #public-build-number{visibility:hidden}
 
 /* Build 142: lower dock; passive label sits in the content gap above it. */
@@ -917,7 +907,11 @@ body[data-dock=bottom] #public-build-number{bottom:calc(var(--safe-bottom) + var
 @media(prefers-color-scheme:dark){:root:not([data-theme]){--streak-ink:#FFB340;--streak-fill:#FF950026}}
 :root[data-theme=graphite]{--streak-ink:#FFB340;--streak-fill:#FF950026;--home-action-overlay:#ffffff26}
 .home-page,.home-dashboard{gap:var(--home-gap)}
-.home-greeting{font-size:var(--type-greeting);font-weight:var(--weight-semibold)}
+.home-header{row-gap:var(--space-1)}
+.home-streak-card{box-shadow:none;gap:var(--space-3)}
+.home-days{margin-block:var(--space-2)}
+.home-workout-cta{color:var(--workout-ink)}
+.home-greeting{font-size:var(--type-greeting);font-weight:var(--weight-semibold);line-height:var(--line-body)}
 .home-date strong{font-size:var(--type-date)}.home-date span{font-size:var(--type-date-secondary)}
 .home-dashboard{flex:0;grid-template-rows:auto auto;align-items:stretch}
 .home-workout-card,.home-streak-card{padding:var(--home-padding);box-sizing:border-box}
