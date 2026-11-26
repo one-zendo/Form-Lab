@@ -1,0 +1,11 @@
+/* ONE approved headline measurements; no viewport or navigation changes. */
+:root{--headline-size:28px;--headline-weight:700;--headline-height:44px;--headline-tracking:-.7px;--headline-leading:24px;--headline-glyph-height:32px;--headline-stroke:3px;--headline-optical-gap:10px;--headline-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.page:not(:has(.diagnostic-caption)) .brand,.workouts-page .workouts-header h1,.workouts-page .workouts-header .one-routine-title,.workouts-page .workouts-layout[data-wide=true] .workouts-header h1{font:var(--headline-weight) var(--headline-size)/var(--headline-height) var(--headline-family);letter-spacing:var(--headline-tracking);height:var(--headline-height);min-height:var(--headline-height);min-width:0;margin:0;padding:0;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.home-brand .brand,.workouts-stack .workouts-header h1,.page>.brand{display:flex;align-items:center;gap:0}
+.headline-leading,.home-brand .brand-signature{display:grid;place-items:center;flex:0 0 var(--headline-leading);width:var(--headline-leading);height:var(--headline-height);background:none;border-radius:0}
+.headline-leading::before,.home-brand .brand-signature::before{content:"";width:var(--headline-stroke);height:var(--headline-glyph-height);border-radius:var(--radius-pill);background:var(--accent)}
+.home-brand .tagline{padding-inline-start:var(--headline-leading)}
+.workouts-page .workouts-back{min-width:0;gap:0}
+.workouts-page .workouts-back>.workouts-round{flex:none;color:var(--accent);background:transparent}
+.workouts-page .workouts-header .one-routine-title{background:transparent;border:0}
+.workouts-page .workouts-heading{font-size:20px;font-weight:600;letter-spacing:-.5px;line-height:1.2}
