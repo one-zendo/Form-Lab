@@ -39,3 +39,5 @@ test('physical posture classification requires folded signal and segment directi
 
 test('consolidated dock and hinge tokens retain approved values',()=>{for(const token of ['--bottom-bar-height:56px','--bottom-bar-icon:22px','--bottom-bar-capsule-width:54px','--bottom-bar-capsule-height:40px','--hinge-motion-ms:320','--unfold-motion-ms:460'])assert.ok(css.includes(token));assert.equal((css.match(/--bottom-bar-height:/g)||[]).length,1)});
 test('recovery indicator retains distinct class and accessible label',()=>{const ui=vm.runInNewContext(fs.readFileSync(new URL('../core/components.js',import.meta.url),'utf8')+';FormUI');const markup=ui.dayIndicator({rest:true,recovered:true});assert.ok(markup.includes('done recovered'));assert.ok(markup.includes('Recovery completed'))});
+
+test('FL Home uses side-rail bottom clearance and intrinsic card rows',()=>{assert.ok(css.includes('main:has(.home-page){overflow-y:auto;padding-bottom:calc(var(--fl-bottom-clearance) + var(--safe-bottom))}'));assert.ok(css.includes('.home-dashboard{flex:1 0 auto;min-height:min-content;'));assert.ok(css.includes('.home-streak-footer{flex:none;padding-top:var(--space-2);margin-top:0}'))});
