@@ -1041,3 +1041,5 @@ body[data-safe-overlay=true] #safe-area-overlay{visibility:visible}
 #safe-area-overlay i:nth-child(2){inset:0 0 0 auto;width:var(--safe-right)}
 #safe-area-overlay i:nth-child(3){inset:auto 0 0;height:var(--safe-bottom)}
 #safe-area-overlay i:nth-child(4){inset:0 auto 0 0;width:var(--safe-left)}
+
+.diagnostics-toggle{font:inherit;font-size:var(--type-caption);font-weight:600;color:var(--accent);background:var(--raised);border:0;border-radius:var(--radius-pill);padding:var(--space-2) var(--space-3);min-height:32px;letter-spacing:0;white-space:nowrap;flex:none}#open-diagnostics{margin-inline-start:var(--space-2)}#close-diagnostics{margin-block:var(--space-2)}
