@@ -21,3 +21,11 @@ test('update guard protects session and draft',()=>{const line=js.split('\n').fi
 test('invalid numeric set data rejected',()=>{const x=storage();assert.equal(x.run("validRecord({id:'x',name:'x',exercises:[{name:'x',sets:[{weight:-1}]}]})"),false)});
 test('demo storage does not overwrite real storage',()=>{const x=storage({[key]:JSON.stringify(legacy)});x.run("demoMode=true;workoutData={routines:[],history:[],session:null};saveWorkouts()");assert.deepEqual(JSON.parse(x.map.get(key)),legacy);assert.ok(x.map.has('form.lab.demo-workouts.v1'))});
 test('all local scripts parse',()=>{for(const m of html.matchAll(/<script src="(core\/[^"?]+)\?v=\d+"/g))new vm.Script(fs.readFileSync(new URL('../'+m[1],import.meta.url),'utf8'))});
+
+const home=vm.runInNewContext(fs.readFileSync(new URL('../core/home.js',import.meta.url),'utf8')+';FormHome');
+test('weekly streak counts distinct days and consecutive weeks',()=>{const history=[16,17,18,23,23,24,25].map(d=>({finished:new Date(2026,10,d,8)}));const s=home.stats(history,new Date(2026,10,26,12),3);assert.equal(s.current,2);assert.equal(s.best,2);assert.equal(s.count,3);assert.equal(s.days[3].today,true)});
+test('empty, invalid and future history are ignored',()=>{const now=new Date(2026,10,26,12);assert.equal(home.stats([null,{finished:'invalid'},{finished:new Date(2026,10,26,20)}],now,0).count,0)});
+test('incomplete current week preserves prior streak',()=>{assert.equal(home.stats([16,17,18].map(d=>({finished:new Date(2026,10,d,8)})),new Date(2026,10,26),3).current,1)});
+test('greeting boundaries',()=>{for(const [h,g] of [[0,'Good morning'],[11,'Good morning'],[12,'Good afternoon'],[18,'Good evening']])assert.equal(home.greeting(new Date(2026,10,26,h)),g)});
+test('shared day indicator preserves state classes',()=>{const ui=vm.runInNewContext(fs.readFileSync(new URL('../core/components.js',import.meta.url),'utf8')+';FormUI');assert.ok(ui.dayIndicator({done:true,today:true}).includes('done today'));assert.ok(!ui.dayIndicator({done:false,today:false}).includes('<svg'))});
+test('Home modules load before app',()=>{for(const name of ['home','components'])assert.ok(html.indexOf('core/'+name+'.js?v=')>=0&&html.indexOf('core/'+name+'.js?v=')<html.indexOf('core/app.js?v='))});
