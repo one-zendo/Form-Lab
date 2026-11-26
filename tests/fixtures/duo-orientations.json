@@ -1,0 +1,107 @@
+[
+  {
+    "orientation": "FP",
+    "display": [
+      466,
+      678
+    ],
+    "viewport": [
+      382,
+      678
+    ],
+    "rotation": 0,
+    "mode": "folded-portrait",
+    "dock": "bottom",
+    "safeInsets": [
+      0,
+      0,
+      34,
+      0
+    ],
+    "displayEvidence": "outer reference"
+  },
+  {
+    "orientation": "FL1",
+    "display": [
+      678,
+      466
+    ],
+    "viewport": [
+      594,
+      466
+    ],
+    "rotation": 90,
+    "mode": "folded-landscape",
+    "dock": "side",
+    "safeInsets": [
+      0,
+      0,
+      34,
+      0
+    ],
+    "displayEvidence": "outer reference"
+  },
+  {
+    "orientation": "FL2",
+    "display": [
+      678,
+      466
+    ],
+    "viewport": [
+      594,
+      466
+    ],
+    "rotation": 270,
+    "mode": "folded-landscape",
+    "dock": "side",
+    "safeInsets": [
+      0,
+      0,
+      34,
+      0
+    ],
+    "displayEvidence": "outer reference"
+  },
+  {
+    "orientation": "UP",
+    "display": [
+      669,
+      951
+    ],
+    "viewport": [
+      669,
+      869
+    ],
+    "rotation": 0,
+    "mode": "unfolded-portrait",
+    "dock": "bottom",
+    "safeInsets": [
+      0,
+      0,
+      34,
+      0
+    ],
+    "displayEvidence": "inner reference, not independently measured"
+  },
+  {
+    "orientation": "UL",
+    "display": [
+      951,
+      669
+    ],
+    "viewport": [
+      867,
+      669
+    ],
+    "rotation": 270,
+    "mode": "unfolded-landscape",
+    "dock": "bottom",
+    "safeInsets": [
+      0,
+      0,
+      34,
+      0
+    ],
+    "displayEvidence": "inner reference, not independently measured"
+  }
+]
