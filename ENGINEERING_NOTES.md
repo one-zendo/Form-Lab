@@ -72,3 +72,6 @@ Added direct Diagnostics button beside headline build label and Close diagnostic
 
 ## Build 165 — automatic diagnostic bars
 Diagnostics automatically enables existing four-edge safe-area overlay via render state. Closing diagnostics clears manual overlay state; optional developer toggle remains for normal mode. CSS env values adapt to orientation/posture; diagnostics adds rotation angle. Bars represent reported safe-area insets, not a measured touch exclusion map; zero insets and browser-excluded regions cannot be visualized by this method. No layout changes. JS syntax checked; device and deployment unverified.
+
+## Build 166 — isolated viewport lab
+Previous diagnostics used calibrated main and nav, so content dimensions were not raw viewport dimensions. Overlay was after startup scripts, risking null lookup when diagnostics persisted. Move overlay and independent measurement section before scripts; hide main/nav during diagnostics, retain normal geometry, use direct env insets, blue viewport border and 20px grid. Report zero insets explicitly, visual offset and safe dimensions. No guessed hardware exclusion. JS syntax verified; device behavior and deployment unverified.
