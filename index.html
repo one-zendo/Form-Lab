@@ -802,29 +802,40 @@ body[data-layout=folded-portrait] main {
 .page-tab-options button{display:flex;align-items:center;gap:var(--space-3);min-height:var(--touch-target);padding:var(--space-2) var(--space-3);border-radius:var(--radius-control);background:transparent;color:var(--ink);text-align:left;font-size:var(--type-body)}
 .page-tab-options button svg{width:var(--icon-inline);height:var(--icon-inline)}
 .page-tab-options button[aria-current=page]{background:var(--raised);color:var(--accent)}
-/* Landscape rail calibration: align with system status column, preserve portrait. */
-:root{--landscape-rail-offset:var(--duo-rail-offset)}
-html:has(body[data-layout$="-landscape"]:not([data-layout^="standard"])),body[data-layout$="-landscape"]:not([data-layout^="standard"]){overflow:visible}
-body[data-layout$="-landscape"]:not([data-layout^="standard"]) nav.nav{left:calc(100% + var(--landscape-rail-offset));right:auto;top:50%;bottom:auto;transform:translate(-50%,-50%);position:absolute}
-body[data-layout$="-landscape"]:not([data-layout^="standard"]) main{padding-right:var(--space-3);overscroll-behavior-x:none}
+/* Adaptive dock: preserve folded rail; unfolded uses in-viewport bottom dock. */
+:root{
+ --safe-top:env(safe-area-inset-top,0px);
+ --safe-right:env(safe-area-inset-right,0px);
+ --safe-bottom:env(safe-area-inset-bottom,0px);
+ --safe-left:env(safe-area-inset-left,0px);
+ --content-edge:var(--space-4);
+ --dock-reserve:calc(var(--dock-size) + var(--dock-bottom) + var(--space-6));
+ --landscape-rail-offset:var(--duo-rail-offset);
+}
+main{padding:calc(var(--space-5) + var(--safe-top)) calc(var(--content-edge) + var(--safe-right)) calc(var(--dock-reserve) + var(--safe-bottom)) calc(var(--content-edge) + var(--safe-left))}
+body[data-dock=bottom] nav.nav{bottom:calc(var(--dock-bottom) + var(--safe-bottom));left:calc(50% + (var(--safe-left) - var(--safe-right))/2);right:auto;top:auto;transform:translateX(-50%)}
+html:has(body[data-layout=folded-landscape]),body[data-layout=folded-landscape]{overflow:visible}
+body[data-layout=folded-landscape] nav.nav{left:calc(100% + var(--landscape-rail-offset));right:auto;top:50%;bottom:auto;transform:translate(-50%,-50%);position:absolute}
+body[data-layout^="folded-"] main{padding-right:calc(var(--space-3) + var(--safe-right));padding-bottom:calc(46px + var(--safe-bottom));overscroll-behavior-x:none}
+#build-tools{left:calc(var(--space-3) + var(--safe-left));bottom:calc(var(--space-1) + var(--safe-bottom))}
 </style></head>
 <body>
 <main></main>
-<div id="build-tools"><span id="build-number">Build 96</span><button id="quick-check" type="button">Check</button><button id="quick-update" type="button">Update</button><span id="update-status" role="status" aria-live="polite"></span></div>
+<div id="build-tools"><span id="build-number">Build 97</span><button id="quick-check" type="button">Check</button><button id="quick-update" type="button">Update</button><span id="update-status" role="status" aria-live="polite"></span></div>
 <nav class="nav" aria-label="Main navigation"></nav>
 <dialog class="page-tab-menu" id="page-tab-menu" aria-labelledby="page-tab-title"><h2 id="page-tab-title">Navigate</h2><div class="page-tab-options"></div></dialog>
 <dialog class="dev-dialog" id="developer"></dialog>
 <dialog class="home-coming" id="home-coming"><h2>Coming next</h2><p>We’re building the workout and activity features on this clean FORM foundation.</p><button id="home-coming-close">Done</button></dialog>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD=96;
+const BUILD=97;
 const UPDATE_INTERVAL_MS = 5000;
 const tabs=['Home','Workouts','Progress','Profile'];
 const glyphs={home:'M3 11 12 3l9 8v9h-6v-7H9v7H3z',workouts:'M3 10h18v4H3zM7 6v12M17 6v12',progress:'M3 20h18M5 15l4-5 4 3 6-9',profile:'M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8M4 21v-2a8 8 0 0 1 16 0v2',exercise:'M3 10h18v4H3zM6 7v10M18 7v10',timer:'M12 7v6l4 2M9 2h6M12 4a9 9 0 1 0 0 18 9 9 0 0 0 0-18',records:'M5 20V9h14v11M8 9V5h8v4M9 14h6',library:'M4 4h6v16H4zM14 4h6v16h-6z',plus:'M12 4v16M4 12h16',swap:'M4 7h15l-4-4m5 14H5l4 4',rest:'M4 3h16v18H4zM8 8h8M8 12h8M8 16h5',calendar:'M3 5h18v16H3zM7 3v4m10-4v4M3 10h18',heart:'M20 8c0 5-8 11-8 11S4 13 4 8a4 4 0 0 1 8-1 4 4 0 0 1 8 1'};
 const icon=n=>{const names={home:'house',workouts:'dumbbell',progress:'chart-no-axes-combined',profile:'user-round',exercise:'dumbbell',records:'trophy',library:'library-big',rest:'clipboard-list',swap:'arrow-left-right',heart:'heart-pulse'};const name=names[n]||n;return '<svg viewBox="0 0 24 24" aria-hidden="true" data-lucide="'+name+'"><path d="'+(glyphs[n]||glyphs.exercise)+'"/></svg>'};
 const main=document.querySelector('main'),nav=document.querySelector('.nav'),dev=document.querySelector('#developer');
 let page='Home',taps=0,showDiagnostics=false;try{showDiagnostics=localStorage.getItem('form.diagnostics')==='true'}catch{}
-function layout(){const w=document.documentElement.clientWidth,h=document.documentElement.clientHeight,s=Math.min(w,h),l=Math.max(w,h),ratio=Math.min(screen.width,screen.height)/Math.max(screen.width,screen.height),duo=ratio>.62,folded=duo&&s<=530&&l<=760,mode=folded?'folded-'+(w>h?'landscape':'portrait'):duo?'unfolded-'+(w>h?'landscape':'portrait'):'standard-'+(w>h?'landscape':'portrait');document.body.dataset.layout=mode;document.body.dataset.dock=folded||w>h?'side':'bottom';document.body.dataset.posture=navigator.devicePosture?.type||(matchMedia('(device-posture: folded)').matches?'folded':'unknown');diagnostics()}
+function layout(){const w=document.documentElement.clientWidth,h=document.documentElement.clientHeight,s=Math.min(w,h),l=Math.max(w,h),ratio=Math.min(screen.width,screen.height)/Math.max(screen.width,screen.height),duo=ratio>.62,folded=duo&&s<=530&&l<=760,mode=folded?'folded-'+(w>h?'landscape':'portrait'):duo?'unfolded-'+(w>h?'landscape':'portrait'):'standard-'+(w>h?'landscape':'portrait');document.body.dataset.layout=mode;document.body.dataset.dock=folded?'side':'bottom';document.body.dataset.posture=navigator.devicePosture?.type||(matchMedia('(device-posture: folded)').matches?'folded':'unknown');diagnostics()}
 function diagnostics(){const box=document.querySelector('#diagnostics');if(!box)return;const v=window.visualViewport,n=nav.getBoundingClientRect(),m=main.getBoundingClientRect(),s=getComputedStyle(main),values=[['Layout',document.body.dataset.layout],['Posture',document.body.dataset.posture],['Dock',document.body.dataset.dock],['Layout viewport',innerWidth+' × '+innerHeight],['Visual viewport',v?Math.round(v.width)+' × '+Math.round(v.height):'Unavailable'],['Scale',v?v.scale.toFixed(3):'Unavailable'],['Screen',screen.width+' × '+screen.height],['Content',Math.round(m.width)+' × '+Math.round(m.height)],['Padding',s.padding],['Navigation',[n.x,n.y,n.width,n.height].map(Math.round).join(' / ')],['Navigation taps',taps],['Scroll',Math.round(main.scrollTop)+' px']];box.replaceChildren(...values.map(([k,v])=>{const row=document.createElement('div');row.className='diagnostic-row';row.innerHTML='<span></span><strong></strong>';row.firstChild.textContent=k;row.lastChild.textContent=v;return row}))}
 function homeMarkup(){const now=new Date(),weekday=now.toLocaleDateString(undefined,{weekday:'long'}),date=now.toLocaleDateString(undefined,{month:'long',day:'numeric'}),days=['M','T','W','T','F','S','S'];return '<div class="page home-page enter"><header class="home-header"><div class="home-brand"><h1 class="brand"><span class="brand-signature" aria-hidden="true"></span>FORM</h1><p class="tagline">Train with focus, follow your progress</p></div><time class="home-date"><strong>'+weekday+'</strong><span>'+date+'</span></time></header><h2 class="home-greeting">Hello, Zendo.</h2><div class="home-dashboard"><section class="home-primary"><button class="home-workout-card" id="home-start" type="button"><span class="home-workout-copy"><strong>Ready to train?</strong><span>Choose your workout</span></span><span class="home-workout-cta" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></span></button></section><section class="home-support"><article class="home-streak-card"><div class="home-streak-top"><div><div class="home-streak-title">'+icon('records')+'<h2>Training streak</h2></div><p class="home-streak-caption">Set your weekly schedule</p></div><button class="home-icon-button" id="home-calendar" aria-label="Training calendar">'+icon('calendar')+'</button></div><div class="home-days" aria-label="Weekly training activity">'+days.map((d,i)=>'<div class="home-day"><span>'+d+'</span><span class="home-day-dot"></span></div>').join('')+'</div><div class="home-streak-footer"><span>Personal best</span><strong>0 weeks</strong></div></article></section></div></div>'}
 
