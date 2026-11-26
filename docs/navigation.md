@@ -17,3 +17,6 @@ Build 36: matching navigation-area glass, 20px headline filter, 65% tint and 24p
 
 ## Build 40 — approved Balanced navigation
 Universal 60pt cross-axis (bottom height, rail width), 48pt selection/touch target, 6pt shell padding, 22pt icons, 4pt icon-label and item gaps, 30pt outer radius, 12pt Home content clearance. Web uses CSS px; actual native points require device validation. Retain 8px viewport edge anchor, orientation mapping, glass and live measured Home clearance. Horizontal length remains content-driven; five Lab destinations may require horizontal scrolling at narrow widths instead of clipping targets. Compact 10px labels retained as design choice from approved component study. No navigation logic changes. Supersedes prior provisional 20px icon/44px target sizing. Physical fit and accessibility review pending.
+
+
+Build 41: one independent noninteractive selection lens behind existing buttons, pointer capture for direct manipulation; only release commits page navigation. Keyboard/programmatic clicks remain available. Overflow mode keeps scroll/tap access. Existing Balanced dimensions, orientation mapping and measured Home clearance unchanged. See motion.md; device testing pending.

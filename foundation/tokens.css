@@ -30,3 +30,7 @@
 
 /* Approved Balanced navigation standard — CSS px in Lab, pt target in native. */
 :root{--dock-size:60px;--dock-target:var(--space-48);--dock-pad:6px;--dock-icon:22px;--dock-radius:calc(var(--dock-size)/2);--dock-label-size:10px;--dock-gap:var(--space-4);--dock-content-gap:var(--space-12)}
+
+/* Continuous glass selection feedback. */
+:root{--glass-lens:linear-gradient(145deg,rgba(255,255,255,.85),rgba(190,205,225,.32));--glass-lens-depth:0 2px 5px rgba(40,60,90,.12);--glass-lens-lift:1.06}
+[data-theme="graphite-lime"]{--glass-lens:linear-gradient(145deg,rgba(255,255,255,.24),rgba(255,255,255,.08));--glass-lens-depth:0 2px 5px rgba(0,0,0,.24)}

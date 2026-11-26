@@ -73,3 +73,16 @@ body[data-nav="rail"] .dock-material{background:var(--glass-scroll-right)}
 /* Narrow viewports retain every reachable target rather than clip labels. */
 #dock{overflow-x:auto;scrollbar-width:none}#dock::-webkit-scrollbar{display:none}
 #dock svg{flex-shrink:0}
+
+/* Build 41: single optical selection lens; measured target geometry. */
+#dock .dock-lens{display:none;position:absolute;left:0;top:0;pointer-events:none;z-index:0;width:var(--lens-w,var(--dock-target));height:var(--lens-h,var(--dock-target));transform:translate3d(var(--lens-x,0px),var(--lens-y,0px),0);transition:transform var(--motion-selection) var(--ease-spring),width var(--motion-selection) var(--ease-spring),height var(--motion-selection) var(--ease-spring)}
+#dock[data-lens-ready=true] .dock-lens{display:block}
+#dock .dock-lens>div{width:100%;height:100%;border-radius:calc(var(--dock-target)/2);background:var(--glass-lens);box-shadow:inset 0 1px 1px var(--glass-rim),inset 0 -1px 1px var(--glass-rim-shade),var(--glass-lens-depth);transition:transform var(--motion-selection) var(--ease-spring)}
+#dock[data-lens-ready=true] button{position:relative;z-index:1;background:transparent;color:var(--muted);user-select:none;-webkit-user-select:none}
+#dock[data-lens-ready=true] button.lens-preview{color:var(--action)}
+#dock[data-lens-ready=true][data-overflow=false],#dock[data-lens-ready=true][data-overflow=false] button{touch-action:none}
+#dock[data-dragging=true] .dock-lens,#dock[data-lens-instant=true] .dock-lens{transition:none}
+#dock[data-dragging=true] .dock-lens>div{transform:scale(var(--glass-lens-lift))}
+#dock[data-overflow=true]{touch-action:pan-x}body[data-nav=rail] #dock[data-overflow=true]{touch-action:pan-y}
+@media(prefers-reduced-motion:reduce){#dock .dock-lens,#dock .dock-lens>div{transition:none!important}#dock[data-dragging=true] .dock-lens>div{transform:none}}
+@media(prefers-reduced-transparency:reduce){#dock .dock-lens>div{background:var(--elevated);box-shadow:none}}
