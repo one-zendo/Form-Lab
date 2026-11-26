@@ -1095,3 +1095,5 @@ body[data-diagnostics=true] #viewport-outline{visibility:hidden}
 
 /* Camera calibration overlay is independent of diagnostic visibility. */
 #camera-guides{position:fixed;inset:0;z-index:100001;pointer-events:none}body[data-diagnostics=true] #camera-guides{z-index:100001}
+
+body[data-viewport-outline=off] #viewport-outline{visibility:hidden}body[data-viewport-outline=off] .viewport-grid{border-color:transparent}
