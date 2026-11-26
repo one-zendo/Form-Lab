@@ -982,3 +982,7 @@ body[data-layout=unfolded-landscape] .home-month-grid{row-gap:clamp(2px,.8vh,var
 /* Build 156: suppress WebKit native tap flash; preserve keyboard focus. */
 html,body,button,a,[role=button],input,select,textarea,label{-webkit-tap-highlight-color:transparent}
 button:focus-visible,a:focus-visible,[role=button]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Build 157: square calendar markers independent of grid row stretch. */
+body[data-layout=unfolded-landscape] .home-month-grid{container-type:size}
+body[data-layout=unfolded-landscape] .home-month-day{--month-marker-size:min(var(--home-month-cell-expanded),calc((100cqh - 6 * clamp(2px,.8vh,var(--home-month-row-gap)))/7),calc((100cqw - 6 * var(--space-1))/7));width:var(--month-marker-size);height:var(--month-marker-size);max-width:none;max-height:none;min-width:0;min-height:0;aspect-ratio:1;box-sizing:border-box;border-radius:50%;align-self:center;justify-self:center}
