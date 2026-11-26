@@ -22,17 +22,17 @@ body[data-hinge="book"] .sample-grid .sample{min-width:0}
 body[data-hinge="laptop"] .sample-grid{grid-template-columns:minmax(0,1fr)}
 
 /* Lab navigation prototype: current navigation.md orientation contract. */
-:root{--dock-target:var(--target-min);--dock-pad:var(--space-4);--dock-edge:var(--space-8);--dock-icon:var(--icon-profile);--dock-reserve:calc(var(--dock-target) + var(--dock-pad)*2 + var(--dock-edge)*2)}
+:root{--dock-edge:var(--space-8);--dock-reserve:calc(var(--dock-size) + var(--dock-edge)*2)}
 html,body{touch-action:pan-x pan-y}
 button{touch-action:manipulation}
-#dock{position:fixed;z-index:10;display:flex;gap:var(--dock-pad);padding:var(--dock-pad);border-radius:var(--radius-pill);background:var(--paper);box-shadow:inset 0 0 0 1px var(--glass-highlight),0 2px 12px #00000015;bottom:max(var(--dock-edge),env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);max-width:calc(100% - var(--space-16))}
-#dock button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-4);min-width:var(--dock-target);min-height:var(--dock-target);padding:var(--space-4) var(--space-8);border:0;border-radius:var(--radius-pill);background:transparent;color:var(--muted);font:var(--type-caption) var(--font);cursor:pointer}
+#dock{position:fixed;z-index:10;display:flex;gap:var(--dock-gap);padding:var(--dock-pad);height:var(--dock-size);border-radius:var(--dock-radius);background:var(--paper);box-shadow:inset 0 0 0 1px var(--glass-highlight),0 2px 12px #00000015;bottom:max(var(--dock-edge),env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);max-width:calc(100% - var(--space-16))}
+#dock button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-4);min-width:var(--dock-target);height:var(--dock-target);flex:1 0 auto;padding:0 var(--space-8);border:0;border-radius:calc(var(--dock-target)/2);background:transparent;color:var(--muted);font:var(--dock-label-size)/1.2 var(--font);cursor:pointer}
 #dock button[aria-pressed="true"]{background:var(--elevated);color:var(--action)}
 #dock svg{width:var(--dock-icon);height:var(--dock-icon);stroke-width:var(--icon-stroke)}
 #shell{padding-bottom:calc(var(--dock-reserve) + env(safe-area-inset-bottom))}
-body[data-nav="rail"] #dock{flex-direction:column;left:auto;right:max(var(--dock-edge),env(safe-area-inset-right));bottom:auto;top:50%;transform:translateY(-50%);max-height:100dvh;overflow:auto}
+body[data-nav="rail"] #dock{width:var(--dock-size);height:auto;flex-direction:column;left:auto;right:max(var(--dock-edge),env(safe-area-inset-right));bottom:auto;top:50%;transform:translateY(-50%);max-height:100dvh;overflow:auto}
 body[data-nav="rail"] #dock button span{display:none}
-body[data-nav="rail"] #dock button{padding:var(--space-4)}
+body[data-nav="rail"] #dock button{width:var(--dock-target);flex:none;padding:0}
 body[data-nav="rail"] #shell{padding-right:calc(var(--dock-reserve) + env(safe-area-inset-right));padding-bottom:0}
 
 /* Build 16: headline anchor independent of content flow. */
@@ -69,3 +69,7 @@ body[data-nav="rail"] .dock-material{background:var(--glass-scroll-right)}
 #dock button:active{background:var(--glass-press)}
 }
 @media(prefers-reduced-transparency:reduce){.headline-material{background:var(--canvas)!important}#dock{background:var(--paper);box-shadow:inset 0 0 0 1px var(--glass-highlight),var(--glass-depth)}#dock button[aria-pressed="true"],#dock button:active{background:var(--elevated)}}
+
+/* Narrow viewports retain every reachable target rather than clip labels. */
+#dock{overflow-x:auto;scrollbar-width:none}#dock::-webkit-scrollbar{display:none}
+#dock svg{flex-shrink:0}
