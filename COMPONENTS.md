@@ -4,3 +4,6 @@ Build 173. Use form-page, form-grid, form-stack, form-card for layout; form-butt
 
 ## Interaction surfaces (174)
 Use native dialog.form-dialog for new centered dialogs; add form-sheet for bottom-aligned sheet geometry. form-menu provides grid spacing; form-selection supports aria-pressed/current and existing color-motion tokens. Existing five dialogs carry form-dialog-legacy to preserve their exact sizing, borders and backdrop until individually migrated. Page navigation menu shares form-menu. Native showModal/close and existing handlers unchanged. No custom sheet animation or focus trap introduced.
+
+## Build 175 audit
+Shared focus-visible outline now covers universal input fields. Existing modal dimensions and motion aliases retained pending browser validation. Lab viewport outline shares diagnostic border tokens, fixed to viewport, non-interactive, hidden in diagnostic mode to avoid duplicate outlines. Native modal top layer can cover/dim it; no layout reservation.
