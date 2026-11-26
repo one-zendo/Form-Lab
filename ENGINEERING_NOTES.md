@@ -105,3 +105,6 @@ User requested always-visible diagnostic blue boundary in normal app. Add fixed 
 
 ## Build 176 — FORM headline diagnostics
 Remove folded landscape headline navigation menu, its markup and handlers. Home FORM wordmark opens diagnostics; diagnostic FORM wordmark closes. Build number update shortcut and regular dock retained. Persistent outline unchanged. JS syntax checked; regression definitions updated. Physical rendering pending.
+
+## Build 177 — Home semantic integration
+Verify FORM open/close toggle markup and retain delegated handler. Apply shared tabular numeric class to streak and personal best, add machine-readable local date and explicit rest-day button type. No CSS, navigation, hinge or outline changes. JS syntax checked; source regression added. Home scheduling and full device verification remain pending.
