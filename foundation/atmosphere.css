@@ -6,3 +6,6 @@ body[data-nav=rail] #atmosphere-layer{right:var(--rail-clearance,var(--dock-rese
 #weather-preview-home{position:absolute;right:0;top:100%;z-index:22;border:0;border-radius:var(--radius-pill);min-height:var(--target-min);padding:0 var(--space-12);background:var(--paper);color:var(--action);font:var(--type-caption) var(--font);box-shadow:var(--glass-depth);white-space:nowrap}
 body[data-page=Home]:has(#weather-preview-home:not([hidden])) .content{padding-top:calc(var(--layout-center) + var(--headline-height)/2 + var(--glass-lead) + var(--target-min))}
 @media(prefers-reduced-transparency:reduce){#atmosphere-layer{display:none}}
+
+/* Original soft weather concept extends behind greeting without occupying layout space. */
+#atmosphere-layer[data-style=classic]{height:calc(var(--layout-center) + var(--headline-height)/2 + var(--glass-lead) + var(--space-48) + var(--space-24));mask-image:linear-gradient(to bottom,#000 55%,transparent);-webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent)}
