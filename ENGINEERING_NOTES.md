@@ -75,3 +75,6 @@ Diagnostics automatically enables existing four-edge safe-area overlay via rende
 
 ## Build 166 — isolated viewport lab
 Previous diagnostics used calibrated main and nav, so content dimensions were not raw viewport dimensions. Overlay was after startup scripts, risking null lookup when diagnostics persisted. Move overlay and independent measurement section before scripts; hide main/nav during diagnostics, retain normal geometry, use direct env insets, blue viewport border and 20px grid. Report zero insets explicitly, visual offset and safe dimensions. No guessed hardware exclusion. JS syntax verified; device behavior and deployment unverified.
+
+## Build 167 — measured Duo geometry
+DUO_REFERENCE.md supplies five measured viewport signatures. Match within 8 CSS px and measured angle; unknown retains existing fallback. FL1=90 left, FL2=270 right; safe insets alone cannot distinguish. Remove obsolete FL1 right-side Home override. Both measured FL layouts use 12px viewport-relative edges, 48px rail and 12px gap, center rail above bottom safe inset; no subtraction of 84px excluded system strip. Existing calibration mode and unmeasured layout fallbacks retained. FP/UP/UL geometry and hinge motion unchanged. JS syntax and seven isolated classifier cases passed; no browser/device or deployment verification.
