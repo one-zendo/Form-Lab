@@ -90,3 +90,6 @@ Apply form-page to Home, Workouts and generic pages, form-grid to Home dashboard
 
 ## Build 171 — design hardware and layout audit
 Five standalone schematic SVGs and measured/reference fixtures added. Runtime CSS unchanged; JS only build number. Audit: screen ratio and compact thresholds remain heuristics, overlapping Home hinge rules remain; no changes pending device verification. Correct malformed escaped adaptive-layout test regex. Ten fixture classifier checks passed, JS syntax passed; full Node suite and device rendering not verified. Hardware camera/radii illustrative, not measured.
+
+## Build 172 — adaptive layout audit
+25 existing regression definitions passed in an adapted JavaScript harness (not native Node). Two remaining definitions checked separately. Removed redundant production FL Home padding override; shared shell and existing FL Home clearance both resolve to space-3 plus safe bottom. No hinge, motion, navigation or classifier changes. Device/browser rendering and CI remain unverified. Retain heuristic classification and specialized hinge rules pending device evidence; no speculative cleanup.
