@@ -3,3 +3,5 @@ Use live drawable viewport, safe areas and posture/segments; never uniformly sca
 
 ## Build 6 — calibration screen
 Shared headline and content anchors from canonical hardware geometry. FL1 Safari local X0 for both, native targets X84/29.5; no second viewport exclusion. Other orientations use recorded X16, local center Y48. Landscape 2:3 grid after gap; portrait stacks. Purple/green outlines are CSS element guides, not full diagnostic system. No native simulator or camera overlay yet; manual override does not emulate a physical viewport. Unmatched sizes use generic fallback. No rotation animation. Device validation pending.
+
+Build 6 user feedback (2026-11-26): user reported “You nailed it” after the calibration screen was delivered. Record positive user acceptance of the layout screen; individual orientation measurements, auto-update and transition tests were not explicitly reported. Green outline denotes content boundary; purple denotes headline boundary.
