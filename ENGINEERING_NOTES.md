@@ -66,3 +66,6 @@ Branch: checkpoint/build-159-device-confirmed
 
 ## Build 163 — safe-area visualization
 Developer settings toggle shows black bars for all four CSS env safe-area insets. Fixed noninteractive overlay, off by default, session-only. Diagnostics reports resolved top/right/bottom/left values. Does not change content or rail geometry. Zero inset produces no bar; browser-excluded screen regions cannot be painted by the app. JS syntax checked; physical device and deployment unverified.
+
+## Build 164 — diagnostics toggle
+Added direct Diagnostics button beside headline build label and Close diagnostics on diagnostic page. Both use shared persisted state setter; existing developer checkbox remains. Navigation and safe-area overlay unchanged. JS syntax verified; headline fit and device behavior not tested.
