@@ -71,3 +71,31 @@ body[data-page=Home] #headline-build{display:inline-flex;align-items:center;font
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
   .headline{background:var(--canvas)}
 }
+
+/* Build 31: scrolling content passes behind the fixed frosted headline. */
+#calibration{position:relative}
+.headline{
+  position:relative;
+  z-index:30;
+  isolation:isolate;
+  background:color-mix(in srgb,var(--canvas) 68%,transparent);
+  -webkit-backdrop-filter:blur(20px) saturate(1.2);
+  backdrop-filter:blur(20px) saturate(1.2);
+  border-bottom:1px solid color-mix(in srgb,var(--muted) 16%,transparent);
+}
+.headline::after{content:none}
+.content{
+  position:relative;
+  z-index:0;
+  flex:1 1 0;
+  margin-top:calc(-1 * var(--headline-height));
+  padding-top:calc(var(--headline-height) + var(--space-16));
+  min-height:0;
+  height:0;
+  overflow-x:hidden;
+  overflow-y:auto;
+  overscroll-behavior-y:contain;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y;
+  scrollbar-width:none;
+}

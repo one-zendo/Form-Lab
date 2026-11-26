@@ -48,3 +48,7 @@ Added an 18px translucent backdrop-blur fade immediately below the shared headli
 
 ## Build 30 — Correct frosted headline boundary
 Removed the narrow blur strip extending below the headline. The frosted glass now belongs to the full shared headline bar itself, with a translucent canvas surface and 18px backdrop blur/saturation. A subtle 1px bottom separator defines the bar's lower boundary. The effect ends at that line; no blur layer extends into page content. Headline dimensions, fixed scrolling architecture, orientation offsets, and navigation are unchanged. Includes a CSS fallback when backdrop-filter is unavailable.
+
+
+## Build 31 — Content scrolls behind frosted headline
+Corrected the frosted-header implementation: the content scroller now overlaps the headline's layout slot by exactly the headline height, while equivalent top padding preserves the original initial content position. As the content scrolls, cards and text pass underneath the stationary headline and its translucent 20px backdrop blur, making the blur visibly functional. Headline remains above content with z-index 30; its bottom separator defines the edge. Preserved the single-scroll-container model, headline height, calibrated offset, date typography, device geometry and navigation. Automated CSS regression test covers the overlap and backdrop filter. Safari visual verification on physical Duo remains required.
