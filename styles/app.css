@@ -833,23 +833,9 @@ body[data-layout=folded-landscape][data-calibrating=true] #form-marker-y{display
 #rail-panel{max-height:80%;overflow-y:auto}
 #rail-panel strong,#rail-panel label{display:block}
 #form-slider-y{accent-color:#64a8ff!important}
-/* Folded landscape starts in calibrated geometry, independent of delayed angle events. */
-:root{--folded-landscape-90-x:1px;--folded-landscape-90-y:24px;--folded-landscape-90-nav-right:24px}
-@media (orientation:landscape) and (max-height:530px) and (max-width:760px){
- body[data-layout^="folded-"] main{
-  inset:var(--folded-landscape-90-y) 0 0 var(--folded-landscape-90-x);
-  width:auto;height:auto;transform:none;
-  padding-top:0;padding-left:0;
-  padding-right:calc(var(--dock-edge) + var(--dock-width) + var(--space-3) + var(--safe-right));
- }
- body[data-layout^="folded-"] nav.nav{
-  flex-direction:column;left:auto;right:var(--folded-landscape-90-nav-right);top:50%;bottom:auto;transform:translateY(-50%);
- }
- body[data-layout^="folded-"][data-calibrating=true] main{
-  inset:var(--calibration-top) 0 0 var(--calibration-left);width:auto;height:auto;transform:none;padding-top:0;padding-left:0;
- }
- body[data-layout^="folded-"][data-calibrating=true] nav.nav{right:var(--calibration-right)}
-}
+/* Developer calibration only; production geometry uses the shared shell. */
+body[data-layout=folded-landscape][data-calibrating=true] main{inset:var(--calibration-top) 0 0 var(--calibration-left);width:auto;height:auto;transform:none;padding-top:0;padding-left:0}
+body[data-layout=folded-landscape][data-calibrating=true] nav.nav{right:var(--calibration-right)}
 /* Keep the UI visible and opaque during device rotation. */
 html,body,main{background-color:var(--canvas)}
 body:not([data-layout]) main,body:not([data-layout]) nav.nav{visibility:hidden}
@@ -1051,9 +1037,16 @@ body[data-diagnostics=true] main,body[data-diagnostics=true] nav.nav{visibility:
 #safe-area-overlay i:nth-child(1){height:env(safe-area-inset-top,0px)}#safe-area-overlay i:nth-child(2){width:env(safe-area-inset-right,0px)}#safe-area-overlay i:nth-child(3){height:env(safe-area-inset-bottom,0px)}#safe-area-overlay i:nth-child(4){width:env(safe-area-inset-left,0px)}
 
 
+/* Shared layout primitives. Opt-in for new pages; existing card visuals unchanged. */
+:root{--layout-page-max:var(--content-max);--layout-gap:var(--card-gap);--layout-card-min:var(--home-card-min-inline,240px);--layout-card-padding:var(--card-padding)}
+.form-page{width:100%;max-width:var(--layout-page-max);min-width:0;margin-inline:auto;container-type:inline-size}
+.form-stack{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--layout-gap);min-width:0}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--layout-card-min)),1fr));gap:var(--layout-gap);min-width:0;align-items:stretch}
+.form-grid>* ,.form-stack>*{min-width:0}
+.form-card{min-width:0;padding:var(--layout-card-padding);border-radius:var(--radius-card);background:var(--surface);overflow-wrap:anywhere}
 /* Adaptive landscape shell: viewport-relative, independent of measured signatures. */
 :root{--fl-shell-edge:var(--space-3);--fl-shell-gap:var(--space-3);--fl-shell-rail:var(--dock-width)}
 body[data-layout=folded-landscape]:not([data-calibrating=true]) main{inset:0;width:auto;height:auto;transform:none;padding:calc(var(--fl-shell-edge) + var(--safe-top)) calc(var(--fl-shell-edge) + var(--fl-shell-rail) + var(--fl-shell-gap) + var(--safe-right)) calc(var(--safe-bottom) + var(--fl-shell-edge)) calc(var(--fl-shell-edge) + var(--safe-left));overflow-x:hidden}
 body[data-layout=folded-landscape]:not([data-calibrating=true]) main:has(.home-page){padding-bottom:calc(var(--safe-bottom) + var(--fl-shell-edge))}
 body[data-layout=folded-landscape]:not([data-calibrating=true]) .home-page{padding-inline-start:0}
-body[data-layout=folded-landscape]:not([data-calibrating=true]) nav.nav{right:calc(var(--fl-shell-edge) + var(--safe-right));top:calc((100% + var(--safe-top) - var(--safe-bottom))/2);bottom:auto;left:auto;transform:translateY(-50%);width:var(--fl-shell-rail);box-sizing:border-box}
+body[data-layout=folded-landscape]:not([data-calibrating=true]) nav.nav{flex-direction:column;right:calc(var(--fl-shell-edge) + var(--safe-right));top:calc((100% + var(--safe-top) - var(--safe-bottom))/2);bottom:auto;left:auto;transform:translateY(-50%);width:var(--fl-shell-rail);box-sizing:border-box}
