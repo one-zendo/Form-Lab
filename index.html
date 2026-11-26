@@ -552,6 +552,52 @@ main {
   .home-streak-card { padding:var(--card-padding-compact); }
 }
 
+
+/* Workouts: One card composition, FORM semantic tokens. */
+.workouts-exercise-copy{flex:1;min-width:0}.workouts-exercise-meta{display:block}
+.workouts-page,.workouts-stack,.workouts-card-list,.workouts-card,.workouts-editor,.workouts-exercise {
+  display:grid; gap:var(--card-gap); min-width:0;
+}
+.workouts-page { align-content:start; width:100%; }
+.workouts-header,.workouts-section-title,.workouts-row { display:flex; align-items:center; justify-content:space-between; gap:var(--space-2); min-width:0; }
+.workouts-header h1 { margin:0; font-size:var(--type-brand); font-weight:var(--weight-brand); }
+.workouts-heading { margin:0; font-size:var(--type-subtitle); font-weight:var(--weight-semibold); }
+.workouts-muted { color:var(--muted); font-size:var(--type-detail); margin:0; line-height:var(--line-body); }
+.workouts-round { display:grid; place-items:center; flex:none; width:var(--touch-target); height:var(--touch-target); border-radius:var(--radius-pill); background:var(--surface); color:var(--accent); }
+.workouts-round svg { width:var(--icon-default); height:var(--icon-default); }
+.workouts-segments { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); background:var(--raised); border-radius:var(--radius-control); padding:var(--space-1); gap:var(--space-1); }
+.workouts-segments button { min-height:var(--touch-target); background:transparent; color:var(--muted); border-radius:var(--radius-control); font-weight:var(--weight-medium); transition:background var(--motion-color-duration) var(--motion-ease); }
+.workouts-segments button[aria-pressed=true] { background:var(--surface); color:var(--ink); box-shadow:var(--elevation-card); }
+.workouts-search { display:flex; align-items:center; gap:var(--space-2); min-height:var(--touch-target); background:var(--surface); color:var(--muted); border-radius:var(--radius-control); padding-inline:var(--space-3); }
+.workouts-search svg { flex:none; width:var(--icon-control); height:var(--icon-control); }
+.workouts-search input,.workouts-input { min-width:0; width:100%; color:var(--ink); font:inherit; border:0; background:var(--surface); }
+.workouts-search input { background:transparent; min-height:var(--touch-target); }
+.workouts-input { padding:var(--space-3); min-height:var(--touch-target); border-radius:var(--radius-control); border:1px solid var(--line); }
+.workouts-card { padding:var(--card-padding); background:var(--surface); border-radius:var(--radius-card); border:1px solid var(--line); box-shadow:var(--elevation-card); color:var(--ink); text-align:left; width:100%; }
+.workouts-card h3,.workouts-card strong { margin:0; font-size:var(--type-subtitle); font-weight:var(--weight-semibold); overflow-wrap:anywhere; }
+.workouts-card p { margin:0; }
+button.workouts-card { gap:var(--space-1); transition:background var(--motion-color-duration) var(--motion-ease); }
+button.workouts-card[aria-current=true] { border-color:var(--accent); }
+.workouts-action { min-height:var(--touch-target); border-radius:var(--radius-control); padding:var(--space-2) var(--space-3); background:var(--accent); color:var(--on-accent); font-weight:var(--weight-medium); display:flex; align-items:center; justify-content:center; gap:var(--space-2); width:100%; }
+.workouts-secondary { background:var(--raised); color:var(--ink); }
+.workouts-action svg { width:var(--icon-control); height:var(--icon-control); }
+.workouts-detail { min-width:0; display:grid; align-content:start; gap:var(--card-gap); }
+.workouts-exercise { gap:var(--space-2); }
+.workouts-exercise summary { display:flex; align-items:center; justify-content:space-between; gap:var(--space-2); cursor:pointer; min-height:var(--touch-target); list-style:none; }
+.workouts-exercise summary::-webkit-details-marker { display:none; }
+.workouts-set { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--space-2); align-items:center; text-align:center; padding-block:var(--space-2); border-top:1px solid var(--line); font-size:var(--type-detail); }
+.workouts-set input { text-align:center; padding-inline:var(--space-1); }
+.workouts-editor label { display:grid; gap:var(--space-1); font-size:var(--type-detail); color:var(--muted); }
+.workouts-editor { align-content:start; }
+.workouts-editor .workouts-card { gap:var(--space-2); }
+.workouts-layout { display:grid; gap:var(--card-gap); min-width:0; }
+.workouts-back { display:flex; align-items:center; gap:var(--space-2); }
+.workouts-session-set { display:flex; align-items:center; gap:var(--space-2); min-height:var(--touch-target); }
+.workouts-session-set input { accent-color:var(--accent); width:var(--icon-default); height:var(--icon-default); flex:none; }
+@media (orientation:landscape) and (min-width:700px) {
+  .workouts-layout:has(.workouts-detail) { grid-template-columns:minmax(0,1fr) minmax(0,1.3fr); align-items:start; }
+}
+
 /* Single static navigation shell: content scrolls independently. */
 
 :root {
@@ -733,13 +779,13 @@ body[data-layout=folded-portrait] main {
 </style></head>
 <body>
 <main></main>
-<div id="build-tools"><span id="build-number">Build 83</span><button id="quick-check" type="button">Check</button><button id="quick-update" type="button">Update</button><span id="update-status" role="status" aria-live="polite"></span></div>
+<div id="build-tools"><span id="build-number">Build 84</span><button id="quick-check" type="button">Check</button><button id="quick-update" type="button">Update</button><span id="update-status" role="status" aria-live="polite"></span></div>
 <nav class="nav" aria-label="Main navigation"></nav>
 <dialog class="dev-dialog" id="developer"></dialog>
 <dialog class="home-coming" id="home-coming"><h2>Coming next</h2><p>We’re building the workout and activity features on this clean FORM foundation.</p><button id="home-coming-close">Done</button></dialog>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD=83;
+const BUILD=84;
 const UPDATE_INTERVAL_MS = 5000;
 const tabs=['Home','Workouts','Progress','Profile'];
 const glyphs={home:'M3 11 12 3l9 8v9h-6v-7H9v7H3z',workouts:'M3 10h18v4H3zM7 6v12M17 6v12',progress:'M3 20h18M5 15l4-5 4 3 6-9',profile:'M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8M4 21v-2a8 8 0 0 1 16 0v2',exercise:'M3 10h18v4H3zM6 7v10M18 7v10',timer:'M12 7v6l4 2M9 2h6M12 4a9 9 0 1 0 0 18 9 9 0 0 0 0-18',records:'M5 20V9h14v11M8 9V5h8v4M9 14h6',library:'M4 4h6v16H4zM14 4h6v16h-6z',plus:'M12 4v16M4 12h16',swap:'M4 7h15l-4-4m5 14H5l4 4',rest:'M4 3h16v18H4zM8 8h8M8 12h8M8 16h5',calendar:'M3 5h18v16H3zM7 3v4m10-4v4M3 10h18',heart:'M20 8c0 5-8 11-8 11S4 13 4 8a4 4 0 0 1 8-1 4 4 0 0 1 8 1'};
@@ -749,7 +795,80 @@ let page='Home',taps=0,showDiagnostics=false;try{showDiagnostics=localStorage.ge
 function layout(){const w=document.documentElement.clientWidth,h=document.documentElement.clientHeight,s=Math.min(w,h),l=Math.max(w,h),ratio=Math.min(screen.width,screen.height)/Math.max(screen.width,screen.height),duo=ratio>.62,folded=duo&&s<=530&&l<=760,mode=folded?'folded-'+(w>h?'landscape':'portrait'):duo?'unfolded-'+(w>h?'landscape':'portrait'):'standard-'+(w>h?'landscape':'portrait');document.body.dataset.layout=mode;document.body.dataset.dock=folded||w>h?'side':'bottom';document.body.dataset.posture=navigator.devicePosture?.type||(matchMedia('(device-posture: folded)').matches?'folded':'unknown');diagnostics()}
 function diagnostics(){const box=document.querySelector('#diagnostics');if(!box)return;const v=window.visualViewport,n=nav.getBoundingClientRect(),m=main.getBoundingClientRect(),s=getComputedStyle(main),values=[['Layout',document.body.dataset.layout],['Posture',document.body.dataset.posture],['Dock',document.body.dataset.dock],['Layout viewport',innerWidth+' × '+innerHeight],['Visual viewport',v?Math.round(v.width)+' × '+Math.round(v.height):'Unavailable'],['Scale',v?v.scale.toFixed(3):'Unavailable'],['Screen',screen.width+' × '+screen.height],['Content',Math.round(m.width)+' × '+Math.round(m.height)],['Padding',s.padding],['Navigation',[n.x,n.y,n.width,n.height].map(Math.round).join(' / ')],['Navigation taps',taps],['Scroll',Math.round(main.scrollTop)+' px']];box.replaceChildren(...values.map(([k,v])=>{const row=document.createElement('div');row.className='diagnostic-row';row.innerHTML='<span></span><strong></strong>';row.firstChild.textContent=k;row.lastChild.textContent=v;return row}))}
 function homeMarkup(){const now=new Date(),weekday=now.toLocaleDateString(undefined,{weekday:'long'}),date=now.toLocaleDateString(undefined,{month:'short',day:'numeric'}),days=['M','T','W','T','F','S','S'];return '<div class="page home-page enter"><header class="home-header"><div class="home-brand"><h1 class="brand">FORM<span class="brand-mark">.</span></h1><p class="tagline">Train with focus, follow your progress</p></div><time class="home-date"><strong>'+weekday+'</strong><span>'+date+'</span></time></header><h2 class="home-greeting">Hello.</h2><div class="home-dashboard"><section class="home-primary"><button class="home-workout-card" id="home-start" type="button"><span class="home-workout-copy"><strong>Ready to train?</strong><span>Choose your workout</span></span><span></span><span class="home-workout-cta">'+icon('exercise')+'<span>Start</span></span></button></section><section class="home-support"><article class="home-streak-card"><div class="home-streak-top"><div><div class="home-streak-title">'+icon('records')+'<h2>Training streak</h2></div><p class="home-streak-caption">Set your weekly schedule</p></div><button class="home-icon-button" id="home-calendar" aria-label="Training calendar">'+icon('calendar')+'</button></div><div class="home-days" aria-label="Weekly training activity">'+days.map((d,i)=>'<div class="home-day"><span>'+d+'</span><span class="home-day-dot"></span></div>').join('')+'</div><div class="home-streak-footer"><span>Personal best</span><strong>0 weeks</strong></div></article></section></div></div>'}
-function render(){if(showDiagnostics){main.innerHTML='<div class="page enter"><h1 class="brand">FORM · Diagnostics</h1><p class="diagnostic-caption">Navigation and viewport test</p><section class="diagnostic-card"><h2>Live diagnostics</h2><div id="diagnostics"></div></section><button id="check-update">Check for Updates</button><p class="foot"></p><section class="diagnostic-card" style="margin-top:12px"><h2>Scroll test</h2><p>Navigation stays stationary while content scrolls.</p>'+Array.from({length:12},(_,i)=>'<div class="diagnostic-marker">Scroll marker '+(i+1)+'</div>').join('')+'</section></div>'}else{main.innerHTML=page==='Home'?homeMarkup():'<div class="page enter"><h1 class="brand">'+page+'</h1><p class="tagline">This page will follow One’s design when its turn comes.</p></div>'}nav.querySelectorAll('button').forEach((b,i)=>b.setAttribute('aria-current',tabs[i]===page?'page':'false'));const start=document.getElementById('home-start');if(start)start.onclick=()=>document.getElementById('home-coming').showModal();const calendar=document.getElementById('home-calendar');if(calendar)calendar.onclick=()=>document.getElementById('home-coming').showModal();window.lucide?.createIcons();layout()}
+
+/* Independent Workouts implementation. No One data or styling is imported. */
+const WORKOUT_STORAGE='form.lab.workouts.v1';
+let workoutData={routines:[],history:[],session:null},workoutView='routines',workoutQuery='',workoutDetail=null,workoutDraft=null,workoutNotice='';
+try { const saved=JSON.parse(localStorage.getItem(WORKOUT_STORAGE)||'null'); if(saved&&Array.isArray(saved.routines)&&Array.isArray(saved.history))workoutData={routines:saved.routines,history:saved.history,session:saved.session||null}; } catch { workoutNotice='Saved workout data could not be read.'; }
+const escapeWorkout=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const workoutId=()=>globalThis.crypto?.randomUUID?.()||Date.now().toString(36)+Math.random().toString(36).slice(2);
+const workoutClone=v=>JSON.parse(JSON.stringify(v));
+function saveWorkouts(){try{localStorage.setItem(WORKOUT_STORAGE,JSON.stringify(workoutData));workoutNotice='';return true}catch{workoutNotice='Could not save on this device. Keep the app open.';return false}}
+const setCount=r=>r.exercises.reduce((n,e)=>n+e.sets.length,0);
+const workoutMeta=r=>r.exercises.length+' exercise'+(r.exercises.length===1?'':'s')+' · '+setCount(r)+' sets';
+const workoutAction=(label,action,extra='',secondary=false)=>'<button type="button" class="workouts-action'+(secondary?' workouts-secondary':'')+'" data-w-action="'+action+'" '+extra+'>'+label+'</button>';
+function workoutListItems(){
+ const q=workoutQuery.trim().toLowerCase(),history=workoutView==='history',all=history?workoutData.history:workoutData.routines;
+ const matches=all.filter(r=>(r.name+' '+(history?new Date(r.finished).toLocaleDateString()+' '+r.exercises.map(e=>e.name).join(' '):'')).toLowerCase().includes(q));
+ const count=matches.length+' '+(history?'workout':'routine')+(matches.length===1?'':'s');
+ let cards=matches.map(r=>'<button type="button" class="workouts-card" data-w-action="'+(history?'history-detail':'routine-detail')+'" data-id="'+escapeWorkout(r.id)+'" aria-current="'+(workoutDetail?.id===r.id)+'"><strong>'+escapeWorkout(r.name)+'</strong><span class="workouts-muted">'+(history?Math.max(1,Math.round((r.finished-r.started)/60000))+' min · '+setCount(r)+' sets':workoutMeta(r))+'</span>'+(history?'<span class="workouts-muted">'+escapeWorkout(new Date(r.finished).toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'}))+'</span>':'')+'</button>').join('');
+ if(!cards)cards='<article class="workouts-card"><h3>'+(all.length?'No matching '+(history?'workouts':'routines'):history?'No recorded workouts yet.':'Create your first routine')+'</h3><p class="workouts-muted">'+(all.length?'Try another search.':history?'Complete your first workout to see it here.':'Build your own training plan.')+'</p>'+(!history&&!all.length?workoutAction('Create Routine','new-routine'):'')+'</article>';
+ return {cards,count};
+}
+function workoutListMarkup(){
+ const {cards,count}=workoutListItems(),history=workoutView==='history';
+ return '<section class="workouts-stack"><header class="workouts-header"><h1>Workouts</h1><button type="button" class="workouts-round" data-w-action="new-routine" aria-label="Create Routine">'+icon('plus')+'</button></header><div class="workouts-segments" role="group" aria-label="Workout view"><button type="button" data-w-action="routines" aria-pressed="'+!history+'">Routines</button><button type="button" data-w-action="history" aria-pressed="'+history+'">History</button></div><label class="workouts-search">'+icon('search')+'<input id="workouts-search" type="search" placeholder="Search '+(history?'workouts':'routines')+'" aria-label="Search '+(history?'workouts':'routines')+'" value="'+escapeWorkout(workoutQuery)+'"></label><div class="workouts-section-title"><h2 class="workouts-heading">'+(history?'Recent history':'My routines')+'</h2><span id="workouts-count" class="workouts-muted" aria-live="polite">'+count+'</span></div><div id="workouts-items" class="workouts-card-list">'+cards+'</div>'+(!history?workoutAction(icon('play')+' Start Empty Workout','empty-workout','',true):'')+'</section>';
+}
+function workoutExerciseMarkup(e){
+ return '<details class="workouts-card workouts-exercise"><summary><span>'+icon('exercise')+'</span><span class="workouts-exercise-copy"><strong>'+escapeWorkout(e.name)+'</strong><span class="workouts-muted workouts-exercise-meta">'+e.sets.length+' sets</span></span>'+icon('chevron-down')+'</summary><div class="workouts-set workouts-muted"><span>Set</span><span>kg</span><span>Reps</span><span>Rest</span></div>'+e.sets.map((t,i)=>'<div class="workouts-set"><span>'+(i+1)+'</span><span>'+escapeWorkout(t.weight)+'</span><span>'+escapeWorkout(t.reps)+'</span><span>'+escapeWorkout(t.rest)+'s</span></div>').join('')+'</details>';
+}
+function workoutDetailMarkup(r,history=false){
+ return '<section class="workouts-detail"><header class="workouts-header"><div class="workouts-back"><button class="workouts-round" data-w-action="back" aria-label="Back to Workouts">'+icon('chevron-left')+'</button><h1>'+escapeWorkout(r.name)+'</h1></div>'+(!history?'<button class="workouts-round" data-w-action="edit-routine" aria-label="Edit Routine">'+icon('pencil')+'</button>':'')+'</header><p class="workouts-muted">'+workoutMeta(r)+(history?' · '+escapeWorkout(new Date(r.finished).toLocaleDateString()):'')+'</p>'+(!history?workoutAction('Start Workout','start-routine'):'')+'<h2 class="workouts-heading">Exercises</h2>'+r.exercises.map(workoutExerciseMarkup).join('')+(r.description?'<p class="workouts-muted">'+escapeWorkout(r.description)+'</p>':'')+'</section>';
+}
+function workoutEditorMarkup(){
+ const d=workoutDraft;return '<section class="workouts-detail workouts-editor"><header class="workouts-header"><div class="workouts-back"><button class="workouts-round" data-w-action="cancel-editor" aria-label="Back">'+icon('chevron-left')+'</button><h1>'+ (workoutData.routines.some(r=>r.id===d.id)?'Edit Routine':'New Routine')+'</h1></div></header><label>Routine name<input class="workouts-input" data-w-field="name" value="'+escapeWorkout(d.name)+'" placeholder="Routine name"></label><label>Description<input class="workouts-input" data-w-field="description" value="'+escapeWorkout(d.description)+'" placeholder="Optional"></label>'+workoutAction('Save Changes','save-routine')+'<div class="workouts-section-title"><h2 class="workouts-heading">Exercises</h2><button class="workouts-round" data-w-action="add-exercise" aria-label="Add Exercise">'+icon('plus')+'</button></div>'+d.exercises.map((e,i)=>'<article class="workouts-card"><label>Exercise name<input class="workouts-input" data-w-field="exercise" data-e="'+i+'" value="'+escapeWorkout(e.name)+'" placeholder="Exercise name"></label><div class="workouts-set workouts-muted"><span>Set</span><span>kg</span><span>Reps</span><span>Rest (s)</span></div>'+e.sets.map((t,j)=>'<div class="workouts-set"><button type="button" class="workouts-secondary" data-w-action="remove-set" data-e="'+i+'" data-s="'+j+'" aria-label="Remove set '+(j+1)+'">'+(j+1)+' ×</button>'+['weight','reps','rest'].map(k=>'<input class="workouts-input" type="number" min="0" inputmode="decimal" aria-label="'+k+'" data-w-field="'+k+'" data-e="'+i+'" data-s="'+j+'" value="'+escapeWorkout(t[k])+'">').join('')+'</div>').join('')+workoutAction('Add Set','add-set','data-e="'+i+'"',true)+workoutAction('Remove Exercise','remove-exercise','data-e="'+i+'"',true)+'</article>').join('')+workoutAction('+ Add Exercise','add-exercise','',true)+(workoutData.routines.some(r=>r.id===d.id)?workoutAction('Delete Routine','delete-routine','',true):'')+'</section>';
+}
+function workoutSessionMarkup(){
+ const r=workoutData.session;return '<section class="workouts-detail"><header class="workouts-header"><h1>'+escapeWorkout(r.name)+'</h1><span class="workouts-muted">Active workout</span></header>'+r.exercises.map((e,i)=>'<article class="workouts-card"><h3>'+escapeWorkout(e.name)+'</h3>'+e.sets.map((t,j)=>'<label class="workouts-session-set"><input type="checkbox" data-w-session="'+i+':'+j+'" '+(t.done?'checked':'')+'><span>Set '+(j+1)+' · '+escapeWorkout(t.weight)+' kg · '+escapeWorkout(t.reps)+' reps</span></label>').join('')+'</article>').join('')+workoutAction('Add Exercise','session-exercise','',true)+workoutAction('Finish Workout','finish-workout')+workoutAction('Discard Workout','discard-workout','',true)+'</section>';
+}
+function workoutsMarkup(){
+ const wide=innerWidth>=700&&innerWidth>innerHeight;
+ let detail=workoutData.session?workoutSessionMarkup():workoutDraft?workoutEditorMarkup():workoutDetail?workoutDetailMarkup(workoutDetail,workoutView==='history'):'';
+ return '<div class="page workouts-page enter">'+(workoutNotice?'<p role="status" class="workouts-muted">'+escapeWorkout(workoutNotice)+'</p>':'')+'<div class="workouts-layout">'+(!detail||wide?workoutListMarkup():'')+detail+'</div></div>';
+}
+function workoutRefresh(){render()}
+function workoutStart(r){workoutData.session={id:workoutId(),name:r.name,description:r.description||'',exercises:workoutClone(r.exercises),started:Date.now()};saveWorkouts();workoutRefresh()}
+function handleWorkoutAction(b){
+ const action=b.dataset.wAction,e=Number(b.dataset.e),j=Number(b.dataset.s),id=b.dataset.id;
+ if(workoutData.session&&!['session-exercise','finish-workout','discard-workout'].includes(action))return;
+ if(workoutDraft&&['routines','history','routine-detail','history-detail','new-routine','empty-workout'].includes(action)&&!confirm('Discard unsaved routine changes?'))return;
+ switch(action){
+ case 'routines':case 'history':workoutView=action;workoutQuery='';workoutDetail=null;workoutDraft=null;break;
+ case 'back':workoutDetail=null;break;
+ case 'new-routine':workoutView='routines';workoutDetail=null;workoutDraft={id:workoutId(),name:'',description:'',exercises:[]};break;
+ case 'routine-detail':case 'history-detail':workoutDraft=null;workoutView=action==='history-detail'?'history':'routines';workoutDetail=(workoutView==='history'?workoutData.history:workoutData.routines).find(r=>r.id===id)||null;break;
+ case 'edit-routine':workoutDraft=workoutClone(workoutDetail);break;
+ case 'cancel-editor':if(!confirm('Discard unsaved changes?'))return;workoutDraft=null;break;
+ case 'add-exercise':workoutDraft.exercises.push({name:'',sets:[{weight:0,reps:10,rest:90}]});break;
+ case 'remove-exercise':workoutDraft.exercises.splice(e,1);break;
+ case 'add-set':workoutDraft.exercises[e].sets.push({...workoutDraft.exercises[e].sets.at(-1)||{weight:0,reps:10,rest:90}});break;
+ case 'remove-set':workoutDraft.exercises[e].sets.splice(j,1);break;
+ case 'save-routine':{const d=workoutDraft;if(!d.name.trim()||d.exercises.some(x=>!x.name.trim()||!x.sets.length)){workoutNotice='Enter a routine name and give each exercise a name and at least one set.';break}d.name=d.name.trim();const i=workoutData.routines.findIndex(r=>r.id===d.id);if(i<0)workoutData.routines.push(d);else workoutData.routines[i]=d;workoutDetail=d;workoutDraft=null;saveWorkouts();break}
+ case 'delete-routine':if(!confirm('Delete this routine?'))return;workoutData.routines=workoutData.routines.filter(r=>r.id!==workoutDraft.id);workoutDraft=null;workoutDetail=null;saveWorkouts();break;
+ case 'start-routine':if(!workoutDetail.exercises.length){workoutNotice='Add an exercise before starting.';break}workoutStart(workoutDetail);return;
+ case 'empty-workout':workoutDraft=null;workoutDetail=null;workoutStart({name:'Workout',exercises:[]});return;
+ case 'session-exercise':{const name=prompt('Exercise name');if(!name?.trim())return;const weight=Number(prompt('Weight (kg)','0')),reps=Number(prompt('Reps','10'));if(!Number.isFinite(weight)||!Number.isFinite(reps)||weight<0||reps<0)return;workoutData.session.exercises.push({name:name.trim(),sets:[{weight,reps,rest:90,done:false}]});saveWorkouts();break}
+ case 'finish-workout':{const r=workoutData.session,completed=r.exercises.map(x=>({...x,sets:x.sets.filter(t=>t.done)})).filter(x=>x.sets.length);if(!completed.length){workoutNotice='Complete at least one set before finishing.';break}workoutData.history.unshift({...r,exercises:completed,finished:Date.now()});workoutData.session=null;workoutDetail=null;workoutView='history';workoutQuery='';saveWorkouts();break}
+ case 'discard-workout':if(!confirm('Discard this workout?'))return;workoutData.session=null;saveWorkouts();break;
+ default:return;
+ }
+ workoutRefresh();
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-w-action]');if(b&&page==='Workouts')handleWorkoutAction(b)});
+document.addEventListener('input',e=>{const t=e.target;if(t.id==='workouts-search'){workoutQuery=t.value;const {cards,count}=workoutListItems();document.getElementById('workouts-items').innerHTML=cards;document.getElementById('workouts-count').textContent=count;return}if(!workoutDraft||!t.dataset.wField)return;const k=t.dataset.wField,i=Number(t.dataset.e),j=Number(t.dataset.s);if(k==='name'||k==='description')workoutDraft[k]=t.value;else if(k==='exercise')workoutDraft.exercises[i].name=t.value;else workoutDraft.exercises[i].sets[j][k]=Math.max(0,Number(t.value)||0)});
+document.addEventListener('change',e=>{const t=e.target;if(!t.dataset.wSession||!workoutData.session)return;const [i,j]=t.dataset.wSession.split(':').map(Number);workoutData.session.exercises[i].sets[j].done=t.checked;saveWorkouts()});
+
+function render(){if(showDiagnostics){main.innerHTML='<div class="page enter"><h1 class="brand">FORM · Diagnostics</h1><p class="diagnostic-caption">Navigation and viewport test</p><section class="diagnostic-card"><h2>Live diagnostics</h2><div id="diagnostics"></div></section><button id="check-update">Check for Updates</button><p class="foot"></p><section class="diagnostic-card" style="margin-top:12px"><h2>Scroll test</h2><p>Navigation stays stationary while content scrolls.</p>'+Array.from({length:12},(_,i)=>'<div class="diagnostic-marker">Scroll marker '+(i+1)+'</div>').join('')+'</section></div>'}else{main.innerHTML=page==='Home'?homeMarkup():page==='Workouts'?workoutsMarkup():'<div class="page enter"><h1 class="brand">'+page+'</h1><p class="tagline">This page will follow One’s design when its turn comes.</p></div>'}nav.querySelectorAll('button').forEach((b,i)=>b.setAttribute('aria-current',tabs[i]===page?'page':'false'));const start=document.getElementById('home-start');if(start)start.onclick=()=>document.getElementById('home-coming').showModal();const calendar=document.getElementById('home-calendar');if(calendar)calendar.onclick=()=>document.getElementById('home-coming').showModal();window.lucide?.createIcons();layout()}
 function go(t){taps++;if(page!==t){page=t;render()}}
 nav.innerHTML=tabs.map((t,i)=>'<button aria-label="'+t+'" title="'+t+'" data-go="'+t+'">'+icon(['home','workouts','progress','profile'][i])+'</button>').join('');
 function openDeveloper(){dev.innerHTML='<h2>Developer settings</h2><label>Show diagnostics <input type="checkbox" id="show-diagnostics" '+(showDiagnostics?'checked':'')+'></label><p>Build '+BUILD+'</p><button id="dev-update">Check for Updates</button><button id="dev-close">Done</button>';dev.showModal()}
