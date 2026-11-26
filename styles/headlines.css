@@ -19,3 +19,11 @@ body[data-layout=folded-portrait] nav.nav button span{display:none}
 body:is([data-duo-orientation=FP],[data-duo-orientation=FL1],[data-duo-orientation=FL2],[data-duo-orientation=UP],[data-duo-orientation=UL]):not([data-calibrating=true]) main{padding-top:max(var(--safe-top),var(--headline-top))}
 body:is([data-duo-orientation=FP],[data-duo-orientation=FL1],[data-duo-orientation=FL2],[data-duo-orientation=UP],[data-duo-orientation=UL]) main>.page{margin-block:0}
 .home-header .brand{align-items:center}.home-header .home-date strong{align-self:center}
+
+/* Native design coordinates and web-only FL1 adapter. */
+:root{--fl1-native-headline-inset:84px;--fl1-native-content-inset:16px;--fl1-safari-excluded:84px;--fl1-safari-headline-inset:max(0px,calc(var(--fl1-native-headline-inset) - var(--fl1-safari-excluded)));--fl1-safari-content-inset:max(0px,calc(var(--fl1-native-content-inset) - var(--fl1-safari-excluded)));--fl1-workout-share:2fr;--fl1-streak-share:3fr}
+body[data-duo-orientation=FL1]:not([data-calibrating=true]) main{padding-left:max(var(--safe-left),var(--fl1-safari-content-inset))}
+body[data-duo-orientation=FL1]:not([data-calibrating=true]) .home-header{padding-left:calc(var(--fl1-safari-headline-inset) - var(--fl1-safari-content-inset))}
+body[data-duo-orientation=FL1] .home-brand .brand-signature{justify-items:start}
+body[data-duo-orientation=FL1] .home-dashboard{grid-template-columns:minmax(0,var(--fl1-workout-share)) minmax(0,var(--fl1-streak-share))}
+#fl1-preview{margin:8px 0;padding:8px;border:1px solid #ccd4df;border-radius:12px}#fl1-preview svg{display:block;width:100%;height:auto;margin-top:8px}#fl1-preview select{font:inherit;margin-left:8px}
