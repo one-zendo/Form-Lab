@@ -885,3 +885,9 @@ body[data-dock=bottom] #build-tools{bottom:calc(var(--bottom-bar-height) + var(-
 .appearance-options label+label{border-top:1px solid var(--line)}
 .appearance-options input{margin-left:auto;accent-color:var(--accent);width:20px;height:20px}
 .appearance-options svg{width:20px;height:20px;color:var(--accent)}
+
+/* Build 139: compact card-aligned bottom dock, independent of side rail. */
+:root{--bottom-bar-height:56px;--bottom-bar-icon:22px;--bottom-bar-capsule-width:54px;--bottom-bar-capsule-height:40px;--bottom-bar-padding:4px;--bottom-bar-edge:var(--content-edge);--bottom-bar-offset:8px}
+body[data-dock=bottom] nav.nav,body[data-layout=folded-portrait][data-dock=bottom] nav.nav{inset:auto calc(var(--bottom-bar-edge) + var(--safe-right)) calc(var(--bottom-bar-offset) + var(--safe-bottom)) calc(var(--bottom-bar-edge) + var(--safe-left));width:auto;height:var(--bottom-bar-height);padding:var(--bottom-bar-padding) max(var(--space-1),calc((100% - var(--bottom-bar-content-max))/2));border:1px solid var(--line);border-radius:var(--radius-card);grid-template-columns:repeat(4,minmax(0,1fr));}
+body[data-dock=bottom] main,body[data-layout=folded-portrait][data-dock=bottom] main{padding-bottom:calc(var(--bottom-bar-height) + var(--bottom-bar-offset) + var(--safe-bottom) + var(--space-4))}
+body[data-dock=bottom] #build-tools{bottom:calc(var(--bottom-bar-height) + var(--bottom-bar-offset) + var(--safe-bottom));}
