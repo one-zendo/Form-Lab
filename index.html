@@ -36,6 +36,12 @@
   --type-heading:20px;
   --type-card-title:clamp(21px, 5.2vw, 24px);
   --type-brand:clamp(30px, 7.3vw, 34px);
+  --brand-tracking:-1.4px;
+  --brand-line-height:1.1;
+  --signature-width:3px;
+  --signature-height:30px;
+  --signature-gap:var(--space-2);
+  --header-secondary-line:var(--line-body);
   --weight-medium:600;
   --weight-semibold:650;
   --weight-brand:800;
@@ -265,43 +271,56 @@ main {
 .home-header {
   display:grid;
   grid-template-columns:minmax(0,1fr) auto;
-  align-items:start;
-  gap:var(--space-3);
+  grid-template-rows:auto auto;
+  align-items:baseline;
+  column-gap:var(--space-3);
+  row-gap:var(--space-1);
   margin-bottom:var(--space-4);
 }
-
-.home-brand {
-  min-width:0;
-}
-
+.home-brand,.home-date { display:contents; }
 .home-brand .brand {
-  letter-spacing:-1.4px;
+  grid-column:1;
+  grid-row:1;
+  min-width:0;
+  letter-spacing:var(--brand-tracking);
   font-size:var(--type-brand);
-  line-height:1.1;
+  line-height:var(--brand-line-height);
 }
-
+.home-brand .page-tab-trigger { gap:var(--signature-gap); }
+.home-brand .page-tab-trigger > span { display:inline-flex; align-items:center; gap:var(--signature-gap); }
+.home-brand .brand::before { content:none; }
+.brand-signature {
+  display:inline-block;
+  flex:none;
+  width:var(--signature-width);
+  height:var(--signature-height);
+  border-radius:var(--radius-pill);
+  background:var(--accent);
+}
 .home-brand .tagline {
+  grid-column:1;
+  grid-row:2;
+  min-width:0;
   font-size:var(--type-detail);
-  line-height:var(--icon-control);
-  margin:var(--space-1) 0 0;
+  line-height:var(--header-secondary-line);
+  margin:0;
 }
-
-.home-date {
-  display:grid;
-  gap:var(--space-1);
+.home-date strong {
+  grid-column:2;
+  grid-row:1;
   text-align:right;
   white-space:nowrap;
-  padding-top:2px;
-}
-
-.home-date strong {
   font-weight:var(--weight-semibold);
   font-size:var(--type-subtitle);
-  line-height:var(--touch-target);
+  line-height:var(--line-heading);
 }
-
 .home-date span {
+  grid-column:2;
+  grid-row:2;
+  text-align:right;
+  white-space:nowrap;
   font-size:var(--type-detail);
+  line-height:var(--header-secondary-line);
   color:var(--muted);
 }
 
@@ -534,7 +553,7 @@ main {
 }
 
 /* One responsive Home measurement policy; cards grow with content and available space. */
-@media (orientation:landscape) and (min-width:700px) {
+@media (orientation:landscape) {
   .home-dashboard {
     grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);
     grid-template-rows:minmax(min-content,1fr);
@@ -796,14 +815,14 @@ body[data-layout$="-landscape"]:not([data-layout^="standard"]) main{padding-righ
 </style></head>
 <body>
 <main></main>
-<div id="build-tools"><span id="build-number">Build 92</span><button id="quick-check" type="button">Check</button><button id="quick-update" type="button">Update</button><span id="update-status" role="status" aria-live="polite"></span></div>
+<div id="build-tools"><span id="build-number">Build 93</span><button id="quick-check" type="button">Check</button><button id="quick-update" type="button">Update</button><span id="update-status" role="status" aria-live="polite"></span></div>
 <nav class="nav" aria-label="Main navigation"></nav>
 <dialog class="page-tab-menu" id="page-tab-menu" aria-labelledby="page-tab-title"><h2 id="page-tab-title">Navigate</h2><div class="page-tab-options"></div></dialog>
 <dialog class="dev-dialog" id="developer"></dialog>
 <dialog class="home-coming" id="home-coming"><h2>Coming next</h2><p>We’re building the workout and activity features on this clean FORM foundation.</p><button id="home-coming-close">Done</button></dialog>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script>
-const BUILD=92;
+const BUILD=93;
 const UPDATE_INTERVAL_MS = 5000;
 const tabs=['Home','Workouts','Progress','Profile'];
 const glyphs={home:'M3 11 12 3l9 8v9h-6v-7H9v7H3z',workouts:'M3 10h18v4H3zM7 6v12M17 6v12',progress:'M3 20h18M5 15l4-5 4 3 6-9',profile:'M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8M4 21v-2a8 8 0 0 1 16 0v2',exercise:'M3 10h18v4H3zM6 7v10M18 7v10',timer:'M12 7v6l4 2M9 2h6M12 4a9 9 0 1 0 0 18 9 9 0 0 0 0-18',records:'M5 20V9h14v11M8 9V5h8v4M9 14h6',library:'M4 4h6v16H4zM14 4h6v16h-6z',plus:'M12 4v16M4 12h16',swap:'M4 7h15l-4-4m5 14H5l4 4',rest:'M4 3h16v18H4zM8 8h8M8 12h8M8 16h5',calendar:'M3 5h18v16H3zM7 3v4m10-4v4M3 10h18',heart:'M20 8c0 5-8 11-8 11S4 13 4 8a4 4 0 0 1 8-1 4 4 0 0 1 8 1'};
@@ -812,7 +831,7 @@ const main=document.querySelector('main'),nav=document.querySelector('.nav'),dev
 let page='Home',taps=0,showDiagnostics=false;try{showDiagnostics=localStorage.getItem('form.diagnostics')==='true'}catch{}
 function layout(){const w=document.documentElement.clientWidth,h=document.documentElement.clientHeight,s=Math.min(w,h),l=Math.max(w,h),ratio=Math.min(screen.width,screen.height)/Math.max(screen.width,screen.height),duo=ratio>.62,folded=duo&&s<=530&&l<=760,mode=folded?'folded-'+(w>h?'landscape':'portrait'):duo?'unfolded-'+(w>h?'landscape':'portrait'):'standard-'+(w>h?'landscape':'portrait');document.body.dataset.layout=mode;document.body.dataset.dock=folded||w>h?'side':'bottom';document.body.dataset.posture=navigator.devicePosture?.type||(matchMedia('(device-posture: folded)').matches?'folded':'unknown');diagnostics()}
 function diagnostics(){const box=document.querySelector('#diagnostics');if(!box)return;const v=window.visualViewport,n=nav.getBoundingClientRect(),m=main.getBoundingClientRect(),s=getComputedStyle(main),values=[['Layout',document.body.dataset.layout],['Posture',document.body.dataset.posture],['Dock',document.body.dataset.dock],['Layout viewport',innerWidth+' × '+innerHeight],['Visual viewport',v?Math.round(v.width)+' × '+Math.round(v.height):'Unavailable'],['Scale',v?v.scale.toFixed(3):'Unavailable'],['Screen',screen.width+' × '+screen.height],['Content',Math.round(m.width)+' × '+Math.round(m.height)],['Padding',s.padding],['Navigation',[n.x,n.y,n.width,n.height].map(Math.round).join(' / ')],['Navigation taps',taps],['Scroll',Math.round(main.scrollTop)+' px']];box.replaceChildren(...values.map(([k,v])=>{const row=document.createElement('div');row.className='diagnostic-row';row.innerHTML='<span></span><strong></strong>';row.firstChild.textContent=k;row.lastChild.textContent=v;return row}))}
-function homeMarkup(){const now=new Date(),weekday=now.toLocaleDateString(undefined,{weekday:'long'}),date=now.toLocaleDateString(undefined,{month:'short',day:'numeric'}),days=['M','T','W','T','F','S','S'];return '<div class="page home-page enter"><header class="home-header"><div class="home-brand"><h1 class="brand">FORM<span class="brand-mark">.</span></h1><p class="tagline">Train with focus, follow your progress</p></div><time class="home-date"><strong>'+weekday+'</strong><span>'+date+'</span></time></header><h2 class="home-greeting">Hello.</h2><div class="home-dashboard"><section class="home-primary"><button class="home-workout-card" id="home-start" type="button"><span class="home-workout-copy"><strong>Ready to train?</strong><span>Choose your workout</span></span><span></span><span class="home-workout-cta">'+icon('exercise')+'<span>Start</span></span></button></section><section class="home-support"><article class="home-streak-card"><div class="home-streak-top"><div><div class="home-streak-title">'+icon('records')+'<h2>Training streak</h2></div><p class="home-streak-caption">Set your weekly schedule</p></div><button class="home-icon-button" id="home-calendar" aria-label="Training calendar">'+icon('calendar')+'</button></div><div class="home-days" aria-label="Weekly training activity">'+days.map((d,i)=>'<div class="home-day"><span>'+d+'</span><span class="home-day-dot"></span></div>').join('')+'</div><div class="home-streak-footer"><span>Personal best</span><strong>0 weeks</strong></div></article></section></div></div>'}
+function homeMarkup(){const now=new Date(),weekday=now.toLocaleDateString(undefined,{weekday:'long'}),date=now.toLocaleDateString(undefined,{month:'long',day:'numeric'}),days=['M','T','W','T','F','S','S'];return '<div class="page home-page enter"><header class="home-header"><div class="home-brand"><h1 class="brand"><span class="brand-signature" aria-hidden="true"></span>FORM</h1><p class="tagline">Train with focus, follow your progress</p></div><time class="home-date"><strong>'+weekday+'</strong><span>'+date+'</span></time></header><h2 class="home-greeting">Hello, Zendo.</h2><div class="home-dashboard"><section class="home-primary"><button class="home-workout-card" id="home-start" type="button"><span class="home-workout-copy"><strong>Ready to train?</strong><span>Choose your workout</span></span><span></span><span class="home-workout-cta">'+icon('exercise')+'<span>Start</span></span></button></section><section class="home-support"><article class="home-streak-card"><div class="home-streak-top"><div><div class="home-streak-title">'+icon('records')+'<h2>Training streak</h2></div><p class="home-streak-caption">Set your weekly schedule</p></div><button class="home-icon-button" id="home-calendar" aria-label="Training calendar">'+icon('calendar')+'</button></div><div class="home-days" aria-label="Weekly training activity">'+days.map((d,i)=>'<div class="home-day"><span>'+d+'</span><span class="home-day-dot"></span></div>').join('')+'</div><div class="home-streak-footer"><span>Personal best</span><strong>0 weeks</strong></div></article></section></div></div>'}
 
 /* Independent Workouts implementation. No One data or styling is imported. */
 const WORKOUT_STORAGE='form.lab.workouts.v1';
