@@ -1088,3 +1088,7 @@ body[data-diagnostics=true] #viewport-outline{visibility:hidden}
 .home-greeting-trigger{font:inherit;color:inherit;letter-spacing:inherit;background:none;border:0;padding:0;text-align:left;min-height:var(--touch-target);cursor:pointer}
 
 #camera-guides{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}#camera-calibration{padding:8px 0;border-bottom:1px solid #dde3ea}#camera-calibration label,#camera-calibration output{display:block;margin:6px 0}#camera-calibration input[type=range]{width:100%}#camera-calibration output{font-size:11px;overflow-wrap:anywhere}
+
+/* Build 182: bounded native diagnostic scrolling, independent of app swipe gestures. */
+.viewport-readings{max-height:none;min-height:0;margin:0 auto;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+#camera-calibration input[type=range]{touch-action:pan-y}
