@@ -299,3 +299,7 @@ Before designing any screen, component or interaction, prioritize Duo layout ada
 
 ## Mandatory token-first architecture
 All reusable visual values must resolve through global semantic design, layout, motion, or component tokens. Shared responsive layout logic consumes these tokens and adapts to available container width, safe areas, navigation docking and posture. Cards, controls, navigation and future components inherit shared defaults; page-specific rules are reserved for content composition or documented exceptions. Do not duplicate reusable values or introduce local motion systems. Audit existing hardcoded values incrementally without breaking verified device behavior. Build 51 introduces the shared adaptive card system; full token migration and device validation remain pending.
+
+
+## Clean restart baseline — Build 53
+The user confirmed navigation positioning is perfect. Preserve Build 53 navigation positioning, viewport and screen-area configuration, global tokens, diagnostics and update behavior as the restart foundation. This confirms positioning only, not every device behavior. ONE is a visual layout reference only; do not migrate its implementation. Existing product and UX specifications remain requirements, not legacy page code.
