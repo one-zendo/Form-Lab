@@ -5,3 +5,17 @@
 
 /* Shared stationary headline, independent scrolling content. */
 #shell{height:100dvh;min-height:0;overflow:hidden}#calibration{height:100%;display:flex;flex-direction:column;min-height:0;padding-bottom:0}.headline{flex:none;background:var(--canvas);z-index:2}.content{flex:1;min-height:0;overflow-y:auto;overscroll-behavior-y:contain;padding-bottom:var(--space-16)}body[data-page=Home] .content{display:flex;flex-direction:column}body[data-page=Home] #app-pages{flex:0 0 auto}body[data-page=Home] #headline-build{display:none}body[data-page=Home] .home-dashboard{align-items:stretch}.home-days span{max-width:var(--space-40);width:100%;justify-self:center}
+
+
+/* Home dashboard refinement — balanced compact cards across Duo postures. */
+.home-dashboard{gap:var(--space-12);align-items:stretch}
+.home-workout-card{min-height:112px;padding:var(--space-16);gap:var(--space-16)}
+.home-workout-copy{gap:var(--space-4)}
+.home-workout-copy strong{font-size:var(--type-section);line-height:1.15}
+.home-workout-cta{font-size:var(--type-headline)}
+.home-streak{padding:var(--space-12);gap:var(--space-8)}
+.home-streak-heading{display:grid;gap:var(--space-4)}
+.home-days{gap:var(--space-4)}
+.home-days span{max-width:28px;font-size:var(--type-caption)}
+.home-streak .form-secondary{min-height:var(--target-min);padding-block:var(--space-8)}
+@media(min-width:560px){.home-workout-card{min-height:128px}.home-streak{padding:var(--space-16)}}
