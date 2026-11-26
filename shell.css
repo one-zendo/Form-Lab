@@ -47,3 +47,13 @@ html,body{width:100%;height:100%;min-height:0;max-height:100%;overflow:hidden;ov
 /* FORM Glass dock material; existing dimensions and anchor are unchanged. */
 @supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){#dock{background:var(--glass-dock-tint);-webkit-backdrop-filter:var(--glass-filter);backdrop-filter:var(--glass-filter)}}
 @media(prefers-reduced-transparency:reduce){#dock{background:var(--paper);-webkit-backdrop-filter:none;backdrop-filter:none}}
+
+/* Build 36: full-width bottom / right-edge glass, independent of dock controls. */
+.dock-material{display:none}
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+body:not([data-nav="rail"]) #shell{padding-bottom:0}
+body:not([data-nav="rail"]) .dock-material{display:block;position:fixed;inset:auto 0 0;height:calc(var(--dock-reserve) + env(safe-area-inset-bottom) + var(--glass-lead));z-index:9;pointer-events:none;background:var(--glass-tint);-webkit-backdrop-filter:var(--glass-headline-filter);backdrop-filter:var(--glass-headline-filter);-webkit-mask-image:linear-gradient(to top,#000 0%,#000 calc(100% - var(--glass-edge)),rgba(0,0,0,.8) calc(100% - 16px),rgba(0,0,0,.35) calc(100% - 8px),transparent 100%);mask-image:linear-gradient(to top,#000 0%,#000 calc(100% - var(--glass-edge)),rgba(0,0,0,.8) calc(100% - 16px),rgba(0,0,0,.35) calc(100% - 8px),transparent 100%)}
+body[data-nav="rail"] #shell{padding-right:0}
+body[data-nav="rail"] .dock-material{display:block;position:fixed;inset:0 0 0 auto;width:calc(var(--dock-reserve) + env(safe-area-inset-right) + var(--glass-lead));z-index:9;pointer-events:none;background:var(--glass-tint);-webkit-backdrop-filter:var(--glass-headline-filter);backdrop-filter:var(--glass-headline-filter);-webkit-mask-image:linear-gradient(to left,#000 0%,#000 calc(100% - var(--glass-edge)),rgba(0,0,0,.8) calc(100% - 16px),rgba(0,0,0,.35) calc(100% - 8px),transparent 100%);mask-image:linear-gradient(to left,#000 0%,#000 calc(100% - var(--glass-edge)),rgba(0,0,0,.8) calc(100% - 16px),rgba(0,0,0,.35) calc(100% - 8px),transparent 100%)}
+}
+@media(prefers-reduced-transparency:reduce){body:not([data-nav="rail"]) #shell{padding-bottom:calc(var(--dock-reserve) + env(safe-area-inset-bottom))}body[data-nav="rail"] #shell{padding-right:calc(var(--dock-reserve) + env(safe-area-inset-right))}body .dock-material{display:none!important}}

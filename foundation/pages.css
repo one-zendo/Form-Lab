@@ -65,3 +65,13 @@ body[data-page=Home] #headline-build{display:inline-flex;align-items:center;font
 .content{position:relative;z-index:auto;flex:1 1 0;height:0;min-height:0;margin-top:0;padding-top:calc(var(--layout-center) + var(--headline-height)/2 + var(--glass-lead));overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;touch-action:pan-y;scrollbar-width:none}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.headline-material{background:var(--canvas);height:calc(var(--layout-center) + var(--headline-height)/2)}}
 @media(prefers-reduced-transparency:reduce){.headline-material{background:var(--canvas);height:calc(var(--layout-center) + var(--headline-height)/2);-webkit-backdrop-filter:none;backdrop-filter:none;-webkit-mask-image:none;mask-image:none}}
+
+/* Preserve resting content clearance while allowing the scroller to paint behind glass. */
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+body:not([data-nav="rail"]) .content{padding-bottom:calc(var(--dock-reserve) + env(safe-area-inset-bottom) + var(--glass-lead) + var(--space-16))}
+body[data-nav="rail"] #calibration{--rail-clearance:calc(var(--dock-reserve) + env(safe-area-inset-right))}
+body[data-nav="rail"] .headline{right:var(--rail-clearance)}
+body[data-nav="rail"] .headline-material{right:var(--rail-clearance)}
+body[data-nav="rail"] .content{margin-inline-end:0;padding-inline-end:calc(var(--rail-clearance) + max(var(--space-16),env(safe-area-inset-right)) + var(--glass-lead))}
+}
+@media(prefers-reduced-transparency:reduce){body:not([data-nav="rail"]) .content{padding-bottom:var(--space-16)}body[data-nav="rail"] .headline,body[data-nav="rail"] .headline-material{right:0}body[data-nav="rail"] .content{margin-inline-end:max(var(--space-16),env(safe-area-inset-right));padding-inline-end:0}}
