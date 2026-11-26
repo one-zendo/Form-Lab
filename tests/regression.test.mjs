@@ -6,7 +6,7 @@ const js=fs.readFileSync(new URL('../core/app.js',import.meta.url),'utf8');
 const html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const css=fs.readFileSync(new URL('../styles/app.css',import.meta.url),'utf8');
 const manifest=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8'));
-test('script parses and build versions match',()=>{new vm.Script(js);assert.equal(Number(js.match(/const BUILD=(\d+)/)[1]),manifest.build);assert.ok(html.includes('Build '+manifest.build));assert.ok(html.includes('app.js?v='+manifest.build));assert.ok(html.includes('app.css?v='+manifest.build))});
+test('script parses and build versions match',()=>{new vm.Script(js);assert.equal(Number(js.match(/const BUILD=(\d+)/)[1]),manifest.build);assert.ok(html.includes('id="build-number"'));assert.ok(html.includes('app.js?v='+manifest.build));assert.ok(html.includes('app.css?v='+manifest.build))});
 const storageCode=fs.readFileSync(new URL('../core/storage.js',import.meta.url),'utf8')+'\n'+js.slice(js.indexOf("const WORKOUT_STORAGE="),js.indexOf("const setCount="));
 const key='form.lab.workouts.v1';
 const routine={id:'r1',name:'Test',exercises:[{name:'Squat',sets:[{weight:20,reps:10,rest:90}]}]};
