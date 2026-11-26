@@ -17,3 +17,5 @@
 /* Approved workout interaction refinements. */
 :root{--workout-action-height:56px;--motion-feedback:150ms;--dialog-expanded-max:480px;--focus-width:2px;--focus-offset:2px;--modal-scrim:#0006}
 @media(prefers-reduced-motion:reduce){:root{--motion-feedback:0ms}}
+
+:root{--diag-camera:#ff9500;--diag-headline:#af52de;--diag-viewport:#0088ff;--diag-content:#34c759;--diag-safe:#8e8e93}
