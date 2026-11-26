@@ -96,3 +96,6 @@ Five standalone schematic SVGs and measured/reference fixtures added. Runtime CS
 
 ## Build 173 — universal component foundation
 Share existing workout button and input declarations with low-specificity universal classes, integrate primary actions and fields, add opt-in secondary/icon/heading/numeric variants. Existing layout, hinge, motion and theme rules unchanged. Document component contract and discrepancies between design spec and runtime. JS syntax checked; source regression added. Dialog/menu migration and physical verification pending.
+
+## Build 174 — interaction component foundation
+Add opt-in dialog, sheet, menu and selection primitives; classify five existing dialogs as legacy to avoid altering geometry or backdrop. Share page menu grid. No lifecycle, hinge, navigation or motion policy changes. JS syntax checked; regression definition added. New sheet and selection variants not yet used in runtime; device testing pending.
