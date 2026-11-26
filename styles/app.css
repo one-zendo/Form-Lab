@@ -1083,3 +1083,9 @@ body[data-diagnostics=true] #viewport-outline{visibility:hidden}
 .form-diagnostics-headline{display:inline-flex;align-items:center;gap:0;background:transparent;color:inherit;font:inherit;letter-spacing:inherit;padding:0;min-height:var(--touch-target);white-space:nowrap}
 .home-brand .form-diagnostics-headline .brand-signature{align-self:center}
 .viewport-readings header #close-diagnostics{background:transparent;color:#111;padding:0;font:var(--headline-weight) var(--headline-size)/var(--headline-height) var(--headline-family);letter-spacing:var(--headline-tracking)}
+
+/* Build 179: UP display-only header probe; never move content outside drawable viewport. */
+.home-greeting-trigger{font:inherit;color:inherit;letter-spacing:inherit;background:none;border:0;padding:0;text-align:left;min-height:var(--touch-target);cursor:pointer}
+body[data-layout=unfolded-portrait] .home-brand .brand{background:#FFE2B8;color:#111114;border-radius:var(--radius-card);}
+body[data-layout=unfolded-portrait] .home-header{position:relative;isolation:isolate}
+body[data-layout=unfolded-portrait] .home-header::before{content:"";position:absolute;pointer-events:none;z-index:-1;inset-inline:0;top:calc(-1 * env(safe-area-inset-top,0px));height:env(safe-area-inset-top,0px);background:#FFE2B8}
