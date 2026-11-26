@@ -45,3 +45,6 @@ Retain existing baseline. Add optional 56 CSS px workout action height (timer pl
 
 ## Build 19 — design compliance gate
 Official Lucide 0.456.0 SVGs and ISC license vendored from upstream; dock inline geometry matches these assets, with FORM stroke token 1.75 and existing 20px dock size preserved provisionally (20/22 conflict unresolved). No external runtime dependency. CI checks dock geometry, icon tokens, build metadata and JS syntax. New icons must be sourced from pinned official assets and added to compliance coverage. Before every commit review canonical design, layout, motion, accessibility and protected shell behavior; document exceptions and run relevant tests. Static checks do not replace visual/device review. CI is not confirmed a required branch protection gate.
+
+## Build 20 — Workouts icon
+User approved official Lucide biceps-flexed replacing dumbbell. Existing dock sizing, stroke and behavior unchanged. Compliance test updated; prior vendor asset retained for future use.
