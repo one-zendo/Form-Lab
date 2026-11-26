@@ -5,3 +5,6 @@ Build 2: visible build label, versioned assets, ordered deferred scripts, resize
 
 ## Device-reported rotation calibration (Build 3)
 User observed FL1 = 90 degrees, FL2 = 270 degrees; landscape angles 90/270 and portrait angles 0/180. Use angle only after viewport classification establishes folded landscape. Unavailable angle retains ambiguity; inverted portrait is not a new calibrated hardware orientation. Browser/device verification of updated implementation pending.
+
+## Stable milestone — Build 3, 2026-11-26
+User reported the updated orientation detection working perfectly on Duo after testing Build 3. Source checkpoint: f7c83758bdce1015bff6188eb53dd751f5ff69ab. This confirms user-reported operation of the updated rotation detection, not exhaustive safe-area, hinge, browser or automated test certification. Preserve this baseline when implementing Stage 2.
