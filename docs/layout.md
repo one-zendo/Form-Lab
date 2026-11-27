@@ -1,5 +1,15 @@
 # Layout
 
+## Layout Lab Build 001
+
+Home uses one content-width grid. Cards stack until the available content width can fit two 15 rem tracks and a 12 px gap. Tracks share remaining width, and card height follows content. The header, cards and dock share the same 16 px page inset, plus any reported safe area. Dynamic viewport height sizes the shell and sets the available scroll space. At very short heights, the document becomes the scroll container.
+
+The approved physical geometry, Safari exclusions and historical anchors remain in their existing reference data. Layout uses browser-reported safe insets, and Safari viewport exclusions are already represented by the drawable browser dimensions. Native-sized previews are browser simulations. Physical Duo Safari, the native runtime and actual safe-inset values remain unverified, including how the native viewport reports clearance around the folded camera.
+
+Chromium and Playwright WebKit passed all ten calibrated viewport cases with the fixture insets and with zero insets. The checks cover card arrangement, header and dock clearance, resizing, diagnostics and retention of sample training data.
+
+The previous runtime and its tests are recoverable from `archive/form-build-94`. See [restart handoff](LAYOUT-LAB-HANDOFF.md) for the historical migration context.
+
 ## Build 94 — UP Safari-sized Home
 
 Home uses the approved Start Workout control with a quarter-width play accent in UP Safari-sized. The control sits inside the existing workout card and uses its existing navigation to Workouts.

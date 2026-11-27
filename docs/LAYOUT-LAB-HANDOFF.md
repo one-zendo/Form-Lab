@@ -1,5 +1,5 @@
 # FORM Layout Lab — restart handoff
-Recorded 2026-11-27. Documentation only; restart not yet performed.
+Recorded 2026-11-27 before the restart. The active Build 001 layout and its verification scope are described in [layout.md](layout.md#layout-lab-build-001).
 
 ## Preserve
 Previous application snapshot: f61cd026a2a12a45ba6c2cd5a781b28b3a92865c (Build 94 plus UP Home CSS correction). Preserve complete Git history, source, tests, assets, calibration and user data. Existing layout history: docs/layout.md at that snapshot. Archive and verify before replacing runtime. Same repository, main only, same Pages URL https://one-zendo.github.io/Form-Lab/. No new branches. Temporary fix/up-home-spacing branch removal remains pending.

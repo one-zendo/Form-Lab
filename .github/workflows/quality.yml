@@ -1,14 +1,39 @@
-name: Shell quality
+name: Layout Lab quality
 on: [push, pull_request]
 permissions:
   contents: read
 jobs:
-  test:
+  static:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: 22
       - run: for file in shell.js foundation/*.js; do node --check "$file" || exit 1; done
       - run: node --test tests/*.test.cjs
+
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        browser: [chromium, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-save --package-lock=false playwright@1.57.0
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - run: |
+          python3 -m http.server 3000 --bind 127.0.0.1 &
+          server=$!
+          trap 'kill "$server"' EXIT
+          for attempt in {1..20}; do
+            if curl -fsS http://localhost:3000/ >/dev/null; then break; fi
+            sleep 1
+          done
+          node tests/browser/layout.cjs
+        env:
+          FORM_BROWSER: ${{ matrix.browser }}

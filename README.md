@@ -1,36 +1,31 @@
-# FORM Lab
+# FORM Layout Lab
 
-FORM Lab is a static Safari prototype for the FORM strength-training experience on Duo. The current build includes adaptive navigation and diagnostics, demo routines and workout logging, local history, and private Hevy JSON import.
+Build 001 is the grayscale Home wireframe for FORM on Duo. GitHub Pages publishes the root of `main`. [Open Layout Lab](https://one-zendo.github.io/Form-Lab/)
+
+Home uses one grid with shared 16 px insets and card padding. Card columns derive from available width after safe areas. Dynamic viewport height controls vertical space and scrolling. The dock stays in the same grid for every orientation. Only Home is active in this build.
+
+Open Diagnostics to view live measurements and hardware references. The orientation labels indicate matches to calibrated viewport sizes. Native-sized browser previews are simulations because the repository has no SwiftUI target. The [Duo Hardware Standard](docs/DUO-HARDWARE-STANDARD.md) records the calibrated values.
+
+## Archive
+
+The complete former application, including its source, assets and tests, is recoverable from `archive/form-build-94` at commit `f61cd026a2a12a45ba6c2cd5a781b28b3a92865c`. Extract the archived tree into a separate directory with `git archive archive/form-build-94`. [Browse the archive](https://github.com/one-zendo/Form-Lab/tree/archive/form-build-94)
+
+Workout data remains on the existing Pages origin. Layout Lab only accesses the diagnostics preference key and only saves it when a setting changes. Open Build 94 tabs stay on their existing build until manually refreshed. Layout Lab polls its own version series every five seconds.
 
 ## Develop and verify
 
-Start with [AGENTS.md](AGENTS.md), the [documentation index](docs/README.md), and the [Duo Hardware Standard](docs/DUO-HARDWARE-STANDARD.md). Serve the repository root with `python3 -m http.server 3000 --bind 127.0.0.1` and open `http://localhost:3000`. There is no compilation step.
-
-Use Node 22 for the same checks as Shell quality:
+Serve the root in one terminal.
 
 ```sh
-for file in shell.js foundation/*.js; do node --check "$file" || exit 1; done
+python3 -m http.server 3000 --bind 127.0.0.1
+```
+
+Run the static checks and the ten calibrated viewport cases in Chromium and WebKit.
+
+```sh
 node --test tests/*.test.cjs
+npm install --no-save --package-lock=false playwright@1.57.0
+npx playwright install --with-deps chromium webkit
+node tests/browser/layout.cjs
+FORM_BROWSER=webkit node tests/browser/layout.cjs
 ```
-
-The Training browser integration workflow installs a pinned Playwright version as test tooling:
-
-```sh
-npm install --no-save --package-lock=false playwright@1.65.1
-npx playwright install --with-deps chromium
-node tests/browser/training.cjs
-```
-
-The browser suite starts its own temporary HTTP server. On a supported host with Playwright WebKit installed, run it with `FORM_BROWSER=webkit` to exercise the same flows in WebKit.
-
-## Repository guide
-
-- `index.html`, `shell.js`, and `shell.css` compose the application. `foundation/` contains the runtime, including geometry, posture, navigation, training, diagnostics, and the shared design tokens.
-- `design/duo/` contains the approved hardware SVGs. `reference/` retains historical excerpts.
-- `tests/` contains the active Node and browser suites. Historical design decisions live in `docs/`.
-
-Training starts from sample or imported routines in Demo Mode. Existing routines can be edited, and workouts and preferences are stored on the browser origin. Routine creation, duplication and deletion, an exercise catalog and swapping, a scheduling calendar, and native SwiftUI are outside the current Lab implementation.
-
-GitHub Pages publishes the repository root from `main`. Keep the HTML build metadata, About label, asset query versions and `version.json` synchronized. The Lab checks the version every five seconds while visible and waits for training initialization, unsaved edits, active sessions with unverified storage, and open dialogs before reloading. An already open page can still use local features during a network interruption. Offline launch and installation as a PWA have no dedicated manifest or service worker in this branch.
-
-To roll back an application release, revert its source changes on `main` and publish the restored assets under a build number higher than the faulty release. That releases the fix to open tabs using the same update mechanism. Verify the published version and HTML before calling the rollback complete. Browser storage keys and export files require no changes.

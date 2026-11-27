@@ -1,9 +1,65 @@
-#diagnostic-overlay{position:fixed;inset:0;pointer-events:none;z-index:30;overflow:hidden}#diagnostic-overlay .guide{position:absolute;box-sizing:border-box;border:1px dashed var(--guide-color);pointer-events:none}#diagnostic-overlay .guide.viewport{border:2px solid var(--diag-viewport)}#diagnostic-overlay .guide.camera{border-radius:50%}#diagnostic-overlay .guide.safe{border:0;background:var(--diag-safe);opacity:.25}#diagnostic-overlay .guide.grid{border:0;background-image:linear-gradient(to right,#0088ff20 1px,transparent 1px),linear-gradient(to bottom,#0088ff20 1px,transparent 1px);background-size:20px 20px}#safe-probe{position:fixed;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}#diagnostic-controls summary{cursor:pointer;min-height:var(--target-min)}
+:root {
+  --diag-camera: #ff9500;
+  --diag-headline: #af52de;
+  --diag-viewport: #0088ff;
+  --diag-content: #34c759;
+  --diag-safe: #8e8e93;
+}
 
-#diagnostic-open{font:inherit;color:inherit;background:none;border:0;padding:0;min-height:var(--target-min);cursor:pointer}#diagnostic-open:focus-visible{outline:var(--focus-width) solid var(--brand)}
+#diagnostic-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
 
-.guide-label{position:absolute;font:600 10px var(--font);background:var(--paper);padding:1px 3px;white-space:nowrap;pointer-events:none}.guide.axis{border:0!important;background:var(--guide-color);opacity:.65}
+.guide, .guide-label { position: absolute; }
+.guide { border: 1px dashed var(--guide-color); }
+.guide.viewport { border: 2px solid var(--diag-viewport); }
+.guide.camera { border-radius: 50%; }
+.guide.safe, .guide.axis { border: 0; background: var(--guide-color); opacity: .55; }
+.guide.grid {
+  border: 0;
+  background-image: linear-gradient(to right, #0088ff20 1px, transparent 1px),
+    linear-gradient(to bottom, #0088ff20 1px, transparent 1px);
+  background-size: 20px 20px;
+}
 
-#app-pages .diag-caption{font-size:12px;font-weight:600;text-transform:uppercase;color:var(--muted);margin:24px 0 8px}.diag-group{padding:0 16px!important}.diag-row{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;padding:8px 0;color:var(--ink);font:inherit;width:100%;text-align:left}.diag-row+.diag-row{border-top:1px solid var(--elevated)}.diag-link{background:none;border:0;cursor:pointer}.diag-link span{color:var(--muted);font-size:24px}.diag-switch{appearance:none;-webkit-appearance:none;position:relative;width:44px;height:26px;flex:none;margin:0;border:0;border-radius:20px;background:#8e8e93;cursor:pointer}.diag-switch:checked{background:#34c759}.diag-switch:before{content:"";position:absolute;width:20px;height:20px;left:3px;top:3px;background:white;border-radius:50%;transition:transform var(--motion-feedback)}.diag-switch:checked:before{transform:translateX(18px)}.diag-switch:focus-visible{outline:2px solid var(--action);outline-offset:2px}
+.guide-label {
+  font: 600 10px var(--font);
+  background: var(--paper);
+  padding: 1px 3px;
+  white-space: nowrap;
+}
 
-.diag-switch:disabled{opacity:.45;cursor:default}.diag-device #readout{margin:0}.diag-device #readout div{display:flex;justify-content:space-between;gap:12px;padding:8px 0}.diag-device #readout div+div{border-top:1px solid var(--elevated)}.diag-device #readout dt{color:var(--muted)}.diag-device #readout dd{text-align:right;margin:0;font-variant-numeric:tabular-nums}
+#safe-probe {
+  position: fixed;
+  visibility: hidden;
+  pointer-events: none;
+  padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
+}
+
+#diagnostics {
+  inline-size: min(34rem, calc(100% - var(--safe-left) - var(--safe-right) - 32px));
+  max-block-size: calc(100% - var(--safe-top) - var(--safe-bottom) - 32px);
+  padding: var(--space-16);
+  border: 1px solid var(--outline);
+  color: var(--ink);
+}
+
+#diagnostics::backdrop { background: #0006; }
+
+.diag-row, #readout div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-12);
+  padding-block: var(--space-8);
+}
+
+.diag-row { min-block-size: var(--target-min); }
+#diagnostics fieldset { min-inline-size: 0; }
+#storage-status { margin-block: var(--space-12); }
+#diagnostics summary { cursor: pointer; min-block-size: var(--target-min); }
+#readout dd { margin: 0; text-align: end; overflow-wrap: anywhere; }

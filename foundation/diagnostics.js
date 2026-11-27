@@ -1,1 +1,175 @@
-(()=>{const q=s=>document.querySelector(s),overlay=q('#diagnostic-overlay'),controls=q('#diagnostic-controls'),master=q('#guides'),labels=q('#guide-labels'),inputs=[master,labels,...controls.querySelectorAll('[data-guide]')],key='form.diagnostics.v1';let pending=false;try{const saved=JSON.parse(localStorage.getItem(key)||'{}');inputs.forEach(el=>{const k=el.id||el.dataset.guide;if(k in saved){if(el.type==='checkbox')el.checked=!!saved[k];else if(['Native','Safari'].includes(saved[k]))el.value=saved[k]}})}catch{}function save(){for(const el of inputs)if(el!==master)el.disabled=!master.checked;try{localStorage.setItem(key,JSON.stringify(Object.fromEntries(inputs.map(el=>[el.id||el.dataset.guide,el.type==='checkbox'?el.checked:el.value]))));q('#storage-status').textContent='Preferences saved on this device'}catch{q('#storage-status').textContent='Storage unavailable; settings last for this session'}}inputs.forEach(el=>el.addEventListener('change',()=>{save();schedule()}));save();const enabled=n=>master.checked&&q('[data-guide="'+n+'"]').checked,fmt=n=>Number(n.toFixed(1));function draw(){pending=false;if(!master.checked){if(overlay.hasChildNodes())overlay.replaceChildren();return}const w=innerWidth,h=innerHeight,v=window.visualViewport,g=FormDuoGeometry[document.body.dataset.orientation],mode=document.body.dataset.viewportMode,style=getComputedStyle(q('#safe-probe')),safe=['Top','Right','Bottom','Left'].map(s=>parseFloat(style['padding'+s])||0),nodes=[];function box(x,y,width,height,color,kind=''){if(width<=0||height<=0)return;const el=document.createElement('div');el.className='guide '+kind;Object.assign(el.style,{left:x+'px',top:y+'px',width:width+'px',height:height+'px'});el.style.setProperty('--guide-color','var(--diag-'+color+')');nodes.push(el)}function label(x,y,t,color){if(!labels.checked)return;const el=document.createElement('span');el.className='guide-label';el.style.left=Math.max(0,Math.min(w-105,x))+'px';el.style.top=Math.max(0,Math.min(h-16,y))+'px';el.style.color='var(--diag-'+color+')';el.textContent=t;nodes.push(el)}function line(axis,n,color){if(axis==='X'){if(n<0||n>w)return;box(n,0,1,h,color,'axis');label(n+2,4,'X '+fmt(n),color)}else{if(n<0||n>h)return;box(0,n,w,1,color,'axis');label(4,n+2,'Y '+fmt(n),color)}}function measure(group,name,el,color){if(!el||!el.getClientRects().length)return;const r=el.getBoundingClientRect();if(enabled(group)){box(r.x,r.y,r.width,r.height,color);if(r.bottom>0&&r.top<h)label(r.x+3,r.y+3,name+' '+fmt(r.width)+'×'+fmt(r.height),color);if(group==='Headline'){line('X',r.x,color);line('Y',r.y+r.height/2,color)}}}if(enabled('Grid'))box(0,0,w,h,'viewport','grid');if(enabled('Viewport')){box(v?.offsetLeft??0,v?.offsetTop??0,v?.width??w,v?.height??h,'viewport','viewport');label(w-110,h-18,w+'×'+h+' px','viewport')}if(enabled('Safe areas')){box(0,0,w,safe[0],'safe','safe');box(w-safe[1],0,safe[1],h,'safe','safe');box(0,h-safe[2],w,safe[2],'safe','safe');box(0,0,safe[3],h,'safe','safe')}measure('Headline','Headline',q('.headline'),'headline');measure('Content','Content',q('.content'),'content');document.querySelectorAll('[data-screen]:not([hidden]) .form-card,#lab-playground:not([hidden]) .form-card,#lab-playground:not([hidden]) .sample').forEach((el,i)=>measure('Content','Card '+(i+1),el,'content'));measure('Content','Dock',q('#dock'),'content');if(document.body.dataset.page==='Home'&&enabled('Content')){const a=q('.home-workout-card'),b=q('.home-streak'),dock=q('#dock'),tag=q('.tagline'),hello=q('.home-greeting'),head=q('.headline');const rect=el=>el.getBoundingClientRect();function distance(first,second,axis,name){const A=rect(first),B=rect(second);const gap=axis==='x'?B.left-A.right:B.top-A.bottom;const x=axis==='x'?A.right:Math.max(A.left,B.left)+8,y=axis==='x'?Math.max(A.top,B.top)+8:A.bottom;if(gap>0)box(x,y,axis==='x'?gap:1,axis==='y'?gap:1,'content','axis');label(x+3,y+2,name+' '+fmt(gap)+' px','content')}measure('Content','Tagline',tag,'content');measure('Content','Greeting',hello,'content');distance(head,tag,'y','Headline → tagline');distance(tag,hello,'y','Tagline → greeting');distance(hello,a,'y','Greeting → card');const side=rect(b).left>=rect(a).right;distance(a,b,side?'x':'y','Card gap');const rail=document.body.dataset.nav==='rail';distance(b,dock,rail?'x':'y','Dock gap');for(const [name,el] of [['Start',a],['Streak',b]]){const r=rect(el),pad=getComputedStyle(el).paddingTop;label(r.left+5,r.bottom-18,name+' inset '+pad,'content')}}if(g?.camera){const [cx,cy]=g.camera;if(enabled('Camera')&&mode!=='Unmatched'){const x=cx-(mode==='Safari-sized'&&g.side==='left'?g.excluded:0),y=cy-(mode==='Safari-sized'&&g.side==='top'?g.excluded:0);for(const n of [x-18.5,x+18.5])line('X',n,'camera');for(const n of [y-18.5,y+18.5])line('Y',n,'camera');box(x-18.5,y-18.5,37,37,'camera','camera')}}overlay.replaceChildren(...nodes);}function schedule(){if(!pending){pending=true;requestAnimationFrame(draw)}}for(const n of ['resize','scroll','orientationchange','pageshow'])window.addEventListener(n,schedule,{passive:true});window.visualViewport?.addEventListener('resize',schedule);window.visualViewport?.addEventListener('scroll',schedule);document.addEventListener('form-page',schedule);q('.content').addEventListener('scroll',schedule,{passive:true});new MutationObserver(schedule).observe(document.body,{attributes:true,attributeFilter:['data-orientation','data-nav','data-page','data-viewport-mode']});if(window.ResizeObserver){const ro=new ResizeObserver(schedule);for(const el of [q('#calibration'),q('#dock'),q('.content')])ro.observe(el)}schedule()})();
+(() => {
+  const overlay = document.querySelector('#diagnostic-overlay');
+  const master = document.querySelector('#guides');
+  const labels = document.querySelector('#guide-labels');
+  const guideInputs = [...document.querySelectorAll('[data-guide]')];
+  const inputs = [master, labels, ...guideInputs];
+  const guides = new Map(guideInputs.map(input => [input.dataset.guide, input]));
+  const status = document.querySelector('#storage-status');
+  const storageKey = 'form.diagnostics.v1';
+  const inputKey = input => input.id || input.dataset.guide;
+  const content = document.querySelector('.content');
+  const cards = [...content.querySelectorAll('.form-card')];
+  const dock = document.querySelector('#dock');
+  let pending = false;
+
+  function readPreferences() {
+    return JSON.parse(localStorage.getItem(storageKey) || '{}') || {};
+  }
+
+  function syncControls() {
+    for (const input of inputs) {
+      if (input !== master) input.disabled = !master.checked;
+    }
+  }
+
+  try {
+    const preferences = readPreferences();
+    for (const input of inputs) {
+      if (inputKey(input) in preferences) input.checked = Boolean(preferences[inputKey(input)]);
+    }
+    status.textContent = 'Settings apply on this device';
+  } catch {
+    status.textContent = 'Stored settings unavailable';
+  }
+  syncControls();
+
+  for (const input of inputs) {
+    input.addEventListener('change', () => {
+      syncControls();
+      try {
+        const preferences = { ...readPreferences(), [inputKey(input)]: input.checked };
+        localStorage.setItem(storageKey, JSON.stringify(preferences));
+        status.textContent = 'Preferences saved on this device';
+      } catch {
+        status.textContent = 'Storage unavailable. Settings apply for this session.';
+      }
+      schedule();
+    });
+  }
+
+  function draw() {
+    pending = false;
+    if (!master.checked) {
+      overlay.replaceChildren();
+      return;
+    }
+
+    const width = innerWidth;
+    const height = innerHeight;
+    const visual = window.visualViewport;
+    const { orientation, viewportMode } = document.body.dataset;
+    const geometry = FormDuoGeometry[orientation];
+    const probe = getComputedStyle(document.querySelector('#safe-probe'));
+    const [top, right, bottom, left] = ['Top', 'Right', 'Bottom', 'Left'].map(
+      edge => parseFloat(probe['padding' + edge]) || 0
+    );
+    const nodes = [];
+    const enabled = name => guides.get(name).checked;
+    const fmt = number => Number(number.toFixed(1));
+
+    function box(x, y, w, h, color, kind = '') {
+      if (w <= 0 || h <= 0) return;
+      const element = document.createElement('div');
+      element.className = 'guide ' + kind;
+      Object.assign(element.style, { left: x + 'px', top: y + 'px', width: w + 'px', height: h + 'px' });
+      element.style.setProperty('--guide-color', 'var(--diag-' + color + ')');
+      nodes.push(element);
+    }
+
+    function label(x, y, text, color) {
+      if (!labels.checked) return;
+      const element = document.createElement('span');
+      element.className = 'guide-label';
+      element.style.left = Math.max(0, Math.min(width - 105, x)) + 'px';
+      element.style.top = Math.max(0, Math.min(height - 16, y)) + 'px';
+      element.style.color = 'var(--diag-' + color + ')';
+      element.textContent = text;
+      nodes.push(element);
+    }
+
+    function axes(x, y, color) {
+      if (x >= 0 && x <= width) {
+        box(x, 0, 1, height, color, 'axis');
+        label(x + 2, 4, 'X ' + fmt(x), color);
+      }
+      if (y >= 0 && y <= height) {
+        box(0, y, width, 1, color, 'axis');
+        label(4, y + 2, 'Y ' + fmt(y), color);
+      }
+    }
+
+    function measure(element, name, color, clip) {
+      const rect = element.getBoundingClientRect();
+      const y = Math.max(rect.top, clip?.top ?? 0);
+      const end = Math.min(rect.bottom, clip?.bottom ?? height);
+      if (end <= y) return rect;
+      box(rect.x, y, rect.width, end - y, color);
+      label(rect.x + 3, y + 3, name + ' ' + fmt(rect.width) + '×' + fmt(rect.height), color);
+      return rect;
+    }
+
+    if (enabled('Grid')) box(0, 0, width, height, 'viewport', 'grid');
+    if (enabled('Viewport')) {
+      const w = visual?.width ?? width;
+      const h = visual?.height ?? height;
+      box(visual?.offsetLeft ?? 0, visual?.offsetTop ?? 0, w, h, 'viewport', 'viewport');
+      label(width - 110, height - 18, fmt(w) + '×' + fmt(h) + ' px', 'viewport');
+    }
+    if (enabled('Safe areas')) {
+      box(0, 0, width, top, 'safe', 'safe');
+      box(width - right, 0, right, height, 'safe', 'safe');
+      box(0, height - bottom, width, bottom, 'safe', 'safe');
+      box(0, 0, left, height, 'safe', 'safe');
+    }
+    if (enabled('Headline')) {
+      const rect = measure(document.querySelector('#home .headline'), 'Headline', 'headline');
+      axes(rect.x, rect.y + rect.height / 2, 'headline');
+    }
+    if (enabled('Content')) {
+      const clip = measure(content, 'Content', 'content');
+      measure(content.querySelector('.tagline'), 'Tagline', 'content', clip);
+      const [first, second] = cards.map((card, i) => measure(card, 'Card ' + (i + 1), 'content', clip));
+      const sideBySide = second.left >= first.right;
+      const gap = sideBySide ? second.left - first.right : second.top - first.bottom;
+      const gapY = sideBySide ? first.top : first.bottom;
+      if (gapY >= clip.top && gapY < clip.bottom) {
+        label(sideBySide ? first.right : first.left, gapY, 'Card gap ' + fmt(gap) + ' px', 'content');
+      }
+      const nav = measure(dock, 'Navigation', 'content');
+      label(nav.left, clip.bottom, 'Dock gap ' + fmt(nav.top - clip.bottom) + ' px', 'content');
+    }
+
+    if (enabled('Camera') && geometry?.camera) {
+      const [cx, cy] = geometry.camera;
+      const safari = viewportMode === 'Safari-sized';
+      const x = cx - (safari && geometry.side === 'left' ? geometry.excluded : 0);
+      const y = cy - (safari && geometry.side === 'top' ? geometry.excluded : 0);
+      axes(x - 18.5, y - 18.5, 'camera');
+      axes(x + 18.5, y + 18.5, 'camera');
+      box(x - 18.5, y - 18.5, 37, 37, 'camera', 'camera');
+    }
+    overlay.replaceChildren(...nodes);
+  }
+
+  function schedule() {
+    if (pending) return;
+    pending = true;
+    requestAnimationFrame(draw);
+  }
+
+  for (const event of ['resize', 'scroll', 'orientationchange', 'pageshow']) {
+    window.addEventListener(event, schedule, { passive: true });
+  }
+  window.visualViewport?.addEventListener('resize', schedule);
+  window.visualViewport?.addEventListener('scroll', schedule);
+  content.addEventListener('scroll', schedule, { passive: true });
+  new MutationObserver(schedule).observe(document.body, {
+    attributes: true, attributeFilter: ['data-orientation', 'data-viewport-mode'],
+  });
+  if (window.ResizeObserver) {
+    const observer = new ResizeObserver(schedule);
+    for (const element of [content, dock, ...cards]) observer.observe(element);
+  }
+  schedule();
+})();
