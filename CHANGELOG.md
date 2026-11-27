@@ -103,3 +103,6 @@ Replaced runtime from scratch using DESIGN.md. Prior commit 157b411aa749249e6b40
 
 ## Clean Build 02
 Explicit navigation grid areas, fixed viewport shell, content-only scrolling, orientation-driven dock transition with reduced-motion and segment exceptions. Hidden rest timer reclaims its track. Browser and physical validation pending.
+
+## Clean Build 03
+Show current build number on Home headline; retain tagline. Syntax checked; browser and deployment verification pending.
