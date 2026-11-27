@@ -17,3 +17,46 @@ test('private training validation rejects repeated routine IDs and malformed nes
   assert.equal(validPrivateTraining({ routines: [routine], records: [null] }), false);
   assert.equal(validPrivateTraining({ routines: [routine], records: [{ ...record, detail: [{ name: 'Squat', sets: [null] }] }] }), false);
 });
+
+const { readPrivateTraining, selectPrivateDataset } = require('../foundation/demo.js');
+
+test('dataset selection archives prior data and reuses identity for equivalent reordered records', () => {
+  const first = {
+    routines: [{ id: 'same', name: 'First', exercises: [['Row', 1, 8]] }],
+    records: [
+      { routine: 'same', date: '2026-11-26', duration: 15, volume: 80 },
+      { routine: 'same', date: '2026-11-26', duration: 15, volume: 90 },
+    ],
+  };
+  const second = { routines: [{ ...first.routines[0], name: 'Second' }], records: [] };
+  const a = selectPrivateDataset(null, first);
+  const b = selectPrivateDataset(a, second);
+  assert.notEqual(a.datasetId, b.datasetId);
+  assert.equal(b.archivedDatasets[0].datasetId, a.datasetId);
+  const reimported = selectPrivateDataset(readPrivateTraining(JSON.parse(JSON.stringify(b))), {
+    ...first, records: [...first.records].reverse(),
+  });
+  assert.equal(reimported.datasetId, a.datasetId);
+  assert.deepEqual(reimported.records, first.records);
+  assert.equal(reimported.archivedDatasets[0].datasetId, b.datasetId);
+  assert.equal(selectPrivateDataset(reimported, first), reimported);
+});
+
+test('legacy snapshots keep their original payload and duplicate persisted identities are rejected', () => {
+  const payload = { routines: [{ id: 'old', name: 'Old', exercises: [] }], records: [], extra: 'retained' };
+  const legacy = readPrivateTraining(payload);
+  assert.equal(legacy.datasetId, 'private:legacy');
+  assert.equal(legacy.extra, payload.extra);
+  assert.deepEqual(legacy.routines, payload.routines);
+  assert.equal(Object.hasOwn(payload, 'datasetId'), false);
+  assert.throws(() => readPrivateTraining({ ...legacy, archivedDatasets: [legacy] }), /identity/);
+});
+
+test('a new registry cannot reuse the identity of an older dataset with surviving workout data', () => {
+  const payload = { routines: [{ id: 'same', name: 'One', exercises: [] }], records: [] };
+  const older = selectPrivateDataset(null, payload);
+  const afterRegistryLoss = selectPrivateDataset(null, {
+    ...payload, routines: [{ ...payload.routines[0], name: 'Two' }],
+  });
+  assert.notEqual(afterRegistryLoss.datasetId, older.datasetId);
+});

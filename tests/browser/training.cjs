@@ -171,8 +171,105 @@ async function checkWorkout(context, url) {
   assert.equal(history.length, 2);
   assert.equal(history[1].id, started.id);
   assert.equal(history[1].exercises[0].sets[0].done, true);
+  const failures = [];
+  const check = (actual, expected, message) => {
+    if (actual !== expected) failures.push({ message, actual, expected });
+  };
+  await dock('Progress');
+  check(await page.locator('#progress-summary strong').first().innerText(), '1', 'Progress includes the just-finished private workout');
+  await openLab();
+  const other = {
+    ...fixture,
+    routines: [{ ...fixture.routines[0], name: 'Other dataset', exercises: [['Other exercise', 1, 4]] }],
+  };
+  await upload(other);
+  await page.getByText('Imported 1 routines', { exact: false }).waitFor();
+  await dock('Progress');
+  check(await page.locator('#progress-summary strong').first().innerText(), '0', 'Progress excludes history from another dataset');
+  await dock('Workouts');
+  await click('[data-routine=constructor]');
+  check(await page.locator('#routine-exercises summary strong').first().innerText(), 'Other exercise', 'Reused ID does not inherit edited exercises');
+  check(await page.locator('#routine-history summary').count(), 0, 'Reused ID does not inherit prior history');
+  await page.reload();
+  await page.waitForFunction(() => !!window.FormExerciseLibrary);
+  await openLab();
+  await upload(fixture);
+  await page.getByText('Imported 1 routines', { exact: false }).waitFor();
+  await dock('Workouts');
+  await click('[data-routine=constructor]');
+  await click('#routine-edit');
+  check(await page.locator('[data-edit="0:0:rest"]').inputValue(), '45', 'Reimport restores the original exercise modifications');
+  await click('#routine-edit');
+  check(await page.locator('#routine-history summary').count(), 1, 'Reimport recovers the original dataset history');
+  await dock('Progress');
+  check(await page.locator('#progress-summary strong').first().innerText(), '1', 'Reimport recovers the original Progress after reload');
+  assert.deepEqual(failures, []);
   assert.equal(artworkSearches.length, searchCount);
   assert.deepEqual(errors, []);
+}
+
+async function checkLegacyRecovery(context, url) {
+  const page = await context.newPage();
+  await page.route('**/*', route => route.request().url().startsWith(url) ? route.continue() : route.abort());
+  const legacyOverridesKey = 'form.training.routines.demo.v1';
+  const legacyHistory = {
+    id: 'unscoped', routineId: fixture.routines[0].id, name: 'Old workout', started: 1000, finished: 2000,
+    exercises: [{ name: 'Old exercise', sets: [{ reps: 19, done: true }] }],
+  };
+  const legacyOverrides = { [fixture.routines[0].id]: legacyHistory.exercises };
+  await page.addInitScript(({ fixture, legacyHistory, legacyOverrides, legacyOverridesKey, importKey, historyKey }) => {
+    if (sessionStorage.getItem('legacy-fixture')) return;
+    sessionStorage.setItem('legacy-fixture', 'true');
+    localStorage.setItem('form.demo-mode.v1', 'true');
+    localStorage.setItem(importKey, JSON.stringify(fixture));
+    localStorage.setItem(historyKey, JSON.stringify([legacyHistory]));
+    localStorage.setItem(legacyOverridesKey, JSON.stringify(legacyOverrides));
+  }, { fixture, legacyHistory, legacyOverrides, legacyOverridesKey, importKey, historyKey });
+  page.on('dialog', dialog => dialog.accept());
+  await page.goto(url);
+  await page.waitForFunction(() => !!window.FormExerciseLibrary);
+  const storage = key => page.evaluate(key => JSON.parse(localStorage.getItem(key)), key);
+  const click = selector => page.locator(selector).click();
+  const openLab = async () => {
+    await click('#dock [data-page=Profile]');
+    await click('[data-setting-page="Developer settings"]');
+  };
+  const upload = data => page.locator('input[type=file]').setInputFiles({
+    name: 'training.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(data)),
+  });
+
+  await click('#dock [data-page=Workouts]');
+  await click('[data-routine=constructor]');
+  assert.equal(await page.locator('#routine-exercises summary strong').first().innerText(), 'Private exercise');
+  assert.equal(await page.locator('#routine-history summary').count(), 0);
+  await openLab();
+  const replacement = { ...fixture, routines: [{ ...fixture.routines[0], name: 'Replacement' }] };
+  await page.evaluate(key => {
+    const original = Storage.prototype.setItem;
+    window.restoreStorage = () => { Storage.prototype.setItem = original; };
+    Storage.prototype.setItem = function (name, value) {
+      if (name === key) throw new DOMException('Test quota rejection', 'QuotaExceededError');
+      return original.call(this, name, value);
+    };
+  }, importKey);
+  await upload(replacement);
+  await page.getByRole('status').filter({ hasText: 'Could not save private training data' }).waitFor();
+  assert.deepEqual(await storage(importKey), fixture);
+  await page.evaluate(() => window.restoreStorage());
+  await upload(replacement);
+  await page.getByRole('status').filter({ hasText: 'Imported 1 routines' }).waitFor();
+  assert.equal((await storage(importKey)).archivedDatasets[0].routines[0].name, fixture.routines[0].name);
+  assert.deepEqual(await storage(legacyOverridesKey), legacyOverrides);
+  assert.deepEqual(await storage(historyKey), [legacyHistory]);
+  await page.reload();
+  await page.waitForFunction(() => !!window.FormExerciseLibrary);
+  await openLab();
+  await upload(fixture);
+  await page.getByRole('status').filter({ hasText: 'Imported 1 routines' }).waitFor();
+  assert.equal((await storage(importKey)).datasetId, 'private:legacy');
+  assert.deepEqual(await storage(legacyOverridesKey), legacyOverrides);
+  assert.deepEqual(await storage(historyKey), [legacyHistory]);
+  await page.close();
 }
 
 async function checkDuoLayout(context, url) {
@@ -223,9 +320,13 @@ async function main() {
     const context = await browser.newContext();
     context.setDefaultTimeout(8000);
     await checkLock(context, url);
+    const legacyContext = await browser.newContext();
+    legacyContext.setDefaultTimeout(8000);
+    await checkLegacyRecovery(legacyContext, url);
+    await legacyContext.close();
     await checkWorkout(context, url);
     await checkDuoLayout(context, url);
-    console.log('Browser lock, navigation, import, draft, exercise management, rest recovery, workout completion and Duo viewport checks passed');
+    console.log('Browser lock, navigation, dataset isolation, legacy recovery, Progress, workout lifecycle and Duo viewport checks passed');
   } finally {
     await browser?.close();
     server.close();

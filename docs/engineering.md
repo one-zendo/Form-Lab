@@ -123,3 +123,19 @@ Remaining work includes routine authoring, isolation of routine overrides betwee
 The ambiguous folded-landscape case retains the right rail shared by both known FL rotations. The browser regression checks the dock bounds at each of the five Safari-sized viewports and the ambiguous case. These are simulated viewports. The suite also checks draft recovery, private imports, exercise removal, rest-timer recovery, workout completion, and Web Locks contention.
 
 The four stale source assertions on main were reproduced under Node 22. The audit branch passed all 54 Node assertions and the Playwright Chromium integration using Node 22. Playwright was upgraded after npm audit flagged the old browser download certificate validation. The updated test dependency reported zero advisories in the npm audit run. WebKit could not launch on the audit host because its native shared libraries were unavailable.
+
+## Build 83 — Phase 1 training data remediation
+
+Baseline is verified Build 82 at `f545bbc7464dcbdef9735114ed7ac9e6e0932b7f`. On that commit the new Chromium assertions showed zero Progress after completion, cross-import override and history bleed, and stale Progress after reimport. A separate legacy fixture showed an unscoped override applied to an unrelated import.
+
+### Data ownership and compatibility
+
+- Private snapshots use a durable dataset ID in the existing `form.private.training.v1` entry. That entry atomically stores the selected snapshot and its archived predecessors as one localStorage write. An equivalent snapshot reuses its ID across reloads and repeated imports. Comparison is independent of JSON property order and imported record order. A materially changed snapshot receives a new random 128-bit ID. A fresh registry does not restart an ID counter that could alias surviving workout data.
+- Training owns the import write gate, using the existing storage snapshot checks and Web Lock where available. The active selection is published only after successful write and readback. A quota rejection leaves the old snapshot and selection available.
+- New edits use `form.training.routine-overrides.v2`, scoped by dataset and routine ID. New workouts carry the dataset ID through active storage, completion and recovery. Home, Workouts, Routine History and Progress consume one scoped record projection.
+- The old override key and original history entries remain available in the existing raw data export. Unscoped data with ambiguous provenance is excluded from dataset views. A legacy completion explicitly marked as sample remains associated with the sample dataset. The prior private snapshot receives a stable legacy identity on read and is archived at the next successful switch. No legacy key is deleted or overwritten by migration. This release does not add a UI to assign ambiguous records.
+- Browsers without Web Locks still use optimistic conflict checks. Those checks cannot make independent writes atomic across tabs. Archived imports count toward the origin quota and no automatic pruning is performed. Updated snapshots are treated as separate datasets, and the current export is a raw archive without a matching restore tool.
+
+### Verification
+
+Node 22 syntax and all 57 Node cases passed. Chromium integration passed the existing exercise, rest, reload, finish, lock and Duo viewport checks, plus same-ID import isolation, Progress, original edits/history after reload and reimport, legacy preservation, and rejected-write recovery. WebKit on this host lacks native libraries. Physical Safari and Duo behavior were not tested. UI styling, layout contracts, geometry, coordinates, and motion are outside this phase.

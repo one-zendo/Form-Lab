@@ -1,6 +1,6 @@
 # FORM Lab
 
-FORM Lab is a static Safari prototype for the FORM strength-training experience on Duo. Build 82 contains adaptive navigation and diagnostics, demo routines and workout logging, local history, and private Hevy JSON import.
+FORM Lab is a static Safari prototype for the FORM strength-training experience on Duo. Build 83 contains adaptive navigation and diagnostics, demo routines and workout logging, local history, and private Hevy JSON import.
 
 ## Develop and verify
 
