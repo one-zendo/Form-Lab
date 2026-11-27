@@ -38,3 +38,5 @@ Build 10: user approved stable card geometry during keyboard editing. Snapshot r
 Build 11: focus scroll waits 100ms after latest visual viewport change and smoothly targets 16 CSS px above visible editing boundary where possible. Reduced motion snaps; dismissal smoothly restores previous scroll. Physical timing and rotation pending.
 
 Build 12: prefer browser focus scrolling; use visual viewport and next animation frame to check visibility, native scrollIntoView nearest only if obscured. Remove fixed delay and forced bottom positioning. Preserve editing tracks and restore previous scroll. Safari physical validation pending.
+
+Build 13: user physically accepted Build 12 keyboard behavior. Diagnostics distinguish rendered shell from visual editing area, report hidden navigation/timer accurately, exclude hidden elements from camera overlap checks, update guides during card motion, and hide the indicator while typing. Overlay is noninteractive and paint-contained. No layout or keyboard logic changes. Final regression and physical verification pending.
