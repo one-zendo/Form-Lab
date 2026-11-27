@@ -8,6 +8,7 @@ function place(r){lens.style.setProperty('--lens-x',r.x+'px');lens.style.setProp
 function preview(i){buttons.forEach((b,j)=>b.classList.toggle('lens-preview',i===j))}
 function snap(instant=false){if(instant)dock.dataset.lensInstant='true';place(rects()[selected]);preview(selected);if(instant){cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{delete dock.dataset.lensInstant})}}
 function select(i){if(i<0||i>=buttons.length)return;selected=i;buttons.forEach((b,j)=>b.setAttribute('aria-pressed',String(i===j)));snap();document.dispatchEvent(new CustomEvent('form-page',{detail:buttons[i].dataset.page}))}
+document.addEventListener('form-page',e=>{if(e.detail==='Diagnostics'){selected=buttons.findIndex(b=>b.dataset.page==='Profile');buttons.forEach((b,j)=>b.setAttribute('aria-pressed',String(j===selected)));snap()}});
 function cancel(){if(!gesture)return;const id=gesture.id;gesture=null;delete dock.dataset.dragging;if(dock.hasPointerCapture(id))dock.releasePointerCapture(id);snap(true)}
 function update(){cancel();const {orientation,hinge,viewportMode}=document.body.dataset;document.body.dataset.nav=hinge==='book'?'rail':hinge==='laptop'?'bottom':orientation==='FP'&&viewportMode==='Safari-sized'?'bottom':['FP','FL1','FL2','UL'].includes(orientation)?'rail':'bottom';snap(true)}
 function point(e){const d=dock.getBoundingClientRect();return rail()?e.clientY-d.top+dock.scrollTop:e.clientX-d.left+dock.scrollLeft}
