@@ -7,3 +7,6 @@
 /* Segment boundaries are viewport coordinates; subtract the shell's actual content origin. */
 #cards[data-fold="vertical"][data-segments="vertical"]{grid-template-columns:minmax(0,calc(env(viewport-segment-right 0 0) - var(--cards-x,16px))) minmax(0,1fr);column-gap:max(12px,calc(env(viewport-segment-left 1 0) - env(viewport-segment-right 0 0)))}
 #cards[data-fold="horizontal"][data-segments="horizontal"]{grid-template-rows:minmax(0,calc(env(viewport-segment-bottom 0 0) - var(--cards-y,0px))) minmax(0,1fr);row-gap:max(12px,calc(env(viewport-segment-top 0 1) - env(viewport-segment-bottom 0 0)))}
+
+.card{transform-origin:top left}
+@media (prefers-reduced-motion:reduce){.card{animation:none!important;transition:none!important}}

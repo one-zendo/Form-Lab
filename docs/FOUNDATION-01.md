@@ -15,3 +15,6 @@ Build 03 system retained byte-for-byte: 120 ms profile stabilization, reusable d
 Build 02: portrait viewport stacks cards in one column; landscape retains adaptive minimum-width grid. Device Posture API folded signal is reported when available; continuous does not prove physical unfolding, so calibrated viewport inference remains the fallback. Unknown profiles remain unknown. Posture is diagnostic only; CSS controls card layout. No physical hinge angle is exposed or fabricated.
 
 Build 03 supersedes diagnostic-only posture: a folded Device Posture API or CSS media signal activates split cards. Segment axis takes precedence; otherwise UP/UL reference axis is used without claiming exact boundary. Folded cover profiles retain normal layout absent segments. Segment CSS uses reported boundaries; physical validation pending. No hinge angle is inferred.
+
+Build 03 physical acceptance: user reported hinge detection confirmed on Duo, 2026-11-27; exact sensor source and boundary accuracy not independently verified.
+Build 04: 240 ms transform-only card transitions after settled layout changes; reduced motion disables animation. Reported split geometry snaps to avoid crossing the fold. Existing layout and hardware rules unchanged. Physical motion and browser regression pending.
