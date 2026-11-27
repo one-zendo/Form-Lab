@@ -1,0 +1,4 @@
+# FORM — Engineering architecture
+Current runtime remains index.html, foundation-01.js and foundation-01.css. Clean rewrite is planned, not implemented. Preserve current public URL and storage.
+Target modular src/ structure: hardware reference/config; viewport and posture resolver; adaptive layout and tokens; shell and reusable UI components; keyboard and motion; diagnostics; application state. Keep pure calculations independently testable and browser adapters separate. One responsive shell, not five copies. CSS controls layout; JavaScript supplies observed state and explicit exceptions. Diagnostics read geometry, never determine layout.
+Keep tests/ and .github/workflows/quality.yml. Run node --test tests/*.test.cjs; browser tests use Playwright with HTTP server on port 3000. Test actual available grid width and explicit rotation angles. Verify native implementation separately when built. No workout functionality in foundation wireframe.

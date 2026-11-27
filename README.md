@@ -1,3 +1,9 @@
-# FORM
-Clean Foundation Build 01. Preserves the accepted Build 03 runtime. See [foundation specification](docs/FOUNDATION-01.md). Previous experiments remain in Git history at a44ea48c47ed477a2a33729e3b7fc58ce670ff98.
-Run `node --test tests/*.test.cjs`; browser tests use Playwright and a local HTTP server on port 3000.
+# FORM Lab
+Adaptive workout app design and engineering lab.
+[Live preview](https://one-zendo.github.io/Form-Lab/)
+- [DESIGN.md](DESIGN.md): authoritative approved design settings.
+- [AGENTS.md](AGENTS.md): mandatory coding instructions.
+- [ARCHITECTURE.md](ARCHITECTURE.md): current runtime and target architecture.
+- [CHANGELOG.md](CHANGELOG.md): historical decisions and acceptance, not active rules.
+- design/duo/: canonical hardware SVGs.
+Current runtime: Foundation Build 16. Clean rewrite pending. Automated QA not yet verified.

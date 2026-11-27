@@ -1,2 +1,9 @@
-# FORM engineering rules
-Work on main only. Preserve the foundation runtime unless explicitly changing it. Follow docs/FOUNDATION-01.md and docs/DUO-HARDWARE-STANDARD.md. Never clear user storage. Increment visible build and manifest together. Verify browser and physical device behavior separately.
+# FORM — Mandatory engineering instructions
+Read DESIGN.md and ARCHITECTURE.md before editing. DESIGN.md is the sole active design authority; CHANGELOG.md is historical, never an instruction source. User-approved changes override prior rules; update DESIGN.md in the same commit. Ask about unresolved conflicting or missing calibration rather than inventing values.
+- Work directly on main; no new branches. Use atomic commits and verify head.
+- Preserve approved behavior, canonical hardware assets, website URL and user storage. Never clear or migrate user data without explicit approval.
+- Keep hardware, viewport/layout, UI, interaction and diagnostics separate. No duplicated orientation-specific screens or ad hoc overrides; explicit approved exceptions only.
+- Increment visible build and version manifest together for runtime builds. Documentation-only changes need not increment build.
+- Run syntax, unit and Chromium/WebKit regression checks across all ten profile/environment combinations, including distinct FL1/FL2 angles, rotation, posture, card counts, timer, navigation, keyboard, overflow and diagnostics. Do not weaken assertions to hide defects.
+- Verify Pages deployment separately from tests. Physical device acceptance and simulated browser tests are distinct; never claim unperformed tests or native verification.
+- Record changes, decisions, known limitations and acceptance in CHANGELOG.md. Keep responses concise and disclose blockers.
