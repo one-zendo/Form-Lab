@@ -47,10 +47,11 @@
 #app.keyboard-open #main{grid-template-rows:minmax(0,1fr)}
 #app.keyboard-open #cards{scroll-padding:8px}
 
-/* Keyboard editing: intrinsic card height wins over equal-height tracks. */
+
+/* Stable editing tracks: clip and scroll the original card grid, never compress it. */
 #cards:has(#keyboard-test:not([hidden])){grid-auto-rows:minmax(min-content,1fr)}
 #cards:has(#keyboard-test:not([hidden])) .card{min-height:8rem}
-#app.keyboard-open #cards{grid-template-rows:none;grid-auto-rows:minmax(min-content,auto);align-content:start}
-#app.keyboard-open #cards .card{min-height:8rem}
-#app.keyboard-open #cards[data-fold="horizontal"]{grid-template-rows:repeat(2,minmax(min-content,auto))}
-#app.keyboard-open #cards[data-fold="horizontal"][data-segments="horizontal"]{grid-template-rows:minmax(min-content,calc(env(viewport-segment-bottom 0 0) - var(--cards-y,0px))) minmax(min-content,auto)}
+#app.keyboard-open{overflow:hidden}
+#app.keyboard-open.rail{grid-template-columns:minmax(0,1fr) var(--rail-width)}
+#app.keyboard-open #cards{grid-template-columns:var(--editing-columns)!important;grid-template-rows:var(--editing-rows)!important;grid-auto-rows:minmax(min-content,auto);align-content:start;justify-content:start;overflow:auto;scroll-padding:8px;padding-bottom:8px}
+#app.keyboard-open #cards .card{min-height:0}
