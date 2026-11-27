@@ -1,5 +1,5 @@
 # FORM — Design standard
-Status: restart foundation specification; implementation and physical acceptance pending. This is the sole active design authority for the restart. Build 08 remains the existing runtime until replaced. Native-sized browser previews are not native implementations.
+Status: restart foundation specification; implementation and physical acceptance pending. This is the sole active design authority for the restart. The old runtime is retired; the reset page is not Diagnostic Build 01. Native-sized browser previews are not native implementations.
 
 ## Hardware reference
 | Profile | Full display (pt) | Safari drawable (pt) | Safari exclusion |
@@ -13,7 +13,7 @@ Status: restart foundation specification; implementation and physical acceptance
 These are reference calibration targets, not independently measured guarantees. Use canonical SVGs in design/duo. Silver-gray chassis, no black bezel, circular camera. FP hinge left/curve right; FL1 hinge bottom/curve top; FL2 hinge top/curve bottom; UP vertical fold; UL horizontal fold. Folded hinge corner radius 8 pt, outer 59 pt; unfolded 28 pt provisional. Folded camera centers FP (418,48), FL1 (48,48), FL2 (630,418), radius 18.5 pt; unfolded camera unknown. Native safe areas unverified. Never invent geometry.
 
 ## Independent layout architecture
-Start from scratch with a minimal wireframe: headline, two simple test cards, navigation and diagnostics. No workout features in the initial foundation. Preserve previous runtime in Git history and preserve all user storage.
+Start from scratch with a single-page diagnostic app: headline, two test cards, sample exercises and set checks, expandable cards, editable fields, pop-outs, anchored timer and navigation, scroll-end marker and diagnostics. Navigation tests selection only initially. No workout features in the initial foundation. Preserve previous runtime in Git history and preserve all user storage.
 - Each screen owns its content arrangement independently: Home, Workouts, Progress, Profile, and future screens such as Routine and Active Workout.
 - Each screen owns five orientation layouts (FP, FL1, FL2, UP, UL), each sharing its arrangement between Native and Safari, with environment-specific viewport and safe-area calibration.
 - One shared UI and component model across orientations and environments. Changes to a component's content, color, typography, icons, visual styling and functionality propagate to every instance of that component. Headline and pop-outs are shared components across screens. Card internal padding is shared component styling. Screen-specific content is shared across that screen's orientations and environments, not automatically added to other screens. Hardware/viewport detection, raw posture signals, diagnostics and application data may be shared without imposing layout decisions.

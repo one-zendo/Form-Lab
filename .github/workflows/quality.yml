@@ -1,28 +1,18 @@
-name: FORM quality
+name: FORM reset integrity
 on: [push, workflow_dispatch]
 jobs:
-  unit:
+  reset:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - run: node --check src/app.js && node --check src/layout.js && node --check src/data.js && node --test tests/*.test.cjs
-  browser:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        browser: [chromium, webkit]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - run: npm install --no-save --package-lock=false playwright@1.57.0
-      - run: npx playwright install --with-deps ${{ matrix.browser }}
       - run: |
-          python3 -m http.server 3000 --bind 127.0.0.1 &
-          sleep 2
-          FORM_BROWSER=${{ matrix.browser }} node tests/browser/layout.cjs
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          assert json.loads(Path('version.json').read_text())['status'] == 'reset'
+          assert 'Repository reset' in Path('index.html').read_text()
+          assert not Path('src').exists()
+          assert not Path('tests').exists()
+          for p in ['FP','FL1','FL2','UP','UL']:
+              assert Path(f'design/duo/{p}.svg').is_file()
+          PY

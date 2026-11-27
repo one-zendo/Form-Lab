@@ -1,2 +1,2 @@
-# FORM architecture
-New Build 01: index.html shell; src/data.js pure data model; src/layout.js responsive profile, posture, motion, keyboard and diagnostics; src/app.js application views and persistence; src/app.css design tokens and components. No previous runtime files reused. Storage key form.workout.clean.v1; prior keys untouched. Tests in tests/; CI Chromium and WebKit. Native integrations not implemented. Browser diagnostics and physical validation pending.
+# FORM Lab architecture
+Reset stage: static index.html only, no app runtime or storage access. Next: Diagnostic Build 01 with separate hardware detection, explicit orientation layouts, shared components, interactions and read-only diagnostics. Five orientations, two viewport environments. No workout engine. Restore unit and Chromium/WebKit regression jobs for the new runtime before acceptance.
