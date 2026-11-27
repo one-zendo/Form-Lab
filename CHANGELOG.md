@@ -4,3 +4,6 @@ Retired Build 08 runtime and obsolete tests. Previous changelog and source remai
 
 ## Documentation cleanup
 Clarified diagnostic versus future product scope and stage-specific testing. Retained hardware references, approved layout ownership, visual tokens, navigation, timer, zoom and diagnostics policies. No runtime changes.
+
+## Diagnostic Build 01
+Initial single-page diagnostic runtime, sample controls, deadline timer, anchored navigation, explicit profiles, raw posture reporting and observational overlay. Unknown viewport fallback is uncalibrated. No storage writes. Automated checks queued; physical zoom, camera, native and hinge calibration pending. Test coverage is initial, not full acceptance.

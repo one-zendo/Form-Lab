@@ -1,5 +1,5 @@
 # FORM — Design standard
-Status: restart foundation specification; implementation and physical acceptance pending. This is the sole active design authority for the restart. The old runtime is retired; the reset page is not Diagnostic Build 01. Native-sized browser previews are not native implementations.
+Status: restart foundation specification; implementation and physical acceptance pending. This is the sole active design authority for the restart. Diagnostic Build 01 is the initial implementation; verification and calibration remain pending. Native-sized browser previews are not native implementations.
 
 ## Hardware reference
 | Profile | Full display (pt) | Safari drawable (pt) | Safari exclusion |
