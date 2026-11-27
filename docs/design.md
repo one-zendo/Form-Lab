@@ -84,3 +84,6 @@ User approved live duration, completed-set volume and set count, previous matchi
 
 ## Build 89 — Focused active workout
 Approved compact headline with duration and Finish, no live volume readout, compact set/exercise progress, no weather artwork, expandable rest/note fields, and all exercises expanded by default. Individual collapsed state persists in the active session. Landscape retains exercise selection rail and allows all exercise cards in the scrolling list. Uses existing calibrated anchors and semantic spacing; exact physical fit remains pending. Volume calculations for history remain unchanged.
+
+## Build 92 — Navigation motion
+User reported jerky dock swiping. Preserve the approved dock geometry and existing navigation axes. Relative finger tracking avoids a pointer-down jump; interpolated tab tint follows fractional lens position. A frame-driven damped spring settles on release with bounded velocity; new gestures interrupt it. Reduced-motion setting snaps selection without settling animation. Browser tests cover horizontal/vertical tracking, release selection and keyboard operation. Actual touch smoothness on Duo remains to be confirmed.
