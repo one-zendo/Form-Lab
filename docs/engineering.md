@@ -111,3 +111,15 @@ Verify FORM open/close toggle markup and retain delegated handler. Apply shared 
 
 ## Build 178 — normalization
 Audited 15 linked CSS/JS assets. Centralize routine row, picker width, compact dialog, calendar control and motion aliases in root; name classifier thresholds and hinge retarget window. Preserve effective values and specialized cascade. Document runtime versus aspirational motion spec and exceptions. No speculative override removal. JS syntax and ten orientation classifier cases passed. Full browser/device/Node CI pending.
+
+## Build 82 engineering audit
+
+This branch starts from draft PR #2 at 153a1c4, based on main at 2877321. That baseline includes fallback layout for ambiguous folded landscape, workout storage verification and interrupted-completion recovery, and a browser integration suite.
+
+Build 82 preserves a routine draft when its screen is reopened and asks before replacing it with another routine. Private import is guarded during an active workout or unsaved edit, and validates the dataset before replacing stored data. Imported exercise names and older active sessions of unknown provenance are excluded from ExerciseDB search. Catalog artwork and local fallback icons remain available. Retired experimental offset controls and the old floating diagnostics panel scripts were removed from the active source tree. The approved styling and geometry were preserved.
+
+Remaining work includes routine authoring, isolation of routine overrides between imported datasets sharing routine IDs, broader analytics, and confirming the live artwork provider and licensing contract. Web Locks are used when available. The fallback snapshot check detects observed conflicts but does not provide an atomic cross-tab lock. Physical Duo safe areas, gestures, hinge states, and Safari behavior require device verification.
+
+The ambiguous folded-landscape case retains the right rail shared by both known FL rotations. The browser regression checks the dock bounds at each of the five Safari-sized viewports and the ambiguous case. These are simulated viewports. The suite also checks draft recovery, private imports, exercise removal, rest-timer recovery, workout completion, and Web Locks contention.
+
+The four stale source assertions on main were reproduced under Node 22. The audit branch passed all 54 Node assertions and the Playwright Chromium integration using Node 22. Playwright was upgraded after npm audit flagged the old browser download certificate validation. The updated test dependency reported zero advisories in the npm audit run. WebKit could not launch on the audit host because its native shared libraries were unavailable.
