@@ -101,3 +101,6 @@ body[data-nav=rail] #dock button{flex:1 1 0;min-height:var(--dock-target);height
 #dock .dock-lens{will-change:transform}
 #dock[data-dragging=true] .dock-lens{transition:none!important}
 #dock[data-dragging=true] .dock-lens>div{transition:transform var(--motion-feedback) var(--ease-standard)}
+
+/* Build 61: suppress WebKit's default tap flash; preserve authored press and focus states. */
+html,body,button,a,input,select,textarea,summary,[role=button]{-webkit-tap-highlight-color:transparent}
