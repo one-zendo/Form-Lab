@@ -7,3 +7,6 @@ test('interrupted completion recovers without duplicate or changed timestamp',()
 test('corrupt storage is reported without overwriting it',()=>{const f=fixture();f.data.set('history','broken');assert.equal(f.store.read('history',[],Array.isArray).ok,false);assert.equal(f.data.get('history'),'broken')});
 test('failed active write is reported',()=>{const f=fixture();f.fail('active');assert.equal(f.store.write('active',session),false)});
 test('successful completion clears active state and stores history',()=>{const f=fixture();f.store.write('active',session);const r=f.store.finish(session,[],123);assert.equal(r.ok,true);assert.equal(JSON.parse(f.data.get('active')),null);assert.equal(JSON.parse(f.data.get('history'))[0].finished,123)});
+
+const {validExercises,validSession}=require('../foundation/training.js');
+test('nested malformed exercises and records are rejected',()=>{assert.equal(validExercises([null]),false);assert.equal(validExercises([{name:'Squat',sets:[null]}]),false);assert.equal(validSession({id:'x',name:'Workout',started:1,exercises:[{name:'Squat',sets:[]}]}),true);assert.equal(validSession({id:'x',exercises:[]}),false)});
