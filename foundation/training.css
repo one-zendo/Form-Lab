@@ -120,7 +120,7 @@ body[data-page=Workout] #workout-rest::before{background:linear-gradient(180deg,
 /* Build 62: bound workout grid to the browser's drawable box, including intrinsic flex sizing. */
 body[data-page=Workout] #shell{width:100%;max-width:100%;padding:0}
 body[data-page=Workout] #calibration{min-width:0;width:100%;max-width:100%}
-body[data-page=Workout] #calibration .content{width:auto;min-width:0;max-width:calc(100% - var(--layout-content) - var(--workout-edge));align-self:stretch;margin-inline-start:var(--layout-content);margin-inline-end:var(--workout-edge)}
+body[data-page=Workout] #calibration .content{width:auto;min-width:0;max-width:calc(100% - var(--workout-content-x) - var(--workout-edge));align-self:stretch;margin-inline-start:var(--workout-content-x);margin-inline-end:var(--workout-edge)}
 body[data-page=Workout] #app-pages,body[data-page=Workout] [data-screen=Workout]{min-width:0;max-width:100%;width:100%;box-sizing:border-box}
 body[data-page=Workout] #calibration[data-landscape=true] #workout-rest{max-width:100%;min-width:0;box-sizing:border-box}
 body[data-page=Workout] #workout-exercises .training-set-grid{grid-template-columns:minmax(0,.55fr) minmax(0,.85fr) minmax(0,1fr) minmax(0,1fr) minmax(36px,.8fr)}
@@ -266,9 +266,11 @@ body:not([data-hinge=book])[data-page=Routine] .training-page{min-height:0}
 
 /* Focused workout: one drawable headline anchor, independent of physical diagnostics.
    UP Safari excludes 82pt above the drawable viewport; other anchors remain calibrated. */
-body[data-page=Workout] #calibration{--workout-headline-center:var(--layout-center)}
+body[data-page=Workout] #calibration{--workout-headline-center:var(--layout-center);--workout-headline-x:var(--layout-headline);--workout-content-x:var(--layout-content)}
+/* FL1 Safari already excludes 84pt on the left. Convert physical anchors to drawable coordinates. */
+body[data-page=Workout][data-orientation=FL1][data-viewport-mode=Safari-sized] #calibration{--workout-headline-x:0px;--workout-content-x:0px}
 body[data-page=Workout][data-orientation=UP][data-viewport-mode=Safari-sized] #calibration{--workout-headline-center:var(--layout-content-center)}
-body[data-page=Workout] #calibration .headline{top:calc(var(--workout-headline-center) - var(--headline-height)/2)}
+body[data-page=Workout] #calibration .headline{top:calc(var(--workout-headline-center) - var(--headline-height)/2);margin-inline-start:var(--workout-headline-x)}
 body[data-page=Workout] #calibration .headline-material{height:calc(var(--workout-headline-center) + var(--headline-height)/2 + var(--space-4))}
 body[data-page=Workout] #calibration .content{padding-top:calc(var(--workout-headline-center) + var(--headline-height)/2 + var(--space-8))}
 body[data-page=Workout] .headline .signature{display:none}
