@@ -1,2 +1,0 @@
-# Hardware
-Working physical reference canvases (pt): FP 466×678; FL1/FL2 678×466; UP 669×951; UL 951×669. FP hinge left, FL1 bottom, FL2 top; UP vertical fold, UL horizontal fold. Silver-gray chassis, asymmetric folded silhouette, no black bezel. Outer circular camera recorded diameter 37 pt; FL1 provisional center (48, approximately 48), horizontal edges 29.5/66.5. Other camera coordinates, inner camera and exact contours unresolved. See preserved calibration record for provenance; verify against device/source before claiming accuracy.

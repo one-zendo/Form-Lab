@@ -1,4 +1,4 @@
-name: Layout Lab quality
+name: FORM Foundation quality
 on: [push, pull_request]
 permissions:
   contents: read
@@ -10,7 +10,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: for file in shell.js foundation/*.js; do node --check "$file" || exit 1; done
+      - run: node --check foundation-01.js
       - run: node --test tests/*.test.cjs
 
   browser:
