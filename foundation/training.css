@@ -292,3 +292,9 @@ body[data-page=Workout] .workout-indicator{grid-template-columns:1fr 1fr;grid-te
 .workout-exercise-tools input{display:block;width:100%;box-sizing:border-box;min-height:var(--target-min);border:0;border-radius:var(--radius-small);background:var(--elevated);color:var(--ink);padding:var(--space-8);font:inherit;font-size:var(--type-support)}
 .workout-previous{color:var(--muted);overflow-wrap:anywhere}
 @container(max-width:260px){.workout-exercise-tools{grid-template-columns:1fr}}
+
+/* Build 88: UP active workout only. Physical Y130 maps to drawable Y48. */
+body[data-page=Workout][data-orientation=UP] .headline .signature{display:none}
+body[data-page=Workout][data-orientation=UP][data-viewport-mode=Safari-sized] #calibration .headline{top:calc(var(--layout-content-center) - var(--headline-height)/2)}
+body[data-page=Workout][data-orientation=UP][data-viewport-mode=Safari-sized] #calibration .headline-material{height:calc(var(--layout-content-center) + var(--headline-height)/2 + var(--glass-lead))}
+body[data-page=Workout][data-orientation=UP][data-viewport-mode=Safari-sized] #calibration .content{padding-top:calc(var(--layout-content-center) + var(--headline-height)/2 + var(--glass-lead))}
