@@ -1,6 +1,16 @@
 # Layout
 
-## Current runtime — Build 93
+## Build 94 — UP Safari-sized Home
+
+Home uses the approved Start Workout control with a quarter-width play accent in UP Safari-sized. The control sits inside the existing workout card and uses its existing navigation to Workouts.
+
+The Node suite and Playwright Chromium and WebKit integration passed. Both browser runs checked the control and workout calibration across all ten viewport configurations. A Chromium comparison with Build 93 matched the measured Home card, dock, headline, and content bounds and the Active Workout anchors across the matrix.
+
+### Existing Active Workout safe-inset overlap
+
+The reported 8 px overlap with the safe inset predates Build 94. The Active Workout layout and safe-inset rules are unchanged. The 8 px observation still needs confirmation on physical Duo Safari.
+
+## Orientation profiles — Build 93
 
 FP, FL1, FL2, UP and UL each own their application layout. Edit the orientation's declarations in `foundation/layout.css` for composition, tracks, card dimensions, spacing, alignment and scrolling. Scope environment-specific values to that same profile with `data-viewport-mode="Native-sized"` or `data-viewport-mode="Safari-sized"`. The matching entries in `foundation/layout.js` select navigation, the rest-timer presentation and calibration mapping for each environment. The component CSS supplies shared defaults and consumes the selected profile's values.
 

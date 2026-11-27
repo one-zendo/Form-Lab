@@ -66,6 +66,43 @@ body[data-layout=UP][data-viewport-mode=Safari-sized] #calibration{
   --profile-workout-center:var(--drawable-headline-center);
 }
 
+body[data-layout=UP][data-viewport-mode=Safari-sized][data-page=Home] .home-workout-cta{
+  display:none;
+}
+
+body[data-layout=UP][data-viewport-mode=Safari-sized][data-page=Home] .home-workout-cta-split{
+  display:grid;
+  grid-template-columns:25% minmax(0,1fr);
+  align-self:flex-end;
+  width:min(100%,calc(var(--primary-height)*4));
+  min-height:var(--primary-height);
+  overflow:hidden;
+  border-radius:var(--radius-pill);
+  background:var(--elevated);
+  color:var(--ink);
+  font-size:var(--type-headline);
+  font-weight:var(--weight-headline);
+}
+
+body[data-layout=UP][data-viewport-mode=Safari-sized][data-page=Home] .home-workout-cta-icon{
+  display:grid;
+  place-items:center;
+  background:var(--action);
+  color:var(--on-action);
+}
+
+body[data-layout=UP][data-viewport-mode=Safari-sized][data-page=Home] .home-workout-cta-icon svg{
+  width:var(--icon-action);
+  height:var(--icon-action);
+  stroke-width:var(--icon-stroke);
+}
+
+body[data-layout=UP][data-viewport-mode=Safari-sized][data-page=Home] .home-workout-cta-label{
+  display:grid;
+  place-items:center;
+  padding-inline:var(--space-8);
+}
+
 body[data-layout=UL]{
   --sample-columns:minmax(0,2fr) minmax(0,3fr);
   --home-columns:repeat(2,minmax(0,1fr));

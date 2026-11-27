@@ -380,11 +380,27 @@ async function checkDuoLayout(context, url) {
         const calibratedLeft = orientation === 'FL1' ? (mode === 'Safari-sized' ? 84 : 29.5) : 16;
         assert.equal(home.left, changedOrientation ? 32 : calibratedLeft, label);
         assert.equal(home.padding, changedOrientation && mode === 'Safari-sized' ? '8px' : '16px', label);
+        const splitStart = orientation === 'UP' && mode === 'Safari-sized';
+        const split = page.locator('.home-workout-cta-split');
+        assert.equal(await split.isVisible(), splitStart, label);
+        assert.equal(await page.locator('.home-workout-cta').isVisible(), !splitStart, label);
+        if (splitStart) {
+          const control = await split.boundingBox();
+          const icon = await split.locator('.home-workout-cta-icon').boundingBox();
+          assert.equal(control.height, 48, label);
+          assert.equal(control.width, control.height * 4, label);
+          assert.equal(icon.width, control.width / 4, label);
+        }
       }
     }
   };
 
   await matrix();
+  await resize('UP', 0, [669, 869], 'Safari-sized');
+  await page.locator('.home-workout-cta-split').click();
+  assert.equal(await page.locator('body').getAttribute('data-page'), 'Workouts');
+  await page.locator('#dock [data-page=Home]').click();
+  assert.equal(await page.locator('body').getAttribute('data-page'), 'Home');
   await page.evaluate(() => {
     const sheet = [...document.styleSheets].find(sheet => sheet.href?.includes('/foundation/layout.css'));
     const rule = selector => [...sheet.cssRules].find(rule => rule.selectorText?.replace(/["']/g, '') === selector);
