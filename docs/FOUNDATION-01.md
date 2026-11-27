@@ -44,3 +44,5 @@ Build 13: user physically accepted Build 12 keyboard behavior. Diagnostics disti
 Build 14: user accepted Build 13 diagnostics. FL1 only (both environments): remove 16 CSS px left design inset, retain system safe inset and localized camera avoidance. Other orientations and ambiguous FL fallback unchanged. Physical verification pending.
 
 Build 15: restrict flush-left to FL1 Safari-sized. Apply margin from observed viewport and rotation before the 120ms committed orientation stabilization; retain system safe inset. Native FL1 and other profiles retain 16px design inset. Physical transition timing pending.
+
+Build 16: user physically accepted Build 15. QA correction only: isolate classify from browser-dependent matchMedia initialization in Node tests; browser card layout assertion uses actual available grid width (two 240px tracks plus 12px gap), not outer viewport width. Runtime JS/CSS unchanged. Automated results pending; do not lock until verified.
