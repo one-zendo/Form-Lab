@@ -1,6 +1,6 @@
-*{box-sizing:border-box}html,body{margin:0;width:100%;min-height:100%;background:var(--canvas);color:var(--ink);font:var(--type-body) var(--font)}body{overflow-x:hidden}#shell{min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:var(--space-16);padding:max(var(--space-16),env(safe-area-inset-top)) max(var(--space-16),env(safe-area-inset-right)) max(var(--space-16),env(safe-area-inset-bottom)) max(var(--space-16),env(safe-area-inset-left))}section{width:min(100%,420px);overflow-wrap:anywhere}h1{font-size:var(--type-page);font-weight:var(--weight-bold);margin:0}p{color:var(--muted)}dl{margin:var(--space-16) 0;background:var(--paper);border-radius:var(--radius-card);padding:var(--space-12)}dl div{display:flex;justify-content:space-between;gap:var(--space-12);padding:var(--space-4) 0}dt{color:var(--muted)}dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}select{font:inherit;min-height:var(--target-min);max-width:100%}.note{font-size:var(--type-caption)} @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;min-height:0;max-height:100%;overflow:hidden;overscroll-behavior:none;touch-action:pan-x pan-y;background:var(--canvas);color:var(--ink);font:var(--type-body) var(--font)}#shell{position:relative;display:block;width:100%;height:100dvh;min-height:0;max-height:100dvh;overflow:hidden;box-sizing:border-box;padding-bottom:calc(var(--dock-reserve) + env(safe-area-inset-bottom))}section{width:min(100%,420px);overflow-wrap:anywhere}h1{font-size:var(--type-page);font-weight:var(--weight-bold);margin:0}p{color:var(--muted)}dl{margin:var(--space-16) 0;background:var(--paper);border-radius:var(--radius-card);padding:var(--space-12)}dl div{display:flex;justify-content:space-between;gap:var(--space-12);padding:var(--space-4) 0}dt{color:var(--muted)}dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}select{font:inherit;min-height:var(--target-min);max-width:100%}.note{font-size:var(--type-caption)} @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 /* Calibration-only layout; browser viewport already excludes Safari chrome. */
-#shell{display:block;padding:0}
+
 #calibration{--layout-headline:16px;--layout-content:16px;--layout-center:48px;--headline-height:44px;--signature-width:3px;--signature-height:32px;--signature-gap:10.5px;padding-top:calc(var(--layout-center) - var(--headline-height)/2);padding-bottom:var(--space-24)}
 .headline{display:flex;align-items:center;gap:var(--signature-gap);height:var(--headline-height);margin-inline-start:var(--layout-headline)}
 .signature{width:var(--signature-width);height:var(--signature-height);background:var(--brand);border-radius:var(--radius-pill)}
@@ -23,13 +23,13 @@ body[data-hinge="laptop"] .sample-grid{grid-template-columns:minmax(0,1fr)}
 
 /* Lab navigation prototype: current navigation.md orientation contract. */
 :root{--dock-edge:var(--space-8);--dock-reserve:calc(var(--dock-size) + var(--dock-edge)*2)}
-html,body{touch-action:pan-x pan-y}
+
 button{touch-action:manipulation}
 #dock{position:fixed;z-index:10;display:flex;gap:var(--dock-gap);padding:var(--dock-pad);height:var(--dock-size);border-radius:var(--dock-radius);background:var(--paper);box-shadow:inset 0 0 0 1px var(--glass-highlight),0 2px 12px #00000015;bottom:max(var(--dock-edge),env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);max-width:calc(100% - var(--space-16))}
 #dock button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-4);min-width:var(--dock-target);height:var(--dock-target);flex:1 0 auto;padding:0 var(--space-8);border:0;border-radius:calc(var(--dock-target)/2);background:transparent;color:var(--muted);font:var(--dock-label-size)/1.2 var(--font);cursor:pointer}
 #dock button[aria-pressed="true"]{background:var(--elevated);color:var(--action)}
 #dock svg{width:var(--dock-icon);height:var(--dock-icon);stroke-width:var(--icon-stroke)}
-#shell{padding-bottom:calc(var(--dock-reserve) + env(safe-area-inset-bottom))}
+
 body[data-nav="rail"] #dock{width:var(--dock-size);height:auto;flex-direction:column;left:auto;right:max(var(--dock-edge),env(safe-area-inset-right));bottom:auto;top:50%;transform:translateY(-50%);max-height:100dvh;overflow:auto}
 body[data-nav="rail"] #dock button span{display:none}
 body[data-nav="rail"] #dock button{width:var(--dock-target);flex:none;padding:0}
@@ -41,8 +41,8 @@ body[data-nav="rail"] #shell{padding-right:calc(var(--dock-reserve) + env(safe-a
 .headline .signature{flex-shrink:0}#headline-build{font-size:var(--type-caption);font-weight:var(--weight-body);color:var(--muted);white-space:nowrap;flex-shrink:0}
 
 /* Build 28: lock document scrolling; the content pane is the sole scroll owner. */
-html,body{width:100%;height:100%;min-height:0;max-height:100%;overflow:hidden;overscroll-behavior:none}
-#shell{position:relative;width:100%;height:100dvh;min-height:0;max-height:100dvh;overflow:hidden;box-sizing:border-box}
+
+
 
 /* FORM Glass dock material; existing dimensions and anchor are unchanged. */
 @supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){#dock{background:var(--glass-dock-tint);-webkit-backdrop-filter:var(--glass-filter);backdrop-filter:var(--glass-filter)}}
@@ -81,7 +81,7 @@ body[data-nav="rail"] .dock-material{background:var(--glass-scroll-right)}
 #dock[data-lens-ready=true] button.lens-preview{color:var(--action)}
 #dock[data-lens-ready=true][data-overflow=false],#dock[data-lens-ready=true][data-overflow=false] button{touch-action:none}
 #dock[data-dragging=true] .dock-lens,#dock[data-lens-instant=true] .dock-lens{transition:none}
-#dock[data-dragging=true] .dock-lens>div{transform:scale(var(--glass-lens-lift))}
+
 #dock[data-overflow=true]{touch-action:pan-x}body[data-nav=rail] #dock[data-overflow=true]{touch-action:pan-y}
 @media(prefers-reduced-motion:reduce){#dock .dock-lens,#dock .dock-lens>div{transition:none!important}#dock[data-dragging=true] .dock-lens>div{transform:none}}
 @media(prefers-reduced-transparency:reduce){#dock .dock-lens>div{background:var(--elevated);box-shadow:none}}
@@ -100,7 +100,7 @@ body[data-nav=rail] #dock button{flex:1 1 0;min-height:var(--dock-target);height
 /* Build 58: direct compositor tracking during navigation drag. */
 #dock .dock-lens{will-change:transform}
 #dock[data-dragging=true] .dock-lens{transition:none!important}
-#dock[data-dragging=true] .dock-lens>div{transition:transform var(--motion-feedback) var(--ease-standard)}
+#dock[data-dragging=true] .dock-lens>div{transform:scale(var(--glass-lens-lift));transition:transform var(--motion-feedback) var(--ease-standard)}
 
 /* Build 61: suppress WebKit's default tap flash; preserve authored press and focus states. */
 html,body,button,a,input,select,textarea,summary,[role=button]{-webkit-tap-highlight-color:transparent}
