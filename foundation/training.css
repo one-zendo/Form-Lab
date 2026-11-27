@@ -176,3 +176,12 @@ body[data-page=Workout] #workout-exercises .training-set-grid input::-webkit-inn
 body[data-page=Workout] #workout-exercises .training-set-grid[data-next=true] input{outline:none;box-shadow:inset 0 0 0 1px var(--action)}
 body[data-page=Workout] #workout-exercises .training-set-grid input:focus-visible{outline:2px solid var(--action);outline-offset:-2px}
 body[data-page=Workout] #workout-exercises .training-set-grid button{box-sizing:border-box;align-self:center;justify-self:center;display:grid;place-items:center;padding:0;margin:0;line-height:1}
+
+/* Build 69: exercise header typography and alignment */
+#workout-exercises .training-exercise summary{display:flex;align-items:center;gap:12px;min-height:44px}
+#workout-exercises .training-exercise summary .training-copy{flex:1 1 0;min-width:0}
+#workout-exercises .training-exercise summary .training-copy strong,.workout-choice strong{font-size:17px;font-weight:600;line-height:1.25}
+#workout-exercises .workout-set-count,.workout-choice .workout-set-count{font-size:14px;font-weight:500;line-height:20px;font-variant-numeric:tabular-nums;flex:none}
+#workout-exercises details .workout-set-count[data-lit=true],.workout-choice .workout-set-count[data-lit=true]{color:var(--workout-success);font-weight:500}
+#workout-exercises .workout-chevron{display:grid;place-items:center;width:16px;height:16px;flex:0 0 16px;font-size:0;line-height:1;transform-origin:center}
+#workout-exercises .workout-chevron::before{content:"";width:7px;height:7px;border-right:1.8px solid currentColor;border-bottom:1.8px solid currentColor;transform:translateY(-2px) rotate(45deg)}
