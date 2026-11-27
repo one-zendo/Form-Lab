@@ -6,4 +6,4 @@ Adaptive workout app design and engineering lab.
 - [ARCHITECTURE.md](ARCHITECTURE.md): current runtime and target architecture.
 - [CHANGELOG.md](CHANGELOG.md): historical decisions and acceptance, not active rules.
 - design/duo/: canonical hardware SVGs.
-Current runtime: Foundation Build 16. Clean rewrite pending. Automated QA not yet verified.
+Current runtime: Workout Build 17. Initial functional web implementation; foundation layout retained. Automated QA not yet verified.

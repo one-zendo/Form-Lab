@@ -94,3 +94,6 @@ Build 17: user reverted FP center to Y48, signature top32, X16, aligned with cam
 
 ## Build 81 — calibration resolver corrections
 The web calibration resolver now keeps headline anchors independent from Safari drawable exclusions. FL1 headline X remains 84 in both modes; native content X is 29.5 and Safari content X is 84. UP Safari headline center Y is 130 (82 pt top exclusion + 48 pt offset), while content center remains 48. Unmatched viewport mode uses a generic 16 pt X / 48 pt center fallback and is reported unverified. Added orientation regression tests for these targets. Browser/device geometry remains reference-calibrated, not independently measured.
+
+## Build 17
+Initial functional web tracker: routines, exercise library/custom exercises, sets, active workout resume, rest timer, history, progress totals and records, local persistence/export. Retains approved layout runtime with test-only controls removed. No native integration, advanced set types, unit switching or import yet. QA and physical validation pending.
