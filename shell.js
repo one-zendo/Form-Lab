@@ -1,1 +1,76 @@
-(()=>{init();function init(){const readout=document.querySelector('#readout'),override=document.querySelector('#override');let pending=false;function render(){pending=false;const w=window.innerWidth,h=window.innerHeight;const detected=FormOrientation.detect(FormDuoGeometry,w,h,(screen.orientation?.angle??(typeof window.orientation==='number'?((window.orientation%360)+360)%360:undefined)));const id=override.value==='auto'?detected.id:override.value;const g=FormOrientation.geometryFor(FormDuoGeometry,id);const posture=FormPosture.apply();document.body.dataset.orientation=id;document.body.dataset.viewportMode=detected.mode;FormLayout.apply(g,id,detected.mode,w,h);const cards=document.querySelectorAll('.sample-grid .sample');const labels=posture.mode==='book'?['Left','Right']:posture.mode==='laptop'?['Upper','Lower']:g&&g.w>g.h?['40%','60%']:['First','Second'];cards.forEach((card,i)=>{if(card.firstChild.textContent!==labels[i])card.firstChild.textContent=labels[i]});const rows=[['Environment','Web prototype'],['Orientation',id],['Detection','Automatic · '+detected.mode],['Layout viewport',w+' × '+h+' CSS px'],['Visual viewport',window.visualViewport?Math.round(window.visualViewport.width)+' × '+Math.round(window.visualViewport.height)+' CSS px':'Unavailable'],['Physical target',g?g.w+' × '+g.h+' pt':'Unresolved'],['Drawable target',g&&detected.mode!=='Unmatched'?(g.w-(detected.mode==='Safari-sized'&&g.side!=='top'?g.excluded:0))+' × '+(g.h-(detected.mode==='Safari-sized'&&g.side==='top'?g.excluded:0))+' pt':'Unresolved'],['Posture API',posture.type],['Segments',posture.columns+' × '+posture.rows],['Hinge',posture.type==='unknown'?'Unknown':posture.mode],['Rotation angle',(screen.orientation?.angle??(typeof window.orientation==='number'?((window.orientation%360)+360)%360:undefined))??'Unavailable']];readout.replaceChildren(...rows.map(([k,v])=>{const row=document.createElement('div'),dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=k;dd.textContent=v;row.append(dt,dd);return row;}));}function schedule(){if(!pending){pending=true;requestAnimationFrame(render)}}window.addEventListener('resize',schedule);window.visualViewport?.addEventListener('resize',schedule);screen.orientation?.addEventListener?.('change',schedule);navigator.devicePosture?.addEventListener?.('change',schedule);try{FormPosture.listen(schedule)}catch(e){console.warn('Posture media listener unavailable',e)}window.addEventListener('orientationchange',schedule);window.addEventListener('pageshow',schedule);document.addEventListener('visibilitychange',schedule);setInterval(()=>{if(!document.hidden)schedule()},1000);override.addEventListener('change',schedule);document.querySelector('#guides').addEventListener('change',schedule);render();}})();
+(() => {
+  const readout = document.querySelector('#readout');
+  let pending = false;
+  let lastReadout = '';
+
+  function render() {
+    pending = false;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const angle = screen.orientation?.angle ??
+      (typeof window.orientation === 'number' ? (window.orientation % 360 + 360) % 360 : undefined);
+    const { id, mode } = FormOrientation.detect(FormDuoGeometry, width, height, angle);
+    const geometry = FormOrientation.geometryFor(FormDuoGeometry, id);
+    const posture = FormPosture.apply();
+    const state = document.body.dataset;
+    if (state.orientation !== id) state.orientation = id;
+    if (state.viewportMode !== mode) state.viewportMode = mode;
+    FormLayout.apply(geometry, id, mode, width, height);
+
+    const labels = posture.mode === 'book' ? ['Left', 'Right'] :
+      posture.mode === 'laptop' ? ['Upper', 'Lower'] :
+      geometry && geometry.w > geometry.h ? ['40%', '60%'] : ['First', 'Second'];
+    document.querySelectorAll('.sample-grid .sample').forEach((card, i) => {
+      if (card.firstChild.textContent !== labels[i]) card.firstChild.textContent = labels[i];
+    });
+
+    const visual = window.visualViewport;
+    const safe = getComputedStyle(document.querySelector('#safe-probe'));
+    const safari = mode === 'Safari-sized';
+    const drawable = geometry
+      ? (geometry.w - (safari && geometry.side !== 'top' ? geometry.excluded : 0)) + ' × ' +
+        (geometry.h - (safari && geometry.side === 'top' ? geometry.excluded : 0)) + ' pt'
+      : 'Unresolved';
+    const rows = [
+      ['Environment', 'Web prototype'],
+      ['Orientation', id],
+      ['Detection', 'Automatic · ' + mode],
+      ['Layout viewport', width + ' × ' + height + ' CSS px'],
+      ['Visual viewport', visual ? Math.round(visual.width) + ' × ' + Math.round(visual.height) + ' CSS px' : 'Unavailable'],
+      ['Safe insets (top / right / bottom / left)', [safe.paddingTop, safe.paddingRight, safe.paddingBottom, safe.paddingLeft].join(' / ')],
+      ['Physical target', geometry ? geometry.w + ' × ' + geometry.h + ' pt' : 'Unresolved'],
+      ['Drawable target', drawable],
+      ['Posture API', posture.type],
+      ['Segments', posture.columns + ' × ' + posture.rows],
+      ['Hinge', posture.type === 'unknown' ? 'Unknown' : posture.mode],
+      ['Rotation angle', angle ?? 'Unavailable'],
+    ];
+    const signature = JSON.stringify(rows);
+    if (signature === lastReadout) return;
+    lastReadout = signature;
+    readout.replaceChildren(...rows.map(([key, value]) => {
+      const row = document.createElement('div');
+      const term = document.createElement('dt');
+      const description = document.createElement('dd');
+      term.textContent = key;
+      description.textContent = value;
+      row.append(term, description);
+      return row;
+    }));
+  }
+
+  function schedule() {
+    if (pending) return;
+    pending = true;
+    requestAnimationFrame(render);
+  }
+
+  for (const event of ['resize', 'orientationchange', 'pageshow']) window.addEventListener(event, schedule);
+  window.visualViewport?.addEventListener('resize', schedule);
+  screen.orientation?.addEventListener?.('change', schedule);
+  navigator.devicePosture?.addEventListener?.('change', schedule);
+  FormPosture.listen(schedule);
+  document.addEventListener('visibilitychange', schedule);
+  document.querySelector('#guides').addEventListener('change', schedule);
+  render();
+})();

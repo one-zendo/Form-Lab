@@ -345,6 +345,58 @@ async function checkDuoLayout(context, url) {
   await page.close();
 }
 
+async function checkShellAndRecoveredValues(context, url) {
+  const page = await context.newPage();
+  await page.setViewportSize({ width: 382, height: 678 });
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.route('**/*', route => route.request().url().startsWith(url) ? route.continue() : route.abort());
+  const recovered = {
+    id: 'recovery-test', name: 'Recovered workout', started: Date.now(),
+    exercises: [{ name: 'Test exercise', sets: [{ reps: '<unavailable>', rest: '<unavailable>', done: false }] }],
+  };
+  await page.addInitScript(({ activeKey, recovered }) => {
+    localStorage.setItem('form.demo-mode.v1', 'true');
+    localStorage.setItem('form.preferences.v1', JSON.stringify({ weight: 'unavailable', weekly: 0 }));
+    localStorage.setItem(activeKey, JSON.stringify(recovered));
+  }, { activeKey, recovered });
+  await page.goto(url);
+  await page.waitForFunction(() => window.FormTraining?.sessionName() === 'Recovered workout');
+  const dock = name => page.locator('#dock [data-page="' + name + '"]');
+  const workoutTab = await dock('Workouts').boundingBox();
+  await page.mouse.move(workoutTab.x + workoutTab.width / 2, workoutTab.y + workoutTab.height / 2);
+  await page.mouse.down();
+  await page.waitForFunction(() => document.querySelector('#dock').dataset.dragging === 'true');
+  await page.waitForTimeout(1100);
+  assert.equal(await page.locator('#dock').getAttribute('data-dragging'), 'true', 'Idle layout must not interrupt the held dock gesture');
+  await page.mouse.up();
+  await page.locator('#resume-workout').click();
+  assert.equal(await page.locator('[data-log="0:0:reps"]').inputValue(), '');
+  assert.equal(await page.locator('[data-exercise-rest="0"]').inputValue(), '0');
+  assert.equal(await page.locator('#pref-weight').inputValue(), 'kg');
+  assert.equal(await page.locator('#pref-weekly').inputValue(), '3');
+  assert.deepEqual(await page.evaluate(key => JSON.parse(localStorage.getItem(key)), activeKey), recovered);
+
+  page.once('dialog', dialog => dialog.accept());
+  await page.locator('#workout-finish').click();
+  await dock('Profile').click();
+  for (const name of await page.locator('[data-screen=Profile] [data-setting-page]').evaluateAll(
+    buttons => buttons.map(button => button.dataset.settingPage))) {
+    await page.locator('[data-screen=Profile] [data-setting-page="' + name + '"]').click();
+    assert.equal(await page.locator('body').getAttribute('data-page'), name);
+    await dock('Profile').click();
+  }
+  await page.locator('[data-screen=Profile] [data-setting-page="Developer settings"]').click();
+  await page.locator('#profile-diagnostics').click();
+  assert.match(await page.locator('#readout').innerText(), /Safe insets/);
+  await page.locator('#guides').check();
+  await page.waitForFunction(() => document.querySelector('#diagnostic-overlay').childElementCount > 0);
+  await page.locator('#guides').uncheck();
+  await page.waitForFunction(() => document.querySelector('#diagnostic-overlay').childElementCount === 0);
+  assert.deepEqual(errors, []);
+  await page.close();
+}
+
 async function checkTrainingPresentation(context, url) {
   const page = await context.newPage();
   await page.route('**/*', route => route.request().url().startsWith(url) ? route.continue() : route.abort());
@@ -482,7 +534,11 @@ async function main() {
     presentationContext.setDefaultTimeout(8000);
     await checkTrainingPresentation(presentationContext, url);
     await presentationContext.close();
-    console.log('Browser lock, navigation, dataset isolation, legacy recovery, Progress, workout lifecycle and Duo viewport checks passed');
+    const shellContext = await browser.newContext();
+    shellContext.setDefaultTimeout(8000);
+    await checkShellAndRecoveredValues(shellContext, url);
+    await shellContext.close();
+    console.log('Browser lock, navigation, dataset isolation, recovery, Progress, workout lifecycle, settings, diagnostics and Duo viewport checks passed');
   } finally {
     await browser?.close();
     server.close();

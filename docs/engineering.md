@@ -1,6 +1,6 @@
 # FORM Lab — Engineering notes
 
-## Stable baseline: Build 159
+## Historical checkpoint — pre-reset Build 159
 User reported the app working fine after Build 159. This is device feedback, not exhaustive automated or device-matrix certification.
 Source checkpoint: 0fc7b37a1a5fd5b8763c714865bc2aa7dff24af5
 Branch: checkpoint/build-159-device-confirmed
@@ -29,11 +29,11 @@ Branch: checkpoint/build-159-device-confirmed
 
 ## Update and persistence contract
 - Source commit is not proof of live deployment. Check published version separately when possible.
-- Poll version.json every 30 seconds and on return/focus; use cache-busting and versioned assets.
+- The pre-reset implementation polled version.json every 30 seconds. The current Lab polls every five seconds while visible and checks on visibility change and network reconnect.
 - Build 159 replaces unconditional active-session/draft reload blocking with save and readback verification.
 - Block reload for unreadable storage, failed verification or open dialogs; report the specific reason.
 - Older builds retain the old guard and may need the active session finished before upgrading.
-- Preserve demo and real storage isolation. Independent rest-timer restoration is not implemented.
+- Preserve demo and real storage isolation. In the current Lab, persisted workouts restore rest deadlines or paused durations.
 - Never delete installed web app or clear storage as a routine update fix.
 
 ## Regression checklist before release
@@ -162,3 +162,12 @@ All 57 Node cases and Chromium integration passed. The new presentation tests fa
 GitHub Pages publishes the root of `main` using its generated Pages workflow. It successfully published Build 82 at `cfeec80` while the later training remediation was on the Active Workout preview branch. The separate historical Build 84 at `f0a36a7` predates the Lab reset at `d16dc35` and is already in main's ancestry. This release integrates the current Lab remediation through `1470c81`, preserves main's local Lucide exercise thumbnails and the quality branch's Weather label, and synchronizes the headline, About, asset URLs and version manifest.
 
 The main Lab uses a cache-busted version poll and does not register a service worker. The cache-first Duo test worker belongs to a separate branch. Pages advertised a 600-second HTTP cache lifetime on the original Build 82 response, which can delay a plain navigation. Chromium regression tests cover the recovered workout lifecycle, storage, dataset isolation, artwork and simulated Duo layouts. Physical Safari and Duo were not tested.
+
+
+## Build 92 — reliability audit
+
+Recovery baseline is Build 91 at `b65a1bcf9f6950b15c2fc4dbbc4a09a29f88ad01`. The shell uses viewport, orientation and posture events instead of an unconditional one-second refresh. A stable classification leaves the dock gesture active. The playground timer sleeps while idle, and workout counters update when workout content changes. Diagnostics skip overlay calculations when disabled and display the live CSS safe insets alongside the viewport references.
+
+Workout rendering treats unsupported stored set values as unavailable. Preference reads accept supported types, ranges and options. Existing keys and datasets are retained. The update poll waits for training initialization and checks for unsafe reload state before replacing the page. Direct pushes to main now run the browser workflow. The one-off branch deletion workflow was removed.
+
+Chromium covers all five orientations at both Safari-sized and Native-sized training viewports, including the Build 91 FL1 workout anchors. The Native-sized cases are web simulations. Physical camera and hinge clearance, nonzero safe areas, iOS Safari pinch and Home Screen behavior, physical rest alerts, and screen-reader behavior still need device checks. The current Lab has no service-worker cache or installation manifest. See the README for deployment and versioned rollback instructions.
