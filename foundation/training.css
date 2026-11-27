@@ -146,3 +146,7 @@ body[data-page=Workout] #calibration[data-landscape=true] #workout-rest{max-widt
 body[data-page=Workout] #workout-exercises .training-set-grid{grid-template-columns:minmax(0,.55fr) minmax(0,.85fr) minmax(0,1fr) minmax(0,1fr) minmax(36px,.8fr)}
 body[data-page=Workout] #workout-exercises .training-set-grid input{padding-inline:0}
 body[data-page=Workout][data-hinge=laptop] #calibration[data-landscape=true] [data-screen=Workout]{grid-template-columns:minmax(0,1fr)}
+
+/* Build 63: keep workout rail below the actual headline material boundary. */
+body[data-page=Workout]:not([data-hinge=laptop]) #calibration[data-landscape=true] .content{padding-top:calc(var(--layout-center) + var(--headline-height)/2 + var(--glass-lead) + 12px)}
+body[data-page=Workout] #calibration[data-guides=true] .headline-material{border-bottom:1px dashed #22a06b}
