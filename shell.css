@@ -81,6 +81,7 @@ body[data-nav="rail"] .dock-material{background:var(--glass-scroll-right)}
 #dock[data-lens-ready=true] button.lens-preview{color:var(--action)}
 #dock[data-lens-ready=true][data-overflow=false],#dock[data-lens-ready=true][data-overflow=false] button{touch-action:none}
 #dock[data-dragging=true] .dock-lens,#dock[data-lens-instant=true] .dock-lens{transition:none}
+#dock[data-dragging=true] .dock-lens>div{transform:scale(var(--glass-lens-lift))}
 
 #dock[data-overflow=true]{touch-action:pan-x}body[data-nav=rail] #dock[data-overflow=true]{touch-action:pan-y}
 @media(prefers-reduced-motion:reduce){#dock .dock-lens,#dock .dock-lens>div{transition:none!important}#dock[data-dragging=true] .dock-lens>div{transform:none}}
