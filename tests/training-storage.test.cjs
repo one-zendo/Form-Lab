@@ -10,3 +10,7 @@ test('successful completion clears active state and stores history',()=>{const f
 
 const {validExercises,validSession}=require('../foundation/training.js');
 test('nested malformed exercises and records are rejected',()=>{assert.equal(validExercises([null]),false);assert.equal(validExercises([{name:'Squat',sets:[null]}]),false);assert.equal(validSession({id:'x',name:'Workout',started:1,exercises:[{name:'Squat',sets:[]}]}),true);assert.equal(validSession({id:'x',exercises:[]}),false)});
+
+const {remainingRest}=require('../foundation/training.js');
+test('two clients reject stale active and history writes',()=>{const f=fixture();const second=createTrainingStorage({getItem:k=>f.data.get(k)??null,setItem:(k,v)=>f.data.set(k,v)},'active','history');for(const client of [f.store,second]){client.read('active',null,()=>true);client.read('history',[],Array.isArray)}assert.equal(f.store.write('active',session),true);assert.equal(second.conflicted(),true);assert.equal(second.write('active',{id:'other'}),false);assert.equal(second.finish({id:'other'},[],123).saved,false);assert.deepEqual(JSON.parse(f.data.get('active')),session)});
+test('rest recovery uses elapsed wall time and preserves paused duration',()=>{assert.equal(remainingRest({restEnd:5000,restPaused:null},3000),2000);assert.equal(remainingRest({restEnd:5000,restPaused:null},6000),0);assert.equal(remainingRest({restEnd:5000,restPaused:1200},9000),1200);assert.equal(remainingRest({},9000),0);assert.equal(remainingRest(null,9000),0)});
