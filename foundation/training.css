@@ -59,3 +59,18 @@ body:not([data-hinge=book]) .training-page{min-height:min-content}
 body:not([data-hinge=book]) .training-list{min-height:calc(var(--target-min)*2)}
 }
 @media(prefers-reduced-transparency:reduce){body:is([data-page=Routine],[data-page=Workout])[data-nav=rail] .content{padding-bottom:var(--space-12)}}
+
+/* Build 53: ONE-inspired active session, scoped away from routine layout. */
+#workout-elapsed{font-size:var(--type-support);font-weight:500;color:var(--muted);white-space:nowrap}
+.workout-meta,.workout-time{display:flex;align-items:center;gap:var(--space-8)}
+.workout-meta{justify-content:space-between}.workout-indicator{display:grid;justify-items:end;gap:var(--space-4);min-width:0}
+.workout-live{width:8px;height:8px;flex:none;border-radius:50%;background:#34c759;animation:workout-pulse 2.4s infinite}
+@keyframes workout-pulse{50%{box-shadow:0 0 0 4px #34c75933}}@media(prefers-reduced-motion:reduce){.workout-live{animation:none}}
+#workout-progress{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px}#workout-progress span{width:24px;height:5px;border-radius:5px;background:var(--elevated)}#workout-progress [data-state=full]{background:#34c759}#workout-progress [data-state=partial]{background:#34c75966}
+#workout-name{flex:1;min-width:0;font-size:var(--type-section)}#workout-minimize{min-width:44px;font-size:24px;text-align:center}#workout-finish{background:var(--action);color:white;border-radius:999px;padding-inline:16px}
+#workout-storage{font-size:var(--type-caption)}#workout-storage:empty{display:none}
+body[data-page=Workout] #dock{visibility:hidden;pointer-events:none}body[data-page=Workout] #shell{padding-bottom:0;padding-right:0}body[data-page=Workout] .content{padding-bottom:var(--space-12);padding-inline-end:var(--space-12)}
+#workout-exercises .training-set-grid input{min-height:44px;font-size:15px;font-weight:600}#workout-exercises .training-set-grid[data-done=true]{background:#34c75912;border-radius:var(--radius-small)}#workout-exercises .training-set-grid[data-done=true] input{background:transparent}#workout-exercises .training-set-grid button{font-size:20px;min-height:44px}
+.workout-choices{display:none;grid-area:choices;overflow:auto;min-height:0;align-content:start;gap:var(--space-8)}.workout-choice{display:grid;text-align:start;color:var(--ink);font:inherit;border:0;gap:4px}.workout-choice small{color:var(--muted)}.workout-choice[aria-pressed=true]{outline:1px solid var(--action);outline-offset:-1px}
+[data-landscape=true] [data-screen=Workout]{grid-template-columns:minmax(0,2fr) minmax(0,3fr);grid-template-rows:auto minmax(0,1fr) auto;grid-template-areas:"overview overview" "choices list" "action list"}[data-landscape=true] [data-screen=Workout] .workout-choices{display:grid}[data-landscape=true] #workout-exercises [data-selected=false]{display:none}
+body[data-hinge=laptop] [data-screen=Workout]{grid-template-columns:minmax(0,1fr);grid-template-areas:"overview" "list" "action"}body[data-hinge=laptop] [data-screen=Workout] .workout-choices{display:none}body[data-hinge=laptop] #workout-exercises [data-selected=false]{display:block}
