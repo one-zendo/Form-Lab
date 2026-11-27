@@ -74,3 +74,13 @@ body[data-page=Workout] #dock{visibility:hidden;pointer-events:none}body[data-pa
 .workout-choices{display:none;grid-area:choices;overflow:auto;min-height:0;align-content:start;gap:var(--space-8)}.workout-choice{display:grid;text-align:start;color:var(--ink);font:inherit;border:0;gap:4px}.workout-choice small{color:var(--muted)}.workout-choice[aria-pressed=true]{outline:1px solid var(--action);outline-offset:-1px}
 [data-landscape=true] [data-screen=Workout]{grid-template-columns:minmax(0,2fr) minmax(0,3fr);grid-template-rows:auto minmax(0,1fr) auto;grid-template-areas:"overview overview" "choices list" "action list"}[data-landscape=true] [data-screen=Workout] .workout-choices{display:grid}[data-landscape=true] #workout-exercises [data-selected=false]{display:none}
 body[data-hinge=laptop] [data-screen=Workout]{grid-template-columns:minmax(0,1fr);grid-template-areas:"overview" "list" "action"}body[data-hinge=laptop] [data-screen=Workout] .workout-choices{display:none}body[data-hinge=laptop] #workout-exercises [data-selected=false]{display:block}
+
+/* Build 54: use the calibrated global headline for the session identity. */
+#workout-finish[hidden]{display:none!important}
+body[data-page=Workout] .headline{margin-inline-end:var(--layout-content)}
+body[data-page=Workout] .headline h1{flex:1;min-width:0;overflow:hidden}
+body[data-page=Workout] #diagnostic-open{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:start}
+body[data-page=Workout] #headline-build{display:none}
+body[data-page=Workout] #workout-finish{flex:none;margin-inline-start:auto;min-height:var(--target-min);text-align:center}
+body[data-page=Workout] .workout-meta{min-height:var(--target-min);align-items:center}
+body[data-page=Workout] .workout-indicator .note{margin:0}
