@@ -20,13 +20,14 @@ clearTimeout(settleTimer);
 const settling=!!committed && nextKey!==committed.id+'|'+committed.mode && performance.now()-candidateSince<120;
 if(settling){settleTimer=setTimeout(schedule,125);overlay.style.visibility='hidden'}else{committed=observed;overlay.style.visibility=''}
 const state=committed||observed,p=state.p;const rail=state.id.startsWith('FL')||(state.id==='FP'&&state.mode==='Native-sized');app.classList.toggle('rail',rail);app.classList.toggle('colors',$('colors').checked);$('timer').hidden=!$('timer-toggle').checked;
-let camera=null;if(p&&p.length===7){const x=p[5]-(state.mode==='Safari-sized'&&p[3]==='left'?p[4]:0),y=p[6];camera={left:x-22.5,right:x+22.5,top:y-22.5,bottom:y+22.5}}
-const nextLayoutKey=[state.id,state.mode,innerWidth,innerHeight,$('timer').hidden].join('|');
-if(!settling&&nextLayoutKey!==layoutKey){layoutKey=nextLayoutKey;for(const el of [$('heading'),$('tagline'),$('main'),$('nav')]){el.style.padding='';if(!el.hidden)avoid(el,camera,el.id==='nav'&&rail)}}
+let camera=null;if(p&&p.length===7&&state.mode==='Native-sized'){const x=p[5]-(state.mode==='Safari-sized'&&p[3]==='left'?p[4]:0),y=p[6];camera={left:x-22.5,right:x+22.5,top:y-22.5,bottom:y+22.5}}
+const shell=rect(app), computed=getComputedStyle(app);
+const nextLayoutKey=[state.id,state.mode,shell.width,shell.height,computed.paddingTop,computed.paddingRight,computed.paddingBottom,computed.paddingLeft,$('timer').hidden].join('|');
+if(!settling&&nextLayoutKey!==layoutKey){layoutKey=nextLayoutKey;for(const el of [$('heading'),$('tagline'),$('nav')]){el.style.padding='';if(!el.hidden)avoid(el,camera,el.id==='nav'&&rail)}}
 if(settling)return;
 overlay.hidden=!$('guides').checked;
 if(!$('guides').checked&&!dialog.open)return;
-const r=rect(app),v=visualViewport,css=getComputedStyle(app),probe=rect($('probe'));const size=r=>Math.round(r.width*10)/10+' × '+Math.round(r.height*10)/10;
+const r=rect(app),v=window.visualViewport,css=getComputedStyle(app),probe=rect($('probe'));const size=r=>Math.round(r.width*10)/10+' × '+Math.round(r.height*10)/10;
 $('readout').textContent=[state.id+' · '+state.mode,'Reference: '+(p?p[1]+' × '+p[2]+' pt':'unresolved'),'Layout viewport: '+innerWidth+' × '+innerHeight,'Visual viewport: '+(v?size(v)+'; offset '+v.offsetLeft+', '+v.offsetTop+'; scale '+v.scale:'unavailable'),'CSS probe: '+size(probe),'Rendered shell: '+size(r),'Padding incl. safe areas: '+[css.paddingTop,css.paddingRight,css.paddingBottom,css.paddingLeft].join(' / '),'Cards: '+[...document.querySelectorAll('.card')].map(sizeEl=>size(rect(sizeEl))).join(' / '),'Timer: '+($('timer').hidden?'hidden':size(rect($('timer')))),'Navigation: '+(rail?'right':'bottom')+' '+size(rect($('nav'))),'Rotation: '+angle,'Camera: '+(camera?JSON.stringify(camera):'unresolved')].join('\n');
 if(!$('guides').checked)return;
 let guideIndex=0;
