@@ -412,9 +412,13 @@ async function checkTrainingPresentation(context, url) {
       await resize(orientation, angle, size, mode);
       const measured = await page.evaluate(() => {
         const h=document.querySelector('.headline').getBoundingClientRect(), f=document.querySelector('#workout-finish').getBoundingClientRect();
-        return {center:Math.round(h.top+h.height/2),signature:getComputedStyle(document.querySelector('.signature')).display,finishAligned:Math.abs((f.top+f.height/2)-(h.top+h.height/2))<=1,padding:parseFloat(getComputedStyle(document.querySelector('.content')).paddingTop)};
+        const content=document.querySelector('.content').getBoundingClientRect(),root=document.querySelector('#calibration').getBoundingClientRect();return {headlineX:h.left-root.left,contentX:content.left-root.left,center:Math.round(h.top+h.height/2),signature:getComputedStyle(document.querySelector('.signature')).display,finishAligned:Math.abs((f.top+f.height/2)-(h.top+h.height/2))<=1,padding:parseFloat(getComputedStyle(document.querySelector('.content')).paddingTop)};
       });
       check(measured.center,48,orientation+' '+mode+' workout headline local center');
+      const headlineX=orientation==='FL1'?(mode==='Safari-sized'?0:84):16;
+      const contentX=orientation==='FL1'?(mode==='Safari-sized'?0:29.5):16;
+      check(Math.abs(measured.headlineX-headlineX)<=1,true,orientation+' '+mode+' workout headline local X');
+      check(Math.abs(measured.contentX-contentX)<=1,true,orientation+' '+mode+' workout content local X');
       check(measured.signature==='none',true,orientation+' '+mode+' workout signature visibility');
       check(measured.finishAligned,true,orientation+' '+mode+' Finish alignment');
       check(measured.padding,78,orientation+' '+mode+' workout content clearance');
