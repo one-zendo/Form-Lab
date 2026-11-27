@@ -239,3 +239,22 @@ body[data-page=Workout] #workout-exercises .training-set-grid input{height:44px;
 body[data-page=Workout] #workout-exercises .training-set-grid[data-done] button{width:30px;height:30px;min-height:30px}
 #workout-exercises .workout-add-set{margin-top:8px;min-height:44px}
 @container (max-width:260px){#routine-exercises .training-thumb,#workout-exercises .training-thumb{flex-basis:36px;width:36px;height:36px}#routine-exercises .training-exercise summary,#workout-exercises .training-exercise summary{gap:6px;min-height:44px}#workout-exercises .training-exercise summary .training-copy strong{font-size:14px}#workout-exercises .workout-set-count{font-size:12px}}
+
+/* Build 80: unified routine workspace, existing shell anchors retained. */
+body[data-page=Routine] section[data-screen=Routine]{min-height:0;grid-template-rows:minmax(0,1fr) auto;grid-template-areas:"list" "action";overflow:hidden}
+body[data-page=Routine] section[data-screen=Routine]>.training-overview{grid-area:auto}
+body[data-page=Routine] section[data-screen=Routine]{display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain}
+body[data-page=Routine] section[data-screen=Routine]>.training-list{overflow:visible;flex:none;min-height:0}
+body[data-page=Routine] section[data-screen=Routine]>.training-action{position:sticky;bottom:0;background:var(--paper);padding-block:var(--space-8);margin-top:auto;z-index:2;flex:none}
+body[data-page=Routine] .routine-performance{padding:var(--space-12);min-width:0}
+.routine-performance select{max-width:55%;min-height:var(--target-min);color:var(--ink);background:var(--elevated);border:0;border-radius:var(--radius-control);font:inherit}
+.routine-value{font-size:var(--type-page);font-weight:var(--weight-bold)}
+#routine-chart svg{display:block;width:100%;max-height:125px;overflow:visible}
+#routine-history{margin-top:var(--space-16)}
+.routine-history-item{padding:var(--space-12);overflow-wrap:anywhere}
+.routine-history-item summary{min-height:var(--target-min);cursor:pointer}
+.routine-history-item p{font-size:var(--type-caption)}
+body[data-page=Routine][data-landscape=true] section[data-screen=Routine],body[data-page=Routine][data-hinge=book] section[data-screen=Routine]{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);grid-template-rows:minmax(0,1fr) auto;grid-template-areas:"overview list" "action action";overflow:hidden}
+body[data-page=Routine][data-landscape=true] section[data-screen=Routine]>.training-overview,body[data-page=Routine][data-hinge=book] section[data-screen=Routine]>.training-overview{grid-area:overview;overflow:auto;min-height:0}
+body[data-page=Routine][data-landscape=true] section[data-screen=Routine]>.training-list,body[data-page=Routine][data-hinge=book] section[data-screen=Routine]>.training-list{grid-area:list;overflow:auto;min-height:0}
+body[data-page=Routine][data-hinge=laptop] section[data-screen=Routine]{display:flex;overflow-y:auto}
