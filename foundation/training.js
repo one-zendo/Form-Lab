@@ -12,8 +12,10 @@ function createTrainingStorage(storage,key,historyKey){
  return {write,read,recover,finish,conflicted};
 }
 if(typeof module!=='undefined'&&module.exports)module.exports={createTrainingStorage,validExercises,validSession,remainingRest};
+function acquireTrainingLock(locks,start,blocked){if(!locks?.request){start(false);return}return locks.request('form.training.writer.v1',{ifAvailable:true},lock=>{if(!lock){blocked();return}start(true);return new Promise(()=>{})}).catch(blocked)}
+if(typeof module!=='undefined'&&module.exports)module.exports.acquireTrainingLock=acquireTrainingLock;
 if(typeof document!=='undefined')
-(()=>{
+acquireTrainingLock(navigator.locks,()=>{
 const q=s=>document.querySelector(s),key='form.training.demo.v1',routineKey='form.training.routines.demo.v1',historyKey='form.training.history.demo.v1';
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const clone=x=>JSON.parse(JSON.stringify(x));let session=null,selected=null,editing=false,draft=null,storageOK=true,overrides={},savedHistory=[];
@@ -104,4 +106,4 @@ for(const name of [...names].sort()){const row=document.createElement('div');con
 const select=document.createElement('select');select.setAttribute('aria-label','Correct mapping for '+name);select.add(new Option('Choose catalog exercise',''));for(const item of [...repIds.values()].sort((a,b)=>a.name_en.localeCompare(b.name_en)))select.add(new Option(item.name_en+' · '+(item.equipment||'bodyweight')+' · '+item.id,item.id));select.value=ex?.id||'';const save=document.createElement('button');save.className='form-secondary';save.textContent='Save mapping';save.onclick=()=>{const choice=repIds.get(select.value);if(!choice)return;if(!confirm('Match '+name+' to '+choice.name_en+'? Check movement and equipment.'))return;try{const next={...corrections,[norm(name)]:choice.id};localStorage.setItem(mapKey,JSON.stringify(next));corrections=next;document.querySelectorAll('[data-rep-name]').forEach(el=>{if(norm(el.dataset.repName)===norm(name)){el.innerHTML=thumb;delete el.dataset.repPending;delete el.dataset.repId}});hydrateRep();audit()}catch(e){state.textContent='Could not save mapping'}};row.append(select,save);body.append(row)}}
 panel.addEventListener('toggle',()=>{if(panel.open)audit()});document.addEventListener('form-rep-ready',()=>{if(panel.open)audit()});}
 installExerciseAudit();
-})();
+},()=>{const warn=()=>{const note=document.querySelector('#routine-note');if(note)note.textContent='Workout editing is open in another tab. Close that tab and reload.';const start=document.querySelector('#routine-start');if(start)start.disabled=true;const edit=document.querySelector('#routine-edit');if(edit)edit.disabled=true;const resume=document.querySelector('#resume-workout');if(resume)resume.hidden=true};warn();document.addEventListener('form-page',warn);window.FormTraining={sessionName:()=>undefined,blocksReload:()=>false}});
