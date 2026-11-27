@@ -1,15 +1,15 @@
 /* Dedicated training screens. Existing shell and calibrated anchors remain authoritative. */
 .training-page[hidden],.training-action[hidden],#resume-workout[hidden]{display:none!important}
 .routine-open{font:inherit;color:var(--ink);border:0;text-align:start;width:100%;cursor:pointer}
-.training-page{width:100%;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;grid-template-areas:"overview" "list" "action";gap:var(--space-12);min-height:0}
-.training-overview{grid-area:overview;min-width:0;display:flex;flex-direction:column;gap:var(--space-8)}
+.training-page{width:100%;display:grid;gap:var(--training-gap,var(--space-12));min-height:0}
+.training-overview{grid-area:overview;min-width:0;display:flex;flex-direction:column;gap:var(--training-overview-gap,var(--space-8))}
 .training-overview h2{font-size:var(--type-page);margin:0;overflow-wrap:anywhere}
 .training-overview p{margin:0}
 .training-list{grid-area:list;min-height:0;min-width:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:none}
 .training-list h2{font-size:var(--type-headline);margin:0 0 var(--space-12)}
-.training-action{grid-area:action;min-width:0}
+.training-action{grid-area:action;min-width:0;align-self:var(--training-action-align,auto)}
 .training-link{border:0;background:transparent;color:var(--action);font:inherit;font-size:var(--type-support);font-weight:var(--weight-headline);min-height:var(--target-min);text-align:start;padding:0;cursor:pointer}
-.training-stats{display:flex;flex-wrap:wrap;gap:var(--space-12);font-size:var(--type-caption);color:var(--muted)}
+.training-stats{display:flex;flex-wrap:wrap;gap:var(--training-stats-gap,var(--space-12));font-size:var(--type-caption);color:var(--muted)}
 .training-stats strong{display:block;color:var(--ink);font-size:var(--type-section)}
 .training-exercise{padding:var(--space-16)}
 .training-exercise summary{display:flex;align-items:center;gap:var(--space-12);list-style:none;min-width:0}
@@ -26,48 +26,26 @@
 .training-rest{display:flex;align-items:center;gap:var(--space-12)}
 .training-rest>div{flex:1}.training-rest p{margin:0}
 #rest-count{font-size:var(--type-section);font-weight:var(--weight-bold);color:var(--action)}
-#workout-rest{background:var(--paper);border-radius:var(--radius-card);padding:var(--space-12)}
 body:is([data-page=Routine],[data-page=Workout]) .content{display:flex;flex-direction:column;padding-bottom:calc(var(--home-dock-clearance,var(--dock-reserve)) + var(--space-12))}
 body:is([data-page=Routine],[data-page=Workout]) #app-pages{flex:1;min-height:0;display:flex;flex-direction:column}
 body:is([data-page=Routine],[data-page=Workout]) .training-page{flex:1}
 body:is([data-page=Routine],[data-page=Workout]) .dock-material{display:none}
 body:is([data-page=Routine],[data-page=Workout])[data-nav=rail] .content{padding-bottom:var(--space-16);padding-inline-end:calc(var(--home-dock-clearance,var(--dock-reserve)) + var(--space-12))}
-[data-landscape=true] .training-page,body[data-hinge=book] .training-page{grid-template-columns:minmax(0,2fr) minmax(0,3fr);grid-template-rows:minmax(0,1fr) auto;grid-template-areas:"overview list" "action list"}
-body[data-hinge=laptop] .training-page{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;grid-template-areas:"overview" "list" "action"}
 @media(prefers-reduced-transparency:reduce){body:is([data-page=Routine],[data-page=Workout]) .content{padding-bottom:var(--space-12)}body:is([data-page=Routine],[data-page=Workout])[data-nav=rail] .content{padding-inline-end:0}}
 .training-page :focus-visible{outline:var(--focus-width) solid var(--brand);outline-offset:var(--focus-offset)}
-@media(max-height:390px){.training-page{min-height:320px}.training-list{min-height:150px}}
 
-/* Build 50: compact portrait controls and explicit scroll ownership. */
 .training-toolbar{display:flex;align-items:center;justify-content:space-between;gap:var(--space-8);flex-wrap:wrap}
 .training-toolbar .training-link:last-child{text-align:end}
-@media(orientation:portrait){
-body:not([data-hinge=book]):is([data-page=Routine],[data-page=Workout]) #app-pages{flex:1 1 0;min-height:0;width:100%}
-body:not([data-hinge=book]):is([data-page=Routine],[data-page=Workout]) .training-page{flex:1 1 0;width:100%;min-height:0;grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;grid-template-areas:"overview" "list" "action";gap:var(--space-12)}
-body:not([data-hinge=book]):is([data-page=Routine],[data-page=Workout]) .training-overview{gap:var(--space-4)}
-body:not([data-hinge=book]) .training-list{overflow-y:auto;overflow-x:hidden;min-height:0;-webkit-overflow-scrolling:touch;touch-action:pan-y}
-body:not([data-hinge=book]) .training-stats{gap:var(--space-16)}
-body:not([data-hinge=book]) .training-action{align-self:end}
-body:not([data-hinge=book]) .training-exercise summary{min-height:var(--target-min)}
-body:not([data-hinge=book]) .training-set-grid{grid-template-columns:minmax(20px,.55fr) minmax(32px,1fr) minmax(0,1fr) minmax(0,1fr) minmax(44px,.9fr)}
-body:not([data-hinge=book]) .training-set-grid input{padding:0 var(--space-4)}
-/* Keep a usable scrolling fallback when keyboard, preview control or larger text constrains height. */
-body:not([data-hinge=book]) .training-page{min-height:min-content}
-body:not([data-hinge=book]) .training-list{min-height:calc(var(--target-min)*2)}
-}
 @media(prefers-reduced-transparency:reduce){body:is([data-page=Routine],[data-page=Workout])[data-nav=rail] .content{padding-bottom:var(--space-12)}}
 
 /* Build 53: ONE-inspired active session, scoped away from routine layout. */
 #workout-storage{font-size:var(--type-caption)}#workout-storage:empty{display:none}
 body[data-page=Workout] #dock{visibility:hidden;pointer-events:none}body[data-page=Workout] #shell{padding-bottom:0;padding-right:0}body[data-page=Workout] .content{padding-bottom:var(--space-12);padding-inline-end:var(--space-12)}
 #workout-exercises .training-set-grid input{min-height:44px;font-size:15px;font-weight:600}#workout-exercises .training-set-grid[data-done=true]{background:color-mix(in srgb,var(--workout-success) 7%,transparent);border-radius:var(--radius-small)}#workout-exercises .training-set-grid[data-done=true] input{background:transparent}#workout-exercises .training-set-grid button{font-size:20px;min-height:44px}
-.workout-choices{display:none;grid-area:choices;overflow:auto;min-height:0;align-content:start;gap:var(--space-8)}.workout-choice{display:grid;text-align:start;color:var(--ink);font:inherit;border:0;gap:4px}.workout-choice small{color:var(--muted)}.workout-choice[aria-pressed=true]{outline:1px solid var(--action);outline-offset:-1px}
-[data-landscape=true] [data-screen=Workout] .workout-choices{display:grid}
-body[data-hinge=laptop] [data-screen=Workout]{grid-template-columns:minmax(0,1fr);grid-template-areas:"overview" "list" "action"}body[data-hinge=laptop] [data-screen=Workout] .workout-choices{display:none}
+.workout-choices{display:var(--workout-choices-display,none);grid-area:choices;overflow:auto;min-height:0;align-content:start;gap:var(--space-8)}.workout-choice{display:grid;text-align:start;color:var(--ink);font:inherit;border:0;gap:4px}.workout-choice small{color:var(--muted)}.workout-choice[aria-pressed=true]{outline:1px solid var(--action);outline-offset:-1px}
 
 /* Build 54: use the calibrated global headline for the session identity. */
 #workout-finish[hidden]{display:none!important}
-body[data-page=Workout] .headline{margin-inline-end:var(--layout-content)}
 body[data-page=Workout] .headline h1{flex:1;min-width:0;overflow:hidden}
 body[data-page=Workout] #diagnostic-open{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:start}
 body[data-page=Workout] #headline-build{display:none}
@@ -85,50 +63,43 @@ body[data-page=Workout] #headline-build{display:none}
 
 /* Build 59: unified workout control rail; calibrated headline stays authoritative. */
 body[data-page=Workout] #workout-finish{flex:none;margin-inline-start:auto;min-height:var(--target-min);text-align:center;background:var(--workout-finish-bg);color:var(--workout-finish-ink);width:var(--workout-rail-width);height:var(--target-min);padding:0;border-radius:22px}
-#workout-rest{--rest-fill:0%;position:relative;isolation:isolate;overflow:hidden;border-radius:999px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--glass-highlight),0 4px 18px #00000012;padding:8px;display:flex;align-items:center;gap:4px;min-height:72px}
-#workout-rest::before{content:"";position:absolute;z-index:-1;inset:0 auto 0 0;width:var(--rest-fill);background:color-mix(in srgb,var(--timer) 20%,var(--paper));transition:width .25s linear,height .25s linear}
+#workout-rest{--rest-fill:0%;position:relative;isolation:isolate;overflow:hidden;border-radius:999px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--glass-highlight),0 4px 18px #00000012;padding:8px;display:flex;align-items:center;gap:4px;min-height:72px;align-self:var(--training-action-align,auto)}
+#workout-rest::before{content:"";position:absolute;z-index:-1;inset:0 auto 0 0;width:var(--rest-fill);background:linear-gradient(180deg,color-mix(in srgb,var(--timer) 13%,var(--paper)),color-mix(in srgb,var(--timer) 30%,var(--paper)));transition:width .25s linear,height .25s linear}
 #workout-rest .rest-control{flex:none;width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:var(--timer);font:600 21px var(--font);cursor:pointer;padding:0}
 #workout-rest .rest-readout{flex:1;min-width:0;text-align:center;border:0;background:transparent;color:var(--muted);padding:0;cursor:pointer}
 #workout-rest .rest-readout small{display:block;font-size:11px}
 #rest-count{display:block;color:var(--timer);font-size:23px;font-weight:650;font-variant-numeric:tabular-nums;letter-spacing:-.7px}
+[data-rest-layout=vertical] #workout-rest{width:var(--workout-rail-width);max-width:100%;min-height:0;flex-direction:column;justify-content:space-between;padding:8px 0;align-self:stretch;justify-self:end}
+[data-rest-layout=vertical] #workout-rest::before{inset:auto 0 0;width:100%;height:var(--rest-fill)}
+[data-rest-layout=vertical] .rest-readout{display:flex;flex-direction:column;justify-content:center;width:100%}
+[data-rest-layout=vertical] #rest-plus{order:-1}
+[data-rest-layout=vertical] #rest-minus{order:2}
+[data-rest-layout=vertical] #rest-skip{order:3}
 #workout-rest[data-ready=true] .rest-readout{cursor:default}
 #workout-rest .rest-control:disabled{opacity:.35;cursor:default}
 body[data-page=Workout] .workout-choice{background:transparent;box-shadow:none;outline:none;padding:12px;min-height:55px}
 body[data-page=Workout] .workout-choice[aria-pressed=true]{background:var(--paper);box-shadow:inset 3px 0 var(--brand)}
 body[data-page=Workout] .workout-choice:focus-visible{outline:var(--focus-width) solid var(--brand);outline-offset:calc(-1 * var(--focus-width))}
 body[data-page=Workout] .workout-choice strong{font-size:var(--type-support)}
-body[data-page=Workout]:not([data-hinge=laptop]) #calibration[data-landscape=true] .headline{margin-inline-end:max(var(--space-16),env(safe-area-inset-right))}
-body[data-page=Workout]:not([data-hinge=laptop]) #calibration[data-landscape=true] .content{padding-inline-end:0;padding-bottom:var(--space-12)}
-body:not([data-hinge=laptop]) #calibration[data-landscape=true] [data-screen=Workout]{grid-template-columns:minmax(0,2fr) minmax(0,3fr) minmax(0,var(--workout-rail-width));grid-template-rows:auto minmax(0,1fr);grid-template-areas:"overview overview action" "choices list action";gap:12px}
-body:not([data-hinge=laptop]) #calibration[data-landscape=true] #workout-rest{width:var(--workout-rail-width);height:100%;min-height:0;flex-direction:column;justify-content:space-between;padding:8px 0;align-self:stretch}
-body:not([data-hinge=laptop]) #calibration[data-landscape=true] #workout-rest::before{inset:auto 0 0;width:100%;height:var(--rest-fill)}
-body:not([data-hinge=laptop]) #calibration[data-landscape=true] #workout-rest .rest-readout{flex:1;display:flex;flex-direction:column;justify-content:center;width:100%}
-body:not([data-hinge=laptop]) #calibration[data-landscape=true] #rest-plus{order:-1}
-body:not([data-hinge=laptop]) #calibration[data-landscape=true] #rest-minus{order:2}
-body:not([data-hinge=laptop]) #calibration[data-landscape=true] #rest-skip{order:3}
 
-/* Build 60: layout state belongs to #calibration, not body. Share the actual right edge. */
+/* Use the same trailing edge for the workout headline and content. */
 body[data-page=Workout] #calibration{--workout-edge:max(var(--space-16),env(safe-area-inset-right))}
 body[data-page=Workout] #calibration .headline{right:0;margin-inline-end:var(--workout-edge)}
 body[data-page=Workout] #calibration .headline-material{right:0}
 body[data-page=Workout] #calibration .content{margin-inline-end:var(--workout-edge);padding-inline-end:0;padding-bottom:12px}
 body[data-page=Workout] #app-pages{width:100%;flex:1 1 0;min-height:0}
-body[data-page=Workout] [data-screen=Workout]{width:100%;max-width:none;flex:1 1 0;min-height:0}
-body[data-page=Workout]:not([data-hinge=laptop]) #calibration[data-landscape=true] #workout-rest{align-self:stretch;justify-self:end;height:auto}
-body[data-page=Workout] #workout-rest::before{background:linear-gradient(180deg,color-mix(in srgb,var(--timer) 13%,var(--paper)),color-mix(in srgb,var(--timer) 30%,var(--paper)))}
+body[data-page=Workout] [data-screen=Workout]{flex:1 1 0;min-height:var(--workout-min-height,0);grid-template:var(--workout-grid,"overview" auto "list" minmax(0,1fr) "action" auto / minmax(0,1fr))}
+body[data-page=Workout] .training-list{min-height:var(--workout-list-min-height,0);overflow-x:var(--workout-list-overflow-x,auto);touch-action:var(--workout-list-touch,auto);-webkit-overflow-scrolling:var(--workout-list-webkit-scroll,auto)}
 
 /* Build 62: bound workout grid to the browser's drawable box, including intrinsic flex sizing. */
 body[data-page=Workout] #shell{width:100%;max-width:100%;padding:0}
 body[data-page=Workout] #calibration{min-width:0;width:100%;max-width:100%}
-body[data-page=Workout] #calibration .content{width:auto;min-width:0;max-width:calc(100% - var(--workout-content-x) - var(--workout-edge));align-self:stretch;margin-inline-start:var(--workout-content-x);margin-inline-end:var(--workout-edge)}
+body[data-page=Workout] #calibration .content{width:auto;min-width:0;max-width:calc(100% - var(--workout-content-x) - var(--workout-edge));align-self:stretch;overflow-y:var(--workout-content-overflow,auto);margin-inline-start:var(--workout-content-x);margin-inline-end:var(--workout-edge)}
 body[data-page=Workout] #app-pages,body[data-page=Workout] [data-screen=Workout]{min-width:0;max-width:100%;width:100%;box-sizing:border-box}
-body[data-page=Workout] #calibration[data-landscape=true] #workout-rest{max-width:100%;min-width:0;box-sizing:border-box}
 body[data-page=Workout] #workout-exercises .training-set-grid{grid-template-columns:minmax(0,.55fr) minmax(0,.85fr) minmax(0,1fr) minmax(0,1fr) minmax(36px,.8fr)}
 body[data-page=Workout] #workout-exercises .training-set-grid input{padding-inline:0}
-body[data-page=Workout][data-hinge=laptop] #calibration[data-landscape=true] [data-screen=Workout]{grid-template-columns:minmax(0,1fr)}
 
 /* Build 63: keep workout rail below the actual headline material boundary. */
-body[data-page=Workout]:not([data-hinge=laptop]) #calibration[data-landscape=true] .content{overflow:hidden}
 body[data-page=Workout] #calibration[data-guides=true] .headline-material{border-bottom:1px dashed #22a06b}
 
 /* Build 64: shared status axis, with adaptive progress segments. */
@@ -203,8 +174,8 @@ body[data-page=Workout] #workout-exercises .training-set-grid[data-done] button{
 @container (max-width:260px){#routine-exercises .training-thumb,#workout-exercises .training-thumb{flex-basis:36px;width:36px;height:36px}#routine-exercises .training-exercise summary,#workout-exercises .training-exercise summary{gap:6px;min-height:44px}#workout-exercises .training-exercise summary .training-copy strong{font-size:14px}#workout-exercises .workout-set-count{font-size:12px}}
 
 /* Build 80: unified routine workspace, existing shell anchors retained. */
-body[data-page=Routine] section[data-screen=Routine]{display:flex;flex-direction:column;min-height:0;overflow:hidden auto;overscroll-behavior:contain}
-body[data-page=Routine] section[data-screen=Routine]>.training-list{overflow:visible;flex:none;min-height:0}
+body[data-page=Routine] section[data-screen=Routine]{display:var(--routine-display,flex);flex-direction:column;grid-template:var(--routine-grid,none);min-height:0;overflow:hidden var(--routine-overflow,auto);overscroll-behavior:contain}
+body[data-page=Routine] section[data-screen=Routine]>.training-list{overflow:var(--routine-list-overflow,visible);flex:none;min-height:0}
 body[data-page=Routine] section[data-screen=Routine]>.training-action{position:sticky;bottom:0;background:var(--paper);padding-block:var(--space-8);margin-top:auto;z-index:2;flex:none}
 body[data-page=Routine] .routine-performance{padding:var(--space-12);min-width:0}
 .routine-performance select{max-width:55%;min-height:var(--target-min);color:var(--ink);background:var(--elevated);border:0;border-radius:var(--radius-control);font:inherit}
@@ -214,9 +185,6 @@ body[data-page=Routine] .routine-performance{padding:var(--space-12);min-width:0
 .routine-history-item{padding:var(--space-12);overflow-wrap:anywhere}
 .routine-history-item summary{min-height:var(--target-min);cursor:pointer}
 .routine-history-item p{font-size:var(--type-caption)}
-body[data-page=Routine]:not([data-hinge=laptop]) :is(#calibration[data-landscape=true], [data-hinge=book] #calibration) section[data-screen=Routine]{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);grid-template-rows:minmax(0,1fr) auto;grid-template-areas:"overview list" "action action";overflow:hidden}
-body[data-page=Routine]:not([data-hinge=laptop]) :is(#calibration[data-landscape=true], [data-hinge=book] #calibration) section[data-screen=Routine]>.training-overview{grid-area:overview;overflow:auto;min-height:0}
-body[data-page=Routine]:not([data-hinge=laptop]) :is(#calibration[data-landscape=true], [data-hinge=book] #calibration) section[data-screen=Routine]>.training-list{grid-area:list;overflow:auto;min-height:0}
 
 /* Routine details: shared headline controls, compact performance and summary. */
 .routine-head-control[hidden]{display:none!important}
@@ -256,8 +224,6 @@ body[data-page=Routine] #headline-build{display:none}
 .performance-summary strong{font-size:var(--type-headline);font-variant-numeric:tabular-nums}
 .performance-summary small{font-size:var(--type-caption);color:var(--muted)}
 body[data-page=Routine] .training-overview{min-height:0;overflow:auto;overscroll-behavior:contain}
-body:not([data-hinge=book])[data-page=Routine] .training-page{min-height:0}
-@media(orientation:portrait){body:not([data-hinge=book])[data-page=Routine] .training-page{grid-template-rows:minmax(0,3fr) minmax(0,2fr) auto}}
 
 /* Build 87 — compact workout summary and expanded exercise controls. */
 .workout-exercise-tools{display:flex;flex-wrap:wrap;gap:var(--space-8);margin-bottom:var(--space-8)}
@@ -265,12 +231,8 @@ body:not([data-hinge=book])[data-page=Routine] .training-page{min-height:0}
 .workout-exercise-tools input{display:block;width:100%;box-sizing:border-box;min-height:var(--target-min);border:0;border-radius:var(--radius-small);background:var(--elevated);color:var(--ink);padding:var(--space-8);font:inherit;font-size:var(--type-support)}
 .workout-previous{color:var(--muted);overflow-wrap:anywhere}
 
-/* Focused workout: one drawable headline anchor, independent of physical diagnostics.
-   UP Safari excludes 82pt above the drawable viewport; other anchors remain calibrated. */
-body[data-page=Workout] #calibration{--workout-headline-center:var(--layout-center);--workout-headline-x:var(--layout-headline);--workout-content-x:var(--layout-content)}
-/* FL1 Safari already excludes 84pt on the left. Convert physical anchors to drawable coordinates. */
-body[data-page=Workout][data-orientation=FL1][data-viewport-mode=Safari-sized] #calibration{--workout-headline-x:0px;--workout-content-x:0px}
-body[data-page=Workout][data-orientation=UP][data-viewport-mode=Safari-sized] #calibration{--workout-headline-center:var(--layout-content-center)}
+/* A single drawable anchor drives the workout headline, backing and content. */
+body[data-page=Workout] #calibration{--workout-headline-center:var(--profile-workout-center,var(--layout-center));--workout-headline-x:var(--profile-workout-headline,var(--layout-headline));--workout-content-x:var(--profile-workout-content,var(--layout-content))}
 body[data-page=Workout] #calibration .headline{top:calc(var(--workout-headline-center) - var(--headline-height)/2);margin-inline-start:var(--workout-headline-x)}
 body[data-page=Workout] #calibration .headline-material{height:calc(var(--workout-headline-center) + var(--headline-height)/2 + var(--space-4))}
 body[data-page=Workout] #calibration .content{padding-top:calc(var(--workout-headline-center) + var(--headline-height)/2 + var(--space-8))}

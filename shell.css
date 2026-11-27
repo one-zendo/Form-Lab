@@ -1,22 +1,13 @@
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;min-height:0;max-height:100%;overflow:hidden;overscroll-behavior:none;touch-action:pan-x pan-y pinch-zoom;background:var(--canvas);color:var(--ink);font:var(--type-body) var(--font)}#shell{position:relative;display:block;width:100%;height:100dvh;min-height:0;max-height:100dvh;overflow:hidden;box-sizing:border-box;padding-bottom:calc(var(--dock-reserve) + env(safe-area-inset-bottom))}section{width:min(100%,420px);overflow-wrap:anywhere}h1{font-size:var(--type-page);font-weight:var(--weight-bold);margin:0}p{color:var(--muted)}dl{margin:var(--space-16) 0;background:var(--paper);border-radius:var(--radius-card);padding:var(--space-12)}dl div{display:flex;justify-content:space-between;gap:var(--space-12);padding:var(--space-4) 0}dt{color:var(--muted)}dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}select{font:inherit;min-height:var(--target-min);max-width:100%}.note{font-size:var(--type-caption)} @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-/* Calibration-only layout; browser viewport already excludes Safari chrome. */
-
-#calibration{--layout-headline:16px;--layout-content:16px;--layout-center:48px;--headline-height:44px;--signature-width:3px;--signature-height:32px;--signature-gap:10.5px;padding-top:calc(var(--layout-center) - var(--headline-height)/2);padding-bottom:var(--space-24)}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;min-height:0;max-height:100%;overflow:hidden;overscroll-behavior:none;touch-action:pan-x pan-y pinch-zoom;background:var(--canvas);color:var(--ink);font:var(--type-body) var(--font)}#shell{position:relative;display:block;width:100%;height:100dvh;min-height:0;max-height:100dvh;overflow:hidden;box-sizing:border-box;padding-bottom:calc(var(--dock-reserve) + env(safe-area-inset-bottom))}section{width:var(--layout-section-width,min(100%,420px));overflow-wrap:anywhere}h1{font-size:var(--type-page);font-weight:var(--weight-bold);margin:0}p{color:var(--muted)}dl{margin:var(--space-16) 0;background:var(--paper);border-radius:var(--radius-card);padding:var(--space-12)}dl div{display:flex;justify-content:space-between;gap:var(--space-12);padding:var(--space-4) 0}dt{color:var(--muted)}dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}select{font:inherit;min-height:var(--target-min);max-width:100%}.note{font-size:var(--type-caption)} @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+#calibration{--layout-headline:var(--profile-headline,var(--calibrated-headline,16px));--layout-content:var(--profile-content,var(--calibrated-content,16px));--layout-center:var(--profile-center,var(--calibrated-center,48px));--headline-height:44px;--signature-width:3px;--signature-height:32px;--signature-gap:10.5px}
 .headline{display:flex;align-items:center;gap:var(--signature-gap);height:var(--headline-height);margin-inline-start:var(--layout-headline)}
 .signature{width:var(--signature-width);height:var(--signature-height);background:var(--brand);border-radius:var(--radius-pill)}
-.content{margin-inline-start:var(--layout-content);margin-inline-end:max(var(--space-16),env(safe-area-inset-right));min-width:0}
 h2{font-size:var(--type-section);font-weight:var(--weight-section)}
-.sample-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-12);margin-bottom:var(--space-16)}
-[data-landscape="true"] .sample-grid{grid-template-columns:minmax(0,2fr) minmax(0,3fr)}
+.sample-grid{display:grid;grid-template-columns:var(--sample-columns,minmax(0,1fr));gap:var(--space-12);margin-bottom:var(--space-16)}
 .sample{background:var(--paper);border-radius:var(--radius-card);padding:var(--space-16);min-height:calc(var(--space-48)*2);font-size:var(--type-large);font-weight:var(--weight-bold)}
 .sample.primary{background:var(--action);color:var(--on-action)}
 .sample small{display:block;font-size:var(--type-support);font-weight:var(--weight-body)}
 #shell>section{margin:var(--space-16) auto;padding:var(--space-16);width:min(100%,420px)}
-
-/* Folded posture overrides orientation grid. Equal tracks are a fallback, not measured hinge geometry. */
-body[data-hinge="book"] .sample-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-columns:minmax(0,calc(env(viewport-segment-right 0 0,50%) - var(--layout-content))) minmax(0,1fr)}
-body[data-hinge="book"] .sample-grid .sample{min-width:0}
-body[data-hinge="laptop"] .sample-grid{grid-template-columns:minmax(0,1fr)}
 
 /* Lab navigation prototype: current navigation.md orientation contract. */
 
@@ -31,12 +22,7 @@ body[data-nav="rail"] #dock button span{display:none}
 body[data-nav="rail"] #dock button{width:var(--dock-target);min-width:var(--target-min);min-height:var(--dock-target);height:auto}
 body[data-nav="rail"] #shell{padding-right:calc(var(--dock-reserve) + env(safe-area-inset-right));padding-bottom:0}
 
-/* Build 16: headline anchor independent of content flow. */
-#calibration{--layout-content-center:48px;padding-top:calc(var(--layout-content-center) - var(--headline-height)/2)}
-.headline{position:relative;top:calc(var(--layout-center) - var(--layout-content-center))}
 .headline .signature{flex-shrink:0}#headline-build{font-size:var(--type-caption);font-weight:var(--weight-body);color:var(--muted);white-space:nowrap;flex-shrink:0}
-
-/* Build 28: lock document scrolling; the content pane is the sole scroll owner. */
 
 
 

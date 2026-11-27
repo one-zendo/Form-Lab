@@ -315,32 +315,106 @@ async function checkDuoLayout(context, url) {
   const page = await context.newPage();
   await page.route('**/*', route => route.request().url().startsWith(url) ? route.continue() : route.abort());
   await page.addInitScript(() => {
-    Object.defineProperty(screen.orientation, 'angle', { get: () => window.testRotation });
+    if (screen.orientation) Object.defineProperty(screen.orientation, 'angle', { get: () => window.testRotation });
+    else Object.defineProperty(window, 'orientation', { get: () => window.testRotation });
+  });
+  await page.addInitScript(() => {
+    const matchMedia = window.matchMedia.bind(window);
+    window.matchMedia = query => {
+      const result = matchMedia(query);
+      if (/device-posture: folded|horizontal-viewport-segments: 2|vertical-viewport-segments: 2/.test(query)) {
+        Object.defineProperty(result, 'matches', { get: () => {
+          if (query.includes('horizontal')) return window.testPosture === 'book';
+          if (query.includes('vertical')) return window.testPosture === 'laptop';
+          return Boolean(window.testPosture);
+        } });
+      }
+      return result;
+    };
+    Object.defineProperty(navigator, 'devicePosture', { value: undefined });
   });
   await page.goto(url);
   const cases = [
-    ['FP', 382, 678, 0, 'bottom'],
-    ['FL1', 594, 466, 90, 'rail'],
-    ['FL2', 594, 466, 270, 'rail'],
-    ['FL1 / FL2', 594, 466, 0, 'rail'],
-    ['UP', 669, 869, 0, 'bottom'],
-    ['UL', 867, 669, 270, 'rail'],
+    ['FP', 0, [382, 678], [466, 678], 'bottom', 'rail', 1],
+    ['FL1', 90, [594, 466], [678, 466], 'rail', 'rail', 2],
+    ['FL2', 270, [594, 466], [678, 466], 'rail', 'rail', 2],
+    ['UP', 0, [669, 869], [669, 951], 'bottom', 'bottom', 1],
+    ['UL', 270, [867, 669], [951, 669], 'rail', 'rail', 2],
   ];
-  for (const [orientation, width, height, rotation, nav] of cases) {
+  const resize = async (orientation, rotation, [width, height], mode) => {
     await page.setViewportSize({ width, height });
     await page.evaluate(rotation => {
       window.testRotation = rotation;
       dispatchEvent(new Event('orientationchange'));
     }, rotation);
-    await page.waitForFunction(orientation => document.body.dataset.orientation === orientation, orientation);
-    assert.equal(await page.locator('body').getAttribute('data-viewport-mode'), 'Safari-sized');
-    assert.equal(await page.locator('body').getAttribute('data-nav'), nav, orientation);
-    const dock = await page.locator('#dock').boundingBox();
-    assert.ok(dock && dock.x >= 0 && dock.y >= 0 &&
-      dock.x + dock.width <= width && dock.y + dock.height <= height, orientation);
-    if (orientation === 'FL1 / FL2') {
-      assert.equal(await page.locator('#calibration').getAttribute('data-landscape'), 'true');
+    await page.waitForFunction(([orientation, mode]) =>
+      document.body.dataset.orientation === orientation && document.body.dataset.viewportMode === mode,
+    [orientation, mode]);
+  };
+  const matrix = async (changed = false) => {
+    for (const [orientation, rotation, safari, native, safariNav, nativeNav, columns] of cases) {
+      for (const [mode, [width, height], nav] of [['Safari-sized', safari, safariNav], ['Native-sized', native, nativeNav]]) {
+        await resize(orientation, rotation, [width, height], mode);
+        const label = orientation + ' ' + mode;
+        assert.equal(await page.locator('body').getAttribute('data-layout'), orientation, label);
+        assert.equal(await page.locator('body').getAttribute('data-nav'), nav, label);
+        const dock = await page.locator('#dock').boundingBox();
+        assert.ok(dock && dock.x >= 0 && dock.y >= 0 &&
+          dock.x + dock.width <= width && dock.y + dock.height <= height, label);
+        const home = await page.locator('.home-dashboard').evaluate(el => {
+          const [first, second] = Array.from(el.children, card => card.getBoundingClientRect());
+          const style = getComputedStyle(el);
+          return {
+            sideBySide: first.right <= second.left,
+            equalTracks: first.right <= second.left
+              ? Math.abs(first.width - second.width) < 1 : Math.abs(first.height - second.height) < 1,
+            gap: style.gap,
+            padding: getComputedStyle(el.firstElementChild).padding,
+            left: el.closest('.content').getBoundingClientRect().left,
+          };
+        });
+        const changedOrientation = changed && orientation === 'FL1';
+        assert.equal(home.sideBySide, columns === 2 && !changedOrientation, label);
+        assert.equal(home.equalTracks, true, label);
+        assert.equal(home.gap, changedOrientation ? '24px' : '12px', label);
+        const calibratedLeft = orientation === 'FL1' ? (mode === 'Safari-sized' ? 84 : 29.5) : 16;
+        assert.equal(home.left, changedOrientation ? 32 : calibratedLeft, label);
+        assert.equal(home.padding, changedOrientation && mode === 'Safari-sized' ? '8px' : '16px', label);
+      }
     }
+  };
+
+  await matrix();
+  await page.evaluate(() => {
+    const sheet = [...document.styleSheets].find(sheet => sheet.href?.includes('/foundation/layout.css'));
+    const rule = selector => [...sheet.cssRules].find(rule => rule.selectorText?.replace(/["']/g, '') === selector);
+    const fl1 = rule('body[data-layout=FL1]');
+    const safari = rule('body[data-layout=FL1][data-viewport-mode=Safari-sized]');
+    fl1.style.setProperty('--home-columns', 'minmax(0,1fr)');
+    fl1.style.setProperty('--home-rows', 'repeat(2,minmax(min-content,1fr))');
+    fl1.style.setProperty('--home-card-gap', 'var(--space-24)');
+    fl1.style.setProperty('--profile-content', 'var(--space-32)');
+    safari.style.setProperty('--home-card-padding', 'var(--space-8)');
+  });
+  await matrix(true);
+
+  await resize('FL1 / FL2', 0, [594, 466], 'Safari-sized');
+  assert.equal(await page.locator('body').getAttribute('data-layout'), 'fallback-wide');
+  assert.equal(await page.locator('body').getAttribute('data-nav'), 'rail');
+  await resize('Unknown', 0, [800, 450], 'Unmatched');
+  assert.equal(await page.locator('body').getAttribute('data-layout'), 'fallback-wide');
+  assert.equal(await page.locator('body').getAttribute('data-nav'), 'bottom');
+
+  await resize('FL1', 90, [594, 466], 'Safari-sized');
+  for (const posture of ['book', 'laptop']) {
+    await page.evaluate(posture => {
+      window.testPosture = posture;
+      dispatchEvent(new Event('resize'));
+    }, posture);
+    await page.waitForFunction(posture => Array.from(document.querySelectorAll('#readout div')).some(row =>
+      row.firstElementChild.textContent === 'Hinge' && row.lastElementChild.textContent === posture), posture);
+    assert.equal(await page.locator('body').getAttribute('data-layout'), 'FL1');
+    assert.equal(await page.locator('body').getAttribute('data-nav'), 'rail');
   }
   await page.close();
 }
@@ -403,7 +477,8 @@ async function checkTrainingPresentation(context, url) {
   await page.addInitScript(() => {
     localStorage.setItem('form.demo-mode.v1', 'true');
     localStorage.setItem('form.appearance', 'graphite-lime');
-    Object.defineProperty(screen.orientation, 'angle', { get: () => window.testRotation });
+    if (screen.orientation) Object.defineProperty(screen.orientation, 'angle', { get: () => window.testRotation });
+    else Object.defineProperty(window, 'orientation', { get: () => window.testRotation });
   });
   const capture = async name => {
     const directory = process.env.FORM_UI_EVIDENCE_DIR;

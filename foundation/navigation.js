@@ -10,7 +10,7 @@ function snap(instant=false){if(instant)dock.dataset.lensInstant='true';place(re
 function select(i){if(i<0||i>=buttons.length)return;selected=i;buttons.forEach((b,j)=>b.setAttribute('aria-pressed',String(i===j)));snap(reduce.matches);document.dispatchEvent(new CustomEvent('form-page',{detail:buttons[i].dataset.page}))}
 document.addEventListener('form-page',e=>{if(e.detail==='Diagnostics'){selected=buttons.findIndex(b=>b.dataset.page==='Profile');buttons.forEach((b,j)=>b.setAttribute('aria-pressed',String(j===selected)));snap()}});
 function cancel(){if(!gesture)return;const id=gesture.id;cancelAnimationFrame(dragFrame);dragFrame=0;gesture=null;delete dock.dataset.dragging;if(dock.hasPointerCapture(id))dock.releasePointerCapture(id);snap(true)}
-function update(){cancel();const {orientation,hinge,viewportMode}=document.body.dataset;document.body.dataset.nav=hinge==='book'?'rail':hinge==='laptop'?'bottom':orientation==='FP'&&viewportMode==='Safari-sized'?'bottom':['FP','FL1','FL2','FL1 / FL2','UL'].includes(orientation)?'rail':'bottom';snap(true)}
+function update(){cancel();layout()}
 function point(e){const d=dock.getBoundingClientRect();return rail()?e.clientY-d.top-dock.clientTop+dock.scrollTop:e.clientX-d.left-dock.clientLeft+dock.scrollLeft}
 function center(r){return rail()?r.y+r.h/2:r.x+r.w/2}
 function followPoint(p){if(!gesture)return;const rs=gesture.rects,cs=rs.map(center);let i=0;while(i<cs.length-2&&p>cs[i+1])i++;const k=Math.max(0,Math.min(1,(p-cs[i])/(cs[i+1]-cs[i]||1))),a=rs[i],b=rs[i+1];const n=k>.5?i+1:i;gesture.target=n;if(reduce.matches)return;preview(n);place(Object.fromEntries(['x','y','w','h'].map(key=>[key,a[key]+(b[key]-a[key])*k])))}
@@ -22,7 +22,7 @@ dock.addEventListener('pointerup',e=>{if(gesture?.id!==e.pointerId)return;flush(
 dock.addEventListener('pointercancel',cancel);dock.addEventListener('lostpointercapture',cancel);
 dock.addEventListener('click',e=>{if(blockedClick&&e.detail>0){blockedClick=false;return}const button=e.target.closest('button[data-page]');if(button)select(buttons.indexOf(button))});
 function layout(){if(gesture)return;dock.dataset.overflow=String(rail()?dock.scrollHeight>dock.clientHeight+1:dock.scrollWidth>dock.clientWidth+1);snap(true)}
-new MutationObserver(update).observe(document.body,{attributes:true,attributeFilter:['data-orientation','data-hinge','data-viewport-mode']});
+new MutationObserver(update).observe(document.body,{attributes:true,attributeFilter:['data-nav','data-layout','data-viewport-mode']});
 if(window.ResizeObserver){const ro=new ResizeObserver(layout);ro.observe(dock);buttons.forEach(b=>ro.observe(b))}
-window.addEventListener('resize',layout);window.visualViewport?.addEventListener('resize',layout);update();layout();dock.dataset.lensReady='true';
+window.addEventListener('resize',layout);window.visualViewport?.addEventListener('resize',layout);update();dock.dataset.lensReady='true';
 })();

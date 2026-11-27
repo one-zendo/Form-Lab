@@ -1,0 +1,109 @@
+/* Independent app layout profiles. Component defaults and design tokens stay shared.
+ * Add a viewport-mode selector to the individual profile for an environment override.
+ * The matching runtime choices (dock, timer, calibration) are in layout.js. */
+body[data-layout=FP]{
+  --home-columns:minmax(0,1fr);
+  --home-rows:repeat(2,minmax(min-content,1fr));
+
+  --training-overview-gap:var(--space-4);
+  --training-stats-gap:var(--space-16);
+  --training-action-align:end;
+  --workout-list-min-height:calc(var(--target-min)*2);
+  --workout-list-overflow-x:hidden;
+  --workout-list-touch:pan-y;
+  --workout-list-webkit-scroll:touch;
+  --home-tagline-offset:-6px;
+  --home-tagline-line-height:20px;
+}
+
+body[data-layout=FL1]{
+  --sample-columns:minmax(0,2fr) minmax(0,3fr);
+  --home-columns:repeat(2,minmax(0,1fr));
+  --home-rows:minmax(min-content,1fr);
+  --routine-display:grid;
+  --routine-grid:"overview list" minmax(0,1fr) "action action" auto / minmax(0,2fr) minmax(0,3fr);
+  --routine-overflow:hidden;
+  --routine-list-overflow:auto;
+  --workout-grid:"overview overview action" auto "choices list action" minmax(0,1fr) / minmax(0,2fr) minmax(0,3fr) minmax(0,var(--workout-rail-width));
+  --workout-choices-display:grid;
+  --workout-content-overflow:hidden;
+}
+
+body[data-layout=FL1][data-viewport-mode=Safari-sized]{
+  /* Safari already excludes FL1's left rail in the active workout. */
+  --profile-workout-headline:0px;
+  --profile-workout-content:0px;
+}
+
+body[data-layout=FL2]{
+  --sample-columns:minmax(0,2fr) minmax(0,3fr);
+  --home-columns:repeat(2,minmax(0,1fr));
+  --home-rows:minmax(min-content,1fr);
+  --routine-display:grid;
+  --routine-grid:"overview list" minmax(0,1fr) "action action" auto / minmax(0,2fr) minmax(0,3fr);
+  --routine-overflow:hidden;
+  --routine-list-overflow:auto;
+  --workout-grid:"overview overview action" auto "choices list action" minmax(0,1fr) / minmax(0,2fr) minmax(0,3fr) minmax(0,var(--workout-rail-width));
+  --workout-choices-display:grid;
+  --workout-content-overflow:hidden;
+}
+
+body[data-layout=UP]{
+  --home-columns:minmax(0,1fr);
+  --home-rows:repeat(2,minmax(min-content,1fr));
+
+  --training-overview-gap:var(--space-4);
+  --training-stats-gap:var(--space-16);
+  --training-action-align:end;
+  --workout-list-min-height:calc(var(--target-min)*2);
+  --workout-list-overflow-x:hidden;
+  --workout-list-touch:pan-y;
+  --workout-list-webkit-scroll:touch;
+  --layout-dialog-width:min(calc(100% - var(--space-48)),var(--dialog-expanded-max));
+}
+
+body[data-layout=UP][data-viewport-mode=Safari-sized] #calibration{
+  --profile-workout-center:var(--drawable-headline-center);
+}
+
+body[data-layout=UL]{
+  --sample-columns:minmax(0,2fr) minmax(0,3fr);
+  --home-columns:repeat(2,minmax(0,1fr));
+  --home-rows:minmax(min-content,1fr);
+  --routine-display:grid;
+  --routine-grid:"overview list" minmax(0,1fr) "action action" auto / minmax(0,2fr) minmax(0,3fr);
+  --routine-overflow:hidden;
+  --routine-list-overflow:auto;
+  --workout-grid:"overview overview action" auto "choices list action" minmax(0,1fr) / minmax(0,2fr) minmax(0,3fr) minmax(0,var(--workout-rail-width));
+  --workout-choices-display:grid;
+  --workout-content-overflow:hidden;
+  --layout-dialog-width:min(calc(100% - var(--space-48)),var(--dialog-expanded-max));
+}
+
+/* Unknown viewports and ambiguous folded angles use separate fallback composition. */
+body[data-layout=fallback-stacked]{
+  --training-overview-gap:var(--space-4);
+  --training-stats-gap:var(--space-16);
+  --training-action-align:end;
+  --workout-list-min-height:calc(var(--target-min)*2);
+  --workout-list-overflow-x:hidden;
+  --workout-list-touch:pan-y;
+  --workout-list-webkit-scroll:touch;
+}
+
+body[data-layout=fallback-wide]{
+  --sample-columns:minmax(0,2fr) minmax(0,3fr);
+  --home-columns:repeat(2,minmax(0,1fr));
+  --home-rows:minmax(min-content,1fr);
+  --routine-display:grid;
+  --routine-grid:"overview list" minmax(0,1fr) "action action" auto / minmax(0,2fr) minmax(0,3fr);
+  --routine-overflow:hidden;
+  --routine-list-overflow:auto;
+  --workout-grid:"overview overview action" auto "choices list action" minmax(0,1fr) / minmax(0,2fr) minmax(0,3fr) minmax(0,var(--workout-rail-width));
+  --workout-choices-display:grid;
+  --workout-content-overflow:hidden;
+}
+
+@media(max-height:390px){
+  body[data-layout=fallback-wide]{--workout-list-min-height:150px}
+}

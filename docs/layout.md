@@ -1,4 +1,15 @@
 # Layout
+
+## Current runtime — Build 93
+
+FP, FL1, FL2, UP and UL each own their application layout. Edit the orientation's declarations in `foundation/layout.css` for composition, tracks, card dimensions, spacing, alignment and scrolling. Scope environment-specific values to that same profile with `data-viewport-mode="Native-sized"` or `data-viewport-mode="Safari-sized"`. The matching entries in `foundation/layout.js` select navigation, the rest-timer presentation and calibration mapping for each environment. The component CSS supplies shared defaults and consumes the selected profile's values.
+
+Unknown viewport sizes use the existing stacked or wide fallback. Ambiguous FL1 / FL2 angles use the wide fallback with the existing conservative folded geometry. Posture and segments remain visible in diagnostics, with no automatic book/laptop switch for application composition. The older builds below record that superseded behavior.
+
+Automated coverage exercises all ten orientation and viewport-mode combinations in Chromium and Playwright WebKit. A live FL1 edit checks isolation of card tracks, spacing, content alignment and Safari-only padding. A Chromium comparison with Build 92 found no differences in the measured bounds or overflow across seven screens in all ten cases. Physical Duo Safari and SwiftUI remain unverified.
+
+## Reference calibration and build history
+
 Use live drawable viewport, safe areas and posture/segments; never uniformly scale UI. Recorded Safari exclusions: FP right 84, FL1 left 84, FL2 right 84, UP top 82, UL right 84 pt; verify on device. Native independent. Shared 44pt headline row, reference center 48pt; historical Build 185 maps FP to master FL1 X, FL1/FL2 to master Y (FL2 mirrored), UP/UL default 48. Build 186 native FL1 headline inset 84 and content inset 16; Safari subtracts excluded rail and clamps to zero. Build 189 compact landscape zero Safari leading inset. Prior conversation records native FL1 card anchor 29.5; conflicts with older 16, unresolved pending source/device verification. Landscape dashboard 40:60 tracks; use intrinsic sizes and independent scroll regions. Preserve state on rotation; no transient layout snap. Breakpoints are heuristics, not hardware values.
 
 ## Build 6 — calibration screen

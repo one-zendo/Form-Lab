@@ -11,15 +11,12 @@
       (typeof window.orientation === 'number' ? (window.orientation % 360 + 360) % 360 : undefined);
     const { id, mode } = FormOrientation.detect(FormDuoGeometry, width, height, angle);
     const geometry = FormOrientation.geometryFor(FormDuoGeometry, id);
-    const posture = FormPosture.apply();
+    const posture = FormPosture.read();
     const state = document.body.dataset;
     if (state.orientation !== id) state.orientation = id;
     if (state.viewportMode !== mode) state.viewportMode = mode;
-    FormLayout.apply(geometry, id, mode, width, height);
+    const { sampleLabels: labels } = FormLayout.apply(geometry, id, mode, width, height);
 
-    const labels = posture.mode === 'book' ? ['Left', 'Right'] :
-      posture.mode === 'laptop' ? ['Upper', 'Lower'] :
-      geometry && geometry.w > geometry.h ? ['40%', '60%'] : ['First', 'Second'];
     document.querySelectorAll('.sample-grid .sample').forEach((card, i) => {
       if (card.firstChild.textContent !== labels[i]) card.firstChild.textContent = labels[i];
     });
