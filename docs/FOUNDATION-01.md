@@ -42,3 +42,5 @@ Build 12: prefer browser focus scrolling; use visual viewport and next animation
 Build 13: user physically accepted Build 12 keyboard behavior. Diagnostics distinguish rendered shell from visual editing area, report hidden navigation/timer accurately, exclude hidden elements from camera overlap checks, update guides during card motion, and hide the indicator while typing. Overlay is noninteractive and paint-contained. No layout or keyboard logic changes. Final regression and physical verification pending.
 
 Build 14: user accepted Build 13 diagnostics. FL1 only (both environments): remove 16 CSS px left design inset, retain system safe inset and localized camera avoidance. Other orientations and ambiguous FL fallback unchanged. Physical verification pending.
+
+Build 15: restrict flush-left to FL1 Safari-sized. Apply margin from observed viewport and rotation before the 120ms committed orientation stabilization; retain system safe inset. Native FL1 and other profiles retain 16px design inset. Physical transition timing pending.
