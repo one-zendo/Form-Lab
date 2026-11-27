@@ -9,12 +9,108 @@
   const storageKey = 'form.diagnostics.v1';
   const inputKey = input => input.id || input.dataset.guide;
   const home = document.querySelector('#home');
+  const readout = document.querySelector('#readout');
+  const measurements = readout.closest('details');
+  const headline = home.querySelector('.headline');
+  const tagline = home.querySelector('.tagline');
   const content = home.querySelector('.content');
   const timer = home.querySelector('.timer-placeholder');
   const cards = [...content.querySelectorAll('.form-card')];
   const dock = document.querySelector('#dock');
   let pending = false;
   let sample;
+  let lastReadout = '';
+  const names = {
+    FP: 'Folded Portrait',
+    FL1: 'Folded Landscape 1',
+    FL2: 'Folded Landscape 2',
+    UP: 'Unfolded Portrait',
+    UL: 'Unfolded Landscape',
+  };
+  const fmt = number => Number(number.toFixed(1));
+  const size = ({ width, height }) => fmt(width) + ' × ' + fmt(height) + ' px';
+  const xy = (x, y) => fmt(x) + ', ' + fmt(y) + ' px';
+
+  function updateReadout(viewport) {
+    const { id, mode, geometry, posture, angle, camera, layout, visual, probe, insets } = sample;
+    const nav = dock.getBoundingClientRect();
+    const safari = mode === 'Safari-sized';
+    const drawable = geometry && [
+      geometry.w - (safari && geometry.side !== 'top' ? geometry.excluded : 0),
+      geometry.h - (safari && geometry.side === 'top' ? geometry.excluded : 0),
+    ];
+    const rows = [
+      ['Orientation', id],
+      ['Detected environment', mode],
+      ['Physical display reference', geometry ? geometry.w + ' × ' + geometry.h + ' pt' : 'Unresolved'],
+      ['Drawable reference for detected environment', drawable ? drawable.join(' × ') + ' pt' : 'Unresolved'],
+      ['Calibrated headline center Y (physical reference)', geometry ? (id === 'UP' && safari ? '130 pt' : '48 pt') : 'Unresolved'],
+      ['Recorded Safari exclusion', geometry ? (geometry.side ?? 'Left or right') + ' · ' + geometry.excluded + ' pt' : 'Unresolved'],
+      ['Recorded camera center (physical reference)', geometry?.camera ? geometry.camera.join(', ') + ' pt' : 'Unresolved'],
+      ['Projected camera boundaries (left / top / right / bottom)', camera
+        ? [camera.left, camera.top, camera.right, camera.bottom].map(fmt).join(' / ') + ' px' : 'Unresolved'],
+      ['Raw layout viewport', size(layout)],
+      ['Raw visual viewport', visual ? size(visual) : 'Unavailable'],
+      ['Visual viewport offsets (left, top)', visual ? xy(visual.offsetLeft, visual.offsetTop) : 'Unavailable'],
+      ['Visual viewport scale', visual ? fmt(visual.scale) : 'Unavailable'],
+      ['CSS viewport probe (100vw × 100dvh)', size(probe)],
+      ['Resolved usable viewport', size(viewport)],
+      ['Resolved viewport origin (left, top)', xy(viewport.left, viewport.top)],
+      ['Safe insets (top / right / bottom / left)', insets.map(value => fmt(value) + 'px').join(' / ')],
+      ['Content pane', size(content.getBoundingClientRect())],
+      ...cards.map((card, index) => ['Card ' + (index + 1), size(card.getBoundingClientRect())]),
+      ['Timer', timer.parentElement.hidden ? 'Hidden' : 'Visible · ' + size(timer.getBoundingClientRect())],
+      ['Navigation position', (home.dataset.dock === 'right' ? 'Right rail' : 'Bottom dock') +
+        ' · ' + xy(nav.left, nav.top) + ' · ' + size(nav)],
+      ['Posture API', posture.type],
+      ['Segments', posture.columns + ' × ' + posture.rows],
+      ['Hinge', posture.type === 'unknown' ? 'Unknown' : posture.mode],
+      ['Rotation angle', angle ?? 'Unavailable'],
+    ];
+    const signature = JSON.stringify(rows);
+    if (signature === lastReadout) return;
+    lastReadout = signature;
+    readout.replaceChildren(...rows.map(([key, value]) => {
+      const row = document.createElement('div');
+      const term = document.createElement('dt');
+      const description = document.createElement('dd');
+      term.textContent = key;
+      description.textContent = value;
+      row.append(term, description);
+      return row;
+    }));
+  }
+
+  function addOrientationIndicator(layer, viewport) {
+    const { id, mode, insets } = sample;
+    const indicator = document.createElement('div');
+    indicator.className = 'orientation-indicator';
+    const title = document.createElement('strong');
+    title.textContent = names[id] ? id + ' — ' + names[id] : 'Unknown';
+    const dimensions = document.createElement('div');
+    dimensions.textContent = mode + ' · ' + size(viewport);
+    indicator.append(title, dimensions);
+    layer.append(indicator);
+
+    const [safeTop, safeRight, safeBottom, safeLeft] = insets;
+    const margin = parseFloat(getComputedStyle(indicator).getPropertyValue('--space-4'));
+    const { width, height } = indicator.getBoundingClientRect();
+    const right = Math.max(0, viewport.width - safeRight - width - margin);
+    const left = Math.min(right, safeLeft + margin);
+    const top = Math.min(safeTop + margin, Math.max(0, viewport.height - height));
+    const cardArea = content.getBoundingClientRect();
+    const cardBottom = Math.max(top, Math.min(cardArea.bottom - viewport.top,
+      viewport.height - safeBottom) - height - margin);
+    const avoid = [...headline.children, tagline, dock, timer, ...content.querySelectorAll('h2, p, ul')]
+      .map(element => element.getBoundingClientRect());
+    const places = [[(left + right) / 2, top], [right, cardBottom], [left, cardBottom]];
+    const overlap = ([x, y]) => avoid.reduce((total, rect) => total +
+      Math.max(0, Math.min(viewport.left + x + width, rect.right) - Math.max(viewport.left + x, rect.left)) *
+      Math.max(0, Math.min(viewport.top + y + height, rect.bottom) - Math.max(viewport.top + y, rect.top)), 0);
+    const [x, y] = places.reduce((best, place) => overlap(place) < overlap(best) ? place : best);
+    indicator.style.left = x + 'px';
+    indicator.style.top = y + 'px';
+  }
 
   function readPreferences() {
     return JSON.parse(localStorage.getItem(storageKey) || '{}') || {};
@@ -53,14 +149,15 @@
 
   function draw() {
     pending = false;
+    if (!sample) return;
+    const viewport = home.getBoundingClientRect();
+    if (measurements.open) updateReadout(viewport);
     if (!master.checked) {
       overlay.replaceChildren();
       return;
     }
 
-    if (!sample) return;
     const { camera, insets: [top, right, bottom, left] } = sample;
-    const viewport = home.getBoundingClientRect();
     const { width, height } = viewport;
     const origin = overlay.getBoundingClientRect();
     const layer = document.createElement('div');
@@ -72,7 +169,6 @@
       height: height + 'px',
     });
     const enabled = name => guides.get(name).checked;
-    const fmt = number => Number(number.toFixed(1));
 
     function box(x, y, w, h, color, kind = '') {
       if (w <= 0 || h <= 0) return;
@@ -131,12 +227,12 @@
       box(0, 0, left, height, 'safe', 'safe');
     }
     if (enabled('Headline')) {
-      const rect = measure(document.querySelector('#home .headline'), 'Headline', 'headline');
+      const rect = measure(headline, 'Headline', 'headline');
       axes(rect.x - viewport.left, rect.y - viewport.top + rect.height / 2, 'headline');
     }
     if (enabled('Content')) {
       const clip = measure(content, 'Content', 'content');
-      measure(home.querySelector('.tagline'), 'Tagline', 'content');
+      measure(tagline, 'Tagline', 'content');
       if (!timer.parentElement.hidden) measure(timer, 'Timer', 'content');
       const [first, second] = cards.map((card, i) => measure(card, 'Card ' + (i + 1), 'content', clip));
       const sideBySide = second.left >= first.right;
@@ -159,6 +255,7 @@
       box(left - viewport.left, top - viewport.top, right - left, bottom - top, 'camera', 'camera');
     }
     overlay.replaceChildren(layer);
+    addOrientationIndicator(layer, viewport);
   }
 
   function schedule() {
@@ -171,6 +268,7 @@
     sample = event.detail;
     schedule();
   });
+  measurements.addEventListener('toggle', schedule);
   content.addEventListener('scroll', schedule, { passive: true });
   if (window.ResizeObserver) {
     const observer = new ResizeObserver(schedule);

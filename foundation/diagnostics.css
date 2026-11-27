@@ -14,7 +14,7 @@
   overflow: hidden;
 }
 
-.guide-layer, .guide, .guide-label { position: absolute; }
+.guide-layer, .guide, .guide-label, .orientation-indicator { position: absolute; }
 .guide-layer { overflow: hidden; }
 .guide { border: 1px dashed var(--guide-color); }
 .guide.viewport { border: 2px solid var(--diag-viewport); }
@@ -71,3 +71,13 @@
 #storage-status { margin-block: var(--space-12); }
 #diagnostics summary { cursor: pointer; min-block-size: var(--target-min); }
 #readout dd { margin: 0; text-align: end; overflow-wrap: anywhere; }
+
+.orientation-indicator {
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+  padding: var(--space-4);
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--outline);
+  font: 11px var(--font);
+}

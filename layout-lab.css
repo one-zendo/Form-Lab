@@ -59,16 +59,16 @@ button { font: inherit; color: inherit; }
 .form-page:has(> .timer-region:not([hidden])) {
   grid-template:
     "headline" auto
-    "timer" auto
     "content" minmax(0, 1fr)
+    "timer" auto
     "dock" auto / minmax(0, 1fr);
 }
 
 .form-page[data-dock="right"]:has(> .timer-region:not([hidden])) {
   grid-template:
     "headline dock" auto
-    "timer dock" auto
-    "content dock" minmax(0, 1fr) / minmax(0, 1fr) var(--dock-item-width);
+    "content dock" minmax(0, 1fr)
+    "timer dock" auto / minmax(0, 1fr) var(--dock-item-width);
 }
 
 .headline-region {
@@ -200,3 +200,14 @@ h2 { font-size: 1.0625rem; }
 
 #dock [aria-current] { background: var(--ink); color: var(--paper); }
 #dock :disabled { background: var(--canvas); color: var(--muted); opacity: 1; }
+
+/* Independent of the shell's measured pixel size. */
+#viewport-probe {
+  position: fixed;
+  inset: 0 auto auto 0;
+  inline-size: 100vw;
+  block-size: 100vh;
+  block-size: 100dvh;
+  visibility: hidden;
+  pointer-events: none;
+}

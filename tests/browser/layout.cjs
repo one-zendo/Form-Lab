@@ -40,12 +40,16 @@ async function checkProfile(browser, { orientation, rotation, safeInsets }, mode
   }, { rotation, storage });
 
   assert.ok((await page.goto(url)).ok());
-  assert.equal(await page.locator('meta[name=form-build]').getAttribute('content'), '004');
+  assert.equal(await page.locator('meta[name=form-build]').getAttribute('content'), '005');
   assert.equal(await page.locator('h1').textContent(), 'FORM');
   assert.equal(await page.locator('body').getAttribute('data-orientation'), orientation);
   assert.equal(await page.locator('body').getAttribute('data-viewport-mode'), mode);
   assert.equal(await page.locator('#dock [aria-current=page]').textContent(), 'Home');
   assert.equal(await page.locator('#dock button:disabled').count(), 3);
+  const indicator = page.locator('.orientation-indicator');
+  await indicator.waitFor();
+  assert.match(await indicator.innerText(), new RegExp('^' + orientation + ' — .+'));
+  assert.ok((await indicator.innerText()).includes(mode + ' · ' + width + ' × ' + height + ' px'));
 
   const native = mode === 'Native-sized';
   const side = placement[orientation][native ? 0 : 1];
@@ -153,11 +157,15 @@ async function checkProfile(browser, { orientation, rotation, safeInsets }, mode
   await setTimer(true);
   const timer = await page.locator('.timer-placeholder').boundingBox();
   const during = await page.locator('.content').boundingBox();
-  assert.ok(timer.height >= 48);
-  assert.ok(timer.y + timer.height < during.y);
+  closeTo(timer.height, 48, 'provisional timer height');
+  closeTo(during.y, before.y, 'card pane top stays put');
+  assert.ok(during.y + during.height < timer.y, 'timer below scrollport');
+  const nav = await page.locator('#dock').boundingBox();
+  if (vertical) assert.ok(timer.x + timer.width < nav.x, 'timer clear of the rail');
+  else assert.ok(timer.y + timer.height < nav.y, 'timer above bottom navigation');
   assert.deepEqual(await page.locator('#home .headline, .tagline, #dock').evaluateAll(
     elements => elements.map(element => element.getBoundingClientRect().toJSON())), chrome);
-  closeTo(before.height - during.height, during.y - before.y, 'timer reservation');
+  closeTo(before.height - during.height, timer.y + timer.height - (during.y + during.height), 'timer reservation');
   await page.locator('[data-measurement="Timer"]').waitFor();
   const cardsDuringTimer = await page.locator('.form-card').evaluateAll(elements =>
     elements.map(el => el.getBoundingClientRect().toJSON()));
@@ -187,6 +195,7 @@ async function checkProfile(browser, { orientation, rotation, safeInsets }, mode
   await page.locator('#diagnostic-overlay .viewport').waitFor({ state: 'visible' });
   await page.getByRole('button', { name: 'Diagnostics' }).click();
   await page.getByText('Device measurements').click();
+  await page.locator('#readout dt').first().waitFor();
   assert.match(await page.locator('#readout').innerText(), /Safe insets/);
   const readStorage = () => page.evaluate(keys => Object.fromEntries(keys.map(
     key => [key, localStorage.getItem(key)]
@@ -265,6 +274,24 @@ async function checkLiveRotation(browser, mode, dimensionKey) {
     });
   }
 
+  async function verifyIndicator(id, dimensions) {
+    await page.waitForFunction(({ id, mode, dimensions }) => {
+      const indicator = document.querySelector('.orientation-indicator');
+      const text = indicator?.textContent;
+      if (!text?.startsWith(id + ' — ') ||
+          !text.includes(mode + ' · ' + dimensions.width + ' × ' + dimensions.height + ' px')) return false;
+      const rect = indicator.getBoundingClientRect();
+      const shell = document.querySelector('#home').getBoundingClientRect();
+      const fits = rect.left >= shell.left && rect.top >= shell.top &&
+        rect.right <= shell.right && rect.bottom <= shell.bottom;
+      const chrome = [...document.querySelectorAll('#home h1, #diagnostic-open, .tagline, #dock')];
+      return fits && chrome.every(element => {
+        const box = element.getBoundingClientRect();
+        return rect.right <= box.left || rect.left >= box.right || rect.bottom <= box.top || rect.top >= box.bottom;
+      });
+    }, { id, mode, dimensions });
+  }
+
   await verifyVisible();
   // Begin in UP, repeat the reported transition, then visit every directed pair.
   const transitions = [
@@ -294,6 +321,7 @@ async function checkLiveRotation(browser, mode, dimensionKey) {
     closeTo(bounds.width, dimensions.width, 'settled shell width');
     closeTo(bounds.height, dimensions.height, 'settled shell height');
     await verifyGuides();
+    await verifyIndicator(id, dimensions);
   }
 
   // An offset-only visual scroll has no resize. A following silent viewport
@@ -309,6 +337,38 @@ async function checkLiveRotation(browser, mode, dimensionKey) {
   await page.waitForFunction(() => Math.abs(document.querySelector('#home').getBoundingClientRect().height - innerHeight) < .1);
 
   await verifyGuides();
+
+  await page.evaluate(() => { document.querySelector('#readout').closest('details').open = true; });
+  if (mode === 'Safari-sized') {
+    // Two possible raw samples that yield the reported 867 × 587 shell.
+    // Deliver the correct measurement silently after Build 004's lone retry.
+    const ul = size(byId.UL);
+    const up = size(byId.UP);
+    const viewportHeight = () => page.locator('#home').evaluate(el => el.getBoundingClientRect().height);
+    for (const [visualHeight, top] of [[587, 0], [669, 82]]) {
+      await page.setViewportSize(ul);
+      await phase({ width: ul.width, height: visualHeight }, byId.UL.rotation, [0, top]);
+      assert.equal(await viewportHeight(), 587);
+      await verifyIndicator('UL', { width: 867, height: 587 });
+      await page.waitForFunction(() => document.querySelector('#readout').textContent.includes(
+        'Resolved usable viewport867 × 587 px'));
+      await page.evaluate(async height => {
+        await new Promise(resolve => setTimeout(resolve, 550));
+        if (document.querySelector('#home').getBoundingClientRect().height !== 587) {
+          throw new Error('A live short viewport was overridden');
+        }
+        Object.assign(visualViewport, { height, offsetTop: 0 });
+      }, ul.height);
+      await verifyIndicator('UL', ul);
+      await verifyGuides();
+      assert.equal((await page.locator('#home').boundingBox()).y, 0);
+      await verifyVisible();
+
+      await page.setViewportSize(up);
+      await phase(up, byId.UP.rotation);
+      await verifyIndicator('UP', up);
+    }
+  }
 
   // Move the same inset from top to bottom without any viewport event.
   await page.evaluate(() => document.documentElement.style.setProperty('--safe-top', '34px'));
@@ -339,7 +399,14 @@ async function main() {
       await checkProfile(browser, profile, 'Safari-sized', profile.viewport);
     }
     const page = await browser.newPage({ viewport: { width: 800, height: 600 } });
+    await page.addInitScript(() => localStorage.setItem('form.diagnostics.v1', '{"guides":true}'));
     await page.goto(url);
+    await page.locator('.orientation-indicator').waitFor();
+    assert.match(await page.locator('.orientation-indicator').innerText(), /^Unknown/);
+    await page.getByRole('button', { name: 'Diagnostics' }).click();
+    await page.locator('#guides').uncheck();
+    await page.getByRole('button', { name: 'Done' }).click();
+    await page.locator('.orientation-indicator').waitFor({ state: 'detached' });
     const cardTops = () => page.locator('.form-card').evaluateAll(cards =>
       cards.map(card => card.getBoundingClientRect().top));
     let [first, second] = await cardTops();

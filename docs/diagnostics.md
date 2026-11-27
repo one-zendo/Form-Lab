@@ -1,6 +1,10 @@
 # Diagnostics
 Independent overlay layer: orange camera boundaries derived from hardware, purple headline axes, blue Safari drawable viewport, green content/card alignment, gray unavailable regions and safe areas. Native/Safari simulation switch; independently toggle viewport outline, grid and camera guides. Show physical and drawable dimensions, measured offsets in points. Never change layout to fit overlay. Distinguish measured, simulated and unresolved values; device validation required.
 
+## Layout Lab Build 005
+
+The overlay shows the detected orientation abbreviation and name, sizing environment and usable dimensions. Unresolved orientations display Unknown. Device measurements list raw layout and visual sizes, visual offsets and scale, the independent CSS viewport probe, the resolved viewport and origin, safe insets, content and cards, timer state and dimensions, and navigation position. Physical dimensions and projected camera bounds are labelled as reference data. See the [viewport recovery notes](UNIVERSAL-ADAPTIVE-LAYOUT.md#build-005-viewport-recovery).
+
 ## Layout Lab Build 004
 
 The overlay anchors to the current rendered usable viewport. It uses the camera projection and safe insets from the shell sample, with rendered boundaries for the headline, tagline, navigation, timer and cards. See the [Universal Adaptive Layout](UNIVERSAL-ADAPTIVE-LAYOUT.md#diagnostic-coordinates-and-rotation) for the UP → UL displacement and the settled resampling rules.

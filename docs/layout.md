@@ -1,5 +1,11 @@
 # Layout
 
+## Layout Lab Build 005 — viewport recovery and timer order
+
+The physical Duo report confirmed a live UP → UL discrepancy of 867 × 587 CSS px that cleared after refresh. The new sampler checks for late viewport changes and exposes the raw values in Diagnostics. The [recovery notes](UNIVERSAL-ADAPTIVE-LAYOUT.md#build-005-viewport-recovery) describe the software failure mode and the device evidence still needed.
+
+Chromium and WebKit passed all ten calibrated configurations and live transitions. Regressions simulate a late short-height correction and a late top-offset reset, check the live orientation indicator, and verify the 48 CSS px timer below the card scrollport, stationary headline and navigation, space reclamation, minimum card sizes, scrolling, and storage preservation. The browser runs use simulated viewports. Physical Duo Safari and native SwiftUI validation of Build 005 remain open.
+
 ## Layout Lab Build 004 — two-dimensional layout and timer
 
 The two Home cards share the full remaining content area. The optional 3 rem timer preview reserves space before the cards and releases it when hidden. Run it from Diagnostics. The headline, tagline and dock stay in place while cards scroll. The [Universal Adaptive Layout](UNIVERSAL-ADAPTIVE-LAYOUT.md) records the provisional dimensions, minimum sizes and diagnostic coordinate fix.

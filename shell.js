@@ -1,5 +1,5 @@
 (() => {
-  const readout = document.querySelector('#readout');
+  const viewportProbe = document.querySelector('#viewport-probe');
   const home = document.querySelector('#home');
   const safeProbe = document.querySelector('#safe-probe');
   const dockRegion = home.querySelector('.dock-region');
@@ -24,7 +24,9 @@
   let pending = false;
   let settleTimer;
   let lastLayout = '';
-  let lastReadout = '';
+  let recoveryUntil = 0;
+  const recoveryInterval = 120;
+  const recoveryDuration = 3000;
 
   function render() {
     pending = false;
@@ -40,7 +42,11 @@
     if (state.viewportMode !== mode) state.viewportMode = mode;
 
     const visual = window.visualViewport;
-    const bounds = FormViewport.visibleBounds(visual, width, height);
+    const rawVisual = visual && {
+      width: visual.width, height: visual.height, scale: visual.scale,
+      offsetLeft: visual.offsetLeft, offsetTop: visual.offsetTop,
+    };
+    const bounds = FormViewport.visibleBounds(rawVisual, width, height);
     const safe = getComputedStyle(safeProbe);
     const insets = [safe.paddingTop, safe.paddingRight, safe.paddingBottom, safe.paddingLeft];
     const layoutSignature = JSON.stringify([id, mode, bounds, insets, width, height]);
@@ -59,44 +65,11 @@
     }
     positionDockAndAvoidCamera(id, mode, projectedCamera);
     home.dispatchEvent(new CustomEvent('form:layout', {
-      detail: { camera: projectedCamera, insets: insets.map(value => parseFloat(value) || 0) },
-    }));
-    const camera = geometry?.camera;
-    const headlineCenter = geometry ? (id === 'UP' && mode === 'Safari-sized' ? 130 : 48) : null;
-    const safari = mode === 'Safari-sized';
-    const drawable = geometry
-      ? (geometry.w - (safari && geometry.side !== 'top' ? geometry.excluded : 0)) + ' × ' +
-        (geometry.h - (safari && geometry.side === 'top' ? geometry.excluded : 0)) + ' pt'
-      : 'Unresolved';
-    const rows = [
-      ['Environment', 'Layout Lab web preview'],
-      ['Orientation', id],
-      ['Detection', 'Automatic · ' + mode],
-      ['Navigation placement', home.dataset.dock === 'right' ? 'Right rail' : 'Bottom dock'],
-      ['Layout viewport', width + ' × ' + height + ' CSS px'],
-      ['Visual viewport', visual ? Math.round(visual.width) + ' × ' + Math.round(visual.height) + ' CSS px' : 'Unavailable'],
-      ['Safe insets (top / right / bottom / left)', insets.join(' / ')],
-      ['Physical target', geometry ? geometry.w + ' × ' + geometry.h + ' pt' : 'Unresolved'],
-      ['Drawable target', drawable],
-      ['Recorded Safari exclusion', geometry ? (geometry.side ?? 'Left or right') + ' · ' + geometry.excluded + ' pt' : 'Unresolved'],
-      ['Calibrated headline center Y (physical)', headlineCenter === null ? 'Unresolved' : headlineCenter + ' pt'],
-      ['Recorded camera center (physical)', camera ? camera.join(', ') + ' pt' : 'Unresolved'],
-      ['Posture API', posture.type],
-      ['Segments', posture.columns + ' × ' + posture.rows],
-      ['Hinge', posture.type === 'unknown' ? 'Unknown' : posture.mode],
-      ['Rotation angle', angle ?? 'Unavailable'],
-    ];
-    const signature = JSON.stringify(rows);
-    if (signature === lastReadout) return;
-    lastReadout = signature;
-    readout.replaceChildren(...rows.map(([key, value]) => {
-      const row = document.createElement('div');
-      const term = document.createElement('dt');
-      const description = document.createElement('dd');
-      term.textContent = key;
-      description.textContent = value;
-      row.append(term, description);
-      return row;
+      detail: {
+        id, mode, geometry, posture, angle, camera: projectedCamera,
+        layout: { width, height }, visual: rawVisual, probe: viewportProbe.getBoundingClientRect(),
+        insets: insets.map(value => parseFloat(value) || 0),
+      },
     }));
   }
 
@@ -106,11 +79,20 @@
     requestAnimationFrame(render);
   }
 
-  function viewportChanged() {
+  function recoverViewport() {
+    settleTimer = undefined;
+    if (document.hidden) return;
     schedule();
-    // A rotation can deliver its final dimensions or insets after its last event.
-    clearTimeout(settleTimer);
-    settleTimer = setTimeout(schedule, 180);
+    // Coalesce event-driven updates, but also sample silent late rotation updates.
+    if (performance.now() < recoveryUntil) {
+      settleTimer = setTimeout(recoverViewport, recoveryInterval);
+    }
+  }
+
+  function viewportChanged() {
+    recoveryUntil = performance.now() + recoveryDuration;
+    schedule();
+    settleTimer ??= setTimeout(recoverViewport, recoveryInterval);
   }
 
   for (const event of ['resize', 'orientationchange', 'pageshow']) {
@@ -121,7 +103,9 @@
   screen.orientation?.addEventListener?.('change', viewportChanged);
   navigator.devicePosture?.addEventListener?.('change', schedule);
   FormPosture.listen(schedule);
-  document.addEventListener('visibilitychange', schedule);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) viewportChanged();
+  });
   timerPreview.checked = false;
   timerPreview.addEventListener('change', () => {
     timerRegion.hidden = !timerPreview.checked;
@@ -131,7 +115,9 @@
   document.querySelector('#diagnostic-open').addEventListener('click', () => diagnostics.showModal());
   if (window.ResizeObserver) {
     const observer = new ResizeObserver(schedule);
-    for (const edge of safeProbe.children) observer.observe(edge);
+    const viewportObserver = new ResizeObserver(viewportChanged);
+    viewportObserver.observe(viewportProbe);
+    for (const edge of safeProbe.children) viewportObserver.observe(edge);
     observer.observe(home.querySelector('.headline-region'));
     observer.observe(timerRegion);
   }
