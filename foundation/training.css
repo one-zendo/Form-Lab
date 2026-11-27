@@ -226,7 +226,6 @@ body[data-page=Workout] #workout-exercises .set-swipe[data-dragging]>.training-s
 #routine-exercises .training-exercise,body[data-page=Workout] #workout-exercises .training-exercise{box-sizing:border-box;min-width:0;padding:16px;container-type:inline-size}
 #routine-exercises .training-exercise summary,#workout-exercises .training-exercise summary{display:flex;align-items:center;gap:12px;min-height:56px;list-style:none}
 #routine-exercises .training-thumb,#workout-exercises .training-thumb{flex:0 0 56px;width:56px;height:56px;border-radius:12px;overflow:hidden}
-.training-thumb img{display:block;width:100%;height:100%;object-fit:contain}
 .training-exercise summary .training-copy{flex:1 1 0;min-width:0}
 .training-exercise summary .training-copy strong{display:block;overflow-wrap:anywhere;font-size:17px;font-weight:600;line-height:1.25}
 .training-exercise summary .training-copy small{display:block;font-size:12px;line-height:16px;color:var(--muted)}

@@ -199,3 +199,5 @@ Build 48: approved routine detail borderless overview, compact expandable exerci
 
 ## Premium feature decision — Build 49
 User designated FORM Atmosphere (animated local weather) as a Premium service. Available across all app pages, including routine detail and active workout, with persistent opt-out. Core workout functionality must remain independent of Atmosphere. Lab exposes feature for testing without a subscription; no actual entitlement verification, billing, pricing or purchase flow is implemented. Production must enforce verified Premium entitlement and location consent before live weather use.
+
+Build 82: user approved exercise artwork reset. Removed external exercise provider requests, mapping and artwork diagnostics; retained local Lucide thumbnails, exercise names, routine editing, workout logging and layout. Browser/device testing remains pending.
