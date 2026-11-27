@@ -221,3 +221,21 @@ body[data-page=Workout] #workout-exercises .set-swipe[data-dragging]>.training-s
 .set-undo{position:fixed;bottom:max(16px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:100;display:flex;align-items:center;gap:20px;padding:8px 16px;border-radius:16px;background:var(--paper);color:var(--ink);box-shadow:0 4px 20px #0003}
 .set-undo button{min-height:44px;background:none;border:0;color:var(--action);font:600 14px var(--font)}
 @media(prefers-reduced-motion:reduce){body[data-page=Workout] #workout-exercises .set-swipe>.training-set-grid{transition:none}}
+
+/* Build 75: shared exercise card geometry, including swipe rows. */
+#routine-exercises .training-exercise,body[data-page=Workout] #workout-exercises .training-exercise{box-sizing:border-box;min-width:0;padding:16px;container-type:inline-size}
+#routine-exercises .training-exercise summary,#workout-exercises .training-exercise summary{display:flex;align-items:center;gap:12px;min-height:56px;list-style:none}
+#routine-exercises .training-thumb,#workout-exercises .training-thumb{flex:0 0 56px;width:56px;height:56px;border-radius:12px;overflow:hidden}
+.training-thumb img{display:block;width:100%;height:100%;object-fit:contain}
+.training-exercise summary .training-copy{flex:1 1 0;min-width:0}
+.training-exercise summary .training-copy strong{display:block;overflow-wrap:anywhere;font-size:17px;font-weight:600;line-height:1.25}
+.training-exercise summary .training-copy small{display:block;font-size:12px;line-height:16px;color:var(--muted)}
+#routine-exercises details[open] summary,#workout-exercises details[open] summary{padding-bottom:12px;margin-bottom:8px;border-bottom:1px solid color-mix(in srgb,var(--muted) 15%,transparent)}
+body[data-page=Workout] #workout-exercises .training-set-grid{display:grid;grid-template-columns:minmax(0,.55fr) minmax(0,1.15fr) minmax(0,1fr) minmax(0,1fr) 32px;gap:4px;align-items:center;text-align:center;width:100%;min-width:0}
+body[data-page=Workout] #workout-exercises .set-swipe{width:100%;min-width:0;margin-top:4px}
+body[data-page=Workout] #workout-exercises .set-swipe>.training-set-grid{margin:0;padding:0;min-height:44px;background:var(--paper)}
+body[data-page=Workout] #workout-exercises .set-swipe>.training-set-grid[data-next=true]{background:color-mix(in srgb,var(--action) 8%,var(--paper))}
+body[data-page=Workout] #workout-exercises .training-set-grid input{height:44px;min-width:0;border-radius:8px;background:var(--elevated);text-align:center}
+body[data-page=Workout] #workout-exercises .training-set-grid[data-done] button{width:30px;height:30px;min-height:30px}
+#workout-exercises .workout-add-set{margin-top:8px;min-height:44px}
+@container (max-width:260px){#routine-exercises .training-thumb,#workout-exercises .training-thumb{flex-basis:36px;width:36px;height:36px}#routine-exercises .training-exercise summary,#workout-exercises .training-exercise summary{gap:6px;min-height:44px}#workout-exercises .training-exercise summary .training-copy strong{font-size:14px}#workout-exercises .workout-set-count{font-size:12px}}
