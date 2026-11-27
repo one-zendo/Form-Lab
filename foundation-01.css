@@ -55,3 +55,5 @@
 #app.keyboard-open.rail{grid-template-columns:minmax(0,1fr) var(--rail-width)}
 #app.keyboard-open #cards{grid-template-columns:var(--editing-columns)!important;grid-template-rows:var(--editing-rows)!important;grid-auto-rows:minmax(min-content,auto);align-content:start;justify-content:start;overflow:auto;scroll-padding:8px;padding-bottom:8px}
 #app.keyboard-open #cards .card{min-height:0}
+
+#app.keyboard-open #cards{padding-bottom:max(16px,calc(var(--keyboard-bottom,0px) + 16px));scroll-padding-bottom:16px;overflow-anchor:none}
