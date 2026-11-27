@@ -87,4 +87,4 @@ Agreed design direction, pending implementation and physical validation. Applies
 - When timer hides, reclaim its height and one extra gap; retain one 12 gap between adjacent content and navigation. Cards absorb available space, not gaps.
 - Safe areas, localized camera avoidance, accessibility and minimum content sizes take priority. Preserve hardware calibration and provisional camera clearance. Scroll when needed.
 
-These notes specify future spacing behavior, not current Build 005 implementation. Validate on physical Duo before finalizing.
+Build 006 implements these shared tokens in the web Home shell. Future pages and native implementation must inherit them. Physical validation and browser regression verification remain pending. UL live rotation remains unresolved on physical Safari; viewport logic is unchanged pending raw diagnostic measurements.
