@@ -1,6 +1,6 @@
 # FORM Layout Lab
 
-Build 002 is the grayscale Home wireframe for FORM on Duo. GitHub Pages publishes the root of `main`. [Open Layout Lab](https://one-zendo.github.io/Form-Lab/)
+Build 003 is the grayscale Home wireframe for FORM on Duo. GitHub Pages publishes the root of `main`. [Open Layout Lab](https://one-zendo.github.io/Form-Lab/)
 
 Home uses one grid with shared 16 px insets and card padding. Card columns derive from available width after safe areas. Dynamic viewport height controls vertical space and scrolling. The same grid reserves a right rail or bottom dock, and the dock stays stationary while Home scrolls. See the [placement rules](docs/UNIVERSAL-ADAPTIVE-LAYOUT.md#adaptive-navigation). Only Home is active in this build.
 
@@ -20,7 +20,7 @@ Serve the root in one terminal.
 python3 -m http.server 3000 --bind 127.0.0.1
 ```
 
-Run the static checks and the ten calibrated viewport cases in Chromium and WebKit.
+Run the static checks and the ten calibrated viewport cases and live rotation sequences in Chromium and WebKit.
 
 ```sh
 node --test tests/*.test.cjs

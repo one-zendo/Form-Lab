@@ -1,6 +1,7 @@
 (() => {
   const readout = document.querySelector('#readout');
   const home = document.querySelector('#home');
+  const safeProbe = document.querySelector('#safe-probe');
   const dockRegion = home.querySelector('.dock-region');
   const regions = [home.querySelector('.headline-region'), home.querySelector('.content'), dockRegion];
 
@@ -17,9 +18,10 @@
         if (region.style.getPropertyValue(property) !== value) region.style.setProperty(property, value);
       }
     }
-    return side;
   }
   let pending = false;
+  let settleTimer;
+  let lastLayout = '';
   let lastReadout = '';
 
   function render() {
@@ -30,14 +32,29 @@
       (typeof window.orientation === 'number' ? (window.orientation % 360 + 360) % 360 : undefined);
     const { id, mode } = FormOrientation.detect(FormDuoGeometry, width, height, angle);
     const geometry = FormOrientation.geometryFor(FormDuoGeometry, id);
-    const dockSide = positionDockAndAvoidCamera(id, mode, geometry);
     const posture = FormPosture.read();
     const state = document.body.dataset;
     if (state.orientation !== id) state.orientation = id;
     if (state.viewportMode !== mode) state.viewportMode = mode;
 
     const visual = window.visualViewport;
-    const safe = getComputedStyle(document.querySelector('#safe-probe'));
+    const bounds = FormViewport.visibleBounds(visual, width, height);
+    const safe = getComputedStyle(safeProbe);
+    const insets = [safe.paddingTop, safe.paddingRight, safe.paddingBottom, safe.paddingLeft];
+    const layoutSignature = JSON.stringify([id, mode, bounds, insets, width, height]);
+    if (layoutSignature !== lastLayout) {
+      lastLayout = layoutSignature;
+      for (const edge of ['left', 'top', 'width', 'height']) {
+        const property = '--viewport-' + edge;
+        if (bounds) {
+          const value = bounds[edge] + 'px';
+          if (home.style.getPropertyValue(property) !== value) home.style.setProperty(property, value);
+        } else {
+          home.style.removeProperty(property);
+        }
+      }
+      positionDockAndAvoidCamera(id, mode, geometry);
+    }
     const camera = geometry?.camera;
     const headlineCenter = geometry ? (id === 'UP' && mode === 'Safari-sized' ? 130 : 48) : null;
     const safari = mode === 'Safari-sized';
@@ -49,10 +66,10 @@
       ['Environment', 'Layout Lab web preview'],
       ['Orientation', id],
       ['Detection', 'Automatic · ' + mode],
-      ['Navigation placement', dockSide === 'right' ? 'Right rail' : 'Bottom dock'],
+      ['Navigation placement', home.dataset.dock === 'right' ? 'Right rail' : 'Bottom dock'],
       ['Layout viewport', width + ' × ' + height + ' CSS px'],
       ['Visual viewport', visual ? Math.round(visual.width) + ' × ' + Math.round(visual.height) + ' CSS px' : 'Unavailable'],
-      ['Safe insets (top / right / bottom / left)', [safe.paddingTop, safe.paddingRight, safe.paddingBottom, safe.paddingLeft].join(' / ')],
+      ['Safe insets (top / right / bottom / left)', insets.join(' / ')],
       ['Physical target', geometry ? geometry.w + ' × ' + geometry.h + ' pt' : 'Unresolved'],
       ['Drawable target', drawable],
       ['Recorded Safari exclusion', geometry ? (geometry.side ?? 'Left or right') + ' · ' + geometry.excluded + ' pt' : 'Unresolved'],
@@ -83,9 +100,19 @@
     requestAnimationFrame(render);
   }
 
-  for (const event of ['resize', 'orientationchange', 'pageshow']) window.addEventListener(event, schedule);
-  window.visualViewport?.addEventListener('resize', schedule);
-  screen.orientation?.addEventListener?.('change', schedule);
+  function viewportChanged() {
+    schedule();
+    // A rotation can deliver its final dimensions or insets after its last event.
+    clearTimeout(settleTimer);
+    settleTimer = setTimeout(schedule, 180);
+  }
+
+  for (const event of ['resize', 'orientationchange', 'pageshow']) {
+    window.addEventListener(event, viewportChanged);
+  }
+  window.visualViewport?.addEventListener('resize', viewportChanged);
+  window.visualViewport?.addEventListener('scroll', schedule);
+  screen.orientation?.addEventListener?.('change', viewportChanged);
   navigator.devicePosture?.addEventListener?.('change', schedule);
   FormPosture.listen(schedule);
   document.addEventListener('visibilitychange', schedule);
@@ -93,7 +120,7 @@
   document.querySelector('#diagnostic-open').addEventListener('click', () => diagnostics.showModal());
   if (window.ResizeObserver) {
     const observer = new ResizeObserver(schedule);
-    for (const region of regions) observer.observe(region, { box: 'border-box' });
+    for (const edge of safeProbe.children) observer.observe(edge);
   }
   render();
 })();

@@ -1,4 +1,4 @@
-/* Project calibrated obstructions into the already drawable viewport. */
+/* Resolve live viewport bounds and project calibrated obstructions. */
 window.FormViewport = (() => {
   function dockSide(id, mode) {
     const foldedLandscape = ['FL1', 'FL2', 'FL1 / FL2'].includes(id);
@@ -34,5 +34,16 @@ window.FormViewport = (() => {
       : [blockedEnd - start, 0];
   }
 
-  return { dockSide, cameraBounds, clearance };
+  function visibleBounds(visual, layoutWidth, layoutHeight) {
+    // Pinch zoom changes the viewing window; leave the page layout at its normal scale.
+    if (!visual || Math.abs(visual.scale - 1) > .01) return null;
+    const left = Math.max(0, visual.offsetLeft);
+    const top = Math.max(0, visual.offsetTop);
+    const right = Math.min(layoutWidth, visual.offsetLeft + visual.width);
+    const bottom = Math.min(layoutHeight, visual.offsetTop + visual.height);
+    if (!(right > left && bottom > top)) return null;
+    return { left, top, width: right - left, height: bottom - top };
+  }
+
+  return { dockSide, cameraBounds, clearance, visibleBounds };
 })();

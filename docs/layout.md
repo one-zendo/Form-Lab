@@ -1,5 +1,14 @@
 # Layout
 
+## Layout Lab Build 003 — live rotation stability
+
+On physical Duo, the user reported that the dock disappeared on a live UP → UL rotation and returned after reopening in UL. Build 002 tied the dock to the bottom of a `100dvh` shell. Its visual-viewport resize handler scheduled a render, but visual dimensions were used only in diagnostics. The failure was reproduced by delivering the UL visual viewport before the layout viewport updated. The shell remained 869 CSS px tall and the dock occupied y=805–853 while the viewport ended at y=669. The exact event sequence and safe insets on physical Duo still require a device trace.
+
+Build 003 sizes and positions the shared shell from the intersection of the unzoomed visual viewport and the layout viewport. CSS viewport units supply the fallback. The existing layout-viewport classifier still selects the calibrated orientation and dock arrangement. The shell applies safe insets and camera clearance to the current bounds. Viewport events are coalesced on animation frames, with one trailing sample 180 ms after the latest resize or rotation notification. Independent safe-area edge sensors catch changes even when inset totals are unchanged, and identical geometry samples skip layout writes. The observer watches those sensor inputs instead of observing the grid affected by its writes.
+
+
+Chromium and Playwright WebKit passed the ten settled viewport regressions and no-refresh sequences in both sizing modes. The sequences repeat UP ↔ UL, exercise all directed orientation pairs, vary the order of viewport updates, and check dock bounds during intermediate and settled sizes. They also cover a late sample without a final viewport event and an inset moving from top to bottom without changing its total. These are browser simulations.
+
 ## Layout Lab Build 002
 
 The shell reserves the navigation region before resolving card columns. A right rail uses a shared grid column and a bottom dock uses a shared grid row. The layout keeps the headline and dock outside the content scroll container. The projected folded camera can trim the safe interval of an affected region without shifting the other regions. See the [Universal Adaptive Layout](UNIVERSAL-ADAPTIVE-LAYOUT.md) for placement and outstanding measurements.

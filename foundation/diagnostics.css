@@ -40,6 +40,13 @@
   padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
 }
 
+/* Individual edge sensors also detect an inset moving to the opposite edge. */
+#safe-probe > span { display: block; }
+#safe-probe > :nth-child(1) { inline-size: var(--safe-top); }
+#safe-probe > :nth-child(2) { inline-size: var(--safe-right); }
+#safe-probe > :nth-child(3) { inline-size: var(--safe-bottom); }
+#safe-probe > :nth-child(4) { inline-size: var(--safe-left); }
+
 #diagnostics {
   inline-size: min(34rem, calc(100% - var(--safe-left) - var(--safe-right) - 32px));
   max-block-size: calc(100% - var(--safe-top) - var(--safe-bottom) - 32px);

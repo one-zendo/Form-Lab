@@ -28,15 +28,19 @@ button { font: inherit; color: inherit; }
 
 .form-page {
   --row-gap: var(--space-12);
-  --row-gap: clamp(var(--space-8), 3dvh, var(--space-16));
+  --row-gap: clamp(var(--space-8), calc(var(--viewport-height, 100dvh) * .03), var(--space-16));
+  position: fixed;
+  top: var(--viewport-top, 0px);
+  left: var(--viewport-left, 0px);
+  inline-size: var(--viewport-width, 100%);
   display: grid;
   grid-template:
-    "headline" auto
+    "headline" minmax(0, max-content)
     "content" minmax(0, 1fr)
     "dock" auto / minmax(0, 1fr);
   gap: var(--row-gap) var(--space-16);
-  block-size: 100vh;
-  block-size: 100dvh;
+  block-size: var(--viewport-height, 100vh);
+  block-size: var(--viewport-height, 100dvh);
   padding: calc(var(--space-16) + var(--safe-top))
     calc(var(--space-16) + var(--safe-right))
     calc(var(--space-16) + var(--safe-bottom))
@@ -52,6 +56,9 @@ button { font: inherit; color: inherit; }
 .headline-region {
   grid-area: headline;
   min-inline-size: 0;
+  min-block-size: 0;
+  overflow: clip;
+  overflow-clip-margin: var(--space-4);
 }
 
 .headline-region > .headline {

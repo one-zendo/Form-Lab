@@ -40,7 +40,7 @@ async function checkProfile(browser, { orientation, rotation, safeInsets }, mode
   }, { rotation, storage });
 
   assert.ok((await page.goto(url)).ok());
-  assert.equal(await page.locator('meta[name=form-build]').getAttribute('content'), '002');
+  assert.equal(await page.locator('meta[name=form-build]').getAttribute('content'), '003');
   assert.equal(await page.locator('h1').textContent(), 'FORM');
   assert.equal(await page.locator('body').getAttribute('data-orientation'), orientation);
   assert.equal(await page.locator('body').getAttribute('data-viewport-mode'), mode);
@@ -173,11 +173,119 @@ async function checkProfile(browser, { orientation, rotation, safeInsets }, mode
   console.log(browserName + ' ' + orientation + ' ' + mode + ' ' + width + '×' + height + ' passed');
 }
 
+async function checkLiveRotation(browser, mode, dimensionKey) {
+  const byId = Object.fromEntries(profiles.map(profile => [profile.orientation, profile]));
+  const size = profile => {
+    const [width, height] = profile[dimensionKey];
+    return { width, height };
+  };
+  const page = await browser.newPage({ viewport: size(byId.UP), isMobile: true, hasTouch: true });
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.addInitScript((initial) => {
+    Object.defineProperty(screen, 'orientation', {
+      value: Object.assign(new EventTarget(), { angle: 0 }),
+    });
+    Object.defineProperty(window, 'visualViewport', {
+      value: Object.assign(new EventTarget(), initial, { offsetLeft: 0, offsetTop: 0, scale: 1 }),
+    });
+  }, size(byId.UP));
+  assert.ok((await page.goto(url)).ok());
+  await page.evaluate(() => { window.rotationSession = 'same document'; });
+
+  async function verifyVisible() {
+    const box = await page.evaluate(() => {
+      const nav = document.querySelector('#dock').getBoundingClientRect();
+      const { width, height, offsetLeft, offsetTop } = visualViewport;
+      return {
+        width: nav.width, height: nav.height,
+        left: nav.left - offsetLeft, top: nav.top - offsetTop,
+        right: offsetLeft + width - nav.right, bottom: offsetTop + height - nav.bottom,
+      };
+    });
+    assert.ok(box.width > 0 && box.height > 0);
+    for (const edge of ['left', 'top', 'right', 'bottom']) {
+      assert.ok(box[edge] >= -.1, mode + ' dock outside visual viewport at ' + edge + ': ' + JSON.stringify(box));
+    }
+  }
+
+  async function phase(visual, angle, offsets = [0, 0]) {
+    await page.evaluate(async ({ visual, angle, offsets }) => {
+      screen.orientation.angle = angle;
+      Object.assign(visualViewport, visual, { offsetLeft: offsets[0], offsetTop: offsets[1] });
+      dispatchEvent(new Event('orientationchange'));
+      visualViewport.dispatchEvent(new Event('resize'));
+      await new Promise(requestAnimationFrame);
+    }, { visual, angle, offsets });
+    await verifyVisible();
+  }
+
+  await verifyVisible();
+  // Begin in UP, repeat the reported transition, then visit every directed pair.
+  const transitions = [
+    'UL', 'UP', 'UL', 'UP',
+    'UL', 'UP', 'FP', 'UP', 'FL1', 'UP', 'FL2', 'UL', 'FP', 'UL',
+    'FL1', 'UL', 'FL2', 'FP', 'FL1', 'FP', 'FL2', 'FL1', 'FL2', 'UP',
+  ];
+  for (const [step, id] of transitions.entries()) {
+    const target = byId[id];
+    const dimensions = size(target);
+    // Rotate through a partial viewport with still-stale layout dimensions and a shifted visual origin.
+    await phase({ width: dimensions.width - 24, height: Math.min(dimensions.height, 430) },
+      target.rotation, [10, 8]);
+    if (step % 2 === 0) {
+      await phase(dimensions, target.rotation);
+      await page.setViewportSize(dimensions);
+    } else {
+      await page.setViewportSize(dimensions);
+      await verifyVisible();
+      await phase(dimensions, target.rotation);
+    }
+    await page.locator('body[data-orientation="' + id + '"][data-viewport-mode="' + mode + '"]').waitFor({ state: 'attached' });
+    const dockSide = placement[id][dimensionKey === 'display' ? 0 : 1];
+    await page.locator('#home[data-dock="' + dockSide + '"]').waitFor();
+    await verifyVisible();
+    const bounds = await page.locator('#home').boundingBox();
+    closeTo(bounds.width, dimensions.width, 'settled shell width');
+    closeTo(bounds.height, dimensions.height, 'settled shell height');
+  }
+
+  // An offset-only visual scroll has no resize. A following silent viewport
+  // change exercises the final sample after the last rotation event.
+  await page.evaluate(() => {
+    Object.assign(visualViewport, { height: innerHeight - 60, offsetTop: 15 });
+    visualViewport.dispatchEvent(new Event('scroll'));
+  });
+  await page.waitForFunction(() => document.querySelector('#home').getBoundingClientRect().top === 15);
+  await verifyVisible();
+  await phase({ width: 669, height: 400 }, 0);
+  await page.evaluate(() => { visualViewport.height = innerHeight; });
+  await page.waitForFunction(() => Math.abs(document.querySelector('#home').getBoundingClientRect().height - innerHeight) < .1);
+
+  // Move the same inset from top to bottom without any viewport event.
+  await page.evaluate(() => document.documentElement.style.setProperty('--safe-top', '34px'));
+  await page.waitForFunction(() => document.querySelector('#readout').textContent.includes('34px / 0px / 0px / 0px'));
+  await page.evaluate(() => {
+    document.documentElement.style.setProperty('--safe-top', '0px');
+    document.documentElement.style.setProperty('--safe-bottom', '34px');
+  });
+  await page.waitForFunction(() => document.querySelector('#readout').textContent.includes('0px / 0px / 34px / 0px'));
+  const dock = await page.locator('#dock').boundingBox();
+  closeTo(dock.y + dock.height, size(byId.UP).height - 50, 'late safe-area update');
+  await verifyVisible();
+  assert.equal(await page.evaluate(() => window.rotationSession), 'same document');
+  assert.deepEqual(errors, []);
+  await page.close();
+  console.log(browserName + ' ' + mode + ' live rotations passed');
+}
+
 async function main() {
   const engine = { chromium, webkit }[browserName];
   assert.ok(engine, 'FORM_BROWSER must be chromium or webkit');
   const browser = await engine.launch({ executablePath: process.env.FORM_BROWSER_EXECUTABLE || undefined });
   try {
+    await checkLiveRotation(browser, 'Native-sized', 'display');
+    await checkLiveRotation(browser, 'Safari-sized', 'viewport');
     for (const profile of profiles) {
       await checkProfile(browser, profile, 'Native-sized', profile.display);
       await checkProfile(browser, profile, 'Safari-sized', profile.viewport);
@@ -189,6 +297,7 @@ async function main() {
     let [first, second] = await cardTops();
     assert.equal(first, second);
     await page.setViewportSize({ width: 320, height: 250 });
+    await page.waitForFunction(() => document.querySelector('#home').getBoundingClientRect().width === 320);
     [first, second] = await cardTops();
     assert.ok(second > first);
     const dock = await page.locator('#dock').boundingBox();
