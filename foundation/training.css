@@ -113,12 +113,25 @@ body[data-page=Workout] #workout-finish{background:var(--workout-finish-bg);colo
 body[data-page=Workout] .workout-choice{background:transparent;box-shadow:none;outline:none;padding:12px;min-height:55px}
 body[data-page=Workout] .workout-choice[aria-pressed=true]{background:var(--paper);box-shadow:inset 3px 0 var(--brand);outline:none}
 body[data-page=Workout] .workout-choice strong{font-size:var(--type-support)}
-body[data-page=Workout][data-landscape=true]:not([data-hinge=laptop]) .headline{margin-inline-end:max(var(--space-16),env(safe-area-inset-right))}
-body[data-page=Workout][data-landscape=true]:not([data-hinge=laptop]) .content{padding-inline-end:0;padding-bottom:var(--space-12)}
-body[data-landscape=true]:not([data-hinge=laptop]) [data-screen=Workout]{grid-template-columns:minmax(0,2fr) minmax(0,3fr) var(--workout-rail-width);grid-template-rows:auto minmax(0,1fr);grid-template-areas:"overview overview action" "choices list action";gap:12px}
-body[data-landscape=true]:not([data-hinge=laptop]) #workout-rest{width:var(--workout-rail-width);height:100%;min-height:0;flex-direction:column;justify-content:space-between;padding:8px 0;align-self:stretch}
-body[data-landscape=true]:not([data-hinge=laptop]) #workout-rest::before{inset:auto 0 0;width:100%;height:var(--rest-fill)}
-body[data-landscape=true]:not([data-hinge=laptop]) #workout-rest .rest-readout{flex:1;display:flex;flex-direction:column;justify-content:center;width:100%}
-body[data-landscape=true]:not([data-hinge=laptop]) #rest-plus{order:-1}
-body[data-landscape=true]:not([data-hinge=laptop]) #rest-minus{order:2}
-body[data-landscape=true]:not([data-hinge=laptop]) #rest-skip{order:3}
+body[data-page=Workout]:not([data-hinge=laptop]) #calibration[data-landscape=true] .headline{margin-inline-end:max(var(--space-16),env(safe-area-inset-right))}
+body[data-page=Workout]:not([data-hinge=laptop]) #calibration[data-landscape=true] .content{padding-inline-end:0;padding-bottom:var(--space-12)}
+body:not([data-hinge=laptop]) #calibration[data-landscape=true] [data-screen=Workout]{grid-template-columns:minmax(0,2fr) minmax(0,3fr) var(--workout-rail-width);grid-template-rows:auto minmax(0,1fr);grid-template-areas:"overview overview action" "choices list action";gap:12px}
+body:not([data-hinge=laptop]) #calibration[data-landscape=true] #workout-rest{width:var(--workout-rail-width);height:100%;min-height:0;flex-direction:column;justify-content:space-between;padding:8px 0;align-self:stretch}
+body:not([data-hinge=laptop]) #calibration[data-landscape=true] #workout-rest::before{inset:auto 0 0;width:100%;height:var(--rest-fill)}
+body:not([data-hinge=laptop]) #calibration[data-landscape=true] #workout-rest .rest-readout{flex:1;display:flex;flex-direction:column;justify-content:center;width:100%}
+body:not([data-hinge=laptop]) #calibration[data-landscape=true] #rest-plus{order:-1}
+body:not([data-hinge=laptop]) #calibration[data-landscape=true] #rest-minus{order:2}
+body:not([data-hinge=laptop]) #calibration[data-landscape=true] #rest-skip{order:3}
+
+/* Build 60: layout state belongs to #calibration, not body. Share the actual right edge. */
+body[data-page=Workout] #calibration{--workout-edge:max(var(--space-16),env(safe-area-inset-right))}
+body[data-page=Workout] #calibration .headline{right:0;margin-inline-end:var(--workout-edge)}
+body[data-page=Workout] #calibration .headline-material{right:0}
+body[data-page=Workout] #calibration .content{margin-inline-end:var(--workout-edge);padding-inline-end:0;padding-bottom:12px}
+body[data-page=Workout] #app-pages{width:100%;flex:1 1 0;min-height:0}
+body[data-page=Workout] [data-screen=Workout]{width:100%;max-width:none;flex:1 1 0;min-height:0}
+body[data-page=Workout]:not([data-hinge=laptop]) #calibration[data-landscape=true] .content{padding-top:82px;overflow:hidden}
+body[data-page=Workout]:not([data-hinge=laptop]) #calibration[data-landscape=true] [data-screen=Workout]{grid-template-rows:auto minmax(0,1fr)}
+body[data-page=Workout]:not([data-hinge=laptop]) #calibration[data-landscape=true] #workout-rest{align-self:stretch;justify-self:end;height:auto}
+body[data-page=Workout] #workout-rest::before{background:linear-gradient(180deg,color-mix(in srgb,var(--timer) 13%,var(--paper)),color-mix(in srgb,var(--timer) 30%,var(--paper)))}
+body[data-page=Workout] #workout-exercises .training-exercise{padding:12px}
