@@ -81,3 +81,6 @@ User approved 12-week default, 1/4/12-week and trailing 365-day windows, period 
 
 ## Build 87 — Active workout efficiency
 User approved live duration, completed-set volume and set count, previous matching exercise performance, editable rest seconds and notes in expanded cards. Notes persist with session/history; rest changes apply to unfinished sets only. Previous values use the most recent matching detailed session within the active dataset; missing details are not fabricated. Preserves calibrated headline anchors and existing rest rail, artwork and storage. Excess headline whitespace requires device measurement; physical layout and native behavior remain unverified.
+
+## Build 89 — Focused active workout
+Approved compact headline with duration and Finish, no live volume readout, compact set/exercise progress, no weather artwork, expandable rest/note fields, and all exercises expanded by default. Individual collapsed state persists in the active session. Landscape retains exercise selection rail and allows all exercise cards in the scrolling list. Uses existing calibrated anchors and semantic spacing; exact physical fit remains pending. Volume calculations for history remain unchanged.
