@@ -49,8 +49,15 @@ async function checkLock(context, url) {
     store.finish({ id: 'one' }, [], 123);
   });
   await a.close();
-  await b.waitForFunction(async () => !(await navigator.locks.query()).held.some(lock => lock.name === 'form.training.writer.v1'));
-  assert.equal(await acquire(b), true);
+  // Closing a page and observing query() does not guarantee the lock manager
+  // has finished teardown. Retry the real nonblocking acquisition, bounded.
+  const deadline = Date.now() + 10000;
+  let acquired = false;
+  do {
+    acquired = await acquire(b);
+    if (!acquired) await new Promise(resolve => setTimeout(resolve, 100));
+  } while (!acquired && Date.now() < deadline);
+  assert.equal(acquired, true, 'Writer lock must transfer after the original tab closes');
   assert.equal(await b.evaluate(() => JSON.parse(localStorage.getItem('history'))[0].finished), 123);
   assert.equal(await b.evaluate(() => JSON.parse(localStorage.getItem('active'))), null);
   await b.close();
