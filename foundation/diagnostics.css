@@ -14,7 +14,8 @@
   overflow: hidden;
 }
 
-.guide, .guide-label { position: absolute; }
+.guide-layer, .guide, .guide-label { position: absolute; }
+.guide-layer { overflow: hidden; }
 .guide { border: 1px dashed var(--guide-color); }
 .guide.viewport { border: 2px solid var(--diag-viewport); }
 .guide.camera { border-radius: 50%; }

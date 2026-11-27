@@ -1,5 +1,11 @@
 # Layout
 
+## Layout Lab Build 004 — two-dimensional layout and timer
+
+The two Home cards share the full remaining content area. The optional 3 rem timer preview reserves space before the cards and releases it when hidden. Run it from Diagnostics. The headline, tagline and dock stay in place while cards scroll. The [Universal Adaptive Layout](UNIVERSAL-ADAPTIVE-LAYOUT.md) records the provisional dimensions, minimum sizes and diagnostic coordinate fix.
+
+The browser matrix checks all ten calibrated configurations with zero, fixture and asymmetric safe insets. It also checks split viewport updates, late settling, live guide alignment, equal tracks, timer space reclamation, accessible card scrolling and preserved storage. Physical Duo Safari and SwiftUI validation remain open.
+
 ## Layout Lab Build 003 — live rotation stability
 
 On physical Duo, the user reported that the dock disappeared on a live UP → UL rotation and returned after reopening in UL. Build 002 tied the dock to the bottom of a `100dvh` shell. Its visual-viewport resize handler scheduled a render, but visual dimensions were used only in diagnostics. The failure was reproduced by delivering the UL visual viewport before the layout viewport updated. The shell remained 869 CSS px tall and the dock occupied y=805–853 while the viewport ended at y=669. The exact event sequence and safe insets on physical Duo still require a device trace.

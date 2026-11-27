@@ -1,6 +1,10 @@
 # Diagnostics
 Independent overlay layer: orange camera boundaries derived from hardware, purple headline axes, blue Safari drawable viewport, green content/card alignment, gray unavailable regions and safe areas. Native/Safari simulation switch; independently toggle viewport outline, grid and camera guides. Show physical and drawable dimensions, measured offsets in points. Never change layout to fit overlay. Distinguish measured, simulated and unresolved values; device validation required.
 
+## Layout Lab Build 004
+
+The overlay anchors to the current rendered usable viewport. It uses the camera projection and safe insets from the shell sample, with rendered boundaries for the headline, tagline, navigation, timer and cards. See the [Universal Adaptive Layout](UNIVERSAL-ADAPTIVE-LAYOUT.md#diagnostic-coordinates-and-rotation) for the UP → UL displacement and the settled resampling rules.
+
 ## Build 11
 Independent fixed noninteractive DOM overlay; live getBoundingClientRect for headline/content/cards/navigation, visual and layout viewport, CSS env safe insets and zoom scale. Individual guide toggles plus existing master. Camera is recorded outer-screen reference only, withheld for manual override/unmatched viewport; excluded portions cannot be painted. Native/Safari selector changes reference dimensions only, not live layout or runtime. Grid is 20 CSS px. Measurements viewport-relative and in CSS px, not independently measured physical points. Modal top layer may obscure guides. JS syntax checked; browser/device validation pending. No shell, posture or navigation changes.
 

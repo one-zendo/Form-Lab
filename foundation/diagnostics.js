@@ -8,10 +8,13 @@
   const status = document.querySelector('#storage-status');
   const storageKey = 'form.diagnostics.v1';
   const inputKey = input => input.id || input.dataset.guide;
-  const content = document.querySelector('.content');
+  const home = document.querySelector('#home');
+  const content = home.querySelector('.content');
+  const timer = home.querySelector('.timer-placeholder');
   const cards = [...content.querySelectorAll('.form-card')];
   const dock = document.querySelector('#dock');
   let pending = false;
+  let sample;
 
   function readPreferences() {
     return JSON.parse(localStorage.getItem(storageKey) || '{}') || {};
@@ -55,16 +58,19 @@
       return;
     }
 
-    const width = innerWidth;
-    const height = innerHeight;
-    const visual = window.visualViewport;
-    const { orientation, viewportMode } = document.body.dataset;
-    const geometry = FormDuoGeometry[orientation];
-    const probe = getComputedStyle(document.querySelector('#safe-probe'));
-    const [top, right, bottom, left] = ['Top', 'Right', 'Bottom', 'Left'].map(
-      edge => parseFloat(probe['padding' + edge]) || 0
-    );
-    const nodes = [];
+    if (!sample) return;
+    const { camera, insets: [top, right, bottom, left] } = sample;
+    const viewport = home.getBoundingClientRect();
+    const { width, height } = viewport;
+    const origin = overlay.getBoundingClientRect();
+    const layer = document.createElement('div');
+    layer.className = 'guide-layer';
+    Object.assign(layer.style, {
+      left: viewport.left - origin.left + 'px',
+      top: viewport.top - origin.top + 'px',
+      width: width + 'px',
+      height: height + 'px',
+    });
     const enabled = name => guides.get(name).checked;
     const fmt = number => Number(number.toFixed(1));
 
@@ -74,7 +80,7 @@
       element.className = 'guide ' + kind;
       Object.assign(element.style, { left: x + 'px', top: y + 'px', width: w + 'px', height: h + 'px' });
       element.style.setProperty('--guide-color', 'var(--diag-' + color + ')');
-      nodes.push(element);
+      layer.append(element);
     }
 
     function label(x, y, text, color) {
@@ -85,7 +91,7 @@
       element.style.top = Math.max(0, Math.min(height - 16, y)) + 'px';
       element.style.color = 'var(--diag-' + color + ')';
       element.textContent = text;
-      nodes.push(element);
+      layer.append(element);
     }
 
     function axes(x, y, color) {
@@ -101,20 +107,22 @@
 
     function measure(element, name, color, clip) {
       const rect = element.getBoundingClientRect();
-      const y = Math.max(rect.top, clip?.top ?? 0);
-      const end = Math.min(rect.bottom, clip?.bottom ?? height);
-      if (end <= y) return rect;
-      box(rect.x, y, rect.width, end - y, color);
-      label(rect.x + 3, y + 3, name + ' ' + fmt(rect.width) + '×' + fmt(rect.height), color);
+      const x = Math.max(rect.left, viewport.left, clip?.left ?? viewport.left) - viewport.left;
+      const y = Math.max(rect.top, viewport.top, clip?.top ?? viewport.top) - viewport.top;
+      const w = Math.min(rect.right, viewport.right, clip?.right ?? viewport.right) - viewport.left - x;
+      const h = Math.min(rect.bottom, viewport.bottom, clip?.bottom ?? viewport.bottom) - viewport.top - y;
+      if (w > 0 && h > 0) {
+        box(x, y, w, h, color, 'measured');
+        layer.lastElementChild.dataset.measurement = name;
+        label(x + 3, y + 3, name + ' ' + fmt(rect.width) + '×' + fmt(rect.height), color);
+      }
       return rect;
     }
 
     if (enabled('Grid')) box(0, 0, width, height, 'viewport', 'grid');
     if (enabled('Viewport')) {
-      const w = visual?.width ?? width;
-      const h = visual?.height ?? height;
-      box(visual?.offsetLeft ?? 0, visual?.offsetTop ?? 0, w, h, 'viewport', 'viewport');
-      label(width - 110, height - 18, fmt(w) + '×' + fmt(h) + ' px', 'viewport');
+      box(0, 0, width, height, 'viewport', 'viewport');
+      label(width - 110, height - 18, fmt(width) + '×' + fmt(height) + ' px', 'viewport');
     }
     if (enabled('Safe areas')) {
       box(0, 0, width, top, 'safe', 'safe');
@@ -124,33 +132,33 @@
     }
     if (enabled('Headline')) {
       const rect = measure(document.querySelector('#home .headline'), 'Headline', 'headline');
-      axes(rect.x, rect.y + rect.height / 2, 'headline');
+      axes(rect.x - viewport.left, rect.y - viewport.top + rect.height / 2, 'headline');
     }
     if (enabled('Content')) {
       const clip = measure(content, 'Content', 'content');
-      measure(content.querySelector('.tagline'), 'Tagline', 'content', clip);
+      measure(home.querySelector('.tagline'), 'Tagline', 'content');
+      if (!timer.parentElement.hidden) measure(timer, 'Timer', 'content');
       const [first, second] = cards.map((card, i) => measure(card, 'Card ' + (i + 1), 'content', clip));
       const sideBySide = second.left >= first.right;
       const gap = sideBySide ? second.left - first.right : second.top - first.bottom;
       const gapY = sideBySide ? first.top : first.bottom;
       if (gapY >= clip.top && gapY < clip.bottom) {
-        label(sideBySide ? first.right : first.left, gapY, 'Card gap ' + fmt(gap) + ' px', 'content');
+        label((sideBySide ? first.right : first.left) - viewport.left, gapY - viewport.top, 'Card gap ' + fmt(gap) + ' px', 'content');
       }
       const nav = measure(dock, 'Navigation', 'content');
-      const right = document.querySelector('#home').dataset.dock === 'right';
+      const right = home.dataset.dock === 'right';
       const dockGap = right ? nav.left - clip.right : nav.top - clip.bottom;
-      label(right ? clip.right : nav.left, right ? nav.top : clip.bottom,
+      label((right ? clip.right : nav.left) - viewport.left, (right ? nav.top : clip.bottom) - viewport.top,
         'Dock gap ' + fmt(dockGap) + ' px', 'content');
     }
 
-    const camera = FormViewport.cameraBounds(geometry, viewportMode);
     if (enabled('Camera') && camera) {
       const { left, top, right, bottom } = camera;
-      axes(left, top, 'camera');
-      axes(right, bottom, 'camera');
-      box(left, top, right - left, bottom - top, 'camera', 'camera');
+      axes(left - viewport.left, top - viewport.top, 'camera');
+      axes(right - viewport.left, bottom - viewport.top, 'camera');
+      box(left - viewport.left, top - viewport.top, right - left, bottom - top, 'camera', 'camera');
     }
-    overlay.replaceChildren(...nodes);
+    overlay.replaceChildren(layer);
   }
 
   function schedule() {
@@ -159,18 +167,14 @@
     requestAnimationFrame(draw);
   }
 
-  for (const event of ['resize', 'scroll', 'orientationchange', 'pageshow']) {
-    window.addEventListener(event, schedule, { passive: true });
-  }
-  window.visualViewport?.addEventListener('resize', schedule);
-  window.visualViewport?.addEventListener('scroll', schedule);
-  content.addEventListener('scroll', schedule, { passive: true });
-  new MutationObserver(schedule).observe(document.body, {
-    attributes: true, attributeFilter: ['data-orientation', 'data-viewport-mode'],
+  home.addEventListener('form:layout', event => {
+    sample = event.detail;
+    schedule();
   });
+  content.addEventListener('scroll', schedule, { passive: true });
   if (window.ResizeObserver) {
     const observer = new ResizeObserver(schedule);
-    for (const element of [content, dock, ...cards]) observer.observe(element);
+    for (const element of [home, content, dock, timer, ...cards]) observer.observe(element);
   }
   schedule();
 })();

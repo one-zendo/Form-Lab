@@ -40,7 +40,7 @@ async function checkProfile(browser, { orientation, rotation, safeInsets }, mode
   }, { rotation, storage });
 
   assert.ok((await page.goto(url)).ok());
-  assert.equal(await page.locator('meta[name=form-build]').getAttribute('content'), '003');
+  assert.equal(await page.locator('meta[name=form-build]').getAttribute('content'), '004');
   assert.equal(await page.locator('h1').textContent(), 'FORM');
   assert.equal(await page.locator('body').getAttribute('data-orientation'), orientation);
   assert.equal(await page.locator('body').getAttribute('data-viewport-mode'), mode);
@@ -89,8 +89,11 @@ async function checkProfile(browser, { orientation, rotation, safeInsets }, mode
     closeTo(content.right, vertical ? dockRegion.left - 16 : rightEdge, 'content right');
     closeTo(dockRegion.right, rightEdge, 'dock region right');
     closeTo(dockRegion.bottom, bottomEdge, 'dock region bottom');
-    closeTo(first.left, tagline.left, 'card and tagline left alignment');
-    closeTo(second.right, tagline.right, 'card and tagline right alignment');
+    assert.ok(tagline.left >= first.left && tagline.right <= second.right);
+    closeTo(first.height, second.height, 'equal card heights');
+    closeTo(second.bottom, content.bottom, 'cards use full content height');
+    assert.ok(first.height >= 128 && first.width >= 240);
+    closeTo(second.right, content.right, 'cards use full clear width');
     assert.deepEqual(layout.padding, ['16px', '16px']);
     assert.ok(first.top > header.bottom);
 
@@ -109,8 +112,8 @@ async function checkProfile(browser, { orientation, rotation, safeInsets }, mode
       assert.ok(Math.max(first.bottom, second.bottom) < nav.top);
     }
 
-    if (tagline.width < 492) {
-      closeTo(first.width, tagline.width, 'one-column card width');
+    if (content.width < 492) {
+      closeTo(first.width, content.width, 'one-column card width');
       closeTo(second.top - first.bottom, 12, 'vertical card gap');
     } else {
       closeTo(first.top, second.top, 'two-column card alignment');
@@ -137,6 +140,34 @@ async function checkProfile(browser, { orientation, rotation, safeInsets }, mode
     }
     if (vertical) closeTo((nav.top + nav.bottom) / 2, (railTop + railBottom) / 2, 'rail center');
   }
+
+  async function setTimer(visible) {
+    await page.getByRole('button', { name: 'Diagnostics' }).click();
+    await page.locator('#timer-preview').setChecked(visible);
+    await page.getByRole('button', { name: 'Done' }).click();
+  }
+
+  const before = await page.locator('.content').boundingBox();
+  const chrome = await page.locator('#home .headline, .tagline, #dock').evaluateAll(
+    elements => elements.map(element => element.getBoundingClientRect().toJSON()));
+  await setTimer(true);
+  const timer = await page.locator('.timer-placeholder').boundingBox();
+  const during = await page.locator('.content').boundingBox();
+  assert.ok(timer.height >= 48);
+  assert.ok(timer.y + timer.height < during.y);
+  assert.deepEqual(await page.locator('#home .headline, .tagline, #dock').evaluateAll(
+    elements => elements.map(element => element.getBoundingClientRect().toJSON())), chrome);
+  closeTo(before.height - during.height, during.y - before.y, 'timer reservation');
+  await page.locator('[data-measurement="Timer"]').waitFor();
+  const cardsDuringTimer = await page.locator('.form-card').evaluateAll(elements =>
+    elements.map(el => el.getBoundingClientRect().toJSON()));
+  closeTo(cardsDuringTimer[0].height, cardsDuringTimer[1].height, 'equal card heights with timer');
+  const minimumHeight = cardsDuringTimer[0].top === cardsDuringTimer[1].top ? 128 : 2 * 128 + 12;
+  closeTo(cardsDuringTimer[1].bottom, during.y + Math.max(during.height, minimumHeight),
+    'cards fill remaining space and retain their minimum height');
+  await setTimer(false);
+  await page.locator('[data-measurement="Timer"]').waitFor({ state: 'detached' });
+  assert.deepEqual(await page.locator('.content').boundingBox(), before);
 
   const dockBeforeScroll = await page.locator('#dock').boundingBox();
   const scroll = await page.locator('.content').evaluate(content => {
@@ -183,6 +214,7 @@ async function checkLiveRotation(browser, mode, dimensionKey) {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.addInitScript((initial) => {
+    localStorage.setItem('form.diagnostics.v1', '{"guides":true}');
     Object.defineProperty(screen, 'orientation', {
       value: Object.assign(new EventTarget(), { angle: 0 }),
     });
@@ -218,6 +250,19 @@ async function checkLiveRotation(browser, mode, dimensionKey) {
       await new Promise(requestAnimationFrame);
     }, { visual, angle, offsets });
     await verifyVisible();
+    await verifyGuides();
+  }
+
+  async function verifyGuides() {
+    await page.waitForFunction(() => {
+      const pairs = [['#home', '.guide.viewport'], ['#home .headline', '[data-measurement="Headline"]'],
+        ['.content', '[data-measurement="Content"]'], ['#dock', '[data-measurement="Navigation"]']];
+      return pairs.every(([target, guide]) => {
+        const a = document.querySelector(target).getBoundingClientRect();
+        const b = document.querySelector(guide)?.getBoundingClientRect();
+        return b && ['x', 'y', 'width', 'height'].every(key => Math.abs(a[key] - b[key]) < .1);
+      });
+    });
   }
 
   await verifyVisible();
@@ -248,6 +293,7 @@ async function checkLiveRotation(browser, mode, dimensionKey) {
     const bounds = await page.locator('#home').boundingBox();
     closeTo(bounds.width, dimensions.width, 'settled shell width');
     closeTo(bounds.height, dimensions.height, 'settled shell height');
+    await verifyGuides();
   }
 
   // An offset-only visual scroll has no resize. A following silent viewport
@@ -261,6 +307,8 @@ async function checkLiveRotation(browser, mode, dimensionKey) {
   await phase({ width: 669, height: 400 }, 0);
   await page.evaluate(() => { visualViewport.height = innerHeight; });
   await page.waitForFunction(() => Math.abs(document.querySelector('#home').getBoundingClientRect().height - innerHeight) < .1);
+
+  await verifyGuides();
 
   // Move the same inset from top to bottom without any viewport event.
   await page.evaluate(() => document.documentElement.style.setProperty('--safe-top', '34px'));
@@ -300,6 +348,19 @@ async function main() {
     await page.waitForFunction(() => document.querySelector('#home').getBoundingClientRect().width === 320);
     [first, second] = await cardTops();
     assert.ok(second > first);
+    const shortLayout = await page.locator('.content').evaluate(content => {
+      const cards = [...content.querySelectorAll('.form-card')];
+      content.scrollTop = content.scrollHeight;
+      return {
+        heights: cards.map(card => card.getBoundingClientRect().height),
+        scroll: content.scrollTop,
+        lastBottom: cards.at(-1).getBoundingClientRect().bottom,
+        contentBottom: content.getBoundingClientRect().bottom,
+      };
+    });
+    assert.ok(shortLayout.heights.every(height => height >= 128));
+    assert.ok(shortLayout.scroll > 0);
+    closeTo(shortLayout.lastBottom, shortLayout.contentBottom, 'last card reachable by scrolling');
     const dock = await page.locator('#dock').boundingBox();
     assert.ok(dock.y + dock.height <= 250);
     assert.equal(await page.evaluate(() => window.scrollY), 0);
