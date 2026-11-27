@@ -11,3 +11,5 @@ Diagnostics read rendered geometry, raw layout and visual viewport, CSS probe an
 Acceptance pending: ten viewport cases, rotation including UP→UL without refresh, timer on/off, overflow, camera clearance, diagnostics, physical Duo Safari. Build 03 was reported good by the user; clean reset still requires regression testing. Native implementation not present.
 
 Build 03 system retained byte-for-byte: 120 ms profile stabilization, reusable diagnostic overlays, safe-area-sensitive alignment, camera avoidance only for Native-sized folded profiles. Visible build identifier and manifest reset together.
+
+Build 02: portrait viewport stacks cards in one column; landscape retains adaptive minimum-width grid. Device Posture API folded signal is reported when available; continuous does not prove physical unfolding, so calibrated viewport inference remains the fallback. Unknown profiles remain unknown. Posture is diagnostic only; CSS controls card layout. No physical hinge angle is exposed or fabricated.
