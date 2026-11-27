@@ -84,3 +84,16 @@ body[data-page=Workout] #headline-build{display:none}
 body[data-page=Workout] #workout-finish{flex:none;margin-inline-start:auto;min-height:var(--target-min);text-align:center}
 body[data-page=Workout] .workout-meta{min-height:var(--target-min);align-items:center}
 body[data-page=Workout] .workout-indicator .note{margin:0}
+
+/* Build 55: compact exercise cards and explicit swipe actions. */
+.workout-swipe{position:relative;min-width:0;display:flex;align-items:stretch;gap:8px;touch-action:pan-y}
+.workout-swipe>.training-exercise,.workout-swipe>.workout-choice{flex:1;min-width:0;width:100%}
+.workout-delete[hidden]{display:none!important}.workout-delete{border:0;border-radius:var(--radius-card);background:#d70015;color:white;font:inherit;font-weight:600;min-width:76px;align-self:stretch;cursor:pointer}
+.workout-set-count{font-size:var(--type-support);font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+#workout-exercises details:not([open]) .workout-set-count[data-lit=true],.workout-choice .workout-set-count[data-lit=true]{color:#248a3d;font-weight:700}
+.workout-chevron{color:var(--muted)}#workout-exercises details[open] .workout-chevron{transform:rotate(180deg)}
+#workout-exercises .workout-add-set{width:100%;text-align:center;margin-top:var(--space-8)}
+#workout-exercises .training-set-grid button{border-radius:50%;width:36px;height:36px;min-height:36px;justify-self:center;position:relative}#workout-exercises .training-set-grid button::after{content:"";position:absolute;inset:-4px}
+.workout-choice{grid-template-columns:minmax(0,1fr) auto;align-items:center}
+[data-landscape=true] #workout-exercises .workout-swipe[data-selected=false]{display:none}
+body[data-hinge=laptop] #workout-exercises .workout-swipe[data-selected=false]{display:flex}
