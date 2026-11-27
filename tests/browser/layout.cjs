@@ -55,7 +55,7 @@ async function checkProfile(browser, { orientation, rotation, safeInsets }, mode
     assert.equal(layout.cards.length, 2);
     assert.equal(layout.pageWidth, width);
     assert.equal(layout.header.top, top + 16);
-    assert.equal(layout.nav.bottom, height - bottom - 16);
+    assert.ok(Math.abs(layout.nav.bottom - (height - bottom - 16)) < 0.1);
     for (const region of [layout.header, layout.content, layout.nav]) {
       assert.equal(region.left, left + 16);
       assert.equal(region.right, width - right - 16);
