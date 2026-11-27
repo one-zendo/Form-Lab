@@ -139,3 +139,20 @@ Baseline is verified Build 82 at `f545bbc7464dcbdef9735114ed7ac9e6e0932b7f`. On 
 ### Verification
 
 Node 22 syntax and all 57 Node cases passed. Chromium integration passed the existing exercise, rest, reload, finish, lock and Duo viewport checks, plus same-ID import isolation, Progress, original edits/history after reload and reimport, legacy preservation, and rejected-write recovery. WebKit on this host lacks native libraries. Physical Safari and Duo behavior were not tested. UI styling, layout contracts, geometry, coordinates, and motion are outside this phase.
+
+## Build 84 — Phase 2 UI engineering remediation
+
+Build 83 at `6f74a7a47b4dcc153d528a76e498ff5394834fd5` is the data baseline. Build 84 makes no schema, import, storage or workout calculation changes.
+
+- Routine composition uses the existing landscape flag on `#calibration`. Landscape and book layouts share the intended 2:3 overview/exercise grid, independent column scrolling and a full-width Start action. Portrait and laptop posture retain the stacked fallback.
+- The document root owns theme state. `foundation/tokens.css` owns the Finish palette, control rail color and dimensions, dock geometry tokens and final glass values. `shell.css` owns dock placement and directional material. `foundation/pages.css` owns the FP tagline offset and shared content composition. `foundation/training.css` owns Routine and Workout layout variants and uses the shared tokens.
+- Set completion restores focus to the corresponding control after rendering. Selected workout choices have a shared focus outline when reached by keyboard.
+- Removed retired diagnostics panel, weather-preview layout and rest-options selectors, obsolete centered dock overrides and superseded training declarations. Diagnostics retains its guide presentation. The noninteractive weather layer retains the effective size, mask and stack order.
+
+### Coordinate investigation
+
+Chromium measured the same anchors before and after. Safari-sized FL1 still uses headline/content X84 CSS px. Adding the SVG drawable origin X84 produces physical X168 in a 1:1 compositing reference, while the standard also records headline X84. Safari-sized UP still uses center Y130 CSS px and physical drawable origin Y82. Composed in display coordinates, that is Y212. These values expose an unresolved interpretation of the Build 81 notes and hardware reference. Presentational cleanup does not change either anchor, the geometry resolver, the SVGs or safe-area arithmetic. Automatic review blocked a further cleanup of legacy shell padding and position fallbacks because of calibration risk. Those fallbacks were retained pending separate approval and device evidence.
+
+### Verification
+
+All 57 Node cases and Chromium integration passed. The new presentation tests fail on Build 83 for the landscape Routine grid, dark Finish palette and workout focus. The repaired behavior passed across five Safari-sized and five Native-sized cases and checked independent scrolling, Start visibility and keyboard interaction. A separate 98-row before/after Chromium probe matched headline, content, dock, Home cards, rest rail bounds and calibration values. These are browser size simulations. WebKit lacked native host libraries. Physical Duo, nonzero safe-area behavior, live hinge transitions, zoom policy, screen reader behavior and broader contrast review remain open.

@@ -96,7 +96,24 @@ let workoutSelection=-1,workoutSessionId=null;
 function renderWorkout(){if(!session)return;if(workoutSessionId!==session.id){workoutSessionId=session.id;workoutSelection=-1}if(workoutSelection<0||workoutSelection>=session.exercises.length)workoutSelection=Math.max(0,session.exercises.findIndex(e=>e.sets.some(s=>!s.done)));q('#workout-choices').innerHTML=session.exercises.map((e,i)=>'<div class="workout-swipe" data-exercise="'+i+'"><button class="form-card workout-choice" data-choice="'+i+'" aria-pressed="'+(i===workoutSelection)+'"><strong>'+esc(e.name)+'</strong><small class="workout-set-count" data-lit="'+e.sets.some(s=>s.done)+'">'+e.sets.filter(s=>s.done).length+'/'+e.sets.length+'</small></button><button class="workout-delete" data-delete="'+i+'" hidden>Delete</button></div>').join('');q('#workout-progress').innerHTML=session.exercises.map(e=>{const n=e.sets.filter(s=>s.done).length;return '<span data-state="'+(n===e.sets.length&&n?'full':n?'partial':'empty')+'" style="--exercise-fill:'+(e.sets.length?n/e.sets.length*100:0)+'%"></span>'}).join('');let next=true;q('#workout-exercises').innerHTML=session.exercises.map((e,i)=>{return '<div class="workout-swipe" data-exercise="'+i+'" data-selected="'+(i===workoutSelection)+'"><details class="form-card training-exercise" '+(i===workoutSelection?'open':'')+'><summary>'+repThumb(e,session.privateArtwork!==false)+'<span class="training-copy"><strong>'+esc(e.name)+'</strong>'+(exerciseSubtitle(e)?'<small>'+esc(exerciseSubtitle(e))+'</small>':'')+'</span><span class="workout-set-count" data-lit="'+e.sets.some(s=>s.done)+'">'+e.sets.filter(s=>s.done).length+'/'+e.sets.length+'</span><span class="workout-chevron" aria-hidden="true">⌄</span></summary><div class="training-set-grid"><span>Set</span><span>Prev.</span><span>'+FormPrefs.get('weight')+'</span><span>Reps</span><span></span></div>'+e.sets.map((s,j)=>{const isNext=next&&!s.done;if(isNext)next=false;return '<div class="set-swipe" data-set-swipe="'+i+':'+j+'"><div class="training-set-grid" data-done="'+s.done+'" data-next="'+isNext+'"><span>'+(j+1)+'</span><span>—</span>'+['weight','reps'].map(k=>'<input type="number" min="0" step="'+(k==='weight'?'0.5':'1')+'" data-log="'+i+':'+j+':'+k+'" aria-label="'+esc(e.name)+' '+k+' set '+(j+1)+'" value="'+((k==='weight'?FormPrefs.weightOut(s[k]):s[k])??'')+'">').join('')+'<button data-complete="'+i+':'+j+'" aria-label="Complete set '+(j+1)+'" aria-pressed="'+s.done+'">'+(s.done?'✓':'○')+'</button></div><button class="set-delete" data-set-delete="'+i+':'+j+'" hidden>Delete</button></div>'}).join('')+'<button class="training-link workout-add-set" data-add-set="'+i+'">+ Add Set</button></details><button class="workout-delete" data-delete="'+i+'" hidden>Delete</button></div>'}).join('');tick()}
 q('#workout-choices').addEventListener('click',e=>{const b=e.target.closest('[data-choice]');if(b){workoutSelection=Number(b.dataset.choice);renderWorkout()}});
 q('#workout-exercises').addEventListener('input',e=>{if(!session||!e.target.dataset.log)return;const [i,j,k]=e.target.dataset.log.split(':');const n=e.target.valueAsNumber;session.exercises[i].sets[j][k]=Number.isFinite(n)?Math.max(0,k==='weight'?FormPrefs.weightIn(n):n):null;persist()});
-q('#workout-exercises').addEventListener('click',e=>{const b=e.target.closest('[data-complete]');if(!b||!session)return;const [i,j]=b.dataset.complete.split(':'),s=session.exercises[i].sets[j];workoutSelection=Number(i);s.done=!s.done;if(s.done&&FormPrefs.get('autoRest')){session.restTotal=Math.max(0,s.rest||0)*1000;session.restEnd=Date.now()+session.restTotal;session.restPaused=null}persist();renderWorkout()});
+q('#workout-exercises').addEventListener('click', event => {
+  const button = event.target.closest('[data-complete]');
+  if (!button || !session) return;
+  const position = button.dataset.complete;
+  const [exerciseIndex, setIndex] = position.split(':').map(Number);
+  const set = session.exercises[exerciseIndex].sets[setIndex];
+  const restoreFocus = document.activeElement === button;
+  workoutSelection = exerciseIndex;
+  set.done = !set.done;
+  if (set.done && FormPrefs.get('autoRest')) {
+    session.restTotal = Math.max(0, set.rest || 0) * 1000;
+    session.restEnd = Date.now() + session.restTotal;
+    session.restPaused = null;
+  }
+  persist();
+  renderWorkout();
+  if (restoreFocus) q('[data-complete="' + position + '"]')?.focus({ preventScroll: true });
+});
 for(const root of [q('#workout-exercises'),q('#workout-choices')]){
 let gesture=null,suppressUntil=0;
 const close=()=>root.querySelectorAll('.workout-swipe').forEach(w=>{delete w.dataset.revealed;w.style.removeProperty('--swipe-x');w.querySelector('.workout-delete').hidden=true});

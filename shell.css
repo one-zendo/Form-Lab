@@ -5,15 +5,12 @@
 .headline{display:flex;align-items:center;gap:var(--signature-gap);height:var(--headline-height);margin-inline-start:var(--layout-headline)}
 .signature{width:var(--signature-width);height:var(--signature-height);background:var(--brand);border-radius:var(--radius-pill)}
 .content{margin-inline-start:var(--layout-content);margin-inline-end:max(var(--space-16),env(safe-area-inset-right));min-width:0}
-.tagline{font-size:var(--type-support);margin:var(--space-8) 0 var(--space-24)}
 h2{font-size:var(--type-section);font-weight:var(--weight-section)}
 .sample-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-12);margin-bottom:var(--space-16)}
 [data-landscape="true"] .sample-grid{grid-template-columns:minmax(0,2fr) minmax(0,3fr)}
 .sample{background:var(--paper);border-radius:var(--radius-card);padding:var(--space-16);min-height:calc(var(--space-48)*2);font-size:var(--type-large);font-weight:var(--weight-bold)}
 .sample.primary{background:var(--action);color:var(--on-action)}
 .sample small{display:block;font-size:var(--type-support);font-weight:var(--weight-body)}
-[data-guides="true"] .headline{outline:1px dashed #af52de;outline-offset:-1px}
-[data-guides="true"] .content{outline:1px dashed #34c759;outline-offset:-1px}
 #shell>section{margin:var(--space-16) auto;padding:var(--space-16);width:min(100%,420px)}
 
 /* Folded posture overrides orientation grid. Equal tracks are a fallback, not measured hinge geometry. */
@@ -22,17 +19,16 @@ body[data-hinge="book"] .sample-grid .sample{min-width:0}
 body[data-hinge="laptop"] .sample-grid{grid-template-columns:minmax(0,1fr)}
 
 /* Lab navigation prototype: current navigation.md orientation contract. */
-:root{--dock-edge:var(--space-8);--dock-reserve:calc(var(--dock-size) + var(--dock-edge)*2)}
 
 button{touch-action:manipulation}
-#dock{position:fixed;z-index:10;display:flex;gap:var(--dock-gap);padding:var(--dock-pad);height:var(--dock-size);border-radius:var(--dock-radius);background:var(--paper);box-shadow:inset 0 0 0 1px var(--glass-highlight),0 2px 12px #00000015;bottom:max(var(--dock-edge),env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);max-width:calc(100% - var(--space-16))}
-#dock button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-4);min-width:var(--dock-target);height:var(--dock-target);flex:1 0 auto;padding:0 var(--space-8);border:0;border-radius:calc(var(--dock-target)/2);background:transparent;color:var(--muted);font:var(--dock-label-size)/1.2 var(--font);cursor:pointer}
+#dock{position:fixed;z-index:10;display:flex;gap:var(--dock-gap);padding:var(--dock-pad);height:var(--dock-size);border-radius:var(--dock-radius);background:var(--paper);box-shadow:inset 0 0 0 1px var(--glass-highlight),0 2px 12px #00000015;bottom:max(var(--dock-edge),env(safe-area-inset-bottom));left:max(var(--dock-edge),env(safe-area-inset-left));right:max(var(--dock-edge),env(safe-area-inset-right))}
+#dock button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-4);min-width:0;height:var(--dock-target);flex:1 1 0;padding:0;border:0;border-radius:calc(var(--dock-target)/2);background:transparent;color:var(--muted);font:var(--dock-label-size)/1.2 var(--font);cursor:pointer}
 #dock button[aria-pressed="true"]{background:var(--elevated);color:var(--action)}
 #dock svg{width:var(--dock-icon);height:var(--dock-icon);stroke-width:var(--icon-stroke)}
 
-body[data-nav="rail"] #dock{width:var(--dock-size);height:auto;flex-direction:column;left:auto;right:max(var(--dock-edge),env(safe-area-inset-right));bottom:auto;top:50%;transform:translateY(-50%);max-height:100dvh;overflow:auto}
+body[data-nav="rail"] #dock{width:var(--dock-size);height:auto;flex-direction:column;left:auto;right:max(var(--dock-edge),env(safe-area-inset-right));top:max(var(--dock-edge),env(safe-area-inset-top));bottom:max(var(--dock-edge),env(safe-area-inset-bottom));overflow:auto}
 body[data-nav="rail"] #dock button span{display:none}
-body[data-nav="rail"] #dock button{width:var(--dock-target);flex:none;padding:0}
+body[data-nav="rail"] #dock button{width:var(--dock-target);min-width:var(--target-min);min-height:var(--dock-target);height:auto}
 body[data-nav="rail"] #shell{padding-right:calc(var(--dock-reserve) + env(safe-area-inset-right));padding-bottom:0}
 
 /* Build 16: headline anchor independent of content flow. */
@@ -52,16 +48,14 @@ body[data-nav="rail"] #shell{padding-right:calc(var(--dock-reserve) + env(safe-a
 .dock-material{display:none}
 @supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
 body:not([data-nav="rail"]) #shell{padding-bottom:0}
-body:not([data-nav="rail"]) .dock-material{display:block;position:fixed;inset:auto 0 0;height:calc(var(--dock-reserve) + env(safe-area-inset-bottom) + var(--glass-lead));z-index:9;pointer-events:none;background:var(--glass-tint);-webkit-backdrop-filter:var(--glass-headline-filter);backdrop-filter:var(--glass-headline-filter);-webkit-mask-image:linear-gradient(to top,#000 0%,#000 calc(100% - var(--glass-edge)),rgba(0,0,0,.8) calc(100% - 16px),rgba(0,0,0,.35) calc(100% - 8px),transparent 100%);mask-image:linear-gradient(to top,#000 0%,#000 calc(100% - var(--glass-edge)),rgba(0,0,0,.8) calc(100% - 16px),rgba(0,0,0,.35) calc(100% - 8px),transparent 100%)}
+body:not([data-nav="rail"]) .dock-material{display:block;position:fixed;inset:auto 0 0;height:calc(var(--dock-reserve) + env(safe-area-inset-bottom) + var(--glass-lead));z-index:9;pointer-events:none;background:var(--glass-scroll-bottom);-webkit-backdrop-filter:var(--glass-headline-filter);backdrop-filter:var(--glass-headline-filter);-webkit-mask-image:linear-gradient(to top,#000 0%,#000 calc(100% - var(--glass-edge)),rgba(0,0,0,.8) calc(100% - 16px),rgba(0,0,0,.35) calc(100% - 8px),transparent 100%);mask-image:linear-gradient(to top,#000 0%,#000 calc(100% - var(--glass-edge)),rgba(0,0,0,.8) calc(100% - 16px),rgba(0,0,0,.35) calc(100% - 8px),transparent 100%)}
 body[data-nav="rail"] #shell{padding-right:0}
-body[data-nav="rail"] .dock-material{display:block;position:fixed;inset:0 0 0 auto;width:calc(var(--dock-reserve) + env(safe-area-inset-right) + var(--glass-lead));z-index:9;pointer-events:none;background:var(--glass-tint);-webkit-backdrop-filter:var(--glass-headline-filter);backdrop-filter:var(--glass-headline-filter);-webkit-mask-image:linear-gradient(to left,#000 0%,#000 calc(100% - var(--glass-edge)),rgba(0,0,0,.8) calc(100% - 16px),rgba(0,0,0,.35) calc(100% - 8px),transparent 100%);mask-image:linear-gradient(to left,#000 0%,#000 calc(100% - var(--glass-edge)),rgba(0,0,0,.8) calc(100% - 16px),rgba(0,0,0,.35) calc(100% - 8px),transparent 100%)}
+body[data-nav="rail"] .dock-material{display:block;position:fixed;inset:0 0 0 auto;width:calc(var(--dock-reserve) + env(safe-area-inset-right) + var(--glass-lead));z-index:9;pointer-events:none;background:var(--glass-scroll-right);-webkit-backdrop-filter:var(--glass-headline-filter);backdrop-filter:var(--glass-headline-filter);-webkit-mask-image:linear-gradient(to left,#000 0%,#000 calc(100% - var(--glass-edge)),rgba(0,0,0,.8) calc(100% - 16px),rgba(0,0,0,.35) calc(100% - 8px),transparent 100%);mask-image:linear-gradient(to left,#000 0%,#000 calc(100% - var(--glass-edge)),rgba(0,0,0,.8) calc(100% - 16px),rgba(0,0,0,.35) calc(100% - 8px),transparent 100%)}
 }
 @media(prefers-reduced-transparency:reduce){body:not([data-nav="rail"]) #shell{padding-bottom:calc(var(--dock-reserve) + env(safe-area-inset-bottom))}body[data-nav="rail"] #shell{padding-right:calc(var(--dock-reserve) + env(safe-area-inset-right))}body .dock-material{display:none!important}}
 
 /* Material-only refinements: no changes to anchors, dimensions or hit targets. */
 @supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-body:not([data-nav="rail"]) .dock-material{background:var(--glass-scroll-bottom)}
-body[data-nav="rail"] .dock-material{background:var(--glass-scroll-right)}
 #dock{background:linear-gradient(145deg,var(--glass-sheen),transparent 45%,var(--glass-sheen-end)),var(--glass-dock-tint);box-shadow:inset 0 1px 1px var(--glass-rim),inset 0 -1px 1px var(--glass-rim-shade),inset 0 0 0 1px var(--glass-highlight),var(--glass-depth)}
 #dock button{transition:background-color var(--motion-feedback) var(--ease-standard),color var(--motion-feedback) var(--ease-standard)}
 #dock button[aria-pressed="true"]{background:var(--glass-selection)}
@@ -80,8 +74,7 @@ body[data-nav="rail"] .dock-material{background:var(--glass-scroll-right)}
 #dock[data-lens-ready=true] button{position:relative;z-index:1;background:transparent;color:var(--muted);user-select:none;-webkit-user-select:none}
 #dock[data-lens-ready=true] button.lens-preview{color:var(--action)}
 #dock[data-lens-ready=true][data-overflow=false],#dock[data-lens-ready=true][data-overflow=false] button{touch-action:none}
-#dock[data-dragging=true] .dock-lens,#dock[data-lens-instant=true] .dock-lens{transition:none}
-#dock[data-dragging=true] .dock-lens>div{transform:scale(var(--glass-lens-lift))}
+#dock[data-lens-instant=true] .dock-lens{transition:none}
 
 #dock[data-overflow=true]{touch-action:pan-x}body[data-nav=rail] #dock[data-overflow=true]{touch-action:pan-y}
 @media(prefers-reduced-motion:reduce){#dock .dock-lens,#dock .dock-lens>div{transition:none!important}#dock[data-dragging=true] .dock-lens>div{transform:none}}
@@ -91,12 +84,6 @@ body[data-nav="rail"] .dock-material{background:var(--glass-scroll-right)}
 body[data-page=Home] .dock-material{opacity:0;transition:opacity var(--motion-feedback) var(--ease-standard)}
 body[data-page=Home][data-nav-edge-overlap=true] .dock-material{opacity:1}
 @media(prefers-reduced-motion:reduce){body[data-page=Home] .dock-material{transition:none}}
-
-/* Build 56: edge-inset floating pill with equal tab allocation. */
-body:not([data-nav=rail]) #dock{left:max(var(--dock-edge),env(safe-area-inset-left));right:max(var(--dock-edge),env(safe-area-inset-right));width:auto;max-width:none;transform:none;box-sizing:border-box}
-body:not([data-nav=rail]) #dock button{flex:1 1 0;min-width:0;padding-inline:0}
-body[data-nav=rail] #dock{top:max(var(--dock-edge),env(safe-area-inset-top));bottom:max(var(--dock-edge),env(safe-area-inset-bottom));height:auto;max-height:none;transform:none;box-sizing:border-box}
-body[data-nav=rail] #dock button{flex:1 1 0;min-height:var(--dock-target);height:auto}
 
 /* Build 58: direct compositor tracking during navigation drag. */
 #dock .dock-lens{will-change:transform}

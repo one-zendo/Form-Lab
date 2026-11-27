@@ -1,16 +1,14 @@
-/* Independent decorative layer: no headline or dashboard geometry changes. */
-#atmosphere-layer{position:absolute;inset:0 0 auto;height:calc(var(--layout-center) + var(--headline-height)/2 + var(--glass-lead));pointer-events:none;z-index:20;overflow:hidden;mask-image:linear-gradient(to bottom,#000 65%,transparent);-webkit-mask-image:linear-gradient(to bottom,#000 65%,transparent)}
-#atmosphere-layer[hidden],#weather-preview-home[hidden]{display:none!important}
-#atmosphere-canvas{display:block;width:100%;height:100%}
-body[data-nav=rail] #atmosphere-layer{right:var(--rail-clearance,var(--dock-reserve))}
-#weather-preview-home{position:absolute;right:0;top:100%;z-index:22;border:0;border-radius:var(--radius-pill);min-height:var(--target-min);padding:0 var(--space-12);background:var(--paper);color:var(--action);font:var(--type-caption) var(--font);box-shadow:var(--glass-depth);white-space:nowrap}
-body:has(#weather-preview-home:not([hidden])) .content{padding-top:calc(var(--layout-center) + var(--headline-height)/2 + var(--glass-lead) + var(--target-min))}
+/* Independent decoration. Manual weather changes never reserve layout space. */
+#atmosphere-layer{
+  position:absolute;
+  inset:0 0 auto;
+  height:calc(var(--layout-center) + var(--headline-height)/2 + var(--glass-lead) + var(--space-48) + var(--space-24));
+  z-index:29;
+  pointer-events:none;
+  overflow:hidden;
+  mask-image:linear-gradient(to bottom,#000 55%,transparent);
+  -webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent);
+}
+#atmosphere-layer[hidden]{display:none!important}
+#atmosphere-canvas{display:block;width:100%;height:100%;pointer-events:none}
 @media(prefers-reduced-transparency:reduce){#atmosphere-layer{display:none}}
-
-/* Original soft weather concept extends behind greeting without occupying layout space. */
-#atmosphere-layer{height:calc(var(--layout-center) + var(--headline-height)/2 + var(--glass-lead) + var(--space-48) + var(--space-24));mask-image:linear-gradient(to bottom,#000 55%,transparent);-webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent)}
-
-/* Build 67: foreground atmosphere, above ordinary controls, below diagnostics. */
-#atmosphere-layer{z-index:29;pointer-events:none}
-#atmosphere-layer canvas{pointer-events:none}
-body[data-nav=rail] #atmosphere-layer{right:0}

@@ -306,6 +306,100 @@ async function checkDuoLayout(context, url) {
   await page.close();
 }
 
+async function checkTrainingPresentation(context, url) {
+  const page = await context.newPage();
+  await page.route('**/*', route => route.request().url().startsWith(url) ? route.continue() : route.abort());
+  await page.addInitScript(() => {
+    localStorage.setItem('form.demo-mode.v1', 'true');
+    localStorage.setItem('form.appearance', 'graphite-lime');
+    Object.defineProperty(screen.orientation, 'angle', { get: () => window.testRotation });
+  });
+  const capture = async name => {
+    const directory = process.env.FORM_UI_EVIDENCE_DIR;
+    if (directory) await page.screenshot({ path: directory + '/' + name + '.png', animations: 'disabled' });
+  };
+  const cases = [
+    ['FP', 0, 'flex', [382, 678], [466, 678]],
+    ['FL1', 90, 'grid', [594, 466], [678, 466]],
+    ['FL2', 270, 'grid', [594, 466], [678, 466]],
+    ['UP', 0, 'flex', [669, 869], [669, 951]],
+    ['UL', 270, 'grid', [867, 669], [951, 669]],
+  ];
+  const failures = [];
+  const check = (actual, expected, message) => {
+    if (actual !== expected) failures.push({ message, actual, expected });
+  };
+  const resize = async (orientation, angle, [width, height], mode) => {
+    await page.setViewportSize({ width, height });
+    await page.evaluate(angle => {
+      window.testRotation = angle;
+      dispatchEvent(new Event('orientationchange'));
+    }, angle);
+    await page.waitForFunction(([orientation, mode]) =>
+      document.body.dataset.orientation === orientation && document.body.dataset.viewportMode === mode,
+    [orientation, mode]);
+  };
+  const dock = name => page.locator('#dock [data-page="' + name + '"]').click();
+  await page.goto(url);
+  await page.waitForFunction(() => !!window.FormExerciseLibrary);
+  for (const [orientation, angle, display, safari, native] of cases) {
+    for (const [mode, size] of [['Safari-sized', safari], ['Native-sized', native]]) {
+      await resize(orientation, angle, size, mode);
+      await dock('Workouts');
+      await page.locator('#routine-list [data-routine]').first().click();
+      const layout = await page.locator('[data-screen=Routine]').evaluate(section => {
+        const [overview, list, action] = ['.training-overview', '.training-list', '.training-action']
+          .map(selector => section.querySelector(selector).getBoundingClientRect());
+        return {
+          display: getComputedStyle(section).display,
+          columns: overview.right <= list.left && overview.top === list.top,
+          actionFits: action.top >= 0 && action.bottom <= innerHeight,
+          scrollOwner: getComputedStyle(section.querySelector('.training-list')).overflowY,
+        };
+      });
+      check(layout.display, display, orientation + ' ' + mode + ' Routine display');
+      check(layout.columns, display === 'grid', orientation + ' ' + mode + ' Routine column bounds');
+      if (display === 'grid') {
+        check(layout.actionFits, true, orientation + ' ' + mode + ' visible Start action');
+        check(layout.scrollOwner, 'auto', orientation + ' ' + mode + ' independent exercise scrolling');
+      }
+      if (orientation === 'FL1' && mode === 'Safari-sized') await capture('landscape-routine');
+    }
+  }
+  await resize('FL1', 90, [594, 466], 'Safari-sized');
+  await page.locator('#routine-start').click();
+  const choice = page.locator('[data-choice="0"]');
+  await choice.focus();
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Shift+Tab');
+  check(await choice.evaluate(button => document.activeElement === button), true, 'Keyboard returns to selected exercise');
+  check(await choice.evaluate(button => getComputedStyle(button).outlineStyle), 'solid', 'Selected exercise has keyboard focus indicator');
+  await resize('FP', 0, [382, 678], 'Safari-sized');
+  const finish = page.locator('#workout-finish');
+  const palette = () => finish.evaluate(el => {
+    const style = getComputedStyle(el);
+    return style.backgroundColor + ' / ' + style.color;
+  });
+  check(await palette(), 'rgb(245, 245, 245) / rgb(28, 28, 30)', 'Graphite Lime Finish palette');
+  await capture('graphite-lime-finish');
+  await page.locator('#appearance').evaluate(select => {
+    select.value = 'light';
+    select.dispatchEvent(new Event('change'));
+  });
+  check(await palette(), 'rgb(28, 28, 30) / rgb(255, 255, 255)', 'Light Finish palette');
+  const completion = page.locator('[data-complete="0:0"]');
+  await completion.focus();
+  await completion.press('Enter');
+  check(await completion.getAttribute('aria-pressed'), 'true', 'Keyboard completes set');
+  check(await completion.evaluate(button => button === document.activeElement), true, 'Completion retains keyboard focus');
+  await capture('set-completion-focus');
+  await completion.press('Space');
+  check(await completion.getAttribute('aria-pressed'), 'false', 'Space toggles completed set');
+  check(await completion.evaluate(button => button === document.activeElement), true, 'Toggling retains keyboard focus');
+  assert.deepEqual(failures, []);
+  await page.close();
+}
+
 async function main() {
   const server = http.createServer(serve);
   await new Promise((resolve, reject) => {
@@ -326,6 +420,10 @@ async function main() {
     await legacyContext.close();
     await checkWorkout(context, url);
     await checkDuoLayout(context, url);
+    const presentationContext = await browser.newContext();
+    presentationContext.setDefaultTimeout(8000);
+    await checkTrainingPresentation(presentationContext, url);
+    await presentationContext.close();
     console.log('Browser lock, navigation, dataset isolation, legacy recovery, Progress, workout lifecycle and Duo viewport checks passed');
   } finally {
     await browser?.close();
