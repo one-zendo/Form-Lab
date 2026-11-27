@@ -89,3 +89,6 @@ User screenshot of Build 87 reported the signature still visible and excess top 
 
 ## Build 90 — Workout CSS consolidation
 One workout drawable headline center controls headline, material and content clearance. UP Safari-sized retains the calibrated local center; other layouts retain their existing headline targets. Content begins at the center plus half the headline height plus the existing 8-point spacing token in all workout orientations. Removed obsolete volume, live-dot, old time-row and conflicting exercise visibility rules. Atmosphere scheduling is suspended during workouts and resumes on exit. Physical device verification remains outstanding.
+
+## Build 91 — FL1 Safari workout left inset
+User Build 90 landscape screenshot shows an estimated physical headline X168 pt, consistent with the 84 pt Safari exclusion plus an erroneous 84 pt local margin. In matched FL1 Safari-sized active workouts, map the existing physical X84 headline/content anchors to drawable X0; retain native and all other orientation anchors, right timer rail and hardware geometry. Screenshot classification is inferred; confirm orientation, viewport dimensions and physical alignment on device after release. Browser regression measures local X for both headline and content across ten matched viewport cases.
