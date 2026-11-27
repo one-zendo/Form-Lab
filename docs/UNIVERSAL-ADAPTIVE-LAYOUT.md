@@ -73,3 +73,18 @@ Build 002 previews use the recorded folded camera centers and 18.5 pt radius, wi
 
 ## Restart
 Archive and verify recoverability of prior application; preserve history, data, hardware, diagnostics and functional modules. Replace redundant runtime layout rules with grayscale Home wireframe first. Same repository, main, Pages URL. No storage clearing or workout functionality changes during layout lab. Test all ten reference configurations and live viewport behavior, distinguish browser simulation from physical/native verification. Approve screens sequentially. Preserve canonical hardware previews and independent diagnostics. See DUO-HARDWARE-STANDARD.md and LAYOUT-LAB-HANDOFF.md for retained calibration and restart constraints.
+
+## Universal spacing standard — Build 006 design notes
+
+Agreed design direction, pending implementation and physical validation. Applies to every FORM page, including Home, Workouts, Progress, Profile, Routine Builder and Active Workout, across all orientations and environments. Shared semantic tokens, not page-specific overrides. Use native points and corresponding web CSS pixel design tokens; do not imply physical equivalence.
+
+- Scale: 4, 8, 12, 16, 24, 32.
+- Outer margin and card padding: 16.
+- Headline to tagline: 4; headline region to content: 16.
+- Card title to content: 8; navigation item gap: 4.
+- Universal component gap: 12 between cards, cards and timer, timer and bottom navigation, cards and navigation when timer is absent, and content/timer column and right navigation rail. This supersedes the earlier proposed 16 navigation clearance and adaptive shell row gaps for these relationships.
+- Major section separation: 24; 32 reserved for major group separation on spacious screens where appropriate.
+- When timer hides, reclaim its height and one extra gap; retain one 12 gap between adjacent content and navigation. Cards absorb available space, not gaps.
+- Safe areas, localized camera avoidance, accessibility and minimum content sizes take priority. Preserve hardware calibration and provisional camera clearance. Scroll when needed.
+
+These notes specify future spacing behavior, not current Build 005 implementation. Validate on physical Duo before finalizing.
