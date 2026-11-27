@@ -100,3 +100,6 @@ Initial functional web tracker: routines, exercise library/custom exercises, set
 
 ## Clean Build 01
 Replaced runtime from scratch using DESIGN.md. Prior commit 157b411aa749249e6b402a396e3040515f0f5fd2 retained in history. New local storage key; no prior data deleted. Routine scheduling, exercise and set editing, logging, pause/resume, rest, history, progress, unit conversion, appearance, backup/restore. Superset labels only, no automatic sequencing; history rename/delete/repeat, not full set editing. Native integrations absent. QA pending.
+
+## Clean Build 02
+Explicit navigation grid areas, fixed viewport shell, content-only scrolling, orientation-driven dock transition with reduced-motion and segment exceptions. Hidden rest timer reclaims its track. Browser and physical validation pending.
