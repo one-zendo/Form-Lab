@@ -208,3 +208,16 @@ body[data-page=Workout] #workout-exercises .training-set-grid button::after{inse
 .workout-swipe>.workout-delete{position:absolute;inset:0 0 0 auto;width:84px;min-width:0;border-radius:0;z-index:0}
 body[data-page=Workout] .workout-swipe[data-revealed]>.workout-choice,body[data-page=Workout] .workout-swipe[data-dragging]>.workout-choice{background:var(--paper)}
 @media(prefers-reduced-motion:reduce){.workout-swipe>.training-exercise,.workout-swipe>.workout-choice{transition:none}}
+
+/* Build 73: independent set swipe, preserving row geometry. */
+.set-swipe{position:relative;overflow:hidden;isolation:isolate;border-radius:10px;touch-action:pan-y;margin-top:4px}
+body[data-page=Workout] #workout-exercises .set-swipe>.training-set-grid{position:relative;z-index:1;margin-top:0;background-color:var(--paper);transform:translateX(var(--set-x,0px));transition:transform .22s cubic-bezier(.2,.75,.25,1)}
+body[data-page=Workout] #workout-exercises .set-swipe>.training-set-grid[data-done=true]{background:color-mix(in srgb,var(--workout-success) 7%,var(--paper))}
+body[data-page=Workout] #workout-exercises .set-swipe>.training-set-grid[data-next=true]{background:color-mix(in srgb,var(--action) 8%,var(--paper))}
+.set-swipe[data-revealed]{--set-x:-70px}
+body[data-page=Workout] #workout-exercises .set-swipe[data-dragging]>.training-set-grid{transition:none}
+.set-delete{position:absolute;inset:0 0 0 auto;width:70px;border:0;background:#d70015;color:white;font:600 12px var(--font);cursor:pointer}
+.set-delete[hidden],.set-undo[hidden]{display:none!important}
+.set-undo{position:fixed;bottom:max(16px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:100;display:flex;align-items:center;gap:20px;padding:8px 16px;border-radius:16px;background:var(--paper);color:var(--ink);box-shadow:0 4px 20px #0003}
+.set-undo button{min-height:44px;background:none;border:0;color:var(--action);font:600 14px var(--font)}
+@media(prefers-reduced-motion:reduce){body[data-page=Workout] #workout-exercises .set-swipe>.training-set-grid{transition:none}}
