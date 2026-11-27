@@ -417,7 +417,8 @@ async function checkTrainingPresentation(context, url) {
       check(measured.center,48,orientation+' '+mode+' workout headline local center');
       check(measured.signature==='none',true,orientation+' '+mode+' workout signature visibility');
       check(measured.finishAligned,true,orientation+' '+mode+' Finish alignment');
-      if(orientation==='UP')check(measured.padding,78,orientation+' '+mode+' workout content clearance');
+      check(measured.padding,78,orientation+' '+mode+' workout content clearance');
+      check(await page.locator('#atmosphere-layer').evaluate(el=>el.hidden),true,orientation+' '+mode+' weather renderer suspended');
     }
   }
   await resize('FL1',90,[594,466],'Safari-sized');
