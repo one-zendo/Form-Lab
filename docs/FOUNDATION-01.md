@@ -18,3 +18,6 @@ Build 03 supersedes diagnostic-only posture: a folded Device Posture API or CSS 
 
 Build 03 physical acceptance: user reported hinge detection confirmed on Duo, 2026-11-27; exact sensor source and boundary accuracy not independently verified.
 Build 04: 240 ms transform-only card transitions after settled layout changes; reduced motion disables animation. Reported split geometry snaps to avoid crossing the fold. Existing layout and hardware rules unchanged. Physical motion and browser regression pending.
+
+Build 04 physical acceptance: user reported adaptive motion working on Duo, 2026-11-27.
+Build 05: diagnostic card count 1–4, default 2; normal portrait stacks, normal landscape uses up to two columns with existing 15rem minimum. Equal flexible rows, scroll when needed. Split vertical uses two columns; split horizontal uses two rows and two columns for 3–4 cards. A single card occupies one pane in split mode. Three cards leave an empty grid cell rather than spanning a fold. Card count is a temporary test control, not workout data. Physical validation pending.

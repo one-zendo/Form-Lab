@@ -10,3 +10,16 @@
 
 .card{transform-origin:top left}
 @media (prefers-reduced-motion:reduce){.card{animation:none!important;transition:none!important}}
+
+/* Universal card counts: at most two columns, equal flexible rows. */
+#cards{grid-template-columns:repeat(auto-fit,minmax(min(100%,max(15rem,calc((100% - 12px)/2))),1fr))}
+@media (orientation:portrait){#cards{grid-template-columns:minmax(0,1fr)}}
+#cards[data-fold="vertical"]{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none}
+#cards[data-fold="horizontal"]{grid-template-columns:minmax(0,1fr);grid-template-rows:repeat(2,minmax(8rem,1fr))}
+#cards[data-fold="horizontal"][data-count="3"],#cards[data-fold="horizontal"][data-count="4"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+#cards[data-fold="vertical"][data-segments="vertical"]{grid-template-columns:minmax(0,calc(env(viewport-segment-right 0 0) - var(--cards-x,16px))) minmax(0,1fr)}
+#cards[data-fold="horizontal"][data-segments="horizontal"]{grid-template-rows:minmax(0,calc(env(viewport-segment-bottom 0 0) - var(--cards-y,0px))) minmax(0,1fr)}
+#cards[data-count="1"][data-fold="normal"]{grid-template-columns:minmax(0,1fr)}
+#cards[data-count="1"][data-fold="horizontal"]{grid-template-rows:repeat(2,minmax(8rem,1fr))}
+#cards[data-count="1"][data-fold="horizontal"][data-segments="horizontal"]{grid-template-rows:minmax(0,calc(env(viewport-segment-bottom 0 0) - var(--cards-y,0px))) minmax(0,1fr)}
+.colors .card:nth-child(3){background:var(--green)}.colors .card:nth-child(4){background:var(--amber)}
