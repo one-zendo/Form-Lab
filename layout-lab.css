@@ -10,6 +10,8 @@
   --space-12: 12px;
   --space-16: 16px;
   --target-min: 44px;
+  --dock-item-width: 5rem;
+  --camera-clearance: var(--space-4);
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-right: env(safe-area-inset-right, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -28,14 +30,33 @@ button { font: inherit; color: inherit; }
   --row-gap: var(--space-12);
   --row-gap: clamp(var(--space-8), 3dvh, var(--space-16));
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  gap: var(--row-gap);
+  grid-template:
+    "headline" auto
+    "content" minmax(0, 1fr)
+    "dock" auto / minmax(0, 1fr);
+  gap: var(--row-gap) var(--space-16);
   block-size: 100vh;
   block-size: 100dvh;
   padding: calc(var(--space-16) + var(--safe-top))
     calc(var(--space-16) + var(--safe-right))
     calc(var(--space-16) + var(--safe-bottom))
     calc(var(--space-16) + var(--safe-left));
+}
+
+.form-page[data-dock="right"] {
+  grid-template:
+    "headline dock" auto
+    "content dock" minmax(0, 1fr) / minmax(0, 1fr) var(--dock-item-width);
+}
+
+.headline-region {
+  grid-area: headline;
+  min-inline-size: 0;
+}
+
+.headline-region > .headline {
+  margin-left: var(--avoid-start, 0px);
+  margin-right: var(--avoid-end, 0px);
 }
 
 .headline {
@@ -57,6 +78,9 @@ h2 { font-size: 1.0625rem; }
 }
 
 .content {
+  grid-area: content;
+  padding-left: var(--avoid-start, 0px);
+  padding-right: var(--avoid-end, 0px);
   overflow: auto;
   min-inline-size: 0;
 }
@@ -97,10 +121,32 @@ h2 { font-size: 1.0625rem; }
   border: 1px solid var(--outline);
 }
 
+.dock-region {
+  grid-area: dock;
+  display: grid;
+  place-items: center;
+  min-inline-size: 0;
+  min-block-size: 0;
+  padding-left: var(--avoid-start, 0px);
+  padding-right: var(--avoid-end, 0px);
+}
+
 #dock {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 4.5rem), 1fr));
+  inline-size: min(100%, calc(4 * var(--dock-item-width) + 3 * var(--space-4)));
   gap: var(--space-4);
+}
+
+[data-dock="right"] .dock-region {
+  padding: var(--avoid-start, 0px) 0 var(--avoid-end, 0px);
+}
+
+[data-dock="right"] #dock {
+  grid-template-columns: minmax(0, 1fr);
+  inline-size: 100%;
+  max-block-size: 100%;
+  overflow: auto;
 }
 
 #dock > * {
@@ -114,13 +160,3 @@ h2 { font-size: 1.0625rem; }
 
 #dock [aria-current] { background: var(--ink); color: var(--paper); }
 #dock :disabled { background: var(--canvas); color: var(--muted); opacity: 1; }
-
-/* Give short windows a single document scroll instead of collapsing the content track. */
-@media (max-height: 20rem) {
-  .form-page {
-    block-size: auto;
-    grid-template-rows: auto auto auto;
-  }
-
-  .content { overflow: visible; }
-}

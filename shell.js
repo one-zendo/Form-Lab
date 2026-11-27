@@ -1,5 +1,24 @@
 (() => {
   const readout = document.querySelector('#readout');
+  const home = document.querySelector('#home');
+  const dockRegion = home.querySelector('.dock-region');
+  const regions = [home.querySelector('.headline-region'), home.querySelector('.content'), dockRegion];
+
+  function positionDockAndAvoidCamera(id, mode, geometry) {
+    const side = FormViewport.dockSide(id, mode);
+    if (home.dataset.dock !== side) home.dataset.dock = side;
+    const camera = FormViewport.cameraBounds(geometry, mode);
+    const margin = parseFloat(getComputedStyle(home).getPropertyValue('--camera-clearance'));
+    for (const region of regions) {
+      const vertical = region === dockRegion && side === 'right';
+      const [start, end] = FormViewport.clearance(region.getBoundingClientRect(), camera, vertical, margin);
+      for (const [property, inset] of [['--avoid-start', start], ['--avoid-end', end]]) {
+        const value = inset + 'px';
+        if (region.style.getPropertyValue(property) !== value) region.style.setProperty(property, value);
+      }
+    }
+    return side;
+  }
   let pending = false;
   let lastReadout = '';
 
@@ -11,6 +30,7 @@
       (typeof window.orientation === 'number' ? (window.orientation % 360 + 360) % 360 : undefined);
     const { id, mode } = FormOrientation.detect(FormDuoGeometry, width, height, angle);
     const geometry = FormOrientation.geometryFor(FormDuoGeometry, id);
+    const dockSide = positionDockAndAvoidCamera(id, mode, geometry);
     const posture = FormPosture.read();
     const state = document.body.dataset;
     if (state.orientation !== id) state.orientation = id;
@@ -29,6 +49,7 @@
       ['Environment', 'Layout Lab web preview'],
       ['Orientation', id],
       ['Detection', 'Automatic · ' + mode],
+      ['Navigation placement', dockSide === 'right' ? 'Right rail' : 'Bottom dock'],
       ['Layout viewport', width + ' × ' + height + ' CSS px'],
       ['Visual viewport', visual ? Math.round(visual.width) + ' × ' + Math.round(visual.height) + ' CSS px' : 'Unavailable'],
       ['Safe insets (top / right / bottom / left)', [safe.paddingTop, safe.paddingRight, safe.paddingBottom, safe.paddingLeft].join(' / ')],
@@ -70,5 +91,9 @@
   document.addEventListener('visibilitychange', schedule);
   const diagnostics = document.querySelector('#diagnostics');
   document.querySelector('#diagnostic-open').addEventListener('click', () => diagnostics.showModal());
+  if (window.ResizeObserver) {
+    const observer = new ResizeObserver(schedule);
+    for (const region of regions) observer.observe(region, { box: 'border-box' });
+  }
   render();
 })();

@@ -137,17 +137,18 @@
         label(sideBySide ? first.right : first.left, gapY, 'Card gap ' + fmt(gap) + ' px', 'content');
       }
       const nav = measure(dock, 'Navigation', 'content');
-      label(nav.left, clip.bottom, 'Dock gap ' + fmt(nav.top - clip.bottom) + ' px', 'content');
+      const right = document.querySelector('#home').dataset.dock === 'right';
+      const dockGap = right ? nav.left - clip.right : nav.top - clip.bottom;
+      label(right ? clip.right : nav.left, right ? nav.top : clip.bottom,
+        'Dock gap ' + fmt(dockGap) + ' px', 'content');
     }
 
-    if (enabled('Camera') && geometry?.camera) {
-      const [cx, cy] = geometry.camera;
-      const safari = viewportMode === 'Safari-sized';
-      const x = cx - (safari && geometry.side === 'left' ? geometry.excluded : 0);
-      const y = cy - (safari && geometry.side === 'top' ? geometry.excluded : 0);
-      axes(x - 18.5, y - 18.5, 'camera');
-      axes(x + 18.5, y + 18.5, 'camera');
-      box(x - 18.5, y - 18.5, 37, 37, 'camera', 'camera');
+    const camera = FormViewport.cameraBounds(geometry, viewportMode);
+    if (enabled('Camera') && camera) {
+      const { left, top, right, bottom } = camera;
+      axes(left, top, 'camera');
+      axes(right, bottom, 'camera');
+      box(left, top, right - left, bottom - top, 'camera', 'camera');
     }
     overlay.replaceChildren(...nodes);
   }

@@ -1,4 +1,9 @@
 # Navigation
+
+## Build 002 — Adaptive Navigation
+
+See the [Universal Adaptive Layout](UNIVERSAL-ADAPTIVE-LAYOUT.md#adaptive-navigation) for the current matrix. Home uses the same dock markup in both arrangements. The shell reserves the rail column or dock row before content reflows, centers the dock inside its safe region and keeps it outside the content scroll container. The historical navigation treatments below predate this wireframe.
+
 Four destinations: Home, Workouts, Progress, Profile. Approved positioning: FP, FL1, FL2 and UL right rail; UP bottom dock; conventional narrow portrait bottom. Anchor to live viewport and safe areas; reserve clearance and validate proxy touch targets independently. Floating translucent capsule with sliding selection, accessible labels and 44pt minimum targets. Preserve state across posture changes. Active workout is a persistent experience, not a fifth tab. Exact dock offsets and dimensions require source/device verification; do not copy old implementation.
 
 ## Build 93 — orientation profiles

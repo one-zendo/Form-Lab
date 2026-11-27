@@ -3,7 +3,7 @@ Read docs/README.md and relevant canonical specifications before work. Use desig
 
 ## Layout Lab restart
 
-Build 001 uses one grayscale Home composition across Native-sized and Safari-sized viewports. Its CSS responds to usable width, dynamic viewport height and reported safe insets. Orientation detection and calibration remain diagnostic reference data. See docs/layout.md for the active rule and test scope. Build 94-specific compliance checks and design records apply to the archived app.
+Layout Lab uses one grayscale Home composition across Native-sized and Safari-sized viewports. Its CSS responds to usable width, dynamic viewport height and reported safe insets. The viewport adapter resolves dock placement and projects recorded camera bounds for localized clearance. See docs/UNIVERSAL-ADAPTIVE-LAYOUT.md for the active rules and docs/layout.md for the test scope. Build 94-specific compliance checks and design records apply to the archived app.
 
 ## Development records
 Record user-confirmed device results, approved design decisions, calibration changes, stable milestones and unresolved issues in the relevant existing documentation as they occur. Verify documentation writes. Distinguish user reports from automated and exhaustive device testing. Documentation-only updates do not increment the application build number.

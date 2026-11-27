@@ -1,5 +1,12 @@
 # Layout
 
+## Layout Lab Build 002
+
+The shell reserves the navigation region before resolving card columns. A right rail uses a shared grid column and a bottom dock uses a shared grid row. The layout keeps the headline and dock outside the content scroll container. The projected folded camera can trim the safe interval of an affected region without shifting the other regions. See the [Universal Adaptive Layout](UNIVERSAL-ADAPTIVE-LAYOUT.md) for placement and outstanding measurements.
+
+
+Chromium and Playwright WebKit passed all ten calibrated cases with zero, fixture and asymmetric test insets. The suite checked dock placement and centering, camera clearance, content alignment, stationary navigation during scrolling, and retention of sample training data.
+
 ## Layout Lab Build 001
 
 Home uses one content-width grid. Cards stack until the available content width can fit two 15 rem tracks and a 12 px gap. Tracks share remaining width, and card height follows content. The header, cards and dock share the same 16 px page inset, plus any reported safe area. Dynamic viewport height sizes the shell and sets the available scroll space. At very short heights, the document becomes the scroll container.

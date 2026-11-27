@@ -3,23 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="form-build" content="001">
-  <title>FORM · Layout Lab Build 001</title>
-  <link rel="stylesheet" href="layout-lab.css?v=001">
-  <link rel="stylesheet" href="foundation/diagnostics.css?v=001">
-  <script defer src="foundation/geometry.js?v=001"></script>
-  <script defer src="foundation/posture.js?v=001"></script>
-  <script defer src="foundation/orientation.js?v=001"></script>
-  <script defer src="shell.js?v=001"></script>
-  <script defer src="foundation/diagnostics.js?v=001"></script>
-  <script defer src="foundation/update.js?v=001"></script>
+  <meta name="form-build" content="002">
+  <title>FORM · Layout Lab Build 002</title>
+  <link rel="stylesheet" href="layout-lab.css?v=002">
+  <link rel="stylesheet" href="foundation/diagnostics.css?v=002">
+  <script defer src="foundation/geometry.js?v=002"></script>
+  <script defer src="foundation/posture.js?v=002"></script>
+  <script defer src="foundation/orientation.js?v=002"></script>
+  <script defer src="foundation/viewport.js?v=002"></script>
+  <script defer src="shell.js?v=002"></script>
+  <script defer src="foundation/diagnostics.js?v=002"></script>
+  <script defer src="foundation/update.js?v=002"></script>
 </head>
 <body>
   <main class="form-page" id="home">
-    <header class="headline">
-      <h1>FORM</h1>
-      <button id="diagnostic-open" type="button" aria-haspopup="dialog">Diagnostics</button>
-    </header>
+    <div class="headline-region">
+      <header class="headline">
+        <h1>FORM</h1>
+        <button id="diagnostic-open" type="button" aria-haspopup="dialog">Diagnostics</button>
+      </header>
+    </div>
 
     <div class="content" role="region" aria-label="Home overview" tabindex="0">
       <p class="tagline">Train with focus, follow your progress</p>
@@ -37,19 +40,21 @@
       </div>
     </div>
 
-    <nav id="dock" aria-label="Primary navigation">
-      <a href="#home" aria-current="page">Home</a>
-      <button type="button" disabled>Workouts</button>
-      <button type="button" disabled>Progress</button>
-      <button type="button" disabled>Profile</button>
-    </nav>
+    <div class="dock-region">
+      <nav id="dock" aria-label="Primary navigation">
+        <a href="#home" aria-current="page">Home</a>
+        <button type="button" disabled>Workouts</button>
+        <button type="button" disabled>Progress</button>
+        <button type="button" disabled>Profile</button>
+      </nav>
+    </div>
   </main>
 
   <dialog id="diagnostics" aria-labelledby="diagnostic-title">
     <header class="headline">
       <div>
         <h2 id="diagnostic-title">Diagnostics</h2>
-        <p>Layout Lab Build 001</p>
+        <p>Layout Lab Build 002</p>
       </div>
       <form method="dialog"><button type="submit">Done</button></form>
     </header>
