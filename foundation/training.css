@@ -167,3 +167,12 @@ body[data-page=Workout] #workout-storage:empty{display:none}
 body[data-page=Workout] .workout-live{animation:workout-live-opacity 2.4s ease-in-out infinite;box-shadow:none}
 @keyframes workout-live-opacity{0%,100%{opacity:1}50%{opacity:.45}}
 @media(prefers-reduced-motion:reduce){body[data-page=Workout] .workout-live{animation:none;opacity:1}}
+
+/* Build 68: identical set geometry in every completion state. */
+body[data-page=Workout] #workout-exercises .training-set-grid{align-items:center;justify-items:stretch;box-sizing:border-box;column-gap:4px}
+body[data-page=Workout] #workout-exercises .training-set-grid[data-done]{min-height:44px;margin-top:4px;padding:0;grid-auto-rows:44px}
+body[data-page=Workout] #workout-exercises .training-set-grid input{box-sizing:border-box;height:44px;min-height:44px;width:100%;margin:0;padding:0;line-height:normal;appearance:textfield;-webkit-appearance:none}
+body[data-page=Workout] #workout-exercises .training-set-grid input::-webkit-inner-spin-button,body[data-page=Workout] #workout-exercises .training-set-grid input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+body[data-page=Workout] #workout-exercises .training-set-grid[data-next=true] input{outline:none;box-shadow:inset 0 0 0 1px var(--action)}
+body[data-page=Workout] #workout-exercises .training-set-grid input:focus-visible{outline:2px solid var(--action);outline-offset:-2px}
+body[data-page=Workout] #workout-exercises .training-set-grid button{box-sizing:border-box;align-self:center;justify-self:center;display:grid;place-items:center;padding:0;margin:0;line-height:1}
