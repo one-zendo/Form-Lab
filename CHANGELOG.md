@@ -109,3 +109,6 @@ Show current build number on Home headline; retain tagline. Syntax checked; brow
 
 ## Clean Build 04
 Remove global automatic column selection and hinge-triggered card splitting. Explicit FP, FL1, FL2, UP, UL compositions; initial one-column FP/UP and two-column FL1/FL2/UL defaults. Posture remains diagnostic. Navigation, storage and keyboard logic retained. Physical and browser validation pending.
+
+## Clean Build 05
+Restore orientation-specific hinge response for UP and UL with equal left/right content columns. UL retains its two-column arrangement when bent; no global automatic layout switching. Physical and browser validation pending.

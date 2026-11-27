@@ -9,3 +9,7 @@ html,body{overflow:hidden;overscroll-behavior:none}#shell{grid-template-areas:"h
 #shell[data-profile="UP"] #content{grid-template-columns:minmax(0,1fr);grid-auto-rows:minmax(8rem,1fr)}
 #shell[data-profile="UL"] #content{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(8rem,1fr)}
 #shell[data-profile="FL-ambiguous"] #content{grid-template-columns:minmax(0,1fr)}
+
+/* Explicit hinge compositions for unfolded profiles only. */
+#shell[data-profile="UP"] #content[data-split="vertical"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+#shell[data-profile="UL"] #content[data-split="vertical"]{grid-template-columns:repeat(2,minmax(0,1fr))}
