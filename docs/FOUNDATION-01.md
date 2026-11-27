@@ -21,3 +21,6 @@ Build 04: 240 ms transform-only card transitions after settled layout changes; r
 
 Build 04 physical acceptance: user reported adaptive motion working on Duo, 2026-11-27.
 Build 05: diagnostic card count 1–4, default 2; normal portrait stacks, normal landscape uses up to two columns with existing 15rem minimum. Equal flexible rows, scroll when needed. Split vertical uses two columns; split horizontal uses two rows and two columns for 3–4 cards. A single card occupies one pane in split mode. Three cards leave an empty grid cell rather than spanning a fold. Card count is a temporary test control, not workout data. Physical validation pending.
+
+Build 05 physical acceptance: user reported universal card system working on Duo, 2026-11-27.
+Build 06: system safe-area insets separated from 16px design margin; Safari reference exclusions never subtracted twice. Segment origin refreshed after navigation and camera alignment; minimum 12px fold gap centered around reported boundary when smaller than design gap. Diagnostics report system insets, reference exclusion and camera overlap warnings (not proof of clearance). Existing camera calibration unchanged; unfolded camera and actual native safe areas unresolved. Physical and browser validation pending.

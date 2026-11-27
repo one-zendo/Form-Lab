@@ -23,3 +23,9 @@
 #cards[data-count="1"][data-fold="horizontal"]{grid-template-rows:repeat(2,minmax(8rem,1fr))}
 #cards[data-count="1"][data-fold="horizontal"][data-segments="horizontal"]{grid-template-rows:minmax(0,calc(env(viewport-segment-bottom 0 0) - var(--cards-y,0px))) minmax(0,1fr)}
 .colors .card:nth-child(3){background:var(--green)}.colors .card:nth-child(4){background:var(--amber)}
+
+/* Keep system safe insets separate from the design margin. No Safari reference subtraction. */
+#app{--safe-top:env(safe-area-inset-top,0px);--safe-right:env(safe-area-inset-right,0px);--safe-bottom:env(safe-area-inset-bottom,0px);--safe-left:env(safe-area-inset-left,0px);padding:calc(var(--inset) + var(--safe-top)) calc(var(--inset) + var(--safe-right)) calc(var(--inset) + var(--safe-bottom)) calc(var(--inset) + var(--safe-left))}
+#cards{min-width:0;overscroll-behavior:contain}
+#cards[data-fold="vertical"][data-segments="vertical"]{grid-template-columns:minmax(0,calc(env(viewport-segment-right 0 0) - var(--cards-x,16px) - max(0px,12px - (env(viewport-segment-left 1 0) - env(viewport-segment-right 0 0)))/2)) minmax(0,1fr)}
+#cards[data-fold="horizontal"][data-segments="horizontal"]{grid-template-rows:minmax(0,calc(env(viewport-segment-bottom 0 0) - var(--cards-y,0px) - max(0px,12px - (env(viewport-segment-top 0 1) - env(viewport-segment-bottom 0 0)))/2)) minmax(0,1fr)}
