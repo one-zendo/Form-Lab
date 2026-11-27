@@ -394,6 +394,20 @@ async function checkTrainingPresentation(context, url) {
   }
   await resize('FL1', 90, [594, 466], 'Safari-sized');
   await page.locator('#routine-start').click();
+  for (const [orientation, angle, , safari, native] of cases) {
+    for (const [mode, size] of [['Safari-sized', safari], ['Native-sized', native]]) {
+      await resize(orientation, angle, size, mode);
+      const measured = await page.evaluate(() => {
+        const h=document.querySelector('.headline').getBoundingClientRect(), f=document.querySelector('#workout-finish').getBoundingClientRect();
+        return {center:Math.round(h.top+h.height/2),signature:getComputedStyle(document.querySelector('.signature')).display,finishAligned:Math.abs((f.top+f.height/2)-(h.top+h.height/2))<=1,padding:parseFloat(getComputedStyle(document.querySelector('.content')).paddingTop)};
+      });
+      check(measured.center,48,orientation+' '+mode+' workout headline local center');
+      check(measured.signature==='none',orientation==='UP',orientation+' '+mode+' workout signature visibility');
+      check(measured.finishAligned,true,orientation+' '+mode+' Finish alignment');
+      if(orientation==='UP')check(measured.padding,94,orientation+' '+mode+' workout content clearance');
+    }
+  }
+  await resize('FL1',90,[594,466],'Safari-sized');
   const choice = page.locator('[data-choice="0"]');
   await choice.focus();
   await page.keyboard.press('Tab');
