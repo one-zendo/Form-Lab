@@ -12,7 +12,7 @@
       const response = await fetch(url, { cache: 'no-store' });
       if (!response.ok) return;
       const { series, build } = await response.json();
-      if (series !== 'layout-lab' || !Number.isSafeInteger(build) || build <= current ||
+      if (series !== 'layout-lab-reset' || !Number.isSafeInteger(build) || build <= current ||
           document.hidden || document.querySelector('dialog[open]')) return;
 
       const next = new URL(location.href);
