@@ -97,3 +97,6 @@ The web calibration resolver now keeps headline anchors independent from Safari 
 
 ## Build 17
 Initial functional web tracker: routines, exercise library/custom exercises, sets, active workout resume, rest timer, history, progress totals and records, local persistence/export. Retains approved layout runtime with test-only controls removed. No native integration, advanced set types, unit switching or import yet. QA and physical validation pending.
+
+## Clean Build 01
+Replaced runtime from scratch using DESIGN.md. Prior commit 157b411aa749249e6b402a396e3040515f0f5fd2 retained in history. New local storage key; no prior data deleted. Routine scheduling, exercise and set editing, logging, pause/resume, rest, history, progress, unit conversion, appearance, backup/restore. Superset labels only, no automatic sequencing; history rename/delete/repeat, not full set editing. Native integrations absent. QA pending.

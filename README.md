@@ -1,9 +1,2 @@
-# FORM Lab
-Adaptive workout app design and engineering lab.
-[Live preview](https://one-zendo.github.io/Form-Lab/)
-- [DESIGN.md](DESIGN.md): authoritative approved design settings.
-- [AGENTS.md](AGENTS.md): mandatory coding instructions.
-- [ARCHITECTURE.md](ARCHITECTURE.md): current runtime and target architecture.
-- [CHANGELOG.md](CHANGELOG.md): historical decisions and acceptance, not active rules.
-- design/duo/: canonical hardware SVGs.
-Current runtime: Workout Build 17. Initial functional web implementation; foundation layout retained. Automated QA not yet verified.
+# FORM
+Clean Build 01 — new workout tracker implementation. [Live app](https://one-zendo.github.io/Form-Lab/). Read DESIGN.md, AGENTS.md and ARCHITECTURE.md. Prior implementation preserved in Git history at 157b411aa749249e6b402a396e3040515f0f5fd2. No prior storage deleted. QA pending.
