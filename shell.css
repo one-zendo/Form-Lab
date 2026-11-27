@@ -90,3 +90,9 @@ body[data-nav="rail"] .dock-material{background:var(--glass-scroll-right)}
 body[data-page=Home] .dock-material{opacity:0;transition:opacity var(--motion-feedback) var(--ease-standard)}
 body[data-page=Home][data-nav-edge-overlap=true] .dock-material{opacity:1}
 @media(prefers-reduced-motion:reduce){body[data-page=Home] .dock-material{transition:none}}
+
+/* Build 56: edge-inset floating pill with equal tab allocation. */
+body:not([data-nav=rail]) #dock{left:max(var(--dock-edge),env(safe-area-inset-left));right:max(var(--dock-edge),env(safe-area-inset-right));width:auto;max-width:none;transform:none;box-sizing:border-box}
+body:not([data-nav=rail]) #dock button{flex:1 1 0;min-width:0;padding-inline:0}
+body[data-nav=rail] #dock{top:max(var(--dock-edge),env(safe-area-inset-top));bottom:max(var(--dock-edge),env(safe-area-inset-bottom));height:auto;max-height:none;transform:none;box-sizing:border-box}
+body[data-nav=rail] #dock button{flex:1 1 0;min-height:var(--dock-target);height:auto}
