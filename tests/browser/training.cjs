@@ -49,8 +49,15 @@ async function checkLock(context, url) {
     store.finish({ id: 'one' }, [], 123);
   });
   await a.close();
-  await b.waitForFunction(async () => !(await navigator.locks.query()).held.some(lock => lock.name === 'form.training.writer.v1'));
-  assert.equal(await acquire(b), true);
+  // Closing a page and observing query() does not guarantee the lock manager
+  // has finished teardown. Retry the real nonblocking acquisition, bounded.
+  const deadline = Date.now() + 10000;
+  let acquired = false;
+  do {
+    acquired = await acquire(b);
+    if (!acquired) await new Promise(resolve => setTimeout(resolve, 100));
+  } while (!acquired && Date.now() < deadline);
+  assert.equal(acquired, true, 'Writer lock must transfer after the original tab closes');
   assert.equal(await b.evaluate(() => JSON.parse(localStorage.getItem('history'))[0].finished), 123);
   assert.equal(await b.evaluate(() => JSON.parse(localStorage.getItem('active'))), null);
   await b.close();
@@ -113,8 +120,14 @@ async function checkWorkout(context, url) {
   await click('[data-performance-range="12W"]');
   await click('#routine-start');
   assert.ok(await page.locator('#workout-exercises .training-thumb svg').count());
+  assert.equal(await page.locator('#workout-exercises details:not([open])').count(),0);
+  await page.locator('#workout-exercises [data-exercise="1"] summary').click();
+  await page.waitForFunction(()=>JSON.parse(localStorage.getItem('form.training.demo.v1')).exercises[1].collapsed===true);
+  assert.equal(await page.locator('#workout-exercises [data-exercise="1"] details').getAttribute('open'),null);
+
   await click('#workout-exercises [data-complete] >> nth=0');
-  assert.match(await page.locator('#workout-sets').innerText(), /^1\//);
+  assert.match(await page.locator('#workout-sets').innerText(), /^1 of /);
+  await page.locator('#workout-exercises [data-exercise="0"] [data-tool="note"]').click();
   await page.locator('[data-exercise-note="0"]').fill('Test workout note');
   assert.equal((await storage(activeKey)).exercises[0].note,'Test workout note');
 
@@ -402,9 +415,9 @@ async function checkTrainingPresentation(context, url) {
         return {center:Math.round(h.top+h.height/2),signature:getComputedStyle(document.querySelector('.signature')).display,finishAligned:Math.abs((f.top+f.height/2)-(h.top+h.height/2))<=1,padding:parseFloat(getComputedStyle(document.querySelector('.content')).paddingTop)};
       });
       check(measured.center,48,orientation+' '+mode+' workout headline local center');
-      check(measured.signature==='none',orientation==='UP',orientation+' '+mode+' workout signature visibility');
+      check(measured.signature==='none',true,orientation+' '+mode+' workout signature visibility');
       check(measured.finishAligned,true,orientation+' '+mode+' Finish alignment');
-      if(orientation==='UP')check(measured.padding,94,orientation+' '+mode+' workout content clearance');
+      if(orientation==='UP')check(measured.padding,78,orientation+' '+mode+' workout content clearance');
     }
   }
   await resize('FL1',90,[594,466],'Safari-sized');

@@ -298,3 +298,23 @@ body[data-page=Workout][data-orientation=UP] .headline .signature{display:none}
 body[data-page=Workout][data-orientation=UP][data-viewport-mode=Safari-sized] #calibration .headline{top:calc(var(--layout-content-center) - var(--headline-height)/2)}
 body[data-page=Workout][data-orientation=UP][data-viewport-mode=Safari-sized] #calibration .headline-material{height:calc(var(--layout-content-center) + var(--headline-height)/2 + var(--glass-lead))}
 body[data-page=Workout][data-orientation=UP][data-viewport-mode=Safari-sized] #calibration .content{padding-top:calc(var(--layout-content-center) + var(--headline-height)/2 + var(--glass-lead))}
+
+/* Build 89 — focused workout, shared hardware anchors retained. */
+#headline-build~#workout-elapsed{display:none}
+body[data-page=Workout] #headline-build~#workout-elapsed{display:block;color:var(--action);font-size:var(--type-support);font-weight:var(--weight-headline);flex:none}
+body[data-page=Workout] .headline .signature{display:none}
+body[data-page=Workout] .workout-meta{min-height:0}
+body[data-page=Workout] .workout-indicator{grid-template-columns:1fr 1fr;gap:var(--space-4);font-size:var(--type-caption);color:var(--muted)}
+body[data-page=Workout] #workout-sets{justify-self:start}
+body[data-page=Workout] #workout-progress{grid-column:1/-1;height:var(--space-8)}
+body[data-page=Workout] #workout-progress span{flex:1}
+body[data-page=Workout] #calibration .content{padding-top:calc(var(--layout-center) + var(--headline-height)/2 + var(--space-8))}
+body[data-page=Workout][data-orientation=UP][data-viewport-mode=Safari-sized] #calibration .content{padding-top:calc(var(--layout-content-center) + var(--headline-height)/2 + var(--space-8))}
+body[data-page=Workout] #calibration .headline-material{height:calc(var(--layout-center) + var(--headline-height)/2 + var(--space-4))}
+body[data-page=Workout][data-orientation=UP][data-viewport-mode=Safari-sized] #calibration .headline-material{height:calc(var(--layout-content-center) + var(--headline-height)/2 + var(--space-4))}
+body[data-page=Workout] #workout-exercises .workout-swipe[data-selected=false]{display:flex}
+.workout-exercise-tools{display:flex;flex-wrap:wrap;gap:var(--space-8)}
+.workout-exercise-tools button{min-height:var(--target-min);border:0;border-radius:var(--radius-control);background:var(--elevated);color:var(--ink);font:inherit;font-size:var(--type-support);padding-inline:var(--space-12)}
+.workout-exercise-tools label{flex:1 1 100%}
+.workout-exercise-tools label[hidden]{display:none}
+body[data-page=Workout] #atmosphere-layer{display:none!important}
