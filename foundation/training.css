@@ -199,3 +199,12 @@ body[data-page=Workout] #workout-exercises .training-set-grid[data-done=true] bu
 body[data-page=Workout] #workout-exercises .training-set-grid button::after{inset:-6px}
 #workout-exercises .workout-add-set{min-height:44px;border-top:1px solid color-mix(in srgb,var(--muted) 15%,transparent);border-radius:0;color:var(--action);font-size:14px;font-weight:600}
 @container (max-width:260px){#workout-exercises .training-thumb{width:40px;height:40px}#workout-exercises .training-exercise summary{gap:6px;min-height:44px}#workout-exercises .training-copy strong{font-size:15px}}
+
+/* Build 72: reveal action behind a full-width sliding card. */
+.workout-swipe{display:block;overflow:hidden;border-radius:var(--radius-card);isolation:isolate}
+.workout-swipe>.training-exercise,.workout-swipe>.workout-choice{position:relative;z-index:1;width:100%;box-sizing:border-box;transform:translateX(var(--swipe-x,0px));transition:transform .22s cubic-bezier(.2,.75,.25,1)}
+.workout-swipe[data-revealed]{--swipe-x:-84px}
+.workout-swipe[data-dragging]>.training-exercise,.workout-swipe[data-dragging]>.workout-choice{transition:none}
+.workout-swipe>.workout-delete{position:absolute;inset:0 0 0 auto;width:84px;min-width:0;border-radius:0;z-index:0}
+body[data-page=Workout] .workout-swipe[data-revealed]>.workout-choice,body[data-page=Workout] .workout-swipe[data-dragging]>.workout-choice{background:var(--paper)}
+@media(prefers-reduced-motion:reduce){.workout-swipe>.training-exercise,.workout-swipe>.workout-choice{transition:none}}
