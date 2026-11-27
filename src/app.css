@@ -2,14 +2,11 @@
 /* Explicit dock tracks: scrolling is confined to content, never the shell. */
 html,body{overflow:hidden;overscroll-behavior:none}#shell{grid-template-areas:"header" "content" "rest" "dock"}#header{grid-area:header}#content{grid-area:content}#rest{grid-area:rest}#shell #navigation{grid-area:dock;align-self:end;min-width:0;min-height:0;max-height:100%}#shell.rail{grid-template-areas:"header dock" "content dock" "rest dock"}#shell.rail #navigation{align-self:stretch;justify-content:center}#shell:has(#rest[hidden]):not(.rail){grid-template-areas:"header" "content" "dock";grid-template-rows:auto minmax(0,1fr) auto}#shell:has(#rest[hidden]).rail{grid-template-areas:"header dock" "content dock";grid-template-rows:auto minmax(0,1fr)}#shell.editing,#shell.editing:has(#rest[hidden]):not(.rail){grid-template-areas:"header" "content";grid-template-rows:auto minmax(0,1fr)}#shell.editing.rail,#shell.editing.rail:has(#rest[hidden]){grid-template-areas:"header ." "content .";grid-template-rows:auto minmax(0,1fr)}
 
-/* Independent orientation compositions; no posture-driven or automatic column switching. */
-#shell[data-profile="FP"] #content{grid-template-columns:minmax(0,1fr);grid-auto-rows:minmax(8rem,1fr)}
-#shell[data-profile="FL1"] #content{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(8rem,1fr)}
-#shell[data-profile="FL2"] #content{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(8rem,1fr)}
-#shell[data-profile="UP"] #content{grid-template-columns:minmax(0,1fr);grid-auto-rows:minmax(8rem,1fr)}
-#shell[data-profile="UL"] #content{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(8rem,1fr)}
-#shell[data-profile="FL-ambiguous"] #content{grid-template-columns:minmax(0,1fr)}
-
-/* Explicit hinge compositions for unfolded profiles only. */
+/* Independent layout profiles. Normal cards flow without forced columns; hinge compositions alone split the content. */
+#shell[data-profile="FP"] #content{grid-auto-rows:minmax(8rem,1fr)}
+#shell[data-profile="FL1"] #content{grid-auto-rows:minmax(8rem,1fr)}
+#shell[data-profile="FL2"] #content{grid-auto-rows:minmax(8rem,1fr)}
+#shell[data-profile="UP"] #content{grid-auto-rows:minmax(8rem,1fr)}
+#shell[data-profile="UL"] #content{grid-auto-rows:minmax(8rem,1fr)}
 #shell[data-profile="UP"] #content[data-split="vertical"]{grid-template-columns:repeat(2,minmax(0,1fr))}
 #shell[data-profile="UL"] #content[data-split="vertical"]{grid-template-columns:repeat(2,minmax(0,1fr))}

@@ -112,3 +112,6 @@ Remove global automatic column selection and hinge-triggered card splitting. Exp
 
 ## Clean Build 05
 Restore orientation-specific hinge response for UP and UL with equal left/right content columns. UL retains its two-column arrangement when bent; no global automatic layout switching. Physical and browser validation pending.
+
+## Clean Build 06
+Remove forced normal landscape columns and retain explicit hinge-only vertical split in UP/UL. Normal layout flows in one column pending individual design. Add simulated posture regression assertions. Browser and physical verification pending.
