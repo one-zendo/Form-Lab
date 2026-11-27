@@ -9,3 +9,8 @@ body:has(#weather-preview-home:not([hidden])) .content{padding-top:calc(var(--la
 
 /* Original soft weather concept extends behind greeting without occupying layout space. */
 #atmosphere-layer{height:calc(var(--layout-center) + var(--headline-height)/2 + var(--glass-lead) + var(--space-48) + var(--space-24));mask-image:linear-gradient(to bottom,#000 55%,transparent);-webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent)}
+
+/* Build 67: foreground atmosphere, above ordinary controls, below diagnostics. */
+#atmosphere-layer{z-index:29;pointer-events:none}
+#atmosphere-layer canvas{pointer-events:none}
+body[data-nav=rail] #atmosphere-layer{right:0}
