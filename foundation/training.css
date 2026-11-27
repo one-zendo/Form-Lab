@@ -254,3 +254,27 @@ body[data-page=Routine] #headline-build{display:none}
 #routine-stats span+span{border-inline-start:1px solid color-mix(in srgb,var(--muted) 20%,transparent);padding-inline-start:var(--space-8)}
 #routine-start{width:100%;min-height:48px}
 #routine-note:empty{display:none}
+
+/* Build 86: adaptive performance card. Plot coordinates are SVG mechanics, not device geometry. */
+.routine-performance{display:flex;flex-direction:column;gap:var(--space-8)}
+.performance-ranges{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:var(--elevated);border-radius:var(--radius-control);padding:var(--space-4)}
+.performance-ranges button,.performance-period-nav button{font:inherit;font-size:var(--type-caption);color:var(--ink);border:0;background:transparent;min-height:var(--target-min);border-radius:var(--radius-small);cursor:pointer}
+.performance-ranges button[aria-pressed=true]{background:var(--paper);color:var(--action);font-weight:var(--weight-headline)}
+.performance-period-nav{display:grid;grid-template-columns:var(--target-min) minmax(0,1fr) var(--target-min);align-items:center;text-align:center;gap:var(--space-4);font-size:var(--type-caption)}
+.performance-period-nav button{font-size:var(--type-section);color:var(--action)}
+.performance-period-nav button:disabled{color:var(--muted);opacity:.5;cursor:default}
+#routine-chart{display:flex;flex-direction:column;gap:var(--space-4);min-width:0}
+#routine-chart svg{touch-action:pan-y;user-select:none}
+.performance-grid{stroke:var(--muted);opacity:.18;stroke-dasharray:3 4;vector-effect:non-scaling-stroke}
+.performance-area{fill:var(--action);opacity:.08}
+.performance-line{fill:none;stroke:var(--action);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.performance-cursor{stroke:var(--action);opacity:.45;stroke-dasharray:3 4;vector-effect:non-scaling-stroke}
+.performance-point{fill:var(--action);stroke:var(--paper);stroke-width:1.5;vector-effect:non-scaling-stroke}
+.performance-axis{display:flex;justify-content:space-between;color:var(--muted);font-size:var(--type-caption);gap:var(--space-4)}
+.performance-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4);border-top:1px solid var(--elevated);padding-top:var(--space-8)}
+.performance-summary strong,.performance-summary small{display:block;overflow-wrap:anywhere}
+.performance-summary strong{font-size:var(--type-headline);font-variant-numeric:tabular-nums}
+.performance-summary small{font-size:var(--type-caption);color:var(--muted)}
+body[data-page=Routine] .training-overview{min-height:0;overflow:auto;overscroll-behavior:contain}
+body:not([data-hinge=book])[data-page=Routine] .training-page{min-height:0}
+@media(orientation:portrait){body:not([data-hinge=book])[data-page=Routine] .training-page{grid-template-rows:minmax(0,3fr) minmax(0,2fr) auto}}
