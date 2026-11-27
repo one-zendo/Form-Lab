@@ -39,17 +39,16 @@ button { font: inherit; color: inherit; }
 
 .form-page {
   position: fixed;
-  top: var(--viewport-top, 0px);
-  left: var(--viewport-left, 0px);
-  inline-size: var(--viewport-width, 100%);
+  inset: 0 auto auto 0;
+  inline-size: 100%;
   display: grid;
   grid-template:
     "headline" auto
     "content" minmax(0, 1fr)
     "dock" auto / minmax(0, 1fr);
   gap: var(--component-gap);
-  block-size: var(--viewport-height, 100vh);
-  block-size: var(--viewport-height, 100dvh);
+  block-size: 100vh;
+  block-size: 100dvh;
   padding: calc(var(--page-inset) + var(--safe-top))
     calc(var(--page-inset) + var(--safe-right))
     calc(var(--page-inset) + var(--safe-bottom))
