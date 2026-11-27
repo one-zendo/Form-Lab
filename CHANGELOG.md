@@ -118,3 +118,6 @@ Remove forced normal landscape columns and retain explicit hinge-only vertical s
 
 ## Clean Build 07
 Exclude UP Home from hinge-triggered column switching; preserve other screens and UL. Syntax checked; browser and physical validation pending.
+
+## Clean Build 08
+Simplify UP Home CSS: natural-height stacked cards, no forced equal-height stretching. Decide hinge composition in layout engine rather than contradictory CSS exclusion. Diagnostics report effective composition. Other profiles and active workout retained. Syntax checked; browser and device validation pending.
