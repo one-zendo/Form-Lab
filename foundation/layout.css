@@ -144,3 +144,17 @@ body[data-layout=fallback-wide]{
 @media(max-height:390px){
   body[data-layout=fallback-wide]{--workout-list-min-height:150px}
 }
+
+/* UP Safari Home: content-sized cards, without changing hardware anchors. */
+body[data-layout=UP][data-viewport-mode=Safari-sized][data-page=Home]{
+  --home-rows:auto auto;
+  --home-card-align:start;
+}
+body[data-layout=UP][data-viewport-mode=Safari-sized][data-page=Home] .home-dashboard{
+  flex:0 0 auto;
+  align-content:start;
+}
+body[data-layout=UP][data-viewport-mode=Safari-sized][data-page=Home] .home-workout-cta-icon{
+  background:transparent;
+  color:var(--action);
+}
