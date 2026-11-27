@@ -22,12 +22,6 @@
     }
   }
   let pending = false;
-  let settleTimer;
-  let lastLayout = '';
-  let recoveryUntil = 0;
-  const recoveryInterval = 120;
-  const recoveryDuration = 3000;
-
   function render() {
     pending = false;
     const width = window.innerWidth;
@@ -46,23 +40,9 @@
       width: visual.width, height: visual.height, scale: visual.scale,
       offsetLeft: visual.offsetLeft, offsetTop: visual.offsetTop,
     };
-    const bounds = FormViewport.visibleBounds(rawVisual, width, height);
     const safe = getComputedStyle(safeProbe);
     const insets = [safe.paddingTop, safe.paddingRight, safe.paddingBottom, safe.paddingLeft];
-    const layoutSignature = JSON.stringify([id, mode, bounds, insets, width, height]);
     const projectedCamera = FormViewport.cameraBounds(geometry, mode);
-    if (layoutSignature !== lastLayout) {
-      lastLayout = layoutSignature;
-      for (const edge of ['left', 'top', 'width', 'height']) {
-        const property = '--viewport-' + edge;
-        if (bounds) {
-          const value = bounds[edge] + 'px';
-          if (home.style.getPropertyValue(property) !== value) home.style.setProperty(property, value);
-        } else {
-          home.style.removeProperty(property);
-        }
-      }
-    }
     positionDockAndAvoidCamera(id, mode, projectedCamera);
     home.dispatchEvent(new CustomEvent('form:layout', {
       detail: {
@@ -79,21 +59,7 @@
     requestAnimationFrame(render);
   }
 
-  function recoverViewport() {
-    settleTimer = undefined;
-    if (document.hidden) return;
-    schedule();
-    // Coalesce event-driven updates, but also sample silent late rotation updates.
-    if (performance.now() < recoveryUntil) {
-      settleTimer = setTimeout(recoverViewport, recoveryInterval);
-    }
-  }
-
-  function viewportChanged() {
-    recoveryUntil = performance.now() + recoveryDuration;
-    schedule();
-    settleTimer ??= setTimeout(recoverViewport, recoveryInterval);
-  }
+  const viewportChanged = schedule;
 
   for (const event of ['resize', 'orientationchange', 'pageshow']) {
     window.addEventListener(event, viewportChanged);
