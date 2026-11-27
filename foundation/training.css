@@ -238,3 +238,19 @@ body[data-page=Routine] .routine-performance{padding:var(--space-12);min-width:0
 body[data-page=Routine]:not([data-hinge=laptop]) :is(#calibration[data-landscape=true], [data-hinge=book] #calibration) section[data-screen=Routine]{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);grid-template-rows:minmax(0,1fr) auto;grid-template-areas:"overview list" "action action";overflow:hidden}
 body[data-page=Routine]:not([data-hinge=laptop]) :is(#calibration[data-landscape=true], [data-hinge=book] #calibration) section[data-screen=Routine]>.training-overview{grid-area:overview;overflow:auto;min-height:0}
 body[data-page=Routine]:not([data-hinge=laptop]) :is(#calibration[data-landscape=true], [data-hinge=book] #calibration) section[data-screen=Routine]>.training-list{grid-area:list;overflow:auto;min-height:0}
+
+/* Routine details: shared headline controls, compact performance and summary. */
+.routine-head-control[hidden]{display:none!important}
+body[data-page=Routine] .headline .signature{display:none}
+body[data-page=Routine] .headline h1{flex:1;min-width:0;overflow:hidden}
+body[data-page=Routine] #headline-build{display:none}
+.routine-head-control{flex:0 0 var(--target-min);width:var(--target-min);height:var(--target-min);display:grid;place-items:center;padding:0}
+.routine-head-control svg{width:24px;height:24px;stroke-linecap:round;stroke-linejoin:round}
+.routine-name-accessible{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+#routine-chart svg{height:125px;max-height:125px}
+#routine-chart circle:focus-visible{stroke:var(--ink);stroke-width:2;r:5}
+.routine-comparison[data-direction=up]{color:var(--workout-success)}
+#routine-stats{background:var(--paper);border-radius:var(--radius-card);padding:var(--space-12);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-8)}
+#routine-stats span+span{border-inline-start:1px solid color-mix(in srgb,var(--muted) 20%,transparent);padding-inline-start:var(--space-8)}
+#routine-start{width:100%;min-height:48px}
+#routine-note:empty{display:none}
