@@ -9,7 +9,7 @@ function save(){pref={enabled:enabled.checked,local:pref.local,preview:condition
 function localPhase(now,sunrise,sunset){if(Number.isFinite(sunrise)&&Number.isFinite(sunset)&&sunset>sunrise){if(now<sunrise||now>=sunset)return {phase:'night',progress:0};const p=(now-sunrise)/(sunset-sunrise);return {phase:p<.25?'morning':p>.75?'evening':'afternoon',progress:p}}return {phase:'afternoon',progress:.5}}
 function liveScene(){if(!weather)return null;const {code,day,sunrise,sunset}=weather;const mode=[71,73,75,77,85,86].includes(code)?'snow':code>=51?'rain':code===0?(day?'sun':'night'):'cloud';return {mode,...localPhase(Date.now(),sunrise,sunset),style:'classic'}}
 function target(){if(!pref.enabled)return null;if(pref.preview){const phase=pref.time==='auto'?(pref.condition==='night'?'night':'afternoon'):pref.time;return {mode:pref.condition,phase,progress:{morning:.15,afternoon:.5,evening:.85,night:0}[phase],style:'classic'}}return liveScene()}
-function active(){return !!document.body.dataset.page&&!document.hidden}
+function active(){return !!document.body.dataset.page&&document.body.dataset.page!=='Workout'&&!document.hidden}
 function sync(){options.hidden=!pref.enabled;locationButton.hidden=!pref.enabled||pref.preview||live;privacy.hidden=pref.preview;const next=target();const identity=s=>s&&[s.mode,s.phase,s.style].join(':');if(identity(next)!==identity(scene)){previous=scene;scene=next;changed=performance.now()}else scene=next;layer.hidden=!scene||!active();cancelAnimationFrame(raf);raf=0;if(!layer.hidden)raf=requestAnimationFrame(draw)}
 function circle(x,y,r,fill){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=fill;ctx.fill()}
 function paintClassic(s,t,w,h,alpha){
