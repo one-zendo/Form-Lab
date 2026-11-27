@@ -86,3 +86,6 @@ Build 50: portrait training layout refinement (FP/UP, including Safari and nativ
 
 ## Build 88 — UP active workout
 User screenshot of Build 87 reported the signature still visible and excess top space. UP active workout hides the signature in both viewport modes. Safari-sized UP maps physical headline center 130 pt to drawable center 48 CSS px (82 pt excluded above viewport); content and material follow the local anchor. Other screens and orientations retain existing calibration. Device confirmation remains outstanding.
+
+## Build 90 — Workout CSS consolidation
+One workout drawable headline center controls headline, material and content clearance. UP Safari-sized retains the calibrated local center; other layouts retain their existing headline targets. Content begins at the center plus half the headline height plus the existing 8-point spacing token in all workout orientations. Removed obsolete volume, live-dot, old time-row and conflicting exercise visibility rules. Atmosphere scheduling is suspended during workouts and resumes on exit. Physical device verification remains outstanding.
