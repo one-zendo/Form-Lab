@@ -62,3 +62,6 @@
 /* Diagnostics are independent, non-interactive and excluded from layout. */
 #overlay{pointer-events:none;contain:layout paint;user-select:none}
 #overlay .guide{pointer-events:none;box-sizing:border-box}
+
+/* FL1 only: remove design margin, retain any system-reported left safe inset. */
+#app[data-orientation="FL1"]{padding-left:env(safe-area-inset-left,0px)}
