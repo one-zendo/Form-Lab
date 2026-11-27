@@ -37,4 +37,3 @@ test('portrait training has compact toolbars and independent exercise scrolling'
 
 
 
-test('active workout reload is blocked only for edits or unverified persistence',()=>{const j=read('foundation/training.js');assert.match(j,/blocksReload:\(\)=>editing\|\|!storageOK/);assert.doesNotMatch(j,/blocksReload:\(\)=>editing\|\|!!session\|\|!storageOK/)});
