@@ -46,3 +46,11 @@
 #app.keyboard-open #nav,#app.keyboard-open #timer{display:none}
 #app.keyboard-open #main{grid-template-rows:minmax(0,1fr)}
 #app.keyboard-open #cards{scroll-padding:8px}
+
+/* Keyboard editing: intrinsic card height wins over equal-height tracks. */
+#cards:has(#keyboard-test:not([hidden])){grid-auto-rows:minmax(min-content,1fr)}
+#cards:has(#keyboard-test:not([hidden])) .card{min-height:8rem}
+#app.keyboard-open #cards{grid-template-rows:none;grid-auto-rows:minmax(min-content,auto);align-content:start}
+#app.keyboard-open #cards .card{min-height:8rem}
+#app.keyboard-open #cards[data-fold="horizontal"]{grid-template-rows:repeat(2,minmax(min-content,auto))}
+#app.keyboard-open #cards[data-fold="horizontal"][data-segments="horizontal"]{grid-template-rows:minmax(min-content,calc(env(viewport-segment-bottom 0 0) - var(--cards-y,0px))) minmax(min-content,auto)}
