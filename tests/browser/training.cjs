@@ -89,6 +89,28 @@ async function checkWorkout(context, url) {
   }
   await click('#routine-list [data-routine] >> nth=0');
   assert.ok(await page.locator('#routine-exercises .training-thumb svg').count());
+  assert.equal(await page.locator('[data-performance-range="12W"]').getAttribute('aria-pressed'),'true');
+  await click('[data-performance-range="1Y"]');
+  assert.equal(await page.locator('[data-performance-range="1Y"]').getAttribute('aria-pressed'),'true');
+  const chart=page.locator('#routine-chart svg');
+  if(await chart.getAttribute('role')==='slider'){
+    await chart.press('Home');
+    assert.equal(await chart.getAttribute('aria-valuenow'),'1');
+    await chart.press('End');
+    assert.equal(await chart.getAttribute('aria-valuenow'),await chart.getAttribute('aria-valuemax'));
+    const bounds=await chart.boundingBox();
+    await page.mouse.click(bounds.x+2,bounds.y+bounds.height/2);
+    assert.equal(await chart.getAttribute('aria-valuenow'),'1');
+  }
+  await click('[data-performance-range="4W"]');
+  if(await page.locator('#performance-prev').isEnabled()){
+    const period=await page.locator('#performance-period').innerText();
+    await click('#performance-prev');
+    assert.notEqual(await page.locator('#performance-period').innerText(),period);
+    await click('#performance-next');
+    assert.equal(await page.locator('#performance-period').innerText(),period);
+  }
+  await click('[data-performance-range="12W"]');
   await click('#routine-start');
   assert.ok(await page.locator('#workout-exercises .training-thumb svg').count());
   await click('#workout-exercises [data-complete] >> nth=0');

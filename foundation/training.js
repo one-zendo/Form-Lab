@@ -14,6 +14,21 @@ function createTrainingStorage(storage,key,historyKey){
 if(typeof module!=='undefined'&&module.exports)module.exports={createTrainingStorage,validExercises,validSession,remainingRest};
 function acquireTrainingLock(locks,start,blocked){if(!locks?.request){start(false);return}return locks.request('form.training.writer.v1',{ifAvailable:true},lock=>{if(!lock){blocked();return}start(true);return new Promise(()=>{})}).catch(blocked)}
 if(typeof module!=='undefined'&&module.exports)module.exports.acquireTrainingLock=acquireTrainingLock;
+
+// Calendar windows are inclusive local calendar dates, represented as UTC days to avoid DST drift.
+const performanceDays={ '1W':7,'4W':28,'12W':84,'1Y':365 };
+function performanceDate(date){const t=Date.parse(date+'T00:00:00Z');return Number.isFinite(t)?t/86400000:NaN}
+function performanceWindow(records,metric,range,offset,today,convert=n=>n){
+ const days=performanceDays[range]||84,end=performanceDate(today)-offset*days,start=end-days+1;
+ const value=r=>metric==='Density'?(Number.isFinite(r.volume)&&r.duration>0?convert(r.volume)/r.duration:null):metric==='Volume'?(Number.isFinite(r.volume)?convert(r.volume):null):r[metric.toLowerCase()];
+ const all=records.map(r=>({...r,day:performanceDate(r.date),value:value(r)})).filter(r=>Number.isFinite(r.day)&&Number.isFinite(r.value)).sort((a,b)=>a.day-b.day||(a.finished||0)-(b.finished||0));
+ const points=all.filter(r=>r.day>=start&&r.day<=end),latest=points.at(-1);
+ const monday=latest?latest.day-((new Date(latest.day*86400000).getUTCDay()+6)%7):null;
+ const previous=latest?all.filter(r=>r.day>=monday-7&&r.day<monday).at(-1):null;
+ return {start,end,days,points,latest,delta:previous?latest.value-previous.value:null,average:points.length?points.reduce((s,p)=>s+p.value,0)/points.length:null,best:points.length?Math.max(...points.map(p=>p.value)):null,canBack:all.some(p=>p.day<start)};
+}
+if(typeof module!=='undefined'&&module.exports)module.exports.performanceWindow=performanceWindow;
+
 if(typeof document!=='undefined')
 acquireTrainingLock(navigator.locks,()=>{
 const q=s=>document.querySelector(s),key='form.training.demo.v1',routineKey='form.training.routine-overrides.v2',historyKey='form.training.history.demo.v1';
@@ -36,7 +51,7 @@ const thumb='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-l
 function exerciseSubtitle(e){return e.name.match(/\(([^)]+)\)\s*$/)?.[1]||''}
 function exerciseThumb(){return '<span class="training-thumb">'+thumb+'</span>'}
 const summary=(e)=>e.sets.length+' sets · '+e.sets.map(s=>s.reps).filter((x,i,a)=>a.indexOf(x)===i).join('/')+' reps';
-function open(id){if(!demo())return;const next=routine(id);if(!next)return;if(editing&&selected.id===id&&selected.datasetId===next.datasetId){go('Routine');return}if(editing&&!confirm('Discard unsaved routine edits?'))return;selected=next;editing=false;draft=null;renderRoutine();go('Routine')}
+function open(id){if(!demo())return;const next=routine(id);if(!next)return;if(editing&&selected.id===id&&selected.datasetId===next.datasetId){go('Routine');return}if(editing&&!confirm('Discard unsaved routine edits?'))return;if(selected?.id!==next.id||selected?.datasetId!==next.datasetId){performanceRange='12W';performanceOffset=0}selected=next;editing=false;draft=null;renderRoutine();go('Routine')}
 
 function recordsForDataset() {
   const source = FormDemo.getData();
@@ -69,9 +84,49 @@ function routineRecords(routine) {
     return record.routine === routine.name && routines.filter(candidate => candidate.name === routine.name).length === 1;
   });
 }
-function renderRoutineActivity(){const r=editing?draft:selected;if(!r)return;const records=routineRecords(r),metric=q('#routine-metric').value;const val=x=>metric==='Density'?(Number.isFinite(x.volume)&&x.duration>0?FormPrefs.weightOut(x.volume)/x.duration:null):metric==='Volume'&&Number.isFinite(x.volume)?FormPrefs.weightOut(x.volume):x[metric.toLowerCase()];const unit=({Volume:FormPrefs.get('weight'),Reps:'reps',Duration:'min',Sets:'sets',Density:FormPrefs.get('weight')+'/min'})[metric];const fmt=n=>Number(n.toFixed(1)).toLocaleString();const dateLabel=d=>new Date(d+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'});const pts=records.filter(x=>Number.isFinite(val(x)));const chart=q('#routine-chart');chart.replaceChildren();const head=document.createElement('p');head.className='routine-value';head.textContent=pts.length?fmt(val(pts.at(-1)))+' '+unit:'No recorded data';chart.append(head);if(pts.length){const latest=pts.at(-1),day=new Date(latest.date+'T12:00:00Z');day.setUTCDate(day.getUTCDate()-((day.getUTCDay()+6)%7));const end=day.toISOString().slice(0,10);day.setUTCDate(day.getUTCDate()-7);const start=day.toISOString().slice(0,10);const prev=pts.filter(x=>x.date>=start&&x.date<end).at(-1);const comparison=document.createElement('p');comparison.className='routine-comparison note';const delta=prev?val(latest)-val(prev):null;comparison.textContent=delta===null?'Previous week: Unavailable':(delta>0?'+':'')+fmt(delta)+' '+unit+' vs. last week';comparison.dataset.direction=delta>0?'up':delta<0?'down':'neutral';chart.append(comparison);const vals=pts.map(val),lo=Math.min(...vals),hi=Math.max(...vals),ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 320 100');svg.setAttribute('aria-label',metric+' trend');const times=pts.map(p=>Date.parse(p.date+'T00:00:00Z')),span=times.at(-1)-times[0];const coords=vals.map((v,i)=>[span?12+(times[i]-times[0])*296/span:160,hi===lo?50:85-(v-lo)/(hi-lo)*70]);const line=document.createElementNS(ns,'polyline');line.setAttribute('points',coords.map(p=>p.join(',')).join(' '));line.setAttribute('fill','none');line.setAttribute('stroke','var(--action)');line.setAttribute('stroke-width','2.5');svg.append(line);coords.forEach(([x,y],i)=>{const dot=document.createElementNS(ns,'circle');dot.setAttribute('cx',x);dot.setAttribute('cy',y);dot.setAttribute('r',i===coords.length-1?'3':'1.25');dot.setAttribute('fill','var(--action)');dot.setAttribute('tabindex','0');dot.setAttribute('aria-label',pts[i].date+' '+vals[i]);const choose=()=>{head.textContent=dateLabel(pts[i].date)+' · '+fmt(vals[i])+' '+unit;};dot.addEventListener('click',choose);dot.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose()}});svg.append(dot)});chart.append(svg);const dates=document.createElement('p');dates.className='note';dates.textContent=dateLabel(pts[0].date)+' — '+dateLabel(pts.at(-1).date);chart.append(dates)}
+let performanceRange='12W',performanceOffset=0;
+function renderRoutineChart(){
+ const r=editing?draft:selected;if(!r)return;
+ const metric=q('#routine-metric').value,records=routineRecords(r),now=new Date();
+ const today=[now.getFullYear(),String(now.getMonth()+1).padStart(2,'0'),String(now.getDate()).padStart(2,'0')].join('-');
+ const model=performanceWindow(records,metric,performanceRange,performanceOffset,today,FormPrefs.weightOut);
+ const {points,start,end,days,delta,average,best,canBack}=model;
+ const unit=({Volume:FormPrefs.get('weight'),Reps:'reps',Duration:'min',Sets:'sets',Density:FormPrefs.get('weight')+'/min'})[metric];
+ const fmt=n=>n===null?'—':Number(n.toFixed(1)).toLocaleString();
+ const date=d=>new Date(d*86400000).toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'});
+ const short=d=>new Date(d*86400000).toLocaleDateString(undefined,{month:'short',day:'numeric',timeZone:'UTC'});
+ const chart=q('#routine-chart');chart.replaceChildren();
+ q('#performance-period').textContent=date(start)+' – '+date(end);
+ q('#performance-prev').disabled=!canBack;q('#performance-next').disabled=performanceOffset===0;
+ document.querySelectorAll('[data-performance-range]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.performanceRange===performanceRange)));
+ const label=document.createElement('p');label.className='note performance-selected-date';chart.append(label);
+ const head=document.createElement('p');head.className='routine-value form-numeric';chart.append(head);
+ const comparison=document.createElement('p');comparison.className='routine-comparison note';chart.append(comparison);
+ const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
+ svg.setAttribute('viewBox','0 0 320 125');svg.setAttribute('preserveAspectRatio','none');
+ svg.setAttribute('aria-label',metric+' session chart');chart.append(svg);
+ const el=(tag,attrs)=>{const node=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));svg.append(node);return node};
+ for(const y of [12,42,72,102])el('line',{x1:8,x2:312,y1:y,y2:y,class:'performance-grid'});
+ const lo=points.length?Math.min(...points.map(p=>p.value)):0,hi=points.length?Math.max(...points.map(p=>p.value)):0;
+ const coords=points.map(p=>[8+(p.day-start)*304/(days-1),hi===lo?57:102-(p.value-lo)/(hi-lo)*90]);
+ if(coords.length>1){el('path',{d:'M'+coords.map(p=>p.join(',')).join(' L')+' L'+coords.at(-1)[0]+',102 L'+coords[0][0]+',102 Z',class:'performance-area'});el('polyline',{points:coords.map(p=>p.join(',')).join(' '),class:'performance-line'})}
+ const cursor=el('line',{y1:8,y2:102,class:'performance-cursor'}),dot=el('circle',{r:4,class:'performance-point'});
+ const dates=document.createElement('div');dates.className='performance-axis';for(const day of [start,Math.floor((start+end)/2),end]){const span=document.createElement('span');span.textContent=short(day);dates.append(span)}chart.append(dates);
+ let selectedIndex=points.length-1;
+ function choose(i){if(!points.length)return;selectedIndex=Math.max(0,Math.min(points.length-1,i));const p=points[selectedIndex],[x,y]=coords[selectedIndex];label.textContent=date(p.day);head.textContent=fmt(p.value)+' '+unit;cursor.setAttribute('x1',x);cursor.setAttribute('x2',x);dot.setAttribute('cx',x);dot.setAttribute('cy',y);comparison.textContent=selectedIndex===points.length-1?(delta===null?'Previous week: Unavailable':(delta>0?'+':'')+fmt(delta)+' '+unit+' vs. last week'):'';comparison.dataset.direction=selectedIndex===points.length-1&&delta>0?'up':'neutral';svg.setAttribute('aria-valuenow',selectedIndex+1);svg.setAttribute('aria-valuetext',date(p.day)+' · '+fmt(p.value)+' '+unit)}
+ if(points.length){svg.setAttribute('tabindex','0');svg.setAttribute('role','slider');svg.setAttribute('aria-valuemin','1');svg.setAttribute('aria-valuemax',points.length);choose(selectedIndex);
+ const locate=e=>{const rect=svg.getBoundingClientRect(),x=(e.clientX-rect.left)*320/rect.width,y=(e.clientY-rect.top)*125/rect.height;let best=Infinity,index=0;coords.forEach(([cx,cy],i)=>{const distance=Math.abs(cx-x)*1000+Math.abs(cy-y);if(distance<=best){best=distance;index=i}});choose(index)};
+ let pointer=null;svg.addEventListener('pointerdown',e=>{if(!e.isPrimary||e.button!==0)return;pointer=e.pointerId;svg.setPointerCapture?.(pointer);locate(e)});svg.addEventListener('pointermove',e=>{if(e.pointerId===pointer)locate(e)});for(const event of ['pointerup','pointercancel','lostpointercapture'])svg.addEventListener(event,e=>{if(e.pointerId===pointer)pointer=null});
+ svg.addEventListener('keydown',e=>{const i=({ArrowLeft:selectedIndex-1,ArrowDown:selectedIndex-1,ArrowRight:selectedIndex+1,ArrowUp:selectedIndex+1,Home:0,End:points.length-1})[e.key];if(i!==undefined){e.preventDefault();choose(i)}});
+ }else{cursor.remove();dot.remove();label.textContent='No sessions in this period';head.textContent='—';comparison.textContent='Choose another period or log a workout.'}
+ const stats=document.createElement('div');stats.className='performance-summary';for(const [name,value] of [['Sessions',points.length],['Average',average],['Best',best]]){const cell=document.createElement('div'),title=document.createElement('strong'),caption=document.createElement('small');title.textContent=fmt(value);caption.textContent=name;cell.append(title,caption);stats.append(cell)}chart.append(stats);
+}
+function renderRoutineActivity(){const r=editing?draft:selected;if(!r)return;const records=routineRecords(r);renderRoutineChart();
 const history=q('#routine-history');history.innerHTML='<h2>History</h2>';if(!records.length){history.insertAdjacentHTML('beforeend','<p class="note">No completed sessions yet.</p>');return}for(const x of [...records].reverse()){const d=document.createElement('details');d.className='form-card routine-history-item';const sum=document.createElement('summary');sum.textContent=x.date+' · '+(Number.isFinite(x.duration)?Math.round(x.duration)+' min':'Duration unavailable');d.append(sum);const p=document.createElement('p');p.textContent=[['Volume',x.volume],['Reps',x.reps],['Sets',x.sets]].filter(a=>Number.isFinite(a[1])).map(a=>a[0]+': '+a[1]).join(' · ')||'No additional metrics';d.append(p);for(const e of x.detail||[]){const row=document.createElement('p');row.textContent=e.name+' — '+e.sets.filter(s=>s.done).map(s=>(s.weight??'—')+' kg × '+(s.reps??'—')).join(', ');d.append(row)}if(!x.detail){const note=document.createElement('p');note.className='note';note.textContent='Summary record only';d.append(note)}history.append(d)}}
-q('#routine-metric').addEventListener('change',renderRoutineActivity);
+q('#routine-metric').addEventListener('change',()=>{performanceOffset=0;renderRoutineChart()});
+document.querySelectorAll('[data-performance-range]').forEach(b=>b.addEventListener('click',()=>{performanceRange=b.dataset.performanceRange;performanceOffset=0;renderRoutineChart()}));
+q('#performance-prev').addEventListener('click',()=>{performanceOffset++;renderRoutineChart()});
+q('#performance-next').addEventListener('click',()=>{performanceOffset=Math.max(0,performanceOffset-1);renderRoutineChart()});
 function renderRoutine(){const r=editing?draft:selected;if(!r)return;q('#routine-name').textContent=r.name;q('#routine-focus').textContent=r.focus;q('#routine-stats').innerHTML='<span><strong>'+r.exercises.length+'</strong>Exercises</span><span><strong>'+r.exercises.reduce((n,e)=>n+e.sets.length,0)+'</strong>Sets</span><span><strong>~'+esc(r.duration??'—')+'m</strong>Duration</span>';q('#routine-note').textContent='';renderRoutineActivity();q('#routine-edit').setAttribute('aria-label',editing?'Done editing':'Edit routine');q('#routine-edit').innerHTML=editing?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m16 3 5 5L8 21H3v-5zM13 6l5 5"/></svg>';q('#routine-start').disabled=editing;q('#routine-exercises').innerHTML=r.exercises.map((e,i)=>'<details class="form-card training-exercise" '+(editing?'open':'')+'><summary>'+exerciseThumb()+'<span class="training-copy"><strong>'+esc(e.name)+'</strong><small>'+summary(e)+'</small></span><span aria-hidden="true">⌄</span></summary><div class="training-set-grid"><span>Set</span><span>'+FormPrefs.get('weight')+'</span><span>Reps</span><span>Rest (s)</span><span></span></div>'+e.sets.map((s,j)=>'<div class="training-set-grid"><span>'+(j+1)+'</span>'+['weight','reps','rest'].map(k=>editing?'<input type="number" min="0" step="'+(k==='weight'?'0.5':'1')+'" data-edit="'+i+':'+j+':'+k+'" aria-label="'+k+' set '+(j+1)+'" value="'+((k==='weight'?FormPrefs.weightOut(s[k]):s[k])??'')+'">':'<span>'+((k==='weight'?FormPrefs.weightOut(s[k]):s[k])??'—')+'</span>').join('')+'<span></span></div>').join('')+'</details>').join('')}
 q('#routine-list').addEventListener('click',e=>{const b=e.target.closest('[data-routine]');if(b)open(b.dataset.routine)});
 q('#routine-back').addEventListener('click',()=>{if(editing&&!confirm('Discard unsaved routine edits?'))return;editing=false;draft=null;workouts()});
