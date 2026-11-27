@@ -96,3 +96,8 @@ body:not([data-nav=rail]) #dock{left:max(var(--dock-edge),env(safe-area-inset-le
 body:not([data-nav=rail]) #dock button{flex:1 1 0;min-width:0;padding-inline:0}
 body[data-nav=rail] #dock{top:max(var(--dock-edge),env(safe-area-inset-top));bottom:max(var(--dock-edge),env(safe-area-inset-bottom));height:auto;max-height:none;transform:none;box-sizing:border-box}
 body[data-nav=rail] #dock button{flex:1 1 0;min-height:var(--dock-target);height:auto}
+
+/* Build 58: direct compositor tracking during navigation drag. */
+#dock .dock-lens{will-change:transform}
+#dock[data-dragging=true] .dock-lens{transition:none!important}
+#dock[data-dragging=true] .dock-lens>div{transition:transform var(--motion-feedback) var(--ease-standard)}
