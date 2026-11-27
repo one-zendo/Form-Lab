@@ -1,1 +1,22 @@
-(function(root){function resolve(g,id,mode){if(!g)return {headline:16,content:16,center:48,landscape:false,verified:false};const left=mode==='Safari-sized'&&g.side==='left'?g.excluded:0;return {headline:Math.max(0,g.headline-left),content:Math.max(0,g.content-left),center:48,landscape:g.w>g.h,verified:true}}function apply(g,id,mode){const a=resolve(g,id,mode);const el=document.querySelector('#calibration');for(const [k,v] of Object.entries({headline:a.headline,content:a.content,center:a.center,'content-center':48}))el.style.setProperty('--layout-'+k,v+'px');el.dataset.landscape=String(a.landscape);el.dataset.guides=String(document.querySelector('#guides').checked);document.querySelector('#layout-status').textContent=(a.verified?'Recorded calibration target':'Unmatched viewport: generic fallback')+' · '+mode+' · local headline '+a.headline+' / content '+a.content+' px';}root.FormLayout={resolve,apply};if(typeof module!=='undefined')module.exports={resolve};})(typeof window==='undefined'?globalThis:window);
+/* Resolve headline and content anchors independently from viewport exclusions.
+ * Calibrated targets come from docs/DUO-HARDWARE-STANDARD.md. */
+(function(root){
+  function resolve(g,id,mode){
+    if(!g||mode==='Unmatched')return {headline:16,content:16,center:48,contentCenter:48,landscape:false,verified:false};
+    const safari=mode==='Safari-sized';
+    const headline=g.headline;
+    const content=safari&&id==='FL1'?84:g.content;
+    const center=id==='UP'&&safari?130:48;
+    return {headline,content,center,contentCenter:48,landscape:g.w>g.h,verified:true};
+  }
+  function apply(g,id,mode){
+    const a=resolve(g,id,mode),el=document.querySelector('#calibration');
+    for(const [k,v] of Object.entries({headline:a.headline,content:a.content,center:a.center,'content-center':a.contentCenter}))
+      el.style.setProperty('--layout-'+k,v+'px');
+    el.dataset.landscape=String(a.landscape);
+    el.dataset.guides=String(document.querySelector('#guides').checked);
+    document.querySelector('#layout-status').textContent=(a.verified?'Recorded calibration target':'Unmatched viewport: generic fallback')+' · '+mode+' · headline X '+a.headline+' / content X '+a.content+' / headline center Y '+a.center+' px';
+  }
+  root.FormLayout={resolve,apply};
+  if(typeof module!=='undefined')module.exports={resolve};
+})(typeof window==='undefined'?globalThis:window);
