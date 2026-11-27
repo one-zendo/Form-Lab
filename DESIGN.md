@@ -42,3 +42,14 @@ First verify simple cards, navigation, diagnostics and isolation across all ten 
 
 ## Replace, never override
 Permanent layout changes replace the existing local placement definition. Delete superseded declarations, conditions, fallback arrangements and corrective overrides for that placement; do not layer new rules over obsolete ones. Maintain one authoritative placement definition per screen/orientation/environment and explicitly approved posture state. Permanent placement must not be overridden by hinge signals. Preserve shared UI components, functionality, hardware detection, diagnostics and user data. Retain previous implementations only in Git history. Verify no conflicting active definitions remain.
+
+## Engineering principles and layer boundaries
+Maintain one authoritative definition for each shared component and each local spatial layout. No hidden automation: rearrangement, stretching and movement require an explicit local design. Remove unused styles, variables, functions and obsolete conditions as part of every change. Rotation and posture changes must preserve selected screen, workout state and user input.
+Separate five responsibilities:
+- Hardware: report orientation, drawable viewport, safe areas and raw hinge/posture signals; never dictate card placement.
+- Layout: own spatial placement independently per screen, orientation and environment.
+- Components: share appearance, content, typography, colors, icons and controls across orientations; no global spatial adaptation.
+- Functionality: share interactions, application logic and persistent data independently of layout.
+- Diagnostics: observe and report actual geometry and signals; overlays must never alter layout, dimensions, scrolling or interaction.
+## Development discipline
+Preview and approve spatial arrangements before implementation. Establish and physically test the minimal wireframe before adding workout features. Verify all five orientations in both Native-sized and Safari-sized configurations, including isolation of local placement and propagation of shared component changes. Automated browser checks do not substitute for physical Duo or native validation. Remove superseded code in every build; verify that no conflicting definitions remain. Record approved decisions and known limitations, preserve data and Git history, work directly on main, and verify deployment separately from source changes.
