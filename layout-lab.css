@@ -9,6 +9,14 @@
   --space-8: 8px;
   --space-12: 12px;
   --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --page-inset: var(--space-16);
+  --component-gap: var(--space-12);
+  --headline-content-gap: var(--space-16);
+  --card-padding: var(--space-16);
+  --card-content-gap: var(--space-8);
+  --navigation-item-gap: var(--space-4);
   --target-min: 44px;
   --card-min-inline: 15rem;
   --card-min-block: 8rem;
@@ -30,8 +38,6 @@ button { font: inherit; color: inherit; }
 :focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 
 .form-page {
-  --row-gap: var(--space-12);
-  --row-gap: clamp(var(--space-8), calc(var(--viewport-height, 100dvh) * .03), var(--space-16));
   position: fixed;
   top: var(--viewport-top, 0px);
   left: var(--viewport-left, 0px);
@@ -41,13 +47,13 @@ button { font: inherit; color: inherit; }
     "headline" auto
     "content" minmax(0, 1fr)
     "dock" auto / minmax(0, 1fr);
-  gap: var(--row-gap) var(--space-16);
+  gap: var(--component-gap);
   block-size: var(--viewport-height, 100vh);
   block-size: var(--viewport-height, 100dvh);
-  padding: calc(var(--space-16) + var(--safe-top))
-    calc(var(--space-16) + var(--safe-right))
-    calc(var(--space-16) + var(--safe-bottom))
-    calc(var(--space-16) + var(--safe-left));
+  padding: calc(var(--page-inset) + var(--safe-top))
+    calc(var(--page-inset) + var(--safe-right))
+    calc(var(--page-inset) + var(--safe-bottom))
+    calc(var(--page-inset) + var(--safe-left));
 }
 
 .form-page[data-dock="right"] {
@@ -73,6 +79,7 @@ button { font: inherit; color: inherit; }
 
 .headline-region {
   grid-area: headline;
+  margin-block-end: calc(var(--headline-content-gap) - var(--component-gap));
   display: grid;
   gap: var(--space-4);
   min-inline-size: 0;
@@ -130,7 +137,7 @@ h2 { font-size: 1.0625rem; }
   block-size: 100%;
   grid-template-columns: repeat(auto-fit, minmax(var(--card-min-inline), 1fr));
   grid-auto-rows: minmax(max-content, 1fr);
-  gap: var(--space-12);
+  gap: var(--component-gap);
 }
 
 .form-card {
@@ -138,8 +145,8 @@ h2 { font-size: 1.0625rem; }
   min-block-size: var(--card-min-block);
   display: grid;
   align-content: start;
-  gap: var(--space-12);
-  padding: var(--space-16);
+  gap: var(--card-content-gap);
+  padding: var(--card-padding);
   border: 1px solid var(--outline);
   background: var(--paper);
   overflow-wrap: anywhere;
@@ -174,8 +181,8 @@ h2 { font-size: 1.0625rem; }
 #dock {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 4.5rem), 1fr));
-  inline-size: min(100%, calc(4 * var(--dock-item-width) + 3 * var(--space-4)));
-  gap: var(--space-4);
+  inline-size: min(100%, calc(4 * var(--dock-item-width) + 3 * var(--navigation-item-gap)));
+  gap: var(--navigation-item-gap);
 }
 
 [data-dock="right"] .dock-region {
