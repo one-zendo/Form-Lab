@@ -39,3 +39,23 @@ body[data-hinge=laptop] .training-page{grid-template-columns:minmax(0,1fr);grid-
 @media(prefers-reduced-transparency:reduce){body:is([data-page=Routine],[data-page=Workout]) .content{padding-bottom:var(--space-12)}body:is([data-page=Routine],[data-page=Workout])[data-nav=rail] .content{padding-inline-end:0}}
 .training-page :focus-visible{outline:var(--focus-width) solid var(--brand);outline-offset:var(--focus-offset)}
 @media(max-height:390px){.training-page{min-height:320px}.training-list{min-height:150px}}
+
+/* Build 50: compact portrait controls and explicit scroll ownership. */
+.training-toolbar{display:flex;align-items:center;justify-content:space-between;gap:var(--space-8);flex-wrap:wrap}
+.training-toolbar .training-link:last-child{text-align:end}
+@media(orientation:portrait){
+body:not([data-hinge=book]):is([data-page=Routine],[data-page=Workout]) #app-pages{flex:1 1 0;min-height:0;width:100%}
+body:not([data-hinge=book]):is([data-page=Routine],[data-page=Workout]) .training-page{flex:1 1 0;width:100%;min-height:0;grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;grid-template-areas:"overview" "list" "action";gap:var(--space-12)}
+body:not([data-hinge=book]):is([data-page=Routine],[data-page=Workout]) .training-overview{gap:var(--space-4)}
+body:not([data-hinge=book]) .training-list{overflow-y:auto;overflow-x:hidden;min-height:0;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+body:not([data-hinge=book]) .training-stats{gap:var(--space-16)}
+body:not([data-hinge=book]) .training-action{align-self:end}
+body:not([data-hinge=book]) .training-exercise summary{min-height:var(--target-min)}
+body:not([data-hinge=book]) .training-set-grid{grid-template-columns:minmax(20px,.55fr) minmax(32px,1fr) minmax(0,1fr) minmax(0,1fr) minmax(44px,.9fr)}
+body:not([data-hinge=book]) .training-set-grid input{padding:0 var(--space-4)}
+body:not([data-hinge=book]) #rest-options .form-secondary{padding:var(--space-4);font-size:var(--type-caption)}
+/* Keep a usable scrolling fallback when keyboard, preview control or larger text constrains height. */
+body:not([data-hinge=book]) .training-page{min-height:min-content}
+body:not([data-hinge=book]) .training-list{min-height:calc(var(--target-min)*2)}
+}
+@media(prefers-reduced-transparency:reduce){body:is([data-page=Routine],[data-page=Workout])[data-nav=rail] .content{padding-bottom:var(--space-12)}}

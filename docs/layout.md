@@ -80,3 +80,6 @@ Build 44: user screenshot of Build 43 shows bottom streak card fading despite st
 
 
 Build 45: user requests removal of all headline blur effects. Shared headline backing is now solid canvas with no backdrop filter, gradient tint or feather mask; retains existing height and initial content clearance so scrolling text cannot overlap foreground headline. Atmosphere artwork remains independent above backing. Navigation materials, dimensions, gestures and Home sizing unchanged. Visual device verification pending.
+
+
+Build 50: portrait training layout refinement (FP/UP, including Safari and native-sized reference): combine back/edit and minimize/finish into compact shared toolbars, full available width, tighter overview spacing, flexible independent exercise scroll, pinned action and measured dock reserve, narrow set grid and compact timer controls. Outer scrolling fallback for insufficient height. Landscape split and existing geometry untouched except shared toolbar compaction. No user screenshot identifying exact defect; changes target source-observed excessive vertical controls and constrained exercise space. Physical portrait verification pending.
