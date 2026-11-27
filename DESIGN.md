@@ -1,5 +1,5 @@
 # FORM — Design standard
-Status: approved web foundation behavior through Build 15; Build 16 QA pending. This is the sole active design specification. Native-sized browser previews are not native implementations.
+Status: restart foundation specification; implementation and physical acceptance pending. This is the sole active design authority for the restart. Build 08 remains the existing runtime until replaced. Native-sized browser previews are not native implementations.
 
 ## Hardware reference
 | Profile | Full display (pt) | Safari drawable (pt) | Safari exclusion |
@@ -12,30 +12,30 @@ Status: approved web foundation behavior through Build 15; Build 16 QA pending. 
 
 These are reference calibration targets, not independently measured guarantees. Use canonical SVGs in design/duo. Silver-gray chassis, no black bezel, circular camera. FP hinge left/curve right; FL1 hinge bottom/curve top; FL2 hinge top/curve bottom; UP vertical fold; UL horizontal fold. Folded hinge corner radius 8 pt, outer 59 pt; unfolded 28 pt provisional. Folded camera centers FP (418,48), FL1 (48,48), FL2 (630,418), radius 18.5 pt; unfolded camera unknown. Native safe areas unverified. Never invent geometry.
 
-## Responsive layout
-Use actual available viewport, fixed inset shell, CSS-first adaptive grid. Match reference viewport within 2 CSS px; folded landscape angle 90 = FL1, 270 = FL2, otherwise ambiguous. Unknown stays unknown. Never subtract Safari exclusions twice. System safe insets separate from design margin. Standard outer/card padding 16 CSS px; ONLY FL1 Safari left design margin zero, retaining system inset. Apply this exception immediately from observed profile, not delayed committed orientation. Native FL1 retains 16px design margin. Camera avoidance localized to affected components in Native-sized folded profiles; provisional 4px clearance. No legacy fixed headline or content anchors override these rules.
 
-Spacing tokens 4/8/12/16/24/32: headline/tagline and nav items 4; card internals 8; component gaps 12; headline-content and card padding 16; section 24; major group 32. CSS px are not guaranteed physical pt. Each orientation owns its explicit card composition. Normal content uses a single flowing column in each profile until its individual layout is designed. No forced landscape columns or width-triggered column switching. Hinge-triggered compositions remain enabled. Scroll when insufficient. Minimum card height 8rem. Optional timer below cards, minimum 48px, one gap; hidden reclaims space.
+## Independent layout architecture
+Start from scratch with a minimal wireframe: headline, two simple test cards, navigation and diagnostics. No workout features in the initial foundation. Preserve previous runtime in Git history and preserve all user storage.
+- Each screen owns its layout independently: Home, Workouts, Progress, Profile, and future screens such as Routine and Active Workout.
+- Each screen owns five orientation layouts (FP, FL1, FL2, UP, UL), each with independent Native and Safari settings.
+- Only headline and pop-out layout components may be shared across screens. Hardware/viewport detection, raw posture signals, diagnostics, application data and non-layout visual tokens may be shared, but must not impose screen layout decisions.
+- No global card grid, sizing, stretching, column switching, spacing, scrolling, navigation placement or hinge composition rules. No cross-screen layout inheritance, generic portrait/landscape composition, or corrective CSS overrides of shared layout rules.
+- Each screen/orientation/environment explicitly owns its card arrangement, sizing, alignment, spacing, scrolling, navigation placement and hinge response. Changing one must not affect another.
+- Initial normal-state wireframes use two stacked full-width test cards in all five orientations. Card heights and final spacing are provisional; do not force equal-height stretching globally. Home UP stays stacked regardless of hinge signal. Other hinge compositions require individual approval; the illustrated UL split is provisional, not a global rule.
+- Retain raw hinge and viewport segment detection. Diagnostics distinguish detected posture from actual rendered composition. Never fabricate hinge angle or exact boundary.
 
-## Posture and motion
-Except for UP Home, posture and viewport segment signals activate explicit UP and UL hinge compositions: two equal left/right columns. UL uses a vertical content division, not a claim about physical hinge geometry. Folded cover profiles retain their independent layouts. No global automatic column selection. No fabricated hinge angle or exact boundary. Orientation-specific composition changes retain transform-only card motion 240ms; reduced motion disables animation; reported split snaps to avoid crossing fold. Hide guides during transition. Do not delay FL1 Safari margin.
+## Viewport and calibration
+Use actual drawable viewport; never subtract Safari exclusions twice. Keep system safe insets distinct from design margins. Match reference viewport within 2 CSS px; folded landscape angle 90 = FL1, 270 = FL2, otherwise ambiguous. Unknown stays unknown. Preserve the approved FL1 Safari zero left design margin while retaining system inset; Native FL1 reference margin 16px. Apply these as explicit local layout settings, not global screen composition. Camera avoidance is local; previous 4px clearance is provisional. CSS px are not guaranteed physical pt.
 
-## Navigation
-One reusable dock, own explicit grid track, anchored to the viewport; only content scrolls. On a change between bottom and right placement, animate the dock for 240 ms unless reduced motion, keyboard editing or reported segment geometry requires snapping. No animation during ordinary scrolling. FP Native right, FP Safari bottom; FL1/FL2 both right; UP/UL both bottom; ambiguous FL right; unknown bottom. Rail 80px, bottom max 332px, buttons min 44px. Preserve selected destination across rotation. Home / Workouts / Progress / Profile. Navigation routes to actual application views; selection is session-only.
-
-## Keyboard
-Prefer browser-native focus scrolling. Detect focused editable field plus visual viewport height loss >=100 CSS px at near-unit zoom; heuristic only. Preserve resolved card tracks and rail width, hide dock/timer, clip and scroll content; next animation frame checks visibility, scrollIntoView nearest only when obscured. Restore pre-edit scroll on dismissal; reduced motion respected. No fixed delay or forced target. Floating/layout-resizing keyboards and rotation during editing remain unverified.
+## Navigation and motion
+Navigation destinations: Home, Workouts, Progress, Profile. Preserve selected destination across rotation. Navigation state may be shared; each layout owns its dock geometry and placement. Prior placement references for local wireframes: FP Native right, FP Safari bottom; FL1/FL2 right; UP/UL bottom. Prior 80px rail, 332px maximum bottom dock and 44px minimum controls are reference values, not global layout rules. Keep navigation anchored while content scrolls. Motion is local, transform-only where appropriate, respects reduced motion and avoids crossing reported segment boundaries. No global motion-driven layout changes.
 
 ## Visual identity
-Apple-inspired restrained surfaces, clear hierarchy, spacious layout, Lucide icons where appropriate. FORM wordmark, tagline “Train with focus, follow your progress”. Current wireframe headline 28px bold, card title 17px. Initial functional styling is provisional; final screen typography, surfaces and production colors require approval; do not revive legacy anchors or 40:60 card ratios. Test colors: blue/purple cards, amber timer, green navigation.
+Apple-inspired restrained surfaces, clear hierarchy, spacious layout, Lucide icons where appropriate. FORM wordmark, tagline “Train with focus, follow your progress”. Home headline includes current build number. Test cards blue and purple. Headline 28px and card title 17px are prior wireframe references; final typography and production colors require approval. Spacing tokens 4/8/12/16/24/32 are available values, not inherited layout settings. Pop-outs share their own component styling.
 
 ## Diagnostics and previews
 Independent noninteractive paint-contained overlay, measured local origin, clip to visible geometry; omit hidden elements from guides and camera checks. Orange camera, purple headline/axes, blue viewport, green content/card alignment, gray unavailable/safe regions. Report physical reference, actual layout and visual viewport, offsets, CSS probe, rendered shell, visible editing area, safe insets, exclusions, card/timer/nav measurements, rotation/posture and camera warnings. Guides default on, measurements collapsed; hide indicator while editing, update guides during motion. Preserve form.diagnostics.v1 and all workout data.
 For complete Duo previews use one reusable interactive SVG, fixed hardware, clipped responsive UI, independent diagnostics. Orientation FP/FL1/FL2/UP/UL, Native/Safari, guides toggle default on, expandable measurements default collapsed. Maintain physical scale. Disclose schematic vs verified implementation and unknown measurements.
 
+
 ## Verification
-User accepted hinge, motion, adaptive cards, safe areas, navigation, keyboard, diagnostics and FL1 Safari behavior on Duo. Exact sensor source, native calibration, cross-orientation keyboard behavior and automated regression results are not established. Do not declare foundation locked until checks pass.
-
-Home headline includes the current build number; retain the approved tagline.
-
-Home in UP remains single-column regardless of hinge signals, with natural content-driven card heights (minimum 8rem), 12px gap and no forced equal-height stretching. The layout engine reports no active split for UP Home; detected posture remains separate. Other screens retain existing hinge compositions, including Active Workout.
+First verify simple cards, navigation, diagnostics and isolation across all ten orientation/environment combinations for each screen. Test posture, rotation, scrolling, safe areas and camera avoidance; changing a single layout must leave all others unchanged. Verify keyboard behavior when editable controls are introduced. Prior device acceptance does not establish restart acceptance. Native calibration, unfolded camera geometry and exact sensor source remain unverified. Do not declare foundation locked until automated and physical checks pass.
