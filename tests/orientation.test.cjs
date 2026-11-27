@@ -26,7 +26,7 @@ test('UP Safari headline center includes top exclusion',()=>{
 });
 test('unmatched viewport uses safe generic fallback and is unverified',()=>{
   const a=resolve(FormDuoGeometry.FP,'FP','Unmatched');
-  assert.deepEqual(a,{headline:16,content:16,center:48,contentCenter:48,landscape:false,verified:false});
+  assert.deepEqual(a,{headline:16,content:16,center:48,contentCenter:48,landscape:false,matched:false});
 });
 
 test('ambiguous folded landscape retains shared landscape geometry without side-specific camera claims',()=>{const g=geometryFor(FormDuoGeometry,'FL1 / FL2');assert.deepEqual([g.w,g.h,g.side,g.excluded,g.headline,g.content],[678,466,null,84,84,84]);const a=resolve(g,'FL1 / FL2','Safari-sized');assert.equal(a.landscape,true);assert.equal(a.headline,84);assert.equal(a.content,84);assert.equal(a.matched,true)});
