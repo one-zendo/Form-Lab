@@ -13,3 +13,5 @@ Acceptance pending: ten viewport cases, rotation including UP→UL without refre
 Build 03 system retained byte-for-byte: 120 ms profile stabilization, reusable diagnostic overlays, safe-area-sensitive alignment, camera avoidance only for Native-sized folded profiles. Visible build identifier and manifest reset together.
 
 Build 02: portrait viewport stacks cards in one column; landscape retains adaptive minimum-width grid. Device Posture API folded signal is reported when available; continuous does not prove physical unfolding, so calibrated viewport inference remains the fallback. Unknown profiles remain unknown. Posture is diagnostic only; CSS controls card layout. No physical hinge angle is exposed or fabricated.
+
+Build 03 supersedes diagnostic-only posture: a folded Device Posture API or CSS media signal activates split cards. Segment axis takes precedence; otherwise UP/UL reference axis is used without claiming exact boundary. Folded cover profiles retain normal layout absent segments. Segment CSS uses reported boundaries; physical validation pending. No hinge angle is inferred.
