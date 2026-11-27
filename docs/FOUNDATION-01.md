@@ -24,3 +24,6 @@ Build 05: diagnostic card count 1–4, default 2; normal portrait stacks, normal
 
 Build 05 physical acceptance: user reported universal card system working on Duo, 2026-11-27.
 Build 06: system safe-area insets separated from 16px design margin; Safari reference exclusions never subtracted twice. Segment origin refreshed after navigation and camera alignment; minimum 12px fold gap centered around reported boundary when smaller than design gap. Diagnostics report system insets, reference exclusion and camera overlap warnings (not proof of clearance). Existing camera calibration unchanged; unfolded camera and actual native safe areas unresolved. Physical and browser validation pending.
+
+Build 06 physical acceptance: user reported safe-area build looking good on Duo, 2026-11-27.
+Build 07: shared navigation placement resolver preserves FP Native right, FP Safari bottom, FL1/FL2 both right, UP/UL both bottom, ambiguous FL right and unknown bottom. Dock remains in its own grid track, 80px rail / 332px maximum bottom width, 44px minimum button height. Four selectable wireframe destinations preserve selection through rotation and posture changes; no actual page routing or workout functionality. Selection is session-only. Diagnostics report placement, dock size and selection. Physical and browser validation pending.
