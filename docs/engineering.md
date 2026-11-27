@@ -111,3 +111,54 @@ Verify FORM open/close toggle markup and retain delegated handler. Apply shared 
 
 ## Build 178 — normalization
 Audited 15 linked CSS/JS assets. Centralize routine row, picker width, compact dialog, calendar control and motion aliases in root; name classifier thresholds and hinge retarget window. Preserve effective values and specialized cascade. Document runtime versus aspirational motion spec and exceptions. No speculative override removal. JS syntax and ten orientation classifier cases passed. Full browser/device/Node CI pending.
+
+## Build 82 engineering audit
+
+This branch starts from draft PR #2 at 153a1c4, based on main at 2877321. That baseline includes fallback layout for ambiguous folded landscape, workout storage verification and interrupted-completion recovery, and a browser integration suite.
+
+Build 82 preserves a routine draft when its screen is reopened and asks before replacing it with another routine. Private import is guarded during an active workout or unsaved edit, and validates the dataset before replacing stored data. Imported exercise names and older active sessions of unknown provenance are excluded from ExerciseDB search. Catalog artwork and local fallback icons remain available. Retired experimental offset controls and the old floating diagnostics panel scripts were removed from the active source tree. The approved styling and geometry were preserved.
+
+Remaining work includes routine authoring, isolation of routine overrides between imported datasets sharing routine IDs, broader analytics, and confirming the live artwork provider and licensing contract. Web Locks are used when available. The fallback snapshot check detects observed conflicts but does not provide an atomic cross-tab lock. Physical Duo safe areas, gestures, hinge states, and Safari behavior require device verification.
+
+The ambiguous folded-landscape case retains the right rail shared by both known FL rotations. The browser regression checks the dock bounds at each of the five Safari-sized viewports and the ambiguous case. These are simulated viewports. The suite also checks draft recovery, private imports, exercise removal, rest-timer recovery, workout completion, and Web Locks contention.
+
+The four stale source assertions on main were reproduced under Node 22. The audit branch passed all 54 Node assertions and the Playwright Chromium integration using Node 22. Playwright was upgraded after npm audit flagged the old browser download certificate validation. The updated test dependency reported zero advisories in the npm audit run. WebKit could not launch on the audit host because its native shared libraries were unavailable.
+
+## Build 83 — Phase 1 training data remediation
+
+Baseline is verified Build 82 at `f545bbc7464dcbdef9735114ed7ac9e6e0932b7f`. On that commit the new Chromium assertions showed zero Progress after completion, cross-import override and history bleed, and stale Progress after reimport. A separate legacy fixture showed an unscoped override applied to an unrelated import.
+
+### Data ownership and compatibility
+
+- Private snapshots use a durable dataset ID in the existing `form.private.training.v1` entry. That entry atomically stores the selected snapshot and its archived predecessors as one localStorage write. An equivalent snapshot reuses its ID across reloads and repeated imports. Comparison is independent of JSON property order and imported record order. A materially changed snapshot receives a new random 128-bit ID. A fresh registry does not restart an ID counter that could alias surviving workout data.
+- Training owns the import write gate, using the existing storage snapshot checks and Web Lock where available. The active selection is published only after successful write and readback. A quota rejection leaves the old snapshot and selection available.
+- New edits use `form.training.routine-overrides.v2`, scoped by dataset and routine ID. New workouts carry the dataset ID through active storage, completion and recovery. Home, Workouts, Routine History and Progress consume one scoped record projection.
+- The old override key and original history entries remain available in the existing raw data export. Unscoped data with ambiguous provenance is excluded from dataset views. A legacy completion explicitly marked as sample remains associated with the sample dataset. The prior private snapshot receives a stable legacy identity on read and is archived at the next successful switch. No legacy key is deleted or overwritten by migration. This release does not add a UI to assign ambiguous records.
+- Browsers without Web Locks still use optimistic conflict checks. Those checks cannot make independent writes atomic across tabs. Archived imports count toward the origin quota and no automatic pruning is performed. Updated snapshots are treated as separate datasets, and the current export is a raw archive without a matching restore tool.
+
+### Verification
+
+Node 22 syntax and all 57 Node cases passed. Chromium integration passed the existing exercise, rest, reload, finish, lock and Duo viewport checks, plus same-ID import isolation, Progress, original edits/history after reload and reimport, legacy preservation, and rejected-write recovery. WebKit on this host lacks native libraries. Physical Safari and Duo behavior were not tested. UI styling, layout contracts, geometry, coordinates, and motion are outside this phase.
+
+## Build 84 — Phase 2 UI engineering remediation
+
+Build 83 at `6f74a7a47b4dcc153d528a76e498ff5394834fd5` is the data baseline. Build 84 makes no schema, import, storage or workout calculation changes.
+
+- Routine composition uses the existing landscape flag on `#calibration`. Landscape and book layouts share the intended 2:3 overview/exercise grid, independent column scrolling and a full-width Start action. Portrait and laptop posture retain the stacked fallback.
+- The document root owns theme state. `foundation/tokens.css` owns the Finish palette, control rail color and dimensions, dock geometry tokens and final glass values. `shell.css` owns dock placement and directional material. `foundation/pages.css` owns the FP tagline offset and shared content composition. `foundation/training.css` owns Routine and Workout layout variants and uses the shared tokens.
+- Set completion restores focus to the corresponding control after rendering. Selected workout choices have a shared focus outline when reached by keyboard.
+- Removed retired diagnostics panel, weather-preview layout and rest-options selectors, obsolete centered dock overrides and superseded training declarations. Diagnostics retains its guide presentation. The noninteractive weather layer retains the effective size, mask and stack order.
+
+### Coordinate investigation
+
+Chromium measured the same anchors before and after. Safari-sized FL1 still uses headline/content X84 CSS px. Adding the SVG drawable origin X84 produces physical X168 in a 1:1 compositing reference, while the standard also records headline X84. Safari-sized UP still uses center Y130 CSS px and physical drawable origin Y82. Composed in display coordinates, that is Y212. These values expose an unresolved interpretation of the Build 81 notes and hardware reference. Presentational cleanup does not change either anchor, the geometry resolver, the SVGs or safe-area arithmetic. Automatic review blocked a further cleanup of legacy shell padding and position fallbacks because of calibration risk. Those fallbacks were retained pending separate approval and device evidence.
+
+### Verification
+
+All 57 Node cases and Chromium integration passed. The new presentation tests fail on Build 83 for the landscape Routine grid, dark Finish palette and workout focus. The repaired behavior passed across five Safari-sized and five Native-sized cases and checked independent scrolling, Start visibility and keyboard interaction. A separate 98-row before/after Chromium probe matched headline, content, dock, Home cards, rest rail bounds and calibration values. These are browser size simulations. WebKit lacked native host libraries. Physical Duo, nonzero safe-area behavior, live hinge transitions, zoom policy, screen reader behavior and broader contrast review remain open.
+
+## Build 84 reconciliation on main
+
+GitHub Pages publishes the root of `main` using its generated Pages workflow. It successfully published Build 82 at `cfeec80` while the later training remediation was on the Active Workout preview branch. The separate historical Build 84 at `f0a36a7` predates the Lab reset at `d16dc35` and is already in main's ancestry. This release integrates the current Lab remediation through `1470c81`, preserves main's local Lucide exercise thumbnails and the quality branch's Weather label, and synchronizes the headline, About, asset URLs and version manifest.
+
+The main Lab uses a cache-busted version poll and does not register a service worker. The cache-first Duo test worker belongs to a separate branch. Pages advertised a 600-second HTTP cache lifetime on the original Build 82 response, which can delay a plain navigation. Chromium regression tests cover the recovered workout lifecycle, storage, dataset isolation, artwork and simulated Duo layouts. Physical Safari and Duo were not tested.

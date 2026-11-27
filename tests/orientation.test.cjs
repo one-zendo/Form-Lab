@@ -1,4 +1,4 @@
-const test=require('node:test'),assert=require('node:assert/strict');global.window=global;require('../foundation/geometry.js');const {detect}=require('../foundation/orientation.js');for(const [id,g] of Object.entries(FormDuoGeometry)){test(id,()=>{for(const safari of [false,true]){const w=g.w-(safari&&g.side!=='top'?g.excluded:0),h=g.h-(safari&&g.side==='top'?g.excluded:0);assert.equal(detect(FormDuoGeometry,w,h).id,id.startsWith('FL')?'FL1 / FL2':id)}})}test('unknown',()=>assert.equal(detect(FormDuoGeometry,390,844).id,'Unknown'));
+const test=require('node:test'),assert=require('node:assert/strict');global.window=global;require('../foundation/geometry.js');const {detect,geometryFor}=require('../foundation/orientation.js');for(const [id,g] of Object.entries(FormDuoGeometry)){test(id,()=>{for(const safari of [false,true]){const w=g.w-(safari&&g.side!=='top'?g.excluded:0),h=g.h-(safari&&g.side==='top'?g.excluded:0);assert.equal(detect(FormDuoGeometry,w,h).id,id.startsWith('FL')?'FL1 / FL2':id)}})}test('unknown',()=>assert.equal(detect(FormDuoGeometry,390,844).id,'Unknown'));
 test('folded landscape rotation calibration',()=>{for(const w of [678,594]){assert.equal(detect(FormDuoGeometry,w,466,90).id,'FL1');assert.equal(detect(FormDuoGeometry,w,466,270).id,'FL2');assert.equal(detect(FormDuoGeometry,w,466,undefined).id,'FL1 / FL2')}});
 
 const {resolve}=require('../foundation/layout.js');
@@ -6,7 +6,7 @@ test('calibration anchors match hardware reference',()=>{
   for(const [id,g] of Object.entries(FormDuoGeometry)){
     for(const mode of ['Native-sized','Safari-sized']){
       const a=resolve(g,id,mode);
-      assert.equal(a.verified,true);
+      assert.equal(a.matched,true);
       assert.equal(a.headline,g.headline);
       assert.equal(a.content,id==='FL1'&&mode==='Safari-sized'?84:g.content);
       assert.equal(a.center,id==='UP'&&mode==='Safari-sized'?130:48);
@@ -26,5 +26,10 @@ test('UP Safari headline center includes top exclusion',()=>{
 });
 test('unmatched viewport uses safe generic fallback and is unverified',()=>{
   const a=resolve(FormDuoGeometry.FP,'FP','Unmatched');
-  assert.deepEqual(a,{headline:16,content:16,center:48,contentCenter:48,landscape:false,verified:false});
+  assert.deepEqual(a,{headline:16,content:16,center:48,contentCenter:48,landscape:false,matched:false});
 });
+
+test('ambiguous folded landscape retains shared landscape geometry without side-specific camera claims',()=>{const g=geometryFor(FormDuoGeometry,'FL1 / FL2');assert.deepEqual([g.w,g.h,g.side,g.excluded,g.headline,g.content],[678,466,null,84,84,84]);const a=resolve(g,'FL1 / FL2','Safari-sized');assert.equal(a.landscape,true);assert.equal(a.headline,84);assert.equal(a.content,84);assert.equal(a.matched,true)});
+test('unresolved orientations do not borrow a folded landscape geometry',()=>{assert.equal(geometryFor(FormDuoGeometry,'Unknown'),null)});
+
+test('unknown landscape viewport retains landscape layout without claiming calibration',()=>{const a=resolve(null,'Unknown','Unmatched',800,450);assert.equal(a.landscape,true);assert.equal(a.matched,false)});

@@ -5,6 +5,7 @@
 
 
 .tagline{font-size:var(--type-support);margin:0}
+body[data-orientation=FP] .tagline{position:relative;top:-6px;line-height:20px}
 .home-greeting{font-size:var(--type-page);font-weight:var(--weight-bold);line-height:1.1;margin:0}
 .home-dashboard{display:grid;flex:1 0 auto;grid-template-columns:minmax(0,1fr);grid-template-rows:repeat(2,minmax(min-content,1fr));gap:var(--space-12);align-items:stretch;min-height:0}
 .home-workout-card{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;gap:var(--space-16);min-height:148px;padding:var(--space-16);border:0;border-radius:var(--radius-card);background:var(--action);color:var(--on-action);text-align:start;font:inherit;cursor:pointer;transition:opacity var(--motion-feedback) var(--ease-standard)}
