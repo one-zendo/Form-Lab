@@ -185,3 +185,17 @@ body[data-page=Workout] #workout-exercises .training-set-grid button{box-sizing:
 #workout-exercises details .workout-set-count[data-lit=true],.workout-choice .workout-set-count[data-lit=true]{color:var(--workout-success);font-weight:500}
 #workout-exercises .workout-chevron{display:grid;place-items:center;width:16px;height:16px;flex:0 0 16px;font-size:0;line-height:1;transform-origin:center}
 #workout-exercises .workout-chevron::before{content:"";width:7px;height:7px;border-right:1.8px solid currentColor;border-bottom:1.8px solid currentColor;transform:translateY(-2px) rotate(45deg)}
+
+/* Build 71: approved exercise card design; compact landscape adapts to available width. */
+body[data-page=Workout] #workout-exercises .training-exercise{padding:16px;container-type:inline-size}
+#workout-exercises .training-exercise summary{min-height:56px;gap:12px}
+#workout-exercises .training-thumb{width:56px;height:56px;border-radius:12px;overflow:hidden}
+#workout-exercises .training-copy small{font-size:12px;line-height:16px;color:var(--muted)}
+#workout-exercises details[open] summary{padding-bottom:12px;border-bottom:1px solid color-mix(in srgb,var(--muted) 15%,transparent);margin-bottom:8px}
+body[data-page=Workout] #workout-exercises .training-set-grid[data-next=true]{background:color-mix(in srgb,var(--action) 8%,var(--paper));border-radius:10px}
+body[data-page=Workout] #workout-exercises .training-set-grid[data-next=true] input{box-shadow:none;background:var(--paper)}
+body[data-page=Workout] #workout-exercises .training-set-grid[data-done] button{width:32px;height:32px;min-height:32px;font-size:18px;background:var(--elevated);color:var(--muted);border:0}
+body[data-page=Workout] #workout-exercises .training-set-grid[data-done=true] button{background:var(--workout-success);color:white}
+body[data-page=Workout] #workout-exercises .training-set-grid button::after{inset:-6px}
+#workout-exercises .workout-add-set{min-height:44px;border-top:1px solid color-mix(in srgb,var(--muted) 15%,transparent);border-radius:0;color:var(--action);font-size:14px;font-weight:600}
+@container (max-width:260px){#workout-exercises .training-thumb{width:40px;height:40px}#workout-exercises .training-exercise summary{gap:6px;min-height:44px}#workout-exercises .training-copy strong{font-size:15px}}
