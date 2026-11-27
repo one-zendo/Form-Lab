@@ -59,3 +59,6 @@ Five independent orientation arrangements per screen, not ten. Native and Safari
 
 ## Shared orientation alignment (approved)
 Navigation placement and outer content margins are shared across screens within each orientation, respecting environment-specific viewport and safe-area calibration and approved navigation references. Navigation remains anchored across screen changes and scrolling. Headline alignment follows the shared orientation content boundary. Card internal padding belongs to the shared component; inter-card gaps, card dimensions and arrangements belong to each screen and orientation. Native and Safari share composition intent with local viewport adaptation. These ownership rules supersede earlier statements assigning navigation placement and outer margins independently to every screen. Shared alignment must not introduce global automatic card arrangement or stretching.
+
+## Navigation visibility (approved)
+Main navigation placement is shared across main screens within each orientation and environment. Secondary screens may hide the main dock and use their own back or task controls while retaining shared orientation margins and headline alignment. Visibility is owned by the screen; main dock placement is not. Exact secondary-screen controls require screen-specific design.
