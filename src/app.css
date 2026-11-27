@@ -8,5 +8,5 @@ html,body{overflow:hidden;overscroll-behavior:none}#shell{grid-template-areas:"h
 #shell[data-profile="FL2"] #content{grid-auto-rows:minmax(8rem,1fr)}
 #shell[data-profile="UP"] #content{grid-auto-rows:minmax(8rem,1fr)}
 #shell[data-profile="UL"] #content{grid-auto-rows:minmax(8rem,1fr)}
-#shell[data-profile="UP"] #content[data-split="vertical"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+#shell[data-profile="UP"] #content[data-split="vertical"]:not([data-screen="Home"]){grid-template-columns:repeat(2,minmax(0,1fr))}
 #shell[data-profile="UL"] #content[data-split="vertical"]{grid-template-columns:repeat(2,minmax(0,1fr))}

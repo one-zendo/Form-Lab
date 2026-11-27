@@ -115,3 +115,6 @@ Restore orientation-specific hinge response for UP and UL with equal left/right 
 
 ## Clean Build 06
 Remove forced normal landscape columns and retain explicit hinge-only vertical split in UP/UL. Normal layout flows in one column pending individual design. Add simulated posture regression assertions. Browser and physical verification pending.
+
+## Clean Build 07
+Exclude UP Home from hinge-triggered column switching; preserve other screens and UL. Syntax checked; browser and physical validation pending.

@@ -37,3 +37,5 @@ For complete Duo previews use one reusable interactive SVG, fixed hardware, clip
 User accepted hinge, motion, adaptive cards, safe areas, navigation, keyboard, diagnostics and FL1 Safari behavior on Duo. Exact sensor source, native calibration, cross-orientation keyboard behavior and automated regression results are not established. Do not declare foundation locked until checks pass.
 
 Home headline includes the current build number; retain the approved tagline.
+
+Home in UP remains single-column regardless of hinge signals. Other screens retain existing hinge compositions, including Active Workout.
