@@ -161,3 +161,8 @@ body[data-page=Workout] #workout-count{margin:0;font-size:12px;font-weight:500;l
 body[data-page=Workout] #workout-progress{display:flex;flex-wrap:nowrap;align-items:center;justify-content:flex-end;gap:4px;height:18px;width:100%;min-width:0}
 body[data-page=Workout] #workout-progress span{flex:0 1 24px;min-width:0;height:5px;border-radius:3px;background:linear-gradient(to right,#34c759 0 var(--exercise-fill,0%),var(--elevated) var(--exercise-fill,0%) 100%)}
 body[data-page=Workout] #workout-storage:empty{display:none}
+
+/* Build 65: contained live indicator pulse, no expanding shadow. */
+body[data-page=Workout] .workout-live{animation:workout-live-opacity 2.4s ease-in-out infinite;box-shadow:none}
+@keyframes workout-live-opacity{0%,100%{opacity:1}50%{opacity:.45}}
+@media(prefers-reduced-motion:reduce){body[data-page=Workout] .workout-live{animation:none;opacity:1}}
