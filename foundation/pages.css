@@ -1,9 +1,9 @@
 /* Home dashboard — one authoritative component rule set. Hardware calibration stays in shell.css and layout.js. */
-.headline{margin-inline-end:max(var(--space-16),env(safe-area-inset-right))}
-.home-date{margin-inline-start:auto;display:grid;gap:0;text-align:end;flex:none;line-height:1.2}
+
+
 .home-date[hidden]{display:none}
-.home-date span:first-child{font-size:var(--type-headline);font-weight:var(--weight-bold);color:var(--ink)}
-.home-date span:last-child{font-size:var(--type-support);font-weight:var(--weight-body);color:var(--muted)}
+
+
 .tagline{font-size:var(--type-support);margin:0}
 .home-greeting{font-size:var(--type-page);font-weight:var(--weight-bold);line-height:1.1;margin:0}
 .home-dashboard{display:grid;flex:1 0 auto;grid-template-columns:minmax(0,1fr);grid-template-rows:repeat(2,minmax(min-content,1fr));gap:var(--space-12);align-items:stretch;min-height:0}
@@ -32,10 +32,10 @@
 #progress-summary strong{font-size:var(--type-large);font-weight:var(--weight-bold);font-variant-numeric:tabular-nums}
 #progress-summary p{margin-bottom:var(--space-4)}
 .home-dashboard button:focus-visible{outline:var(--focus-width) solid var(--brand);outline-offset:var(--focus-offset)}
-#shell{height:100dvh;min-height:0;overflow:hidden}
-#calibration{height:100%;display:flex;flex-direction:column;min-height:0;padding-bottom:0}
-.headline{flex:none;background:var(--canvas);z-index:2}
-.content{flex:1;min-height:0;overflow-y:auto;overscroll-behavior-y:contain;padding-bottom:var(--space-16)}
+
+
+
+
 body[data-page=Home] .content{display:flex;flex-direction:column}
 body[data-page=Home] #app-pages{flex:1 0 auto;display:flex;flex-direction:column;min-height:0}
 body[data-page=Home] [data-screen=Home]{display:flex;flex-direction:column;flex:1 0 auto;width:100%;min-height:0;gap:var(--space-12)}
@@ -47,27 +47,35 @@ body[data-hinge=laptop] .home-dashboard{grid-template-columns:minmax(0,1fr);grid
 body[data-page=Home] #headline-build{display:inline-flex;align-items:center;font-size:var(--type-caption);font-weight:var(--weight-body);color:var(--muted);white-space:nowrap;margin-inline-start:var(--space-4)}
 
 /* Build 27: compact date scale and shared fixed headline across every page. */
-#calibration{height:100%;min-height:0;overflow:hidden}
-.headline{position:relative;z-index:20;flex:0 0 var(--headline-height)}
-.home-date{align-self:stretch;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;gap:0;min-width:0;max-width:fit-content;line-height:1.15}
-.home-date span:first-child{font-size:14px;font-weight:var(--weight-headline);line-height:1.15;white-space:nowrap}
-.home-date span:last-child{font-size:10px;font-weight:var(--weight-body);line-height:1.2;white-space:nowrap}
-.content{flex:1 1 auto;min-height:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none}
-.content::-webkit-scrollbar{display:none}
 
+
+
+
+
+
+
+
+/* Consolidated shared layout. Conditional glass, rail and reduced-transparency rules remain separate. */
+#calibration{display:flex;flex-direction:column;position:relative;width:100%;height:100%;min-height:0;max-height:100%;overflow:hidden;box-sizing:border-box;padding:0}
+.headline{margin-inline-end:max(var(--space-16),env(safe-area-inset-right));position:absolute;top:calc(var(--layout-center) - var(--headline-height)/2);left:0;right:0;z-index:21;flex:0 0 var(--headline-height);min-height:var(--headline-height);max-height:var(--headline-height);background:transparent;isolation:auto}
+.home-date{margin-inline-start:auto;align-self:stretch;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;gap:0;min-width:0;max-width:fit-content;text-align:end;flex:none;line-height:1.15}
+.home-date span:first-child{font-size:14px;font-weight:var(--weight-headline);line-height:1.15;white-space:nowrap;color:var(--ink)}
+.home-date span:last-child{font-size:10px;font-weight:var(--weight-body);line-height:1.2;white-space:nowrap;color:var(--muted)}
+.content{margin-inline-start:var(--layout-content);margin-inline-end:max(var(--space-16),env(safe-area-inset-right));min-width:0;position:relative;z-index:auto;flex:1 1 0;height:0;min-height:0;max-height:100%;margin-top:0;padding-top:calc(var(--layout-center) + var(--headline-height)/2 + var(--glass-lead));padding-bottom:var(--space-16);overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-width:none}
+.content::-webkit-scrollbar{display:none}
 /* Build 28: enforce a single internal scroll container on every page. */
-#calibration{display:flex;flex-direction:column;width:100%;height:100%;min-height:0;max-height:100%;overflow:hidden;box-sizing:border-box;padding-bottom:0}
-.headline{position:relative;top:calc(var(--layout-center) - var(--layout-content-center));z-index:20;flex:0 0 var(--headline-height);min-height:var(--headline-height);max-height:var(--headline-height)}
-.content{position:relative;flex:1 1 0;height:0;min-height:0;max-height:100%;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-width:none}
+
+
+
 .content::-webkit-scrollbar{display:none}
 
 
 
 /* Build 32: independent full-width glass layer, with content scrolling under it. */
-#calibration{position:relative;padding-top:0}
-.headline{position:absolute;top:calc(var(--layout-center) - var(--headline-height)/2);left:0;right:0;z-index:21;background:transparent;isolation:auto}
+
+
 .headline-material{position:absolute;inset:0 0 auto;height:calc(var(--layout-center) + var(--headline-height)/2 + var(--glass-lead));z-index:20;pointer-events:none;background:var(--canvas)}
-.content{position:relative;z-index:auto;flex:1 1 0;height:0;min-height:0;margin-top:0;padding-top:calc(var(--layout-center) + var(--headline-height)/2 + var(--glass-lead));overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;touch-action:pan-y;scrollbar-width:none}
+
 
 /* Preserve resting content clearance while allowing the scroller to paint behind glass. */
 @supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
