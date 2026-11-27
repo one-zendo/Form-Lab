@@ -83,3 +83,6 @@ Build 45: user requests removal of all headline blur effects. Shared headline ba
 
 
 Build 50: portrait training layout refinement (FP/UP, including Safari and native-sized reference): combine back/edit and minimize/finish into compact shared toolbars, full available width, tighter overview spacing, flexible independent exercise scroll, pinned action and measured dock reserve, narrow set grid and compact timer controls. Outer scrolling fallback for insufficient height. Landscape split and existing geometry untouched except shared toolbar compaction. No user screenshot identifying exact defect; changes target source-observed excessive vertical controls and constrained exercise space. Physical portrait verification pending.
+
+## Build 88 — UP active workout
+User screenshot of Build 87 reported the signature still visible and excess top space. UP active workout hides the signature in both viewport modes. Safari-sized UP maps physical headline center 130 pt to drawable center 48 CSS px (82 pt excluded above viewport); content and material follow the local anchor. Other screens and orientations retain existing calibration. Device confirmation remains outstanding.
