@@ -27,3 +27,6 @@ Build 06: system safe-area insets separated from 16px design margin; Safari refe
 
 Build 06 physical acceptance: user reported safe-area build looking good on Duo, 2026-11-27.
 Build 07: shared navigation placement resolver preserves FP Native right, FP Safari bottom, FL1/FL2 both right, UP/UL both bottom, ambiguous FL right and unknown bottom. Dock remains in its own grid track, 80px rail / 332px maximum bottom width, 44px minimum button height. Four selectable wireframe destinations preserve selection through rotation and posture changes; no actual page routing or workout functionality. Selection is session-only. Diagnostics report placement, dock size and selection. Physical and browser validation pending.
+
+Build 07 physical acceptance: user reported navigation working on Duo, 2026-11-27.
+Build 08: optional keyboard test field in Card 01, 16px input text, focus-aware visual viewport accommodation. A 100 CSS px height reduction at approximately unit zoom is an inference, not a keyboard API. During detected occlusion the shell fits the visible viewport, dock/timer temporarily hide, card scroll remains available, and focus is brought into view. On dismissal original layout returns. Test input is session-only. Layout-resizing or floating keyboards may not expose detectable occlusion; physical validation pending.

@@ -38,3 +38,11 @@
 #navitems button[aria-current="page"]{font-weight:700;box-shadow:inset 0 0 0 2px #3478f6}
 #navitems button:focus-visible{outline:2px solid #3478f6;outline-offset:-3px}
 .rail #navitems{width:100%;overflow:auto;overscroll-behavior:contain}
+
+/* Keyboard accommodation is temporary and never changes hardware calibration. */
+#keyboard-test{display:grid;gap:4px;min-width:0;font-size:14px}
+#keyboard-input{font:inherit;font-size:16px;min-height:44px;width:100%;min-width:0;padding:8px;border:1px solid #888;border-radius:8px;background:white;color:#202124}
+#app.keyboard-open{top:var(--keyboard-top,0px);bottom:var(--keyboard-bottom,0px);grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr)}
+#app.keyboard-open #nav,#app.keyboard-open #timer{display:none}
+#app.keyboard-open #main{grid-template-rows:minmax(0,1fr)}
+#app.keyboard-open #cards{scroll-padding:8px}
