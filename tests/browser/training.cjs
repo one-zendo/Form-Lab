@@ -458,6 +458,35 @@ async function checkTrainingPresentation(context, url) {
   await page.close();
 }
 
+async function checkDockMotion(context,url){
+  const page=await context.newPage();
+  for(const [w,h,angle] of [[382,678,0],[594,466,90]]){
+    await page.setViewportSize({width:w,height:h});
+    await page.addInitScript(a=>Object.defineProperty(screen,'orientation',{configurable:true,value:{angle:a,addEventListener(){}}}),angle);
+    await page.goto(url);
+    await page.waitForSelector('#dock[data-lens-ready=true]');
+    const buttons=page.locator('#dock button[data-page]'),lens=page.locator('.dock-lens');
+    const a=await buttons.nth(0).boundingBox(),b=await buttons.nth(1).boundingBox();
+    const p={x:a.x+a.width/2,y:a.y+a.height/2},q={x:b.x+b.width/2,y:b.y+b.height/2};
+    const pos=()=>lens.evaluate(el=>[parseFloat(el.style.getPropertyValue('--lens-x')),parseFloat(el.style.getPropertyValue('--lens-y'))]);
+    const initial=await pos();
+    await page.mouse.move(p.x,p.y);await page.mouse.down();
+    assert.deepEqual(await pos(),initial,'No touch-down jump');
+    await page.mouse.move((p.x+q.x)/2,(p.y+q.y)/2,{steps:8});
+    await page.waitForFunction(()=>{const b=document.querySelector('#dock button[data-page]');const n=parseFloat(b.style.getPropertyValue('--lens-weight'));return n>10&&n<90});
+    assert.equal(await buttons.nth(0).getAttribute('aria-pressed'),'true','Selection commits only on release');
+    await page.mouse.move(q.x,q.y,{steps:8});await page.mouse.up();
+    await page.waitForFunction(()=>document.querySelectorAll('#dock button[data-page]')[1].getAttribute('aria-pressed')==='true');
+    await page.waitForFunction(()=>parseFloat(document.querySelectorAll('#dock button[data-page]')[1].style.getPropertyValue('--lens-weight'))===100);
+    await page.emulateMedia({reducedMotion:'reduce'});
+    await buttons.nth(0).focus();await buttons.nth(0).press('Enter');
+    assert.equal(await buttons.nth(0).getAttribute('aria-pressed'),'true');
+    assert.deepEqual(await pos(),initial,'Reduced motion snaps immediately');
+    await page.emulateMedia({reducedMotion:'no-preference'});
+  }
+  await page.close();
+}
+
 async function main() {
   const server = http.createServer(serve);
   await new Promise((resolve, reject) => {
@@ -478,6 +507,7 @@ async function main() {
     await legacyContext.close();
     await checkWorkout(context, url);
     await checkDuoLayout(context, url);
+    await checkDockMotion(context,url);
     const presentationContext = await browser.newContext();
     presentationContext.setDefaultTimeout(8000);
     await checkTrainingPresentation(presentationContext, url);
