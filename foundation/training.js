@@ -1,4 +1,6 @@
 /* Storage helpers are also exercised directly by Node regression tests. */
+function validExercises(v){return Array.isArray(v)&&v.every(e=>e&&typeof e.name==='string'&&Array.isArray(e.sets)&&e.sets.every(s=>s&&typeof s==='object'&&!Array.isArray(s)))}
+function validSession(v){return !!(v&&typeof v.id==='string'&&typeof v.name==='string'&&Number.isFinite(v.started)&&validExercises(v.exercises))}
 function createTrainingStorage(storage,key,historyKey){
  const write=(k,v)=>{try{const raw=JSON.stringify(v);storage.setItem(k,raw);return storage.getItem(k)===raw}catch{return false}};
  const read=(k,fallback,valid)=>{try{const raw=storage.getItem(k),value=raw===null?fallback:JSON.parse(raw);return valid(value)?{ok:true,value}:{ok:false,value:fallback}}catch{return {ok:false,value:fallback}}};
@@ -6,17 +8,17 @@ function createTrainingStorage(storage,key,historyKey){
  const finish=(session,history,now)=>{const existing=history.find(r=>r.id===session.id);const next=existing?history:[...history,{...JSON.parse(JSON.stringify(session)),finished:now}];if(!existing&&!write(historyKey,next))return {history,session,ok:false,saved:false};return {history:next,session:null,ok:write(key,null),saved:true}};
  return {write,read,recover,finish};
 }
-if(typeof module!=='undefined'&&module.exports)module.exports={createTrainingStorage};
+if(typeof module!=='undefined'&&module.exports)module.exports={createTrainingStorage,validExercises,validSession};
 if(typeof document!=='undefined')
 (()=>{
 const q=s=>document.querySelector(s),key='form.training.demo.v1',routineKey='form.training.routines.demo.v1',historyKey='form.training.history.demo.v1';
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const clone=x=>JSON.parse(JSON.stringify(x));let session=null,selected=null,editing=false,draft=null,storageOK=true,overrides={},savedHistory=[];
 const store=createTrainingStorage({getItem:k=>localStorage.getItem(k),setItem:(k,v)=>localStorage.setItem(k,v)},key,historyKey);
-const active=store.read(key,null,v=>v===null||!!(v&&typeof v.id==='string'&&Array.isArray(v.exercises))),history=store.read(historyKey,[],v=>Array.isArray(v)&&v.every(r=>r&&typeof r.id==='string')),routines=store.read(routineKey,{},v=>!!v&&typeof v==='object'&&!Array.isArray(v));
+const active=store.read(key,null,v=>v===null||validSession(v)),history=store.read(historyKey,[],v=>Array.isArray(v)&&v.every(r=>validSession(r)&&Number.isFinite(r.finished))),routines=store.read(routineKey,{},v=>!!v&&typeof v==='object'&&!Array.isArray(v)&&Object.values(v).every(validExercises));
 session=active.value;savedHistory=history.value;overrides=routines.value;
 const readable=active.ok&&history.ok&&routines.ok;
-const recovery=readable?store.recover(session,savedHistory):{session:null,ok:false};session=recovery.session;storageOK=readable&&recovery.ok;
+const recovery=readable?store.recover(session,savedHistory):{session:null,ok:false};session=active.ok&& !readable?active.value:recovery.session;storageOK=readable&&recovery.ok;
 let cleanupPending=readable&&!recovery.ok;
 const write=(k,v)=>readable&&store.write(k,v);
 function persist(){storageOK=write(key,session);q('#workout-storage').textContent=storageOK?'':'Storage unavailable — keep app open';return storageOK}
@@ -50,7 +52,7 @@ q('#routine-list').addEventListener('click',e=>{const b=e.target.closest('[data-
 q('#routine-back').addEventListener('click',()=>{if(editing&&!confirm('Discard unsaved routine edits?'))return;editing=false;draft=null;workouts()});
 q('#routine-edit').addEventListener('click',()=>{if(!selected)return;if(editing){const next={...overrides,[selected.id]:draft.exercises};if(!write(routineKey,next)){q('#routine-note').textContent='Could not save changes';return}overrides=next;selected=draft;draft=null;editing=false}else{draft=clone(selected);editing=true}renderRoutine()});
 q('#routine-exercises').addEventListener('input',e=>{if(!editing||!e.target.dataset.edit)return;const [i,j,k]=e.target.dataset.edit.split(':');const n=e.target.valueAsNumber;draft.exercises[i].sets[j][k]=Number.isFinite(n)?Math.max(0,k==='weight'?FormPrefs.weightIn(n):n):null});
-q('#routine-start').addEventListener('click',()=>{if(!selected||editing||!demo())return;if(!readable||cleanupPending){q('#routine-note').textContent='Workout storage needs recovery. Reload before starting.';return}if(session){resume();return}session={id:String(Date.now()),routineId:selected.id,name:selected.name,started:Date.now(),exercises:clone(selected.exercises).map(e=>({...e,sets:e.sets.map(s=>({...s,done:false}))})),restEnd:0,restPaused:null};if(!persist()){session=null;q('#routine-note').textContent='Could not save workout. Check storage permissions and try again.';return}resume()});
+q('#routine-start').addEventListener('click',()=>{if(!selected||editing||!demo())return;if(cleanupPending){cleanupPending=!store.write(key,null);storageOK=!cleanupPending}if(!readable||cleanupPending){q('#routine-note').textContent='Workout storage needs recovery. Reload before starting.';return}if(session){resume();return}session={id:String(Date.now()),routineId:selected.id,name:selected.name,started:Date.now(),exercises:clone(selected.exercises).map(e=>({...e,sets:e.sets.map(s=>({...s,done:false}))})),restEnd:0,restPaused:null};if(!persist()){session=null;q('#routine-note').textContent='Could not save workout. Check storage permissions and try again.';return}resume()});
 function resume(){if(!session||!demo())return;renderWorkout();go('Workout');syncResume()}
 function syncResume(){q('#resume-workout').hidden=!session||!demo()}
 q('#resume-workout').addEventListener('click',resume);
@@ -90,7 +92,7 @@ q('#workout-finish').onclick=()=>{if(!readable||!session||!confirm('Finish and s
 function showHistory(){if(!demo()||!savedHistory.length)return;const el=q('#history-list');for(const r of savedHistory.slice(-12).reverse()){const a=document.createElement('article');a.className='form-card history-item';a.dataset.trainingHistory='true';a.textContent=r.name+' · Demo · '+new Date(r.finished).toLocaleDateString()+' · '+r.exercises.flatMap(e=>e.sets).filter(s=>s.done).length+' sets';el.prepend(a)}}
 function refreshHistory(){q('#history-list').querySelectorAll('[data-training-history]').forEach(e=>e.remove());showHistory()}
 document.addEventListener('form-demo-change',()=>{syncResume();refreshHistory()});document.addEventListener('form-page',e=>{if(e.detail==='Workouts')refreshHistory();if(e.detail==='Workout'&&!demo())workouts()});setInterval(tick,250);syncResume();refreshHistory();if(!storageOK)q('#workout-storage').textContent='Workout storage needs recovery — keep app open';
-window.FormTraining={sessionName:()=>session?.name,blocksReload:()=>editing||!storageOK};
+window.FormTraining={sessionName:()=>session?.name,blocksReload:()=>editing||(!storageOK&&!!session)};
 
 function installExerciseAudit(){const host=q('#diag-main');if(!host)return;const panel=document.createElement('details');panel.className='form-card diag-group';const title=document.createElement('summary');title.textContent='Exercise Library Audit';panel.append(title);const body=document.createElement('div');body.className='form-stack';panel.append(body);host.append(panel);
 let generation=0;function audit(){const g=++generation;body.replaceChildren();const names=new Set();for(const r of (FormDemo.getData()?.routines||[]))for(const e of (routine(r.id)?.exercises||[]))names.add(e.name);for(const e of session?.exercises||[])names.add(e.name);const info=document.createElement('p');info.textContent='Catalog: '+repStatus.state+' · '+repIds.size+' entries · '+names.size+' exercises';body.append(info);const refresh=document.createElement('button');refresh.className='form-secondary';refresh.textContent='Run audit';refresh.onclick=audit;body.append(refresh);if(repStatus.state!=='ready')return;
