@@ -150,3 +150,14 @@ body[data-page=Workout][data-hinge=laptop] #calibration[data-landscape=true] [da
 /* Build 63: keep workout rail below the actual headline material boundary. */
 body[data-page=Workout]:not([data-hinge=laptop]) #calibration[data-landscape=true] .content{padding-top:calc(var(--layout-center) + var(--headline-height)/2 + var(--glass-lead) + 12px)}
 body[data-page=Workout] #calibration[data-guides=true] .headline-material{border-bottom:1px dashed #22a06b}
+
+/* Build 64: shared status axis, with adaptive progress segments. */
+body[data-page=Workout] .workout-meta{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:end;gap:12px;min-height:32px}
+body[data-page=Workout] .workout-time{display:flex;align-items:center;gap:8px;height:18px;transform:translateY(0)}
+body[data-page=Workout] .workout-live{width:7px;height:7px}
+body[data-page=Workout] #workout-elapsed{font-size:14px;font-weight:500;line-height:18px;font-variant-numeric:tabular-nums}
+body[data-page=Workout] .workout-indicator{display:grid;grid-template-rows:auto 18px;gap:0;min-width:0;justify-items:end}
+body[data-page=Workout] #workout-count{margin:0;font-size:12px;font-weight:500;line-height:14px;text-align:right;font-variant-numeric:tabular-nums}
+body[data-page=Workout] #workout-progress{display:flex;flex-wrap:nowrap;align-items:center;justify-content:flex-end;gap:4px;height:18px;width:100%;min-width:0}
+body[data-page=Workout] #workout-progress span{flex:0 1 24px;min-width:0;height:5px;border-radius:3px;background:linear-gradient(to right,#34c759 0 var(--exercise-fill,0%),var(--elevated) var(--exercise-fill,0%) 100%)}
+body[data-page=Workout] #workout-storage:empty{display:none}
