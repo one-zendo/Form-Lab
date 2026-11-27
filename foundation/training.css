@@ -135,3 +135,14 @@ body[data-page=Workout]:not([data-hinge=laptop]) #calibration[data-landscape=tru
 body[data-page=Workout]:not([data-hinge=laptop]) #calibration[data-landscape=true] #workout-rest{align-self:stretch;justify-self:end;height:auto}
 body[data-page=Workout] #workout-rest::before{background:linear-gradient(180deg,color-mix(in srgb,var(--timer) 13%,var(--paper)),color-mix(in srgb,var(--timer) 30%,var(--paper)))}
 body[data-page=Workout] #workout-exercises .training-exercise{padding:12px}
+
+/* Build 62: bound workout grid to the browser's drawable box, including intrinsic flex sizing. */
+body[data-page=Workout] #shell{width:100%;max-width:100%;padding:0}
+body[data-page=Workout] #calibration{min-width:0;width:100%;max-width:100%}
+body[data-page=Workout] #calibration .content{width:auto;min-width:0;max-width:calc(100% - var(--layout-content) - var(--workout-edge));align-self:stretch;margin-inline-start:var(--layout-content);margin-inline-end:var(--workout-edge)}
+body[data-page=Workout] #app-pages,body[data-page=Workout] [data-screen=Workout]{min-width:0;max-width:100%;width:100%;box-sizing:border-box}
+body[data-page=Workout] #calibration[data-landscape=true] [data-screen=Workout]{grid-template-columns:minmax(0,2fr) minmax(0,3fr) minmax(0,var(--workout-rail-width))}
+body[data-page=Workout] #calibration[data-landscape=true] #workout-rest{max-width:100%;min-width:0;box-sizing:border-box}
+body[data-page=Workout] #workout-exercises .training-set-grid{grid-template-columns:minmax(0,.55fr) minmax(0,.85fr) minmax(0,1fr) minmax(0,1fr) minmax(36px,.8fr)}
+body[data-page=Workout] #workout-exercises .training-set-grid input{padding-inline:0}
+body[data-page=Workout][data-hinge=laptop] #calibration[data-landscape=true] [data-screen=Workout]{grid-template-columns:minmax(0,1fr)}
