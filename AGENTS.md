@@ -4,6 +4,6 @@ Read DESIGN.md and ARCHITECTURE.md before editing. DESIGN.md is the sole active 
 - Preserve approved behavior, canonical hardware assets, website URL and user storage. Never clear or migrate user data without explicit approval.
 - Keep hardware, viewport/layout, UI, interaction and diagnostics separate. No duplicated orientation-specific screens or ad hoc overrides; explicit approved exceptions only.
 - Increment visible build and version manifest together for runtime builds. Documentation-only changes need not increment build.
-- Run syntax, unit and Chromium/WebKit regression checks across all ten profile/environment combinations, including distinct FL1/FL2 angles, rotation, posture, card counts, timer, navigation, keyboard, overflow and diagnostics. Do not weaken assertions to hide defects.
+- During the static reset stage, run reset-integrity checks only. For Diagnostic Build 01, restore syntax, unit and Chromium/WebKit regression checks across all ten profile/environment combinations, following DESIGN.md verification, including distinct FL1/FL2 angles. Add product-specific tests when product features are introduced. Do not weaken assertions to hide defects or claim reset checks validate the app.
 - Verify Pages deployment separately from tests. Physical device acceptance and simulated browser tests are distinct; never claim unperformed tests or native verification.
 - Record changes, decisions, known limitations and acceptance in CHANGELOG.md. Keep responses concise and disclose blockers.
