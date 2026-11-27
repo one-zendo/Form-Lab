@@ -113,8 +113,14 @@ async function checkWorkout(context, url) {
   await click('[data-performance-range="12W"]');
   await click('#routine-start');
   assert.ok(await page.locator('#workout-exercises .training-thumb svg').count());
+  assert.equal(await page.locator('#workout-exercises details:not([open])').count(),0);
+  await page.locator('#workout-exercises [data-exercise="1"] summary').click();
+  await page.waitForFunction(()=>JSON.parse(localStorage.getItem('form.training.demo.v1')).exercises[1].collapsed===true);
+  assert.equal(await page.locator('#workout-exercises [data-exercise="1"] details').getAttribute('open'),null);
+
   await click('#workout-exercises [data-complete] >> nth=0');
-  assert.match(await page.locator('#workout-sets').innerText(), /^1\//);
+  assert.match(await page.locator('#workout-sets').innerText(), /^1 of /);
+  await page.locator('#workout-exercises [data-exercise="0"] [data-tool="note"]').click();
   await page.locator('[data-exercise-note="0"]').fill('Test workout note');
   assert.equal((await storage(activeKey)).exercises[0].note,'Test workout note');
 
@@ -402,9 +408,9 @@ async function checkTrainingPresentation(context, url) {
         return {center:Math.round(h.top+h.height/2),signature:getComputedStyle(document.querySelector('.signature')).display,finishAligned:Math.abs((f.top+f.height/2)-(h.top+h.height/2))<=1,padding:parseFloat(getComputedStyle(document.querySelector('.content')).paddingTop)};
       });
       check(measured.center,48,orientation+' '+mode+' workout headline local center');
-      check(measured.signature==='none',orientation==='UP',orientation+' '+mode+' workout signature visibility');
+      check(measured.signature==='none',true,orientation+' '+mode+' workout signature visibility');
       check(measured.finishAligned,true,orientation+' '+mode+' Finish alignment');
-      if(orientation==='UP')check(measured.padding,94,orientation+' '+mode+' workout content clearance');
+      if(orientation==='UP')check(measured.padding,78,orientation+' '+mode+' workout content clearance');
     }
   }
   await resize('FL1',90,[594,466],'Safari-sized');
