@@ -106,3 +106,6 @@ Explicit navigation grid areas, fixed viewport shell, content-only scrolling, or
 
 ## Clean Build 03
 Show current build number on Home headline; retain tagline. Syntax checked; browser and deployment verification pending.
+
+## Clean Build 04
+Remove global automatic column selection and hinge-triggered card splitting. Explicit FP, FL1, FL2, UP, UL compositions; initial one-column FP/UP and two-column FL1/FL2/UL defaults. Posture remains diagnostic. Navigation, storage and keyboard logic retained. Physical and browser validation pending.
