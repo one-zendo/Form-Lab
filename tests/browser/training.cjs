@@ -114,6 +114,10 @@ async function checkWorkout(context, url) {
   await click('#routine-start');
   assert.ok(await page.locator('#workout-exercises .training-thumb svg').count());
   await click('#workout-exercises [data-complete] >> nth=0');
+  assert.match(await page.locator('#workout-sets').innerText(), /^1\//);
+  await page.locator('[data-exercise-note="0"]').fill('Test workout note');
+  assert.equal((await storage(activeKey)).exercises[0].note,'Test workout note');
+
   assert.equal((await storage(activeKey)).exercises[0].sets[0].done, true);
   await page.reload();
   await page.waitForFunction(() => !!window.FormTraining?.sessionName());

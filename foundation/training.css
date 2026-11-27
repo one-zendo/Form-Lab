@@ -278,3 +278,17 @@ body[data-page=Routine] #headline-build{display:none}
 body[data-page=Routine] .training-overview{min-height:0;overflow:auto;overscroll-behavior:contain}
 body:not([data-hinge=book])[data-page=Routine] .training-page{min-height:0}
 @media(orientation:portrait){body:not([data-hinge=book])[data-page=Routine] .training-page{grid-template-rows:minmax(0,3fr) minmax(0,2fr) auto}}
+
+/* Build 87 — compact workout summary and expanded exercise controls. */
+body[data-page=Workout] .workout-meta{grid-template-columns:minmax(0,1fr);gap:var(--space-4)}
+.workout-totals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-8)}
+.workout-totals small,.workout-totals output{display:block;overflow-wrap:anywhere}
+.workout-totals small{font-size:var(--type-caption);color:var(--muted)}
+body[data-page=Workout] .workout-totals output{font-size:var(--type-headline);font-weight:var(--weight-headline);font-variant-numeric:tabular-nums;color:var(--ink);line-height:normal;white-space:normal}
+body[data-page=Workout] #workout-elapsed{color:var(--action)}
+body[data-page=Workout] .workout-indicator{grid-template-columns:1fr 1fr;grid-template-rows:auto;align-items:center;gap:var(--space-8)}
+.workout-exercise-tools{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:var(--space-8);margin-bottom:var(--space-8)}
+.workout-exercise-tools label{min-width:0;font-size:var(--type-caption);color:var(--muted)}
+.workout-exercise-tools input{display:block;width:100%;box-sizing:border-box;min-height:var(--target-min);border:0;border-radius:var(--radius-small);background:var(--elevated);color:var(--ink);padding:var(--space-8);font:inherit;font-size:var(--type-support)}
+.workout-previous{color:var(--muted);overflow-wrap:anywhere}
+@container(max-width:260px){.workout-exercise-tools{grid-template-columns:1fr}}
