@@ -36,3 +36,5 @@ Build 08 physical review: FP Safari keyboard hides navigation and restores layou
 Build 10: user approved stable card geometry during keyboard editing. Snapshot resolved grid tracks before keyboard accommodation; retain rail width, hide dock/timer, clip and scroll cards to expose focused field, restore pre-edit scroll on dismissal. No persistence of test text. Rotation during editing retains captured tracks until dismissal; cross-orientation editing needs physical validation. Build 09 superseded as keyboard correction, foundation lock not yet reached.
 
 Build 11: focus scroll waits 100ms after latest visual viewport change and smoothly targets 16 CSS px above visible editing boundary where possible. Reduced motion snaps; dismissal smoothly restores previous scroll. Physical timing and rotation pending.
+
+Build 12: prefer browser focus scrolling; use visual viewport and next animation frame to check visibility, native scrollIntoView nearest only if obscured. Remove fixed delay and forced bottom positioning. Preserve editing tracks and restore previous scroll. Safari physical validation pending.
