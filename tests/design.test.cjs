@@ -38,3 +38,5 @@ test('portrait training has compact toolbars and independent exercise scrolling'
 
 test('workout start requires a verified active-session write',()=>{const j=read('foundation/training.js');assert.match(j,/if\(!persist\(\)\)\{session=null;q\('#workout-storage'\)\.textContent='Could not save workout/);assert.match(j,/Could not save workout\. Check storage permissions and try again\.';return\}resume\(\)/)});
 test('workout completion retains the session if clearing active storage fails',()=>{const j=read('foundation/training.js');assert.match(j,/const completedSession=session;session=null;if\(!persist\(\)\)\{session=completedSession/);assert.match(j,/Workout saved, but the active session could not be cleared/)});
+
+test('active workout reload is blocked only for edits or unverified persistence',()=>{const j=read('foundation/training.js');assert.match(j,/blocksReload:\(\)=>editing\|\|!storageOK/);assert.doesNotMatch(j,/blocksReload:\(\)=>editing\|\|!!session\|\|!storageOK/)});
