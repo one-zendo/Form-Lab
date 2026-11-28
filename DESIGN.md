@@ -107,3 +107,6 @@ Home headline only: rounded pastel animated SVG weather art, temperature in Cels
 
 ## Build 41 FP headline and Home overflow
 FP Home uses a two-column greeting/weather row and a second metadata/date row; date remains right aligned. Weather motion and typography retained. Other orientation headline placements unchanged. Home is a fixed non-scrollable dashboard in every orientation and timer state. Flexible zero-minimum grid tracks, card-local container-relative typography, padding and streak sizing fit the reserved content area. Remove the conditional Home overflow glass and observer. Other pages retain scrolling and glass. Short landscape weather areas are reduced in height. Physical content fit, including long names and accessibility text sizes, remains unverified.
+
+## Build 46 — ChatGPT-style surfaces and timer alignment (approved)
+Cards use borderless theme surfaces. Timer and navigation capsules use a subtle 1 CSS px outline (12% theme ink) without drop shadows. The timer and Home dashboard share one horizontal inset token: existing FP 16 CSS px, other profiles 8 CSS px, inside safe content and outside the navigation rail. Timer height 56 CSS px, vertical gap, controls, fill, countdown and navigation anchors unchanged. Physical acceptance pending.

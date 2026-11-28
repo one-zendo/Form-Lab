@@ -134,3 +134,7 @@ Home is non-scrollable, with zero-minimum flexible card tracks and compact conta
 
 ## Build 43
 Removed always-active scroll geometry transitions. Timer toggle alone enables a bounded resize transition; navigation cancels it before changing the visible page. Re-selecting the current destination is a no-op. No card, weather, hardware or storage changes. JS syntax and source checks passed; actual Safari twitch and deployment remain unverified.
+
+## Build 46
+- Shared Home/timer horizontal inset fixes the FP mismatch (16 CSS px rather than 8 for the timer); other profiles retain 8 CSS px. Borderless cards and subtle timer/dock outlines follow approved ChatGPT styling. No hardware, storage or interaction changes.
+- Added browser alignment and border assertions. Browser execution and physical acceptance not verified in this editing session.
