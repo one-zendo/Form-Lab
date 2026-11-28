@@ -180,3 +180,7 @@ ChatGPT screenshot is the authoritative visual reference for grouped Profile set
 
 ## Build 64 — Floating settings selection (approved)
 Appearance and Training mode now open a shared anchored translucent selection dialog directly from Profile, with checkmark, 18px regular labels, 46px minimum rows, 32px continuous radius, 252px maximum width and 24px backdrop blur with opaque fallback. Choice menu is viewport-clamped, dismissible outside or via Escape, and restores focus. Existing radio/select storage handlers remain the sole state owners; mode-switch guard and warning remain visible. Studio Dark settings surface #202020 and outline #414141 match the screenshot reference; other themes unchanged. Complex settings retain dedicated subviews. Hardware calibration and storage unchanged. Browser and physical verification pending.
+
+
+## Build 65 — Three-destination navigation (approved)
+Remove the timer visibility toggle and countdown ring from navigation in every orientation/environment. Home, Workouts and Profile remain equally distributed within the existing dock/rail. The separate 56px rest timer remains visible across destinations with existing controls, animation, anchoring and reserved scroll clearance. Remove obsolete toggle-specific state, transitions and styles. No data, theme or hardware changes. Physical validation pending.

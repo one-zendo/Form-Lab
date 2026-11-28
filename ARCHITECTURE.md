@@ -71,3 +71,5 @@ Build 62 updates only the calibrated top padding values in layout.js; all consum
 Build 63 adds profile.js as a presentation-only subview controller; existing form nodes and storage handlers remain intact. Profile menu values reflect existing name, theme and mode state.
 
 Build 64 extends profile.js with a reusable anchored modal choice presentation over existing radio/select adapters, including update guard and viewport positioning. Existing persistence handlers unchanged.
+
+Build 65 removes navigation timer-toggle ownership and visibility state; countdown and timer bar remain independent of destination selection.

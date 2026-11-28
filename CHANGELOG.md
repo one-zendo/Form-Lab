@@ -197,3 +197,7 @@ Profile grouped settings reference design and dedicated subviews; retained impor
 
 ## Build 64
 Floating Appearance and Training mode menus, Studio Dark settings surface refinement, unchanged hardware/storage. Syntax and DOM IDs checked; browser, CI and Pages pending.
+
+
+## Build 65
+Remove navigation timer button; retain standalone rest timer. Replace superseded toggle regression with three-button, visible-timer and countdown continuity checks. Syntax checked; full CI and deployment pending.
