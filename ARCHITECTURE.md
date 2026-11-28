@@ -12,7 +12,7 @@ Navigation groups four destinations in a shared capsule and includes the indepen
 
 Navigation visibility changes are restricted to direct page panels in #scroll; the shell's data-page is state metadata, never a visibility target.
 
-Timer visibility animates scroll bottom padding and timer opacity/translation; inert hidden transition prevents interaction, countdown remains independent. Scroll extends behind the timer to support a pointer-transparent gradient backdrop layer.
+Timer visibility animates Home viewport bottom or other pages’ scroll bottom padding, plus timer opacity/translation; countdown remains independent. Other pages scroll behind a pointer-transparent gradient backdrop layer; Home does not.
 
 Local Lucide SVGs for interface icons; diagnostic and countdown graphics remain custom.
 

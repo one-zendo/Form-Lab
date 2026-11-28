@@ -110,3 +110,6 @@ Added Obsidian Red as third selectable theme. Existing themes and data preserved
 
 ## Build 35
 Timer gradient backdrop blur: 14px blur, 40px fade above timer, reserved scroll padding and theme-aware gradient. Sharp timer foreground, hidden timer releases reserve and hides glass. Static source checks passed; browser and physical verification pending.
+
+## Build 36
+Home reserves timer space in the actual content viewport instead of scroll padding, allows dashboard flex shrink and intrinsic card minimums, and excludes Home from timer glass. Other pages retain Build 35 glass. Source checks passed; browser and physical tests pending.
