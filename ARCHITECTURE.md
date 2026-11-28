@@ -31,3 +31,5 @@ Build 28 extends the private importer with paste input and atomic batch merge.
 Build 29 adds Studio Dark via shared appearance tokens and validated persistent selection; synchronizes Safari theme-color and color-scheme metadata at boot and theme changes, without altering layout.
 
 Build 30 fixes browser theme-color to #000000 at boot and on theme selection; canvas tokens remain independent.
+
+Build 31 resolves Studio appearance using prefers-color-scheme, with a live media-query listener; saved theme choice is separate from effective appearance.

@@ -92,3 +92,5 @@ Build 28: Profile training data supports pasted JSON or multiple fenced JSON bat
 Build 29: Studio Light retains existing studio preference key. Studio Dark adds OLED black canvas, charcoal cards, white primary actions and streaks, Apple blue #0a84ff timer with dark contrast ink. Three explicit appearance choices; Graphite Lime remains default. Safari browser tint requests pure black through theme-color metadata; root/body background and color-scheme follow the selected theme; browser-controlled exclusion tint subject to physical Safari support. Preserve all exclusion geometry.
 
 Build 30: request pure black Safari chrome tint independent of selected theme. Preserve drawable canvas colors and exclusion geometry; physical Safari support remains unverified.
+
+Build 31: Studio automatically follows system light/dark appearance at startup and during system changes. Profile selector presents Studio and Graphite Lime only. Existing studio-dark preference is recognized as Studio, without clearing data or rewriting it on startup. Graphite Lime remains independent and default; black Safari tint remains requested.

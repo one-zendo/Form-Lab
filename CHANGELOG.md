@@ -95,3 +95,6 @@ Studio Dark added; Studio renamed Studio Light without changing stored preferenc
 
 ## Build 30
 Pure black Safari tint requested for every theme. No layout changes. Physical tint and deployment pending verification.
+
+## Build 31
+Studio follows system appearance automatically; two theme choices. Existing preferences remain compatible. No layout or storage migration. Syntax checked; deployment and physical verification pending.
