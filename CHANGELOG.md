@@ -7,3 +7,6 @@ Clarified diagnostic versus future product scope and stage-specific testing. Ret
 
 ## Diagnostic Build 01
 Initial single-page diagnostic runtime, sample controls, deadline timer, anchored navigation, explicit profiles, raw posture reporting and observational overlay. Unknown viewport fallback is uncalibrated. No storage writes. Automated checks queued; physical zoom, camera, native and hinge calibration pending. Test coverage is initial, not full acceptance.
+
+## Diagnostic Build 02
+Approved arrangement-preserving hinge rule. UP horizontal content separation with provisional midpoint when compatible segment data is unavailable; explicit diagnostic posture simulation. UL remains stacked until a side-by-side arrangement is approved. Timer/navigation unchanged. Added unit and browser assertions; physical posture and spacing unverified.
