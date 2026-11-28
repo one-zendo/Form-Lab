@@ -125,3 +125,6 @@ Enlarged Home weather art (FP 48, FL1/FL2 56, UP/UL 64 CSS px), temperature and 
 
 ## Build 40
 Applied 24-second figure-eight motion to every weather illustration, with larger orientation-specific motion areas and slower internal weather animations. FP and FL sizes are compact adaptations of the approved large preview. JS syntax and source checks passed; browser fit and deployment unverified.
+
+## Build 41
+Corrected FP greeting compression by moving date to metadata row, reduced FP artwork height, removed intrinsic flex minimums that can force Home overflow, and added conditional 32px Home edge glass. Syntax and source checks passed; physical layout and deployment unverified.

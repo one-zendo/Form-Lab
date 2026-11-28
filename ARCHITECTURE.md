@@ -41,3 +41,5 @@ Build 37 adds a navigation glass sibling below the timer and dock, using existin
 Build 38 isolates weather in src/weather.js, independent of training, timer, layout and storage. Weather dialog participates in update guard.
 
 Build 40 uses a shared SVG weather-orbit group and CSS-only figure-eight motion; no extra JS animation loop or weather API changes.
+
+Build 41 uses Home-only overflow observation (scroll, geometry, ResizeObserver) to control a separate edge glass without changing geometry. FP headline grid is local to Home.
