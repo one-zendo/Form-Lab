@@ -239,3 +239,6 @@ Remove Home mode label and its rendering; retain Profile mode controls. Browser 
 
 ## Build 76
 Disable interface text selection; preserve editable field selection. Browser and physical acceptance pending.
+
+## Build 77
+Restore signature accent and left-aligned headlines. Browser and physical acceptance pending.
