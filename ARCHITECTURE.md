@@ -1,5 +1,5 @@
 # FORM Lab architecture
-Diagnostic Build 24: index.html shared semantic components; hardware.js raw detection; layout.js explicit orientation profiles; style.css shared styling and anchored controls; app.js interactions; diagnostics.js observational overlay. No storage writes or workout engine. Unknown viewport uses explicit uncalibrated stacked fallback. Native-sized is browser simulation. Tests cover basic interactions and ten profiles; physical calibration and expanded regression coverage pending.
+Diagnostic Build 25: index.html shared semantic components; hardware.js raw detection; layout.js explicit orientation profiles; style.css shared styling and anchored controls; app.js interactions; diagnostics.js observational overlay. No storage writes or workout engine. Unknown viewport uses explicit uncalibrated stacked fallback. Native-sized is browser simulation. Tests cover basic interactions and ten profiles; physical calibration and expanded regression coverage pending.
 Global posture adjustment is implemented in layout.js for both card arrangements across the five diagnostic layouts; diagnostic simulation is explicitly labeled. No physical hinge boundary is inferred from midpoint.
 update.js checks deployed versions independently of layout; app.js supplies reload safety guard.
 Four page panels share navigation and timer; app.js switches visible panel before refreshing layout; diagnostic controls are session-global. Diagnostic owns card-pair tests; Home has independent dashboard composition. Other pages use simple stacked test content.
@@ -16,7 +16,7 @@ Timer visibility animates the actual scroll viewport bottom and timer opacity/tr
 
 Local Lucide SVGs for interface icons; diagnostic and countdown graphics remain custom.
 
-Home alone uses flexible viewport-filling dashboard cards with edge-to-edge content width; shared header alignment and other page layouts are unchanged.
+Home alone uses zero horizontal scroll-container design padding, full-width flexible dashboard, 8px card gap and 24px card titles; header internal alignment and other page layouts are unchanged.
 
 Shared sticky headline uses backdrop filtering on the actual header with opaque fallback.
 

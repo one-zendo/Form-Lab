@@ -77,3 +77,6 @@ Shared sticky page header with opaque background and content separation. Physica
 
 ## Build 24
 - Fix exposed top strip by moving scroll top padding into the actual sticky header and applying glass directly to the full-width header at top:0. Preserve headline text alignment and 15% opacity/6px blur. Master diagnostic guides default off, with individual categories retained. Browser and physical acceptance pending.
+
+## Build 25
+- Home-only cohesive layout: explicit full width, zero horizontal design margin, 8px card and content gaps, 12px headline gap, consistent 24px titles. Retain 16px card padding, 24px radius, 13px secondary text, flexible equal card allocation, safe insets, existing navigation and timer clearance. Exact 12px visual navigation clearance remains pending measurement. Browser and physical acceptance pending.
