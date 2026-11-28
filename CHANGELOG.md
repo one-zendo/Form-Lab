@@ -62,3 +62,6 @@ Shared sticky page header with opaque background and content separation. Physica
 ## Build 19
 - Home-only edge-to-edge dashboard; equal flexible cards fill available space and resize with timer visibility. Existing orientation arrangements and minimum card sizes retained. Other screens, hardware and storage unchanged.
 - Automated browser and physical acceptance pending.
+
+## Build 20
+- Shared sticky headline frosted glass on all four pages; preserve geometry, alignment, navigation, card layout and storage. Opaque fallback for unsupported browsers. Browser and physical acceptance pending.
