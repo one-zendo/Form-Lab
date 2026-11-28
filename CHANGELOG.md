@@ -128,3 +128,6 @@ Applied 24-second figure-eight motion to every weather illustration, with larger
 
 ## Build 41
 Corrected FP greeting compression by moving date to metadata row, reduced FP artwork height, removed intrinsic flex minimums that can force Home overflow, and added conditional 32px Home edge glass. Syntax and source checks passed; physical layout and deployment unverified.
+
+## Build 42
+Home is non-scrollable, with zero-minimum flexible card tracks and compact container-relative card content. Removed Home overflow glass and observer. Short landscape weather height reduced. Other pages retain scrolling and glass. Source and JS syntax checks passed; physical content fit and deployment pending.

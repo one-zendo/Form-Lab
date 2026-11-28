@@ -42,4 +42,4 @@ Build 38 isolates weather in src/weather.js, independent of training, timer, lay
 
 Build 40 uses a shared SVG weather-orbit group and CSS-only figure-eight motion; no extra JS animation loop or weather API changes.
 
-Build 41 uses Home-only overflow observation (scroll, geometry, ResizeObserver) to control a separate edge glass without changing geometry. FP headline grid is local to Home.
+FP headline grid is local to Home. Build 42 removes Home overflow observation and edge glass; Home uses fixed viewport bounds, non-scrollable overflow and flexible card tracks with local container-relative sizing.
