@@ -104,3 +104,6 @@ Replace forced-black Safari tint with one theme-aware resolver used at startup, 
 
 ## Build 33
 Studio Dark timer text and icons remain white across the liquid boundary. Studio Light and Graphite Lime unchanged. Physical and deployment verification pending.
+
+## Build 34
+Added Obsidian Red as third selectable theme. Existing themes and data preserved. Resolver checks passed; physical appearance and deployment pending.

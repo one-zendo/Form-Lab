@@ -31,3 +31,5 @@ Build 28 extends the private importer with paste input and atomic batch merge.
 Appearance resolver in the head script owns effective theme, Safari theme-color and color-scheme for startup, selection and live system changes. Studio follows system appearance; Graphite remains independent. Safari tint follows the effective canvas; app.js invokes the same resolver and persists only the user's theme choice.
 
 Studio Dark uses white foreground for both timer layers through the shared theme tokens.
+
+Build 34 extends the shared appearance resolver and tokens with Obsidian Red. System appearance events affect Studio only.
