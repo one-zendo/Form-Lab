@@ -1,5 +1,5 @@
 # FORM — Design standard
-Status: restart foundation specification; implementation and physical acceptance pending. This is the sole active design authority for the restart. Diagnostic Build 10 adds a navigation timer visibility toggle; verification and calibration remain pending. Native-sized browser previews are not native implementations.
+Status: restart foundation specification; implementation and physical acceptance pending. This is the sole active design authority for the restart. Diagnostic Build 11 applies the approved visual language to shared navigation; verification and calibration remain pending. Native-sized browser previews are not native implementations.
 
 ## Hardware reference
 | Profile | Full display (pt) | Safari drawable (pt) | Safari exclusion |
@@ -44,6 +44,7 @@ Use a floating rest timer anchored independently of scrolling content and naviga
 Diagnostic headline: FORM Lab with current build number. Future product: FORM wordmark, tagline “Train with focus, follow your progress”; Home headline includes current build number. Test cards blue and purple. Headline 28px and card title 17px are prior wireframe references; final typography and production colors require approval. Spacing tokens 4/8/12/16/24/32 are available values, not inherited layout settings. Pop-outs share their own component styling.
 
 ## Visual direction (approved)
+Official FORM appearance: Apple × ChatGPT, based on user-provided Duo screenshots. Neutral white/light gray surfaces, fine borders, monochrome icons, grouped rows, floating rounded navigation capsules and separate circular timer toggle. Preserve semantic test colors and existing orientation anchors. Icon-only navigation retains accessible destination names. Use solid translucent-look surfaces without backdrop blur during stability testing. Production grouped settings rows remain future component work.
 Combine Apple-inspired calm minimalism, glass-inspired navigation and floating controls, refined typography and restrained spring motion with ChatGPT-inspired intelligent UI: contextual interactive components, progressive disclosure, expandable details, meaningful visualizations and concise conversational insights. Prefer solid readable content cards, purposeful accents, clear hierarchy and light/dark appearance with accessible contrast. Lucide is the standard icon library; use consistent stroke weights and recognizable symbols, avoiding decorative clutter. Preserve approved radius tokens and layout ownership. Intelligent presentation does not authorize global spatial rearrangement or unapproved AI functionality. Production insights and workout features require later implementation and validation.
 
 ## Shared corner radius tokens (approved)

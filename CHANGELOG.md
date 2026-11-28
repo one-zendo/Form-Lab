@@ -34,3 +34,6 @@ Navigation timer visibility toggle, default visible, countdown continues hidden.
 
 ## Diagnostic Build 10
 Stability mitigation for reported blank screen: bounded diagnostic redraws, asynchronous navigation geometry notification, error isolation, repeated tab-switch regression, Ubuntu 24.04 CI runner. Physical cause unconfirmed; verification pending.
+
+## Diagnostic Build 11
+Approved Apple × ChatGPT visual standard; monochrome icon-only destination capsule, separate circular timer control, neutral background and fine card outlines. Existing orientation anchors retained. No backdrop blur during stability testing. Physical fit and stability pending.
