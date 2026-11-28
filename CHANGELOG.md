@@ -46,3 +46,6 @@ Confirmed source defect: navigation selected every data-page element, including 
 
 ## Build 14
 Shared monochrome floating timer, separate circular countdown ring, animated scroll viewport clearance and timer visibility. Preserve countdown, orientation anchors and navigation. Browser tests extended for actual viewport resizing; physical fit and CI pending.
+
+## Build 15
+Replace navigation, timer, set-check and expansion glyphs with upstream Lucide 0.456.0 SVGs. No external runtime dependency. Verification pending.
