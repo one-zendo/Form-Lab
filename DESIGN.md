@@ -204,3 +204,6 @@ Use shared responsive cubic path clipping and SVG outlines on eligible existing 
 
 ## Build 70 — Approved navigation glass
 8px backdrop blur (including Safari prefix), 10% white surface tint, 30% white edge and inset reflection. Selected lens uses 12.5% white tint and outline, matching the interactive preview. Preserve capsule geometry, motion, layout and hardware calibration. Safari appearance and light-theme contrast require physical validation. Workout completion repair remains separate and pending.
+
+## Build 71 — Simplified Diagnostics (approved)
+Only visual guides and collapsed measurements in normal UI. Reuse settings tokens and continuous corners; retain all guide IDs, automatic hardware detection and measurements. Legacy component fixtures are hidden by default and accessible only via explicit engineeringTests=1 URL for regression tests. No calibration or storage changes.

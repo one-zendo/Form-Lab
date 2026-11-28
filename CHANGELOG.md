@@ -221,3 +221,6 @@ Responsive Safari continuous-corner approximation; radius and layout tokens reta
 
 ## Build 70
 Apply approved navigation glass settings: 8px blur, 10% tint, 30% reflection. No workout logic changes.
+
+## Build 71
+Simplify Diagnostics; preserve engineering fixtures via explicit test URL. Browser and physical acceptance pending.
