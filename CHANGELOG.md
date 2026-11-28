@@ -119,3 +119,6 @@ Navigation glass: 20px dock blur, 55% theme surface, 14px directional gradient w
 
 ## Build 38
 Added Little Weather headline, SVG animations, permission-based Open-Meteo integration and forecast. JS syntax checks passed. Live API, browser rendering and deployment unverified.
+
+## Build 39
+Enlarged Home weather art (FP 48, FL1/FL2 56, UP/UL 64 CSS px), temperature and condition text. Replaced old sizing values. No behavior or hardware changes. Source checks passed; browser and physical fit pending.
