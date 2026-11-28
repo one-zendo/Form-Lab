@@ -122,3 +122,6 @@ Added Little Weather headline, SVG animations, permission-based Open-Meteo integ
 
 ## Build 39
 Enlarged Home weather art (FP 48, FL1/FL2 56, UP/UL 64 CSS px), temperature and condition text. Replaced old sizing values. No behavior or hardware changes. Source checks passed; browser and physical fit pending.
+
+## Build 40
+Applied 24-second figure-eight motion to every weather illustration, with larger orientation-specific motion areas and slower internal weather animations. FP and FL sizes are compact adaptations of the approved large preview. JS syntax and source checks passed; browser fit and deployment unverified.

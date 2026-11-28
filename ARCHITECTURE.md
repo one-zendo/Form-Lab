@@ -39,3 +39,5 @@ Build 35 adds a shared timer-glass sibling between scroll content and timer. It 
 Build 37 adds a navigation glass sibling below the timer and dock, using existing rail and safe-area tokens. Home keeps reserved viewport boundaries. Other pages extend the scroll viewport to the safe edge with equivalent navigation and timer padding. No new event listeners.
 
 Build 38 isolates weather in src/weather.js, independent of training, timer, layout and storage. Weather dialog participates in update guard.
+
+Build 40 uses a shared SVG weather-orbit group and CSS-only figure-eight motion; no extra JS animation loop or weather API changes.
