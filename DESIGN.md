@@ -207,3 +207,6 @@ Use shared responsive cubic path clipping and SVG outlines on eligible existing 
 
 ## Build 71 — Simplified Diagnostics (approved)
 Only visual guides and collapsed measurements in normal UI. Reuse settings tokens and continuous corners; retain all guide IDs, automatic hardware detection and measurements. Legacy component fixtures are hidden by default and accessible only via explicit engineeringTests=1 URL for regression tests. No calibration or storage changes.
+
+## Build 72 — Global card geometry
+Standard article cards and grouped settings inherit --card:28px with the existing continuous corner system. Remove Home and settings radius overrides, consolidate Home dashboard declarations and inherit standard 16px article padding. Preserve chart typography, theme colors, orientation-specific grids, scrolling, capsules and calibration. Specialized popup and control radii remain independent.

@@ -224,3 +224,6 @@ Apply approved navigation glass settings: 8px blur, 10% tint, 30% reflection. No
 
 ## Build 71
 Simplify Diagnostics; preserve engineering fixtures via explicit test URL. Browser and physical acceptance pending.
+
+## Build 72
+Unify standard card radius at 28px; consolidate Home CSS and update radius regression expectations. Browser and physical acceptance pending.
