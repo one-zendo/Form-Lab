@@ -110,3 +110,6 @@ FP Home uses a two-column greeting/weather row and a second metadata/date row; d
 
 ## Build 46 — ChatGPT-style surfaces and timer alignment (approved)
 Cards use borderless theme surfaces. Timer and navigation capsules use a subtle 1 CSS px outline (12% theme ink) without drop shadows. The timer and Home dashboard share one horizontal inset token: existing FP 16 CSS px, other profiles 8 CSS px, inside safe content and outside the navigation rail. Timer height 56 CSS px, vertical gap, controls, fill, countdown and navigation anchors unchanged. Physical acceptance pending.
+
+## Build 47 — Card corner radius (approved reference)
+Replace the shared 24 CSS px card radius with 32 CSS px, a visual approximation of the supplied ChatGPT screenshot's soft corners. Applies to all cards and grouped settings using the shared card token. Preserve button, small-control, pop-out and capsule tokens, layout, timer height and hardware. Circular CSS radius is not an exact reproduction of continuous native corner geometry. Physical acceptance pending.

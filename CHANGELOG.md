@@ -138,3 +138,6 @@ Removed always-active scroll geometry transitions. Timer toggle alone enables a 
 ## Build 46
 - Shared Home/timer horizontal inset fixes the FP mismatch (16 CSS px rather than 8 for the timer); other profiles retain 8 CSS px. Borderless cards and subtle timer/dock outlines follow approved ChatGPT styling. No hardware, storage or interaction changes.
 - Added browser alignment and border assertions. Browser execution and physical acceptance not verified in this editing session.
+
+## Build 47
+- Shared card radius 24 → 32 CSS px to approximate the supplied ChatGPT reference; all other radii and geometry unchanged. Added browser token assertion; execution and physical acceptance pending.
