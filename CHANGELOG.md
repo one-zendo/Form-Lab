@@ -141,3 +141,7 @@ Removed always-active scroll geometry transitions. Timer toggle alone enables a 
 
 ## Build 47
 - Shared card radius 24 → 32 CSS px to approximate the supplied ChatGPT reference; all other radii and geometry unchanged. Added browser token assertion; execution and physical acceptance pending.
+
+## Build 48
+- Global component tokens: 40px pop-ups with 24px glass blur, 20px buttons, 32px settings groups, shared row spacing/type/outline and separators. Applied to existing Profile groups, controls and dialogs; future native anchored menus not implemented. Existing calibration and state unchanged.
+- Added browser assertions for settings and popup styling; execution and physical acceptance pending.
