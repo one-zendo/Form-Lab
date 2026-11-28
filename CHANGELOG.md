@@ -65,3 +65,6 @@ Shared sticky page header with opaque background and content separation. Physica
 
 ## Build 20
 - Shared sticky headline frosted glass on all four pages; preserve geometry, alignment, navigation, card layout and storage. Opaque fallback for unsupported browsers. Browser and physical acceptance pending.
+
+## Build 21
+- Shared headline glass extends to viewport top; sticky text retains calibrated top inset. Reduce surface opacity to 58%, blur to 12px and separator contrast. Preserve cards, navigation, timer and hardware. Browser and physical acceptance pending.
