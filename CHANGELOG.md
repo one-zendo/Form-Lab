@@ -49,3 +49,6 @@ Shared monochrome floating timer, separate circular countdown ring, animated scr
 
 ## Build 15
 Replace navigation, timer, set-check and expansion glyphs with upstream Lucide 0.456.0 SVGs. No external runtime dependency. Verification pending.
+
+## Build 16
+Approved screenshot-inspired shared radius tokens: cards/grouped settings 24, regular buttons 16, small controls 12, pop-outs 32. Capsules, circular controls, hardware and spatial placement unchanged. Existing component surfaces retain their colors and spacing; new grouped settings and dark appearance are not introduced in this radius-only change. Physical verification pending.
