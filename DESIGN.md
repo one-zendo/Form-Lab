@@ -1,5 +1,5 @@
 # FORM — Design standard
-Status: restart foundation specification; implementation and physical acceptance pending. This is the sole active design authority for the restart. Diagnostic Build 22 uses 15% headline glass opacity; verification and calibration remain pending. Native-sized browser previews are not native implementations.
+Status: restart foundation specification; implementation and physical acceptance pending. This is the sole active design authority for the restart. Diagnostic Build 23 refines headline glass; verification and calibration remain pending. Native-sized browser previews are not native implementations.
 
 ## Hardware reference
 | Profile | Full display (pt) | Safari drawable (pt) | Safari exclusion |
@@ -79,4 +79,4 @@ Preview and approve spatial arrangements before implementation. Establish and ph
 
 All primary page headlines remain sticky at the top of their content viewport while page content scrolls. Preserve orientation-specific horizontal alignment and safe-area clearance.
 
-Shared headline glass (approved): translucent neutral surface at 15% opacity with 12 CSS px backdrop blur, subtle saturation and a barely visible lower separator; extend glass to the top and sides of the drawable content viewport. Sticky text retains its calibrated initial top inset when scrolling; content must not appear above the glass. Use an opaque fallback where backdrop filters are unsupported. Navigation and cards are unchanged. Blur strength and opacity are provisional visual tokens pending physical testing.
+Shared headline glass (approved): translucent neutral surface at 15% opacity with 6 CSS px backdrop blur, neutral saturation (100%) and a barely visible lower separator; extend glass to the top and sides of the drawable content viewport. Sticky text retains its calibrated initial top inset when scrolling; content must not appear above the glass. Use an opaque fallback where backdrop filters are unsupported. Navigation and cards are unchanged. Blur strength and opacity are provisional visual tokens pending physical testing.
