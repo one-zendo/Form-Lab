@@ -25,3 +25,6 @@ Four functional pages: Home, Workouts, Profile, Diagnostic. Global master and in
 
 ## Diagnostic Build 07
 Removed automatic midpoint fallback; matching segment axis and local fit required. Constant stacked pair target height prevents indirect displacement of cards 03/04. Flat side-by-side tracks use equal fractions. Explicit simulation retains labeled midpoint. Physical hinge guides fixed to viewport. Regression assertions revised for local-fit behavior; verification pending.
+
+## Diagnostic Build 08
+Added independent orange camera center-axis guides, default on under master guides. Uses existing camera reference and Safari offset; unknown camera omitted, offscreen axes clipped. No layout changes. Verification pending.
