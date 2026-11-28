@@ -227,3 +227,6 @@ Simplify Diagnostics; preserve engineering fixtures via explicit test URL. Brows
 
 ## Build 72
 Unify standard card radius at 28px; consolidate Home CSS and update radius regression expectations. Browser and physical acceptance pending.
+
+## Build 73
+Add persistent Profile timer switch and active-session override; retain countdown state and remove hidden timer clearance. Browser and physical verification pending.

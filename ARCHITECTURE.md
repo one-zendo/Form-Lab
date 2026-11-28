@@ -81,3 +81,5 @@ Build 67 refines navigation material in existing CSS selectors; no new interacti
 Build 68 updates the shared settings typography token and reuses it for selection choices; no interaction or geometry logic changes.
 
 Build 69 adds corners.js as a presentation-only progressive enhancement; resize and theme/DOM observers refresh paths without modifying hardware or data.
+
+Build 73: app.js owns independent timer visibility preference and clearance; history.js publishes active session presence without changing timer countdown ownership or storage schema.

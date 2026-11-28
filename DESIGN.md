@@ -210,3 +210,6 @@ Only visual guides and collapsed measurements in normal UI. Reuse settings token
 
 ## Build 72 — Global card geometry
 Standard article cards and grouped settings inherit --card:28px with the existing continuous corner system. Remove Home and settings radius overrides, consolidate Home dashboard declarations and inherit standard 16px article padding. Preserve chart typography, theme colors, orientation-specific grids, scrolling, capsules and calibration. Specialized popup and control radii remain independent.
+
+## Build 73 — Timer visibility preference
+Profile Show timer bar defaults off, persists in independent local key form.timer.visible.v1. An active saved workout forces timer visibility across destinations, including minimized and restored sessions; finishing restores the preference. Hidden timer and glass reserve no timer clearance; countdown state remains independent. Preserve existing dock, hardware calibration and training storage.
