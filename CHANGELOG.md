@@ -28,3 +28,6 @@ Removed automatic midpoint fallback; matching segment axis and local fit require
 
 ## Diagnostic Build 08
 Added independent orange camera center-axis guides, default on under master guides. Uses existing camera reference and Safari offset; unknown camera omitted, offscreen axes clipped. No layout changes. Verification pending.
+
+## Diagnostic Build 09
+Navigation timer visibility toggle, default visible, countdown continues hidden. Release timer-only scroll clearance; bottom dock maximum 360px. Regression added; verification pending.
