@@ -236,3 +236,6 @@ Match navigation to Profile material, remove edge glow and retain blur and motio
 
 ## Build 75
 Remove Home mode label and its rendering; retain Profile mode controls. Browser and deployment verification pending.
+
+## Build 76
+Disable interface text selection; preserve editable field selection. Browser and physical acceptance pending.

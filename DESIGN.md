@@ -219,3 +219,6 @@ Navigation inherits Profile settings surface and outline tokens. Use 94% surface
 
 ## Build 75 — Home mode label
 Remove the mode label from Home in both modes. Profile retains mode selection and warning; dataset isolation and storage remain unchanged.
+
+## Build 76 — Native-like text interaction
+Disable ordinary interface text selection and Safari touch callouts globally within the app shell. Preserve text selection and editing in inputs, textareas and contenteditable fields. No geometry, data or gesture handler changes.

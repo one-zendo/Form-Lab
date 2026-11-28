@@ -153,3 +153,6 @@ nav button[data-destination]{position:relative;z-index:1;transition:transform 15
 
 /* Build 73: timer visibility changes only the existing scroll reservation. */
 #shell[data-timer-visible=false]{--timer-clearance:0px}#timer[hidden],#timer-glass[hidden]{display:none!important}.timer-setting{cursor:pointer}.timer-setting .settings-label{flex:1}.timer-setting .settings-leading svg{width:100%;height:100%}
+
+/* Build 76: native-like selection behavior; preserve editable text. */
+#shell{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}#shell input:not([type=checkbox]):not([type=radio]),#shell textarea,#shell [contenteditable]:not([contenteditable="false"]){-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
