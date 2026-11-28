@@ -143,3 +143,6 @@ Progress replaces Home as the non-scrollable landing page with personalized gree
 
 ## Build 57 — Training navigation icon
 Rename Workouts to Training, retaining its blank canvas. Keep the original Lucide dumbbell outline, rotated horizontally (-45 degrees) to match the approved normal horizontal presentation, with existing 22 CSS px size and 2-unit stroke. No custom path, filled variant, or other layout change. Physical appearance pending acceptance.
+
+## Build 58 — FP headline refinement (approved)
+Consolidate FP Progress headline CSS into one block for both calibrated environments. Greeting 26, name 28, date and condition 13, weather art 64 × 64, temperature 32 CSS px; existing 16 px dashboard inset, 4 px date gap and 12 px card gap. Right weather column 124 px (64 art, 4 gap, 56 temperature/condition); shared bottom alignment for single-line condition/date, wrap long conditions and truncate long names as before. Preserve all weather motion and reduced-motion behavior, safe-area/rail calibration, other orientations and user data. Physical fit and long-condition acceptance pending.

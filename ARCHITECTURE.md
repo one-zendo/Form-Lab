@@ -57,3 +57,5 @@ Build 55 derives bottom/side navigation reservations from shared CSS component g
 Build 56 separates three primary destinations from the Profile-owned Diagnostic subpage. Existing history import remains the sole source of Progress metrics; presentation derives rolling buckets and detail views in history.js, with no storage migration. Workouts blank; saved routines/history accessible from Profile. Diagnostic test controls preserved under Diagnostics. No hardware changes.
 
 Build 57 renames the blank destination Training and rotates only its navigation dumbbell presentation; the shared Lucide geometry and data remain unchanged.
+
+Build 58 consolidates FP headline rules and duplicate reduced-motion weather declarations; no changes to weather engine, geometry, state or storage.
