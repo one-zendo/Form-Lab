@@ -86,3 +86,6 @@ Shared sticky page header with opaque background and content separation. Physica
 
 ## Build 27
 - Studio and Graphite Lime themes, latter default; persistent Profile appearance selector; monochrome streaks and theme-colored timer. No personal training data changes. Browser and physical validation pending.
+
+## Build 28
+Private paste importer for JSON and copied fenced batches. No personal data committed. Browser and physical testing pending.

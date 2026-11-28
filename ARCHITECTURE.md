@@ -25,3 +25,5 @@ The actual header starts at viewport top and owns calibrated padding. App diagno
 Build 26 adds history.js, an explicit local JSON import with read-only workout and routine views; local date/streak calculation; shared timer liquid layer using blend inversion and a single animation loop. Hardware unchanged.
 
 Build 27: shared appearance tokens in style.css, Profile radio selection in app.js, independent local appearance key, liquid overlay clipped to matching fill. No hardware/layout changes.
+
+Build 28 extends the private importer with paste input and atomic batch merge.

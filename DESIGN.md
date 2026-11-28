@@ -86,3 +86,5 @@ Home date is right-aligned in the sticky glass header: uppercase bold 12px weekd
 
 ## Build 27 appearance (approved)
 Studio is the original Apple × ChatGPT light theme with Lucide icons, monochrome training streak and blue timer. Graphite Lime is the default: canvas #151617, surface #242628, elevated #333639, text #f5f5f5, muted #999c9f, accent #d1fa55. Primary action and timer use lime with dark ink; streak uses white with dark check. Theme choice in Profile → Appearance persists separately in form.appearance.v1. Theme changes only shared visual tokens; preserve layout, geometry and training data. Apple Red was explored but not included in the selector. Physical acceptance pending.
+
+Build 28: Profile training data supports pasted JSON or multiple fenced JSON batches, validated together before a single local merge. No personal data in public source.
