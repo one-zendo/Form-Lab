@@ -10,8 +10,8 @@ return 'M '+p(r,0)+' L '+p(w-r,0)+' C '+p(w-k,0)+' '+p(w,k)+' '+p(w,r)+' L '+p(w
 }
 if(typeof module==='object'&&module.exports){module.exports={curve};return;}
 if(!window.CSS||CSS.supports('corner-shape','squircle')||!CSS.supports('clip-path','path("M 0 0 L 1 0 L 1 1 Z")')||!window.ResizeObserver)return;
-const selector='article,.settings-group,.set,dialog,button,input:not([type=checkbox]):not([type=radio]),textarea,.theme-swatch,#theme-options label';
-const excluded='#timer,#timer *,nav,nav *,#week-days *, .progress-segments *, .routine-headline>button';
+const selector='article,.settings-group,nav .destinations,.set,dialog,button,input:not([type=checkbox]):not([type=radio]),textarea,.theme-swatch,#theme-options label';
+const excluded='#timer,#timer *,nav,nav *:not(.destinations),#week-days *, .progress-segments *, .routine-headline>button';
 const watched=new Set();let frame=0;
 function paint(el){
 el.removeAttribute('data-continuous-corner');

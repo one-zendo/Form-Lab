@@ -237,3 +237,6 @@ Shared headline-row and form-headline classes, 44px row, 22px/500 title, 24×32 
 
 ## Build 81 — Headline regression repair
 Remove orphaned FP selector preceding root headline tokens. Bound signature to 24×32 and row to 44px with CSS fallbacks and intrinsic SVG dimensions. Preserve hardware calibration. Browser verification pending.
+
+## Build 82 — Navigation card geometry
+Horizontal dock matches single-row settings card: 56px inner row plus 2px outline, shared 28px continuous corner token and calibrated content side insets. Selection lens remains capsule, 8px blur retained. Vertical rail retains its 44px control height and calibrated width; outer corner token shared. Scroll/timer clearance follows horizontal control height. Browser and physical acceptance pending.

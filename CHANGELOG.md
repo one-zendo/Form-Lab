@@ -254,3 +254,6 @@ Consolidate primary and detail headline geometry and retain detail actions. Brow
 
 ## Build 81
 Repair invalid global token selector and bound headline geometry. Physical and browser acceptance pending.
+
+## Build 82
+Match horizontal dock to Diagnostics settings card geometry, retain rail calibration and selection lens. Browser and physical acceptance pending.
