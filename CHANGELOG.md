@@ -189,3 +189,7 @@ Default public demo snapshot of 35 Hevy workouts and seven routines, independent
 
 ## Build 62
 Compact global headline: standard top padding 8px, FL1 Native 76px and unknown fallback 16px retained. All ten profile values checked in isolation; CI and physical verification pending.
+
+
+## Build 63
+Profile grouped settings reference design and dedicated subviews; retained import and history controls. Syntax and required DOM IDs checked; CI/browser/Pages/physical verification pending.

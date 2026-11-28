@@ -67,3 +67,5 @@ Build 60 supersedes fixed Home/Progress layout: Home uses the shared scroll view
 Build 61 introduces demo-data.js, an authorized public snapshot and isolated mode/key resolver. history.js owns mode selection and uses the existing workout engine with mode-specific keys. Existing personal keys unchanged.
 
 Build 62 updates only the calibrated top padding values in layout.js; all consumers use the existing shared --top variable. Unknown fallback and FL1 Native remain unchanged.
+
+Build 63 adds profile.js as a presentation-only subview controller; existing form nodes and storage handlers remain intact. Profile menu values reflect existing name, theme and mode state.

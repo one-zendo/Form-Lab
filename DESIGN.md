@@ -172,3 +172,7 @@ The user explicitly authorized publishing their actual Hevy workout and routine 
 
 ## Build 62 — Compact global headline (approved)
 Reduce standard calibrated headline top padding from 16 to 8 CSS px in nine orientation/environment profiles. Preserve FL1 Native 76px camera clearance, unknown-profile fallback 16px, additive system safe insets, centered typography, 56px headline minimum, existing 12px gap, and all hardware, timer and data behavior. No other layout changes. Physical acceptance pending.
+
+
+## Build 63 — Profile reference design (approved)
+ChatGPT screenshot is the authoritative visual reference for grouped Profile settings. At the stated 3× device scale, approximate measured row height 56 CSS px, 18px regular labels, 22px icons, 16px horizontal inset, 14px icon gap, 28px continuous group radius (rounded fallback), 1px theme-aware outline, 0.5px inset separator and 32px group spacing. Preserve theme colors, shared headline and calibrated safe area/navigation. Account, Appearance, Training mode, Import training data and Manage data open dedicated Profile subviews with back navigation; Diagnostics retains its existing page. Raw routine/history lists remain accessible in Manage data. No new account service, no storage migration, no hardware changes. Reference measurements are estimates; browser and physical acceptance pending.
