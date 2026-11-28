@@ -100,3 +100,6 @@ nav .nav-label{font-size:10px;line-height:1.1}
 #insights-content article{margin:8px 0;padding:12px;background:var(--elevated)}
 #insights-content h3{font-size:17px;margin:0}
 #insights-content p{font-size:14px;margin:6px 0;color:var(--muted)}
+
+/* Training: original Lucide dumbbell geometry, horizontal presentation. */
+nav [data-destination=Training] svg[data-lucide=dumbbell]{transform:rotate(-45deg);width:22px;height:22px;flex:none}

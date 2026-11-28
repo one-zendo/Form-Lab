@@ -169,3 +169,6 @@ Removed always-active scroll geometry transitions. Timer toggle alone enables a 
 
 ## Build 56
 - Three primary tabs, nested Diagnostics, blank Workouts, real history-derived Progress chart, consistency and insights. Existing imported records preserved. Muscle mapping and body measurements explicitly unavailable pending sources. Adaptive fit and automated verification pending.
+
+## Build 57
+- Training replaces Workouts; original dumbbell outline presented horizontally. Existing data and all layout profiles unchanged. CI and physical acceptance pending.
