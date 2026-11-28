@@ -63,3 +63,5 @@ Build 58 consolidates FP headline rules and duplicate reduced-motion weather dec
 Build 59 removes the weather module, markup, styles and update guard dependency. Progress headline retains greeting and date; shared typography refined. No hardware or storage changes.
 
 Build 60 supersedes fixed Home/Progress layout: Home uses the shared scroll viewport and overlay clearances, intrinsic cards, independent existing profile columns and screenshot-derived presentation tokens. Destination state uses Home; history and storage logic stay unchanged, except chart bar width presentation. No hardware changes.
+
+Build 61 introduces demo-data.js, an authorized public snapshot and isolated mode/key resolver. history.js owns mode selection and uses the existing workout engine with mode-specific keys. Existing personal keys unchanged.

@@ -181,3 +181,7 @@ Approved weather removal and typography refinement; physical acceptance pending.
 
 ## Build 60
 - Home replaces Progress; screenshot-based intrinsic cards, scrolling, restored timer/navigation glass, removed fixed dashboard rules. Existing data and calibration preserved. Reference width is responsive; consistency height inferred from visible content. Browser and physical verification pending.
+
+
+## Build 61
+Default public demo snapshot of 35 Hevy workouts and seven routines, independent personal/demo storage, mode selector, source anomaly warning. CI/browser/Pages/physical verification pending.
