@@ -74,3 +74,6 @@ Shared sticky page header with opaque background and content separation. Physica
 
 ## Build 23
 - Refine shared headline glass using 15% opacity, 6px blur and 100% saturation, based on user screenshot. Preserve separator, text opacity, fallback and all layout geometry. Screenshot-derived tokens are approximate; browser and physical acceptance pending.
+
+## Build 24
+- Fix exposed top strip by moving scroll top padding into the actual sticky header and applying glass directly to the full-width header at top:0. Preserve headline text alignment and 15% opacity/6px blur. Master diagnostic guides default off, with individual categories retained. Browser and physical acceptance pending.
