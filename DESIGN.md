@@ -1,5 +1,5 @@
 # FORM — Design standard
-Status: restart foundation specification; implementation and physical acceptance pending. This is the sole active design authority for the restart. Diagnostic Build 03 enables global arrangement-preserving posture adjustment; verification and calibration remain pending. Native-sized browser previews are not native implementations.
+Status: restart foundation specification; implementation and physical acceptance pending. This is the sole active design authority for the restart. Diagnostic Build 04 adds automatic deployment checks; verification and calibration remain pending. Native-sized browser previews are not native implementations.
 
 ## Hardware reference
 | Profile | Full display (pt) | Safari drawable (pt) | Safari exclusion |
@@ -67,5 +67,8 @@ Separate five responsibilities:
 - Components: share appearance, content, typography, colors, icons and controls across orientations; no global spatial adaptation.
 - Functionality: share interactions, application logic and persistent data independently of layout.
 - Diagnostics: observe and report actual geometry and signals; overlays must never alter layout, dimensions, scrolling or interaction.
+## Automatic build updates (approved)
+Check the deployed version manifest every 3 seconds while visible, and on return to foreground. Reload only for a newer matching-series build after verifying the deployed HTML build marker. Bypass caches and version runtime asset URLs. Defer reload during editing, changed input, active or modified timer, completed set, nondefault navigation, tap tests or open dialog. Show pending version; never clear user storage. Browser background throttling and deployment latency mean three seconds is a polling target, not a delivery guarantee.
+
 ## Development discipline
 Preview and approve spatial arrangements before implementation. Establish and physically test the minimal wireframe before adding workout features. Follow the verification section; automated browser checks do not substitute for physical Duo or native validation. Remove superseded code in every build; verify that no conflicting definitions remain. Record approved decisions and known limitations, preserve data and Git history, work directly on main, and verify deployment separately from source changes.

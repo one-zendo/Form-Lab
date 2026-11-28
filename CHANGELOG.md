@@ -13,3 +13,6 @@ Approved arrangement-preserving hinge rule. UP horizontal content separation wit
 
 ## Diagnostic Build 03
 Enabled arrangement-preserving posture adjustment in all five current stacked profiles, both viewport environments. Unknown profiles remain uncalibrated. Added all-profile posture assertions. Provisional midpoint and minimum 12 CSS px additional spacing are diagnostic design choices, not measured hinge geometry. Future side-by-side layouts are specified but not implemented. Physical validation pending.
+
+## Diagnostic Build 04
+Three-second foreground deployment polling, versioned assets, matching HTML verification and guarded reload. Changed editable fields defer automatic reload until manual refresh; no user storage writes. Browser timing and deployment remain unverified.
