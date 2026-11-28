@@ -251,3 +251,6 @@ Symmetric Home date alignment and abbreviated month. Browser and physical accept
 
 ## Build 80
 Consolidate primary and detail headline geometry and retain detail actions. Browser and physical acceptance pending.
+
+## Build 81
+Repair invalid global token selector and bound headline geometry. Physical and browser acceptance pending.

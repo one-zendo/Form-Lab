@@ -234,3 +234,6 @@ Right-align weekday and date in a trailing column beside the greeting. Bold week
 
 ## Build 80 — Global headline geometry
 Shared headline-row and form-headline classes, 44px row, 22px/500 title, 24×32 signature slot and -2px optical offset. Use Home dashboard inset for all headers; retain orientation safe-area tokens. Detail navigation uses One's 3px rounded back glyph in the same slot with a 44px hit area, and trailing actions/elapsed time. Preserve sticky behavior and Home date. Physical alignment pending.
+
+## Build 81 — Headline regression repair
+Remove orphaned FP selector preceding root headline tokens. Bound signature to 24×32 and row to 44px with CSS fallbacks and intrinsic SVG dimensions. Preserve hardware calibration. Browser verification pending.
