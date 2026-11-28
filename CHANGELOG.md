@@ -148,3 +148,6 @@ Removed always-active scroll geometry transitions. Timer toggle alone enables a 
 
 ## Build 49
 - Shared system typography tokens, clearer hierarchy, medium actions, regular settings and matching timer overlay font. Retain adaptive Home type and geometry. Added browser assertions; execution and physical acceptance pending.
+
+## Build 50
+- Home-specific readability, adaptive padding, grouped workout text and theme primary action; FP compact weather and unbroken unknown temperature. Existing anchors and storage preserved. Browser and physical acceptance pending.
