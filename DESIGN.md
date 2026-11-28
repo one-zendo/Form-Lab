@@ -216,3 +216,6 @@ Profile Show timer bar defaults off, persists in independent local key form.time
 
 ## Build 74 — Shared navigation material
 Navigation inherits Profile settings surface and outline tokens. Use 94% surface tint with 6% transparency (opaque fallback) so the approved 8px backdrop blur remains visible; selection lens mixes 10% theme ink into the shared surface. Remove inset glow and unused decorative pseudo-element. Preserve capsule geometry, lens motion, placement, timer and calibration. Physical appearance pending.
+
+## Build 75 — Home mode label
+Remove the mode label from Home in both modes. Profile retains mode selection and warning; dataset isolation and storage remain unchanged.

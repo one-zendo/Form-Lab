@@ -233,3 +233,6 @@ Add persistent Profile timer switch and active-session override; retain countdow
 
 ## Build 74
 Match navigation to Profile material, remove edge glow and retain blur and motion. Browser and physical acceptance pending.
+
+## Build 75
+Remove Home mode label and its rendering; retain Profile mode controls. Browser and deployment verification pending.
