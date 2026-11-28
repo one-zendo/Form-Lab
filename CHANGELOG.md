@@ -230,3 +230,6 @@ Unify standard card radius at 28px; consolidate Home CSS and update radius regre
 
 ## Build 73
 Add persistent Profile timer switch and active-session override; retain countdown state and remove hidden timer clearance. Browser and physical verification pending.
+
+## Build 74
+Match navigation to Profile material, remove edge glow and retain blur and motion. Browser and physical acceptance pending.

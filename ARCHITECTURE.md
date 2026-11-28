@@ -83,3 +83,5 @@ Build 68 updates the shared settings typography token and reuses it for selectio
 Build 69 adds corners.js as a presentation-only progressive enhancement; resize and theme/DOM observers refresh paths without modifying hardware or data.
 
 Build 73: app.js owns independent timer visibility preference and clearance; history.js publishes active session presence without changing timer countdown ownership or storage schema.
+
+Build 74: navigation material consumes shared settings surface and outline tokens; no interaction or geometry changes.

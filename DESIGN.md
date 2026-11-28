@@ -213,3 +213,6 @@ Standard article cards and grouped settings inherit --card:28px with the existin
 
 ## Build 73 — Timer visibility preference
 Profile Show timer bar defaults off, persists in independent local key form.timer.visible.v1. An active saved workout forces timer visibility across destinations, including minimized and restored sessions; finishing restores the preference. Hidden timer and glass reserve no timer clearance; countdown state remains independent. Preserve existing dock, hardware calibration and training storage.
+
+## Build 74 — Shared navigation material
+Navigation inherits Profile settings surface and outline tokens. Use 94% surface tint with 6% transparency (opaque fallback) so the approved 8px backdrop blur remains visible; selection lens mixes 10% theme ink into the shared surface. Remove inset glow and unused decorative pseudo-element. Preserve capsule geometry, lens motion, placement, timer and calibration. Physical appearance pending.
