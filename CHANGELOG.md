@@ -98,3 +98,6 @@ Pure black Safari tint requested for every theme. No layout changes. Physical ti
 
 ## Build 31
 Studio follows system appearance automatically; two theme choices. Existing preferences remain compatible. No layout or storage migration. Syntax checked; deployment and physical verification pending.
+
+## Build 32
+Replace forced-black Safari tint with one theme-aware resolver used at startup, selection and system changes. Remove superseded active documentation rules. No layout or data changes. Resolver logic tested; deployment and physical tint pending.
