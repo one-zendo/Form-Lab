@@ -184,3 +184,7 @@ Appearance and Training mode now open a shared anchored translucent selection di
 
 ## Build 65 — Three-destination navigation (approved)
 Remove the timer visibility toggle and countdown ring from navigation in every orientation/environment. Home, Workouts and Profile remain equally distributed within the existing dock/rail. The separate 56px rest timer remains visible across destinations with existing controls, animation, anchoring and reserved scroll clearance. Remove obsolete toggle-specific state, transitions and styles. No data, theme or hardware changes. Physical validation pending.
+
+
+## Build 66 — Clear Liquid Glass navigation (approved)
+Remove navigation backdrop blur, gradient fade overlay and related markup/tokens. Preserve dock/rail dimensions, three destinations, icons, touch targets and timer spacing. Translucent theme-aware surface with directional edge highlights and an independently sliding selection lens, 280ms spring-like easing, restrained press scaling, reduced-motion fallback. Lens follows measured active button across horizontal/vertical layouts and resizing; no hardware or storage changes. CSS approximation of Liquid Glass, not native optical refraction. Existing header and separate timer blur remain. Browser and physical acceptance pending.

@@ -201,3 +201,7 @@ Floating Appearance and Training mode menus, Studio Dark settings surface refine
 
 ## Build 65
 Remove navigation timer button; retain standalone rest timer. Replace superseded toggle regression with three-button, visible-timer and countdown continuity checks. Syntax checked; full CI and deployment pending.
+
+
+## Build 66
+Clear translucent navigation, sliding selection lens, no nav blur. Preserved timer, data and geometry. Added browser assertions for lens alignment and removed blur; syntax checked, CI and Pages pending.
