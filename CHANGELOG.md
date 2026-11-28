@@ -151,3 +151,6 @@ Removed always-active scroll geometry transitions. Timer toggle alone enables a 
 
 ## Build 50
 - Home-specific readability, adaptive padding, grouped workout text and theme primary action; FP compact weather and unbroken unknown temperature. Existing anchors and storage preserved. Browser and physical acceptance pending.
+
+## Build 51
+- Compact FP greeting/date grid, bounded side-by-side weather and bottom alignment, no changes to other orientations or hardware. Added FP bounds checks; automated execution and physical acceptance pending.
