@@ -116,3 +116,6 @@ Home reserves timer space in the actual content viewport instead of scroll paddi
 
 ## Build 37
 Navigation glass: 20px dock blur, 55% theme surface, 14px directional gradient with 40px fade, independent of timer. Home retains fixed dashboard clearance. Source checks passed; browser, deployment and physical verification pending.
+
+## Build 38
+Added Little Weather headline, SVG animations, permission-based Open-Meteo integration and forecast. JS syntax checks passed. Live API, browser rendering and deployment unverified.
