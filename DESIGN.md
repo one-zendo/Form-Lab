@@ -91,3 +91,5 @@ Build 28: Profile training data supports pasted JSON or multiple fenced JSON bat
 
 ## Appearance and Safari tint (current approved rule)
 Studio follows the system light/dark appearance automatically at startup and on system changes. Studio Light uses canvas #F8F8FA, Studio Dark uses #000000, Graphite Lime uses #151617 and remains independent of system appearance and the default theme. Profile presents Studio and Graphite Lime. Existing studio-dark preference is recognized as Studio without rewriting it on startup. Safari theme-color must match the effective theme canvas: Studio Light #F8F8FA, Studio Dark #000000, Graphite Lime #151617. Use one appearance resolver for startup, theme selection and system changes; color-scheme follows the resolved appearance. Never force black independently of theme. Browser tint support remains subject to physical Safari verification. Preserve exclusion geometry.
+
+Studio Dark timer: countdown and all control icons are pure white on both the blue liquid and charcoal track. Other themes retain their existing contrast tokens. No geometry changes.

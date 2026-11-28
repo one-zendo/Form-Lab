@@ -101,3 +101,6 @@ Studio follows system appearance automatically; two theme choices. Existing pref
 
 ## Build 32
 Replace forced-black Safari tint with one theme-aware resolver used at startup, selection and system changes. Remove superseded active documentation rules. No layout or data changes. Resolver logic tested; deployment and physical tint pending.
+
+## Build 33
+Studio Dark timer text and icons remain white across the liquid boundary. Studio Light and Graphite Lime unchanged. Physical and deployment verification pending.
