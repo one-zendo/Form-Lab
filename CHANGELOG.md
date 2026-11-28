@@ -68,3 +68,6 @@ Shared sticky page header with opaque background and content separation. Physica
 
 ## Build 21
 - Shared headline glass extends to viewport top; sticky text retains calibrated top inset. Reduce surface opacity to 58%, blur to 12px and separator contrast. Preserve cards, navigation, timer and hardware. Browser and physical acceptance pending.
+
+## Build 22
+- Reduce shared headline glass background opacity from 58% to 15% on all pages. Keep 12px blur, text opacity, fallback and layout unchanged. Browser and physical acceptance pending.
