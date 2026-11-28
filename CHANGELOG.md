@@ -163,3 +163,6 @@ Removed always-active scroll geometry transitions. Timer toggle alone enables a 
 
 ## Build 54
 - Approved action and achievement card designs with adaptive sizing, hero Play button, separate streak value/unit, seven day markers and today ring. No invented history. Regression assertions added; physical fit pending.
+
+## Build 55
+- Unified timer-to-dock spacing to 8 CSS px vertically or horizontally, preserving navigation anchors, capsule dimensions and timer/card alignment. Added geometry assertions across all profiles; execution and physical acceptance pending.

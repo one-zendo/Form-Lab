@@ -51,3 +51,5 @@ Build 52 renders semantic greeting/name spans in the existing headline. Profile 
 Build 53 uses one CSS corner-shape token under feature detection, with explicit round capsule exceptions and unchanged border-radius fallback. No scripting, hardware, state or layout changes.
 
 Build 54 updates Home card markup and shared adaptive card CSS; history.js only changes presentation of existing derived streak and day data. Existing workout navigation, history calculations and storage unchanged.
+
+Build 55 derives bottom/side navigation reservations from shared CSS component geometry and one timer-to-navigation gap token. No hardware or JS changes.
