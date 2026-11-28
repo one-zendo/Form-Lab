@@ -217,3 +217,7 @@ Increase shared Profile settings labels and values from 18 to 19 CSS px, includi
 
 ## Build 69
 Responsive Safari continuous-corner approximation; radius and layout tokens retained, theme-derived SVG outlines, capsule and focus exclusions. External shadows may be clipped; CI and physical validation pending.
+
+
+## Build 70
+Apply approved navigation glass settings: 8px blur, 10% tint, 30% reflection. No workout logic changes.

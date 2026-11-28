@@ -200,3 +200,7 @@ Use 19 CSS px regular (400) for Profile settings labels, inherited secondary val
 
 ## Build 69 — Safari continuous corners (approved)
 Use shared responsive cubic path clipping and SVG outlines on eligible existing continuous-corner surfaces in browsers without native CSS corner-shape. Preserve radius tokens, box metrics, theme colors, timer/navigation/day/segment capsules and hardware/storage. Focus-visible, asymmetric and unsupported surfaces keep CSS rounding. External shadows may be clipped. Exact native geometry and physical Safari appearance unverified.
+
+
+## Build 70 — Approved navigation glass
+8px backdrop blur (including Safari prefix), 10% white surface tint, 30% white edge and inset reflection. Selected lens uses 12.5% white tint and outline, matching the interactive preview. Preserve capsule geometry, motion, layout and hardware calibration. Safari appearance and light-theme contrast require physical validation. Workout completion repair remains separate and pending.
