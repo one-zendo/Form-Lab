@@ -10,3 +10,6 @@ Initial single-page diagnostic runtime, sample controls, deadline timer, anchore
 
 ## Diagnostic Build 02
 Approved arrangement-preserving hinge rule. UP horizontal content separation with provisional midpoint when compatible segment data is unavailable; explicit diagnostic posture simulation. UL remains stacked until a side-by-side arrangement is approved. Timer/navigation unchanged. Added unit and browser assertions; physical posture and spacing unverified.
+
+## Diagnostic Build 03
+Enabled arrangement-preserving posture adjustment in all five current stacked profiles, both viewport environments. Unknown profiles remain uncalibrated. Added all-profile posture assertions. Provisional midpoint and minimum 12 CSS px additional spacing are diagnostic design choices, not measured hinge geometry. Future side-by-side layouts are specified but not implemented. Physical validation pending.
