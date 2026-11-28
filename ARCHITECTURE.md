@@ -49,3 +49,5 @@ Build 48 defines shared semantic surface/row/outline/popup tokens in style.css; 
 Build 52 renders semantic greeting/name spans in the existing headline. Profile name form merges only the explicit name field into existing local preferences; no migration or training data changes.
 
 Build 53 uses one CSS corner-shape token under feature detection, with explicit round capsule exceptions and unchanged border-radius fallback. No scripting, hardware, state or layout changes.
+
+Build 54 updates Home card markup and shared adaptive card CSS; history.js only changes presentation of existing derived streak and day data. Existing workout navigation, history calculations and storage unchanged.

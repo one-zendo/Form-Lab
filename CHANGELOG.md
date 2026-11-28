@@ -160,3 +160,6 @@ Removed always-active scroll geometry transitions. Timer toggle alone enables a 
 
 ## Build 53
 - Shared continuous squircle corners on rectangular components where CSS corner-shape is supported; original radius fallback otherwise. Capsules unchanged. Added conditional browser assertions; execution, Safari support and physical acceptance pending.
+
+## Build 54
+- Approved action and achievement card designs with adaptive sizing, hero Play button, separate streak value/unit, seven day markers and today ring. No invented history. Regression assertions added; physical fit pending.

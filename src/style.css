@@ -49,3 +49,28 @@ button{font-weight:var(--weight-medium)}nav button,#timer button,#week-days butt
   article,.settings-group,.set,dialog,button,input:not([type=checkbox]):not([type=radio]),textarea,.theme-swatch,#theme-options label:has(input:checked){corner-shape:var(--corner-shape)}
   #timer,#timer button,nav .destinations,nav button,#start-workout,#week-days button,#week-days button .day-dot{corner-shape:round}
 }
+
+/* Approved Home cards: scale against dashboard height and card content height, preserve fixed Home. */
+#home-dashboard{--home-card-padding:20px;--home-hero-height:64px;--home-hero-font:21px;--home-streak-size:48px;--home-day-size:36px;--home-flame:#ff9f0a}
+#home-dashboard article{padding:clamp(8px,4.5cqh,var(--home-card-padding));gap:0;justify-content:flex-start}
+#home-dashboard .home-card-label{display:flex;align-items:center;justify-content:space-between;gap:8px;flex:none;min-width:0;color:var(--muted);margin-bottom:clamp(3px,6cqh,12px)}
+#home-dashboard .home-card-label small,#home-dashboard .home-card-label h2{font-size:clamp(11px,8cqh,13px);font-weight:500;line-height:1.2;color:var(--muted);margin:0}
+#home-dashboard .home-card-label svg{width:clamp(16px,12cqh,20px);height:clamp(16px,12cqh,20px)}
+#streak-card .home-card-label svg{color:var(--home-flame);width:clamp(16px,13cqh,24px);height:clamp(16px,13cqh,24px)}
+#home-dashboard .workout-copy{display:flex;flex-direction:column;gap:clamp(2px,2cqh,4px);min-height:0;overflow:hidden}
+#home-dashboard #routine-title{font-size:clamp(18px,13cqh,28px);line-height:1.1;overflow-wrap:anywhere}
+#home-dashboard #routine-info{font-size:clamp(11px,8cqh,15px);line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#home-dashboard #start-workout{display:flex;align-items:center;justify-content:center;gap:clamp(6px,6cqh,12px);margin-top:auto;min-height:44px;height:clamp(44px,30cqh,var(--home-hero-height));font-size:clamp(14px,10cqh,var(--home-hero-font));font-weight:600;line-height:1.1}
+#home-dashboard #start-workout svg{width:clamp(18px,12cqh,24px);height:clamp(18px,12cqh,24px);margin:0}
+#home-dashboard #streak-value{gap:8px;align-items:baseline;flex-wrap:nowrap;min-width:0}
+#home-dashboard #streak-value strong{font-size:clamp(24px,24cqh,var(--home-streak-size));font-weight:600;font-variant-numeric:tabular-nums;line-height:1}
+#home-dashboard #streak-value small{font-size:clamp(12px,10cqh,20px);font-weight:400;color:var(--muted)}
+#home-dashboard .streak-week{margin-top:auto;border-top:var(--separator-width) solid var(--line);padding-top:clamp(3px,8cqh,16px)}
+#home-dashboard #week-days{gap:3px}
+#home-dashboard #week-days button{gap:clamp(2px,4cqh,8px);min-height:0;font-size:clamp(10px,7cqh,12px);line-height:1.2}
+#home-dashboard #week-days .day-dot{max-width:min(var(--home-day-size),20cqh);width:100%;box-sizing:border-box}
+#home-dashboard #week-days .day-dot svg{width:min(18px,11cqh);height:min(18px,11cqh)}
+#home-dashboard #week-days .day-dot i{width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.6}
+#home-dashboard #week-days .today{color:var(--ink);font-weight:600}
+#home-dashboard #week-days .today .day-dot{box-shadow:inset 0 0 0 2px var(--home-flame)}
+#home-dashboard #week-summary:not([hidden]){margin-top:4px;font-size:clamp(10px,6cqh,12px);line-height:1.1}
