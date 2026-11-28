@@ -188,3 +188,7 @@ Remove the timer visibility toggle and countdown ring from navigation in every o
 
 ## Build 66 — Clear Liquid Glass navigation (approved)
 Remove navigation backdrop blur, gradient fade overlay and related markup/tokens. Preserve dock/rail dimensions, three destinations, icons, touch targets and timer spacing. Translucent theme-aware surface with directional edge highlights and an independently sliding selection lens, 280ms spring-like easing, restrained press scaling, reduced-motion fallback. Lens follows measured active button across horizontal/vertical layouts and resizing; no hardware or storage changes. CSS approximation of Liquid Glass, not native optical refraction. Existing header and separate timer blur remain. Browser and physical acceptance pending.
+
+
+## Build 67 — Reference glass material (approved)
+Use the supplied ChatGPT floating selection screenshot as the visual material reference for navigation: softly illuminated upper surface, darker lower surface, restrained translucent gradients, fine luminous outline and inset edge reflections. No backdrop blur, no navigation fade overlay. Retain Build 66 measured sliding lens, reduced-motion behavior, dock and rail geometry, timer and themes. The material is a CSS approximation rather than native optical refraction; visual acceptance pending.

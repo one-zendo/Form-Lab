@@ -205,3 +205,7 @@ Remove navigation timer button; retain standalone rest timer. Replace superseded
 
 ## Build 66
 Clear translucent navigation, sliding selection lens, no nav blur. Preserved timer, data and geometry. Added browser assertions for lens alignment and removed blur; syntax checked, CI and Pages pending.
+
+
+## Build 67
+Refine clear navigation glass using screenshot-inspired tonal gradients and edge reflections; existing lens motion retained. Static CSS checks passed; browser, deployment and physical acceptance pending.

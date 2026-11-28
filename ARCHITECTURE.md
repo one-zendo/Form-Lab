@@ -75,3 +75,5 @@ Build 64 extends profile.js with a reusable anchored modal choice presentation o
 Build 65 removes navigation timer-toggle ownership and visibility state; countdown and timer bar remain independent of destination selection.
 
 Build 66 removes nav-glass overlay and uses a noninteractive measured selection lens inside the existing navigation dock; app.js updates lens geometry on selection and layout events.
+
+Build 67 refines navigation material in existing CSS selectors; no new interaction or geometry logic.
