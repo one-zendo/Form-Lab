@@ -185,3 +185,7 @@ Approved weather removal and typography refinement; physical acceptance pending.
 
 ## Build 61
 Default public demo snapshot of 35 Hevy workouts and seven routines, independent personal/demo storage, mode selector, source anomaly warning. CI/browser/Pages/physical verification pending.
+
+
+## Build 62
+Compact global headline: standard top padding 8px, FL1 Native 76px and unknown fallback 16px retained. All ten profile values checked in isolation; CI and physical verification pending.

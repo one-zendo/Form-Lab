@@ -65,3 +65,5 @@ Build 59 removes the weather module, markup, styles and update guard dependency.
 Build 60 supersedes fixed Home/Progress layout: Home uses the shared scroll viewport and overlay clearances, intrinsic cards, independent existing profile columns and screenshot-derived presentation tokens. Destination state uses Home; history and storage logic stay unchanged, except chart bar width presentation. No hardware changes.
 
 Build 61 introduces demo-data.js, an authorized public snapshot and isolated mode/key resolver. history.js owns mode selection and uses the existing workout engine with mode-specific keys. Existing personal keys unchanged.
+
+Build 62 updates only the calibrated top padding values in layout.js; all consumers use the existing shared --top variable. Unknown fallback and FL1 Native remain unchanged.

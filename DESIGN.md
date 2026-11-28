@@ -168,3 +168,7 @@ All main and routine views use centered single-line titles, 22 CSS px medium wei
 
 ## Build 61 — Default Demo Mode (approved)
 The user explicitly authorized publishing their actual Hevy workout and routine records as the public default demo dataset. Seed 35 workouts and seven routines, retaining original IDs, exercise order, set values, rep ranges, rest settings, notes and dates; omit media fields. Profile → Training data selects Demo or Personal Mode. Demo is the default for fresh visits; an existing personal active session takes precedence so it can be resumed. Separate data and active-session keys isolate all demo writes from personal storage; private imports are allowed only in Personal Mode. Switching modes reloads after persisting the choice and is blocked during an active workout or routine editor. Home labels the active mode and uses existing rolling date/metric logic. The original 8,788 kg calf-raise logging anomaly is retained, warned about in Profile and not an endorsed training target. No hardware/layout calibration changes. Browser, CI, Pages and physical acceptance require separate verification.
+
+
+## Build 62 — Compact global headline (approved)
+Reduce standard calibrated headline top padding from 16 to 8 CSS px in nine orientation/environment profiles. Preserve FL1 Native 76px camera clearance, unknown-profile fallback 16px, additive system safe insets, centered typography, 56px headline minimum, existing 12px gap, and all hardware, timer and data behavior. No other layout changes. Physical acceptance pending.
