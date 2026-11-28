@@ -240,3 +240,6 @@ Remove orphaned FP selector preceding root headline tokens. Bound signature to 2
 
 ## Build 82 — Navigation card geometry
 Horizontal dock matches single-row settings card: 56px inner row plus 2px outline, shared 28px continuous corner token and calibrated content side insets. Selection lens remains capsule, 8px blur retained. Vertical rail retains its 44px control height and calibrated width; outer corner token shared. Scroll/timer clearance follows horizontal control height. Browser and physical acceptance pending.
+
+## Build 83 — Approved Workouts library
+Compact routine cards inherit 28px continuous corners, 16px padding, 1px outline, settings surface, 12px layout gap and 19px title. Exercise list 14/20px, count 13px, bottom-right Start pill 88×36px inside 44px target, top-right pencil 20px, plus 22px, play 16px. No redundant saved-routines heading. FP one column, FL1/FL2/UP two, UL three; calibrated content insets and natural scrolling. Existing handlers and storage retained. Browser and physical acceptance pending.

@@ -87,3 +87,5 @@ Build 73: app.js owns independent timer visibility preference and clearance; his
 Build 74: navigation material consumes shared settings surface and outline tokens; no interaction or geometry changes.
 
 Build 80 shares headline-row/form-headline CSS between shell and dynamically generated detail headers; history retains navigation handlers.
+
+Build 83 replaces routine library inline presentation with shared CSS classes; existing create/edit/start/resume handlers and storage remain unchanged.

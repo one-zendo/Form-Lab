@@ -257,3 +257,6 @@ Repair invalid global token selector and bound headline geometry. Physical and b
 
 ## Build 82
 Match horizontal dock to Diagnostics settings card geometry, retain rail calibration and selection lens. Browser and physical acceptance pending.
+
+## Build 83
+Approved compact Workouts cards and adaptive grid, shared tokens and Lucide controls. Browser and deployment verification pending.

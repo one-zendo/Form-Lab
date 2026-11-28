@@ -108,7 +108,7 @@ nav [data-destination=Training] svg[data-lucide=dumbbell]{transform:rotate(-45de
 #home-date strong,#home-date span{font-size:var(--headline-subtitle)}
 #scroll>header>small{display:none}#shell[data-page=Diagnostic] #scroll>header>small{display:block;text-align:center}
 #scroll:has(>[data-page=Training][data-view=library]:not([hidden])) .headline-row h1{max-width:calc(100% - 104px)}
-#scroll:has(>[data-page=Training][data-view=library]:not([hidden])) .routine-library-action{position:sticky;top:calc(var(--top) + var(--safeT) + 6px);z-index:3;height:0;margin:0!important;transform:translateY(calc(-44px - var(--gap)));pointer-events:none}.routine-library-action button{pointer-events:auto}
+#scroll:has(>[data-page=Training][data-view=library]:not([hidden])) .routine-library-action{position:sticky;top:calc(var(--top) + var(--safeT) + 6px);z-index:3;height:0;margin:0;display:flex;justify-content:flex-end;transform:translateY(calc(-44px - var(--gap)));pointer-events:none}.routine-library-action button{pointer-events:auto}
 #scroll:has(>[data-page=Training][data-view=editor]:not([hidden]))>header,#scroll:has(>[data-page=Training][data-view=active]:not([hidden]))>header{display:none}
 .routine-headline>div{min-width:0}.routine-headline>button{height:var(--headline-action);border-radius:999px;padding:0 8px;background:var(--elevated);color:var(--ink)}.routine-headline>button:first-child{width:var(--headline-action);font-size:24px}.routine-headline>button:last-child{background:var(--ink);color:var(--canvas)}
 
@@ -160,3 +160,26 @@ nav button[data-destination]{position:relative;z-index:1;transition:transform 15
 
 /* Build 80: shared headline geometry, independent content insets. */
 #scroll>header{margin-inline:calc(-1 * var(--left)) calc(-1 * (var(--right) + var(--rail)));padding-inline:var(--dashboard-inset) calc(var(--dashboard-inset) + var(--rail));padding-bottom:0;margin-bottom:12px}#scroll:has(> [data-page=Home]:not([hidden]))>header{margin-inline:calc(-1 * var(--dashboard-inset)) calc(-1 * (var(--dashboard-inset) + var(--rail)))}.routine-headline{position:sticky;top:0;z-index:2;box-sizing:content-box;padding-top:calc(var(--top) + var(--safeT));margin-inline:calc(var(--dashboard-inset) - var(--left)) calc(var(--dashboard-inset) - var(--right));margin-bottom:12px;background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}.routine-headline>.headline-leading-action{grid-column:1;grid-row:1;width:44px;height:44px;justify-self:center;background:transparent;color:var(--accent);padding:0;display:grid;place-items:center;z-index:1}.headline-leading-action svg{pointer-events:none}.routine-headline>.headline-trailing{grid-column:3;grid-row:1;display:flex;align-items:center;gap:8px;margin-left:8px}.routine-headline>.headline-trailing button{height:var(--headline-action);border-radius:var(--capsule);padding:0 12px;background:var(--ink);color:var(--canvas)}
+
+/* Build 83: compact routine library, shared card and headline tokens. */
+:root{--routine-exercise-size:14px;--routine-exercise-line:20px;--routine-start-width:88px;--routine-start-height:36px;--routine-edit-icon:20px;--routine-play-icon:16px}
+#scroll:has(>[data-page=Training][data-view=library]:not([hidden])){padding-inline:var(--dashboard-inset) calc(var(--dashboard-inset) + var(--rail));overflow-x:hidden;overflow-y:auto}
+#scroll:has(>[data-page=Training][data-view=library]:not([hidden]))>header{margin-inline:calc(-1 * var(--dashboard-inset)) calc(-1 * (var(--dashboard-inset) + var(--rail)))}
+.routine-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--gap);align-items:start}
+#shell:is([data-profile=FL1],[data-profile=FL2],[data-profile=UP]) .routine-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+#shell[data-profile=UL] .routine-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.routine-card{margin:0;padding:var(--settings-padding);border:var(--outline-width) solid var(--settings-outline);background:var(--settings-surface,var(--surface));display:grid;gap:var(--outer-gap);min-width:0}
+.routine-card-heading,.routine-card-footer{display:flex;align-items:center;justify-content:space-between;gap:var(--outer-gap);min-width:0}
+.routine-card-heading h2{font-size:var(--settings-label);font-weight:var(--weight-medium);margin:0;min-width:0;overflow-wrap:anywhere}
+.routine-exercises{font-size:var(--routine-exercise-size);line-height:var(--routine-exercise-line);color:var(--muted);overflow-wrap:anywhere}
+.routine-card-footer small{font-size:var(--type-caption);color:var(--muted)}
+.routine-create,.routine-edit,.routine-start{display:grid;place-items:center;padding:0;flex:none;min-height:var(--headline-action);border-radius:var(--capsule)}
+.routine-create,.routine-edit{width:var(--headline-action);background:transparent;color:var(--ink)}
+.routine-create{background:var(--elevated);border:var(--outline-width) solid var(--settings-outline)}
+.routine-edit{color:var(--muted);justify-items:end}
+.routine-create svg{width:var(--settings-icon);height:var(--settings-icon)}
+.routine-edit svg{width:var(--routine-edit-icon);height:var(--routine-edit-icon)}
+.routine-start{width:var(--routine-start-width);background:transparent;color:var(--ink)}
+.routine-start-pill{width:100%;height:var(--routine-start-height);display:flex;align-items:center;justify-content:center;gap:6px;border-radius:var(--capsule);background:var(--ink);color:var(--canvas);font-size:var(--routine-exercise-size);font-weight:var(--weight-medium)}
+.routine-start svg{width:var(--routine-play-icon);height:var(--routine-play-icon)}
+.routine-resume{width:100%;margin-bottom:var(--outer-gap);border-radius:var(--capsule);background:var(--ink);color:var(--canvas)}
