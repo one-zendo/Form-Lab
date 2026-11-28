@@ -242,3 +242,6 @@ Disable interface text selection; preserve editable field selection. Browser and
 
 ## Build 77
 Restore signature accent and left-aligned headlines. Browser and physical acceptance pending.
+
+## Build 78
+Move Home date to trailing column and bold weekday. Browser and physical verification pending.

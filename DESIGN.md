@@ -225,3 +225,6 @@ Disable ordinary interface text selection and Safari touch callouts globally wit
 
 ## Build 77 — Signature headlines
 Restore One's 24×32 SVG signature, path M12 4 L12 16 L12 28, 3px rounded stroke, 44px title row and -2px optical offset. Primary page headlines left aligned with current 22px system typography and theme accent. Preserve sticky header, calibrated insets and existing detail back/minimize actions; detail titles left aligned. Optical gap requires physical verification because FORM uses system font rather than Inter.
+
+## Build 78 — Home date
+Right-align weekday and date in a trailing column beside the greeting. Bold weekday, regular date below. Preserve signature, sticky header and calibrated insets.
