@@ -1,5 +1,5 @@
 # FORM — Design standard
-Status: restart foundation specification; implementation and physical acceptance pending. This is the sole active design authority for the restart. Diagnostic Build 17 integrates the timer toggle into navigation; verification and calibration remain pending. Native-sized browser previews are not native implementations.
+Status: restart foundation specification; implementation and physical acceptance pending. This is the sole active design authority for the restart. Diagnostic Build 18 anchors page headlines; verification and calibration remain pending. Native-sized browser previews are not native implementations.
 
 ## Hardware reference
 | Profile | Full display (pt) | Safari drawable (pt) | Safari exclusion |
@@ -76,3 +76,5 @@ Check the deployed version manifest every 3 seconds while visible, and on return
 
 ## Development discipline
 Preview and approve spatial arrangements before implementation. Establish and physically test the minimal wireframe before adding workout features. Follow the verification section; automated browser checks do not substitute for physical Duo or native validation. Remove superseded code in every build; verify that no conflicting definitions remain. Record approved decisions and known limitations, preserve data and Git history, work directly on main, and verify deployment separately from source changes.
+
+All primary page headlines remain sticky at the top of their content viewport while page content scrolls. Preserve orientation-specific horizontal alignment and safe-area clearance.

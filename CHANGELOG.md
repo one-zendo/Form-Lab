@@ -55,3 +55,6 @@ Approved screenshot-inspired shared radius tokens: cards/grouped settings 24, re
 
 ## Build 17
 Move timer toggle into shared navigation capsule in all profiles. Preserve independent countdown and visibility state, black active styling and blue ring. Ring sized to 42 CSS px to fit shared control. Floating timer bar and navigation anchors unchanged. Physical and automated verification pending.
+
+## Build 18
+Shared sticky page header with opaque background and content separation. Physical safe-area and scroll verification pending.
