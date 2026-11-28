@@ -193,3 +193,7 @@ Compact global headline: standard top padding 8px, FL1 Native 76px and unknown f
 
 ## Build 63
 Profile grouped settings reference design and dedicated subviews; retained import and history controls. Syntax and required DOM IDs checked; CI/browser/Pages/physical verification pending.
+
+
+## Build 64
+Floating Appearance and Training mode menus, Studio Dark settings surface refinement, unchanged hardware/storage. Syntax and DOM IDs checked; browser, CI and Pages pending.

@@ -119,9 +119,18 @@ nav [data-destination=Training] svg[data-lucide=dumbbell]{transform:rotate(-45de
 
 /* Build 63: screenshot-derived grouped settings. */
 :root{--settings-radius:28px;--settings-chevron:20px;--settings-outline:color-mix(in srgb,var(--ink) 20%,transparent)}
-.settings-group{border-color:var(--settings-outline);border-radius:var(--settings-radius)}
-.settings-menu{padding:0;overflow:hidden;background:var(--surface)}
+.settings-group{border-color:var(--settings-outline);border-radius:var(--settings-radius);background:var(--settings-surface,var(--surface))}
+.settings-menu{padding:0;overflow:hidden;background:var(--settings-surface,var(--surface))}
 .settings-menu .settings-row{position:relative;width:100%;display:flex;flex-wrap:nowrap;align-items:center;gap:var(--settings-icon-gap);padding:0 var(--settings-padding);min-height:var(--settings-row-height);border:0;border-radius:0;background:transparent;color:var(--ink);text-align:left;font-size:var(--settings-label);font-weight:400}
 .settings-menu .settings-row+.settings-row::before{content:"";position:absolute;top:0;left:calc(var(--settings-padding) + var(--settings-icon) + var(--settings-icon-gap));right:0;border-top:var(--separator-width) solid var(--line)}
 .settings-leading,.settings-chevron{display:grid;place-items:center;flex:none;width:var(--settings-icon);height:var(--settings-icon)}
 .settings-chevron{width:var(--settings-chevron);color:var(--muted);opacity:.7}.settings-chevron svg{width:100%;height:100%}.settings-label{flex:1;min-width:0;overflow-wrap:anywhere}.settings-value{color:var(--muted);max-width:42%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.settings-menu .settings-row:active{background:var(--elevated)}.settings-menu .settings-row:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}.settings-build{text-align:center;color:var(--muted);margin:0 0 16px}.settings-back{display:flex;align-items:center;gap:4px;background:transparent;color:var(--ink);padding:0 8px;margin-bottom:12px}.settings-back svg{width:22px;height:22px}.settings-panel .settings-group{display:flex;flex-direction:column;gap:12px}.settings-panel select{width:100%;min-height:44px;border:1px solid var(--line);border-radius:var(--small);background:var(--elevated);color:var(--ink);padding:8px}.settings-panel #history-import{width:100%}.settings-panel #theme-options label{min-height:56px}.settings-panel #demo-warning{line-height:1.4}
+
+/* Build 64: shared anchored selection menu. */
+:root{--settings-choice-radius:32px;--settings-choice-row:46px;--settings-choice-width:252px}
+:root[data-theme=studio-dark]{--settings-surface:#202020;--settings-outline:#414141;--settings-choice-surface:#303030}
+#settings-choice{position:fixed;inset:auto;margin:0;padding:8px;max-width:calc(100% - 16px);max-height:calc(100% - 16px);border-radius:var(--settings-choice-radius);border:1px solid var(--settings-outline);background:var(--settings-choice-surface,var(--elevated));color:var(--ink);overflow:auto;box-shadow:0 8px 30px #0003}
+#settings-choice::backdrop{background:transparent}
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){#settings-choice{background:color-mix(in srgb,var(--settings-choice-surface,var(--elevated)) 82%,transparent);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}}
+@supports (corner-shape:squircle){#settings-choice{corner-shape:squircle}}
+.settings-choice-row,.settings-choice-row[aria-pressed=true]{display:flex;align-items:center;gap:8px;width:100%;min-height:var(--settings-choice-row);padding:8px 10px;background:transparent;color:var(--ink);border-radius:var(--menu-row-radius);text-align:left;font-size:18px;font-weight:400}.settings-choice-row:active{background:var(--selected)}.settings-choice-row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}.settings-choice-check{display:grid;place-items:center;width:24px;flex:none}.settings-choice-check svg{width:22px;height:22px}.settings-demo-warning,#settings-selection-status{margin:0 16px 12px;line-height:1.4}#settings-selection-status:empty{display:none}
