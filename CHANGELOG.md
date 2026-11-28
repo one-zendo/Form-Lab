@@ -178,3 +178,6 @@ Removed always-active scroll geometry transitions. Timer toggle alone enables a 
 
 ## Build 59
 Approved weather removal and typography refinement; physical acceptance pending.
+
+## Build 60
+- Home replaces Progress; screenshot-based intrinsic cards, scrolling, restored timer/navigation glass, removed fixed dashboard rules. Existing data and calibration preserved. Reference width is responsive; consistency height inferred from visible content. Browser and physical verification pending.
