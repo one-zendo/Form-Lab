@@ -146,3 +146,6 @@ Rename Workouts to Training, retaining its blank canvas. Keep the original Lucid
 
 ## Build 58 — FP headline refinement (approved)
 Consolidate FP Progress headline CSS into one block for both calibrated environments. Greeting 26, name 28, date and condition 13, weather art 64 × 64, temperature 32 CSS px; existing 16 px dashboard inset, 4 px date gap and 12 px card gap. Right weather column 124 px (64 art, 4 gap, 56 temperature/condition); shared bottom alignment for single-line condition/date, wrap long conditions and truncate long names as before. Preserve all weather motion and reduced-motion behavior, safe-area/rail calibration, other orientations and user data. Physical fit and long-condition acceptance pending.
+
+## Build 59 — Simplified headline and typography (approved)
+Supersedes all prior weather requirements: remove weather artwork, forecast, location requests, API and animations. Progress retains two-line greeting and left-aligned date beneath it, with 4 CSS px gap. Preserve profile alignment, fixed dashboard, timer and navigation. Use existing Apple system font stack globally; strengthen Progress card headings to semibold primary ink, tighten heading tracking and improve small label readability while retaining adaptive fitting. Physical fit pending.

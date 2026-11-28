@@ -59,3 +59,5 @@ Build 56 separates three primary destinations from the Profile-owned Diagnostic 
 Build 57 renames the blank destination Training and rotates only its navigation dumbbell presentation; the shared Lucide geometry and data remain unchanged.
 
 Build 58 consolidates FP headline rules and duplicate reduced-motion weather declarations; no changes to weather engine, geometry, state or storage.
+
+Build 59 removes the weather module, markup, styles and update guard dependency. Progress headline retains greeting and date; shared typography refined. No hardware or storage changes.

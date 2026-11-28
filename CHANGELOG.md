@@ -175,3 +175,6 @@ Removed always-active scroll geometry transitions. Timer toggle alone enables a 
 
 ## Build 58
 - Consolidated 22 overlapping FP headline rules into a single composition; approved greeting, name, date, weather art and temperature sizing. Existing weather animations and hardware calibration retained. 124 px weather column selected to accommodate the requested 64 px artwork and temperature. Browser and physical fit verification pending.
+
+## Build 59
+Approved weather removal and typography refinement; physical acceptance pending.
