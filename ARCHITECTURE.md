@@ -45,3 +45,5 @@ Build 40 uses a shared SVG weather-orbit group and CSS-only figure-eight motion;
 FP headline grid is local to Home. Build 42 removes Home overflow observation and edge glass; Home uses fixed viewport bounds, non-scrollable overflow and flexible card tracks with local container-relative sizing.
 
 Build 48 defines shared semantic surface/row/outline/popup tokens in style.css; existing Profile groups opt into settings semantics in index.html. All existing HTML dialogs share the translucent popup style with opaque fallback. No new state or event handlers.
+
+Build 52 renders semantic greeting/name spans in the existing headline. Profile name form merges only the explicit name field into existing local preferences; no migration or training data changes.

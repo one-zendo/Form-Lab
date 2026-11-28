@@ -154,3 +154,6 @@ Removed always-active scroll geometry transitions. Timer toggle alone enables a 
 
 ## Build 51
 - Compact FP greeting/date grid, bounded side-by-side weather and bottom alignment, no changes to other orientations or hardware. Added FP bounds checks; automated execution and physical acceptance pending.
+
+## Build 52
+- Explicit second greeting line, editable saved display name in Profile, blank fallback and safe storage merge. Added persistence and geometry assertions. Automated execution and physical acceptance pending.

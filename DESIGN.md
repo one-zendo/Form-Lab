@@ -125,3 +125,6 @@ Retain fixed non-scrollable Home and shared card/timer edges, radius, navigation
 
 ## Build 51 — FP compact headline (approved)
 Place the date directly beneath the greeting with a 4 CSS px row gap. Weather artwork and temperature sit side by side at right; weather condition and date share the bottom baseline for single-line conditions. Header uses the existing dashboard inset and a bounded 112 CSS px weather column; allow long conditions and names to wrap rather than clip. Preserve existing weather animation, location behavior, non-scrollable dashboard, component tokens and timer/navigation anchors. Both FP environments only; other orientations unchanged. Physical fit and multi-line baseline acceptance pending.
+
+## Build 52 — Personalized two-line Home greeting (approved)
+All Home profiles render the time-based greeting on its own line and the display name (or “there”) on a separate line below. Long names ellipsize visually to protect the fixed dashboard; full text remains in the heading. Profile → Personal details provides an explicit Save name action; blank restores fallback. Persist only the name in existing form.preferences.v1, preserving all other fields; malformed or inaccessible storage is not overwritten and is reported as session-only. No other storage, hardware, navigation or layout profile changes. Physical fit pending.

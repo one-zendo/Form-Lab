@@ -40,3 +40,6 @@ button{font-weight:var(--weight-medium)}nav button,#timer button,#week-days butt
 
 /* Home-specific readability within the fixed dashboard. */
 #routine-info{font-size:clamp(12px,10cqh,var(--type-body));line-height:1.25}#ready-card{justify-content:flex-start}#ready-card #start-workout{margin-top:auto}#shell[data-profile=FP] #scroll:has(> [data-page=Home]:not([hidden])) #headline{font-size:clamp(24px,6vw,var(--type-headline));overflow-wrap:anywhere;letter-spacing:-.5px}.weather-copy strong{white-space:nowrap}.weather-copy small{overflow-wrap:normal}.weather-copy{max-width:96px}#week-days button{gap:clamp(2px,2cqh,4px)}#streak-value strong{line-height:1.1}
+
+/* Home greeting: explicit name line, independent of natural word wrapping. */
+#headline .greeting-line,#headline .greeting-name{display:block;min-width:0;overflow-wrap:anywhere}#headline .greeting-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#name-form{display:flex;flex-direction:column;gap:8px}#name-form #display-name{width:100%;max-width:100%;min-height:44px;background:var(--elevated);color:var(--ink);padding:8px 12px}#name-form button{align-self:flex-start}
