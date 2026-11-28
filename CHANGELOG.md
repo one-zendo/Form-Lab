@@ -37,3 +37,6 @@ Stability mitigation for reported blank screen: bounded diagnostic redraws, asyn
 
 ## Diagnostic Build 11
 Approved Apple × ChatGPT visual standard; monochrome icon-only destination capsule, separate circular timer control, neutral background and fine card outlines. Existing orientation anchors retained. No backdrop blur during stability testing. Physical fit and stability pending.
+
+## Build 12
+Recovered ONE-derived Home card arrangement from Build 94. Personalized local-time greeting, no tagline, neutral two-card dashboard, session profile name editing, timer toggle contrast and countdown ring. Diagnostic pairs relocated. No storage writes, no workout engine. Home hinge response, animated content resizing, physical validation pending.
