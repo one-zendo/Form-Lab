@@ -89,3 +89,6 @@ Shared sticky page header with opaque background and content separation. Physica
 
 ## Build 28
 Private paste importer for JSON and copied fenced batches. No personal data committed. Browser and physical testing pending.
+
+## Build 29
+Studio Dark added; Studio renamed Studio Light without changing stored preference. Graphite default unchanged. Theme-aware browser tint metadata and canvas background. Syntax checked; browser, deployment and physical verification pending.

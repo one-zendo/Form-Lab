@@ -27,3 +27,5 @@ Build 26 adds history.js, an explicit local JSON import with read-only workout a
 Build 27: shared appearance tokens in style.css, Profile radio selection in app.js, independent local appearance key, liquid overlay clipped to matching fill. No hardware/layout changes.
 
 Build 28 extends the private importer with paste input and atomic batch merge.
+
+Build 29 adds Studio Dark via shared appearance tokens and validated persistent selection; synchronizes Safari theme-color and color-scheme metadata at boot and theme changes, without altering layout.
