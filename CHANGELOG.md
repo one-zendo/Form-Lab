@@ -43,3 +43,6 @@ Recovered ONE-derived Home card arrangement from Build 94. Personalized local-ti
 
 ## Build 13 — blank screen fix
 Confirmed source defect: navigation selected every data-page element, including the shell after first navigation, and hid the entire app on switching destination. Restrict visibility changes to direct page panels. Browser tests previously failed on ambiguous selectors; scope them to actual panels and assert shell visibility and exactly one visible panel on repeated navigation. Physical confirmation pending.
+
+## Build 14
+Shared monochrome floating timer, separate circular countdown ring, animated scroll viewport clearance and timer visibility. Preserve countdown, orientation anchors and navigation. Browser tests extended for actual viewport resizing; physical fit and CI pending.
