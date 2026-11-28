@@ -192,3 +192,7 @@ Remove navigation backdrop blur, gradient fade overlay and related markup/tokens
 
 ## Build 67 — Reference glass material (approved)
 Use the supplied ChatGPT floating selection screenshot as the visual material reference for navigation: softly illuminated upper surface, darker lower surface, restrained translucent gradients, fine luminous outline and inset edge reflections. No backdrop blur, no navigation fade overlay. Retain Build 66 measured sliding lens, reduced-motion behavior, dock and rail geometry, timer and themes. The material is a CSS approximation rather than native optical refraction; visual acceptance pending.
+
+
+## Build 68 — Settings typography correction (approved)
+Use 19 CSS px regular (400) for Profile settings labels, inherited secondary values and shared floating settings choices, superseding the 18px references in Builds 49, 63 and 64. Screenshot-based estimate, not a verified ChatGPT native token. Preserve existing row dimensions, icons, colors, spacing, hardware and storage. Physical fit pending.

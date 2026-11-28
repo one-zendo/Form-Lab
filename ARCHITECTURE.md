@@ -77,3 +77,5 @@ Build 65 removes navigation timer-toggle ownership and visibility state; countdo
 Build 66 removes nav-glass overlay and uses a noninteractive measured selection lens inside the existing navigation dock; app.js updates lens geometry on selection and layout events.
 
 Build 67 refines navigation material in existing CSS selectors; no new interaction or geometry logic.
+
+Build 68 updates the shared settings typography token and reuses it for selection choices; no interaction or geometry logic changes.

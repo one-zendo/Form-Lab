@@ -209,3 +209,7 @@ Clear translucent navigation, sliding selection lens, no nav blur. Preserved tim
 
 ## Build 67
 Refine clear navigation glass using screenshot-inspired tonal gradients and edge reflections; existing lens motion retained. Static CSS checks passed; browser, deployment and physical acceptance pending.
+
+
+## Build 68
+Increase shared Profile settings labels and values from 18 to 19 CSS px, including floating choices. Regular weight and layout tokens unchanged. Screenshot-derived estimate; automated and physical acceptance pending.
