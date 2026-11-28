@@ -92,3 +92,6 @@ Private paste importer for JSON and copied fenced batches. No personal data comm
 
 ## Build 29
 Studio Dark added; Studio renamed Studio Light without changing stored preference. Graphite default unchanged. Theme-aware browser tint metadata and canvas background. Syntax checked; browser, deployment and physical verification pending.
+
+## Build 30
+Pure black Safari tint requested for every theme. No layout changes. Physical tint and deployment pending verification.

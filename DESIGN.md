@@ -89,4 +89,6 @@ Studio is the original Apple × ChatGPT light theme with Lucide icons, monochrom
 
 Build 28: Profile training data supports pasted JSON or multiple fenced JSON batches, validated together before a single local merge. No personal data in public source.
 
-Build 29: Studio Light retains existing studio preference key. Studio Dark adds OLED black canvas, charcoal cards, white primary actions and streaks, Apple blue #0a84ff timer with dark contrast ink. Three explicit appearance choices; Graphite Lime remains default. Safari browser tint follows the selected canvas through theme-color and color-scheme metadata and root/body background; browser-controlled exclusion tint subject to physical Safari support. Preserve all exclusion geometry.
+Build 29: Studio Light retains existing studio preference key. Studio Dark adds OLED black canvas, charcoal cards, white primary actions and streaks, Apple blue #0a84ff timer with dark contrast ink. Three explicit appearance choices; Graphite Lime remains default. Safari browser tint requests pure black through theme-color metadata; root/body background and color-scheme follow the selected theme; browser-controlled exclusion tint subject to physical Safari support. Preserve all exclusion geometry.
+
+Build 30: request pure black Safari chrome tint independent of selected theme. Preserve drawable canvas colors and exclusion geometry; physical Safari support remains unverified.
