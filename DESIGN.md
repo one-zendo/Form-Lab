@@ -228,3 +228,6 @@ Restore One's 24×32 SVG signature, path M12 4 L12 16 L12 28, 3px rounded stroke
 
 ## Build 78 — Home date
 Right-align weekday and date in a trailing column beside the greeting. Bold weekday, regular date below. Preserve signature, sticky header and calibrated insets.
+
+## Build 79 — Symmetric Home headline
+44px row, centered 32px date block with two 16px lines, 6px clearance each side. Bold weekday without comma, regular abbreviated month and day. Preserve signature and calibrated insets.

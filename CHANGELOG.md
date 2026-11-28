@@ -245,3 +245,6 @@ Restore signature accent and left-aligned headlines. Browser and physical accept
 
 ## Build 78
 Move Home date to trailing column and bold weekday. Browser and physical verification pending.
+
+## Build 79
+Symmetric Home date alignment and abbreviated month. Browser and physical acceptance pending.
