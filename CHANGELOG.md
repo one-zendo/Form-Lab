@@ -31,3 +31,6 @@ Added independent orange camera center-axis guides, default on under master guid
 
 ## Diagnostic Build 09
 Navigation timer visibility toggle, default visible, countdown continues hidden. Release timer-only scroll clearance; bottom dock maximum 360px. Regression added; verification pending.
+
+## Diagnostic Build 10
+Stability mitigation for reported blank screen: bounded diagnostic redraws, asynchronous navigation geometry notification, error isolation, repeated tab-switch regression, Ubuntu 24.04 CI runner. Physical cause unconfirmed; verification pending.
