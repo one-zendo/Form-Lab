@@ -35,3 +35,5 @@ Studio Dark uses white foreground for both timer layers through the shared theme
 Build 34 extends the shared appearance resolver and tokens with Obsidian Red. System appearance events affect Studio only.
 
 Build 35 adds a shared timer-glass sibling between scroll content and timer. It inherits theme and safe geometry, with no additional layout calculations or event listeners.
+
+Build 37 adds a navigation glass sibling below the timer and dock, using existing rail and safe-area tokens. Home keeps reserved viewport boundaries. Other pages extend the scroll viewport to the safe edge with equivalent navigation and timer padding. No new event listeners.

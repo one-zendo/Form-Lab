@@ -113,3 +113,6 @@ Timer gradient backdrop blur: 14px blur, 40px fade above timer, reserved scroll 
 
 ## Build 36
 Home reserves timer space in the actual content viewport instead of scroll padding, allows dashboard flex shrink and intrinsic card minimums, and excludes Home from timer glass. Other pages retain Build 35 glass. Source checks passed; browser and physical tests pending.
+
+## Build 37
+Navigation glass: 20px dock blur, 55% theme surface, 14px directional gradient with 40px fade, independent of timer. Home retains fixed dashboard clearance. Source checks passed; browser, deployment and physical verification pending.
