@@ -107,3 +107,6 @@ Studio Dark timer text and icons remain white across the liquid boundary. Studio
 
 ## Build 34
 Added Obsidian Red as third selectable theme. Existing themes and data preserved. Resolver checks passed; physical appearance and deployment pending.
+
+## Build 35
+Timer gradient backdrop blur: 14px blur, 40px fade above timer, reserved scroll padding and theme-aware gradient. Sharp timer foreground, hidden timer releases reserve and hides glass. Static source checks passed; browser and physical verification pending.

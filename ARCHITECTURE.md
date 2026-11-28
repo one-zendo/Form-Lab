@@ -12,7 +12,7 @@ Navigation groups four destinations in a shared capsule and includes the indepen
 
 Navigation visibility changes are restricted to direct page panels in #scroll; the shell's data-page is state metadata, never a visibility target.
 
-Timer visibility animates the actual scroll viewport bottom and timer opacity/translation; inert hidden transition prevents interaction, countdown remains independent.
+Timer visibility animates scroll bottom padding and timer opacity/translation; inert hidden transition prevents interaction, countdown remains independent. Scroll extends behind the timer to support a pointer-transparent gradient backdrop layer.
 
 Local Lucide SVGs for interface icons; diagnostic and countdown graphics remain custom.
 
@@ -33,3 +33,5 @@ Appearance resolver in the head script owns effective theme, Safari theme-color 
 Studio Dark uses white foreground for both timer layers through the shared theme tokens.
 
 Build 34 extends the shared appearance resolver and tokens with Obsidian Red. System appearance events affect Studio only.
+
+Build 35 adds a shared timer-glass sibling between scroll content and timer. It inherits theme and safe geometry, with no additional layout calculations or event listeners.
