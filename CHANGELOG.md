@@ -83,3 +83,6 @@ Shared sticky page header with opaque background and content separation. Physica
 
 ## Build 26
 - Home 8px card margins, right-aligned date, blue history-driven streak and day detail, routine summary; expanded monochrome liquid timer with shared capsule token and 15-second controls; local private JSON importer, read-only history and routines. Navigation transitions refined. Hardware unchanged. Real data not committed. Browser/physical acceptance pending; workout engine, exact duration estimates and muscle metadata not implemented.
+
+## Build 27
+- Studio and Graphite Lime themes, latter default; persistent Profile appearance selector; monochrome streaks and theme-colored timer. No personal training data changes. Browser and physical validation pending.

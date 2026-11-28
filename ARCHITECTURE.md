@@ -23,3 +23,5 @@ Shared sticky headline uses backdrop filtering on the actual header with opaque 
 The actual header starts at viewport top and owns calibrated padding. App diagnostic master guides default off; individual categories remain selected.
 
 Build 26 adds history.js, an explicit local JSON import with read-only workout and routine views; local date/streak calculation; shared timer liquid layer using blend inversion and a single animation loop. Hardware unchanged.
+
+Build 27: shared appearance tokens in style.css, Profile radio selection in app.js, independent local appearance key, liquid overlay clipped to matching fill. No hardware/layout changes.
