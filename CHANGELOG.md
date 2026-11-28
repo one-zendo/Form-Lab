@@ -157,3 +157,6 @@ Removed always-active scroll geometry transitions. Timer toggle alone enables a 
 
 ## Build 52
 - Explicit second greeting line, editable saved display name in Profile, blank fallback and safe storage merge. Added persistence and geometry assertions. Automated execution and physical acceptance pending.
+
+## Build 53
+- Shared continuous squircle corners on rectangular components where CSS corner-shape is supported; original radius fallback otherwise. Capsules unchanged. Added conditional browser assertions; execution, Safari support and physical acceptance pending.

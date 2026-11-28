@@ -47,3 +47,5 @@ FP headline grid is local to Home. Build 42 removes Home overflow observation an
 Build 48 defines shared semantic surface/row/outline/popup tokens in style.css; existing Profile groups opt into settings semantics in index.html. All existing HTML dialogs share the translucent popup style with opaque fallback. No new state or event handlers.
 
 Build 52 renders semantic greeting/name spans in the existing headline. Profile name form merges only the explicit name field into existing local preferences; no migration or training data changes.
+
+Build 53 uses one CSS corner-shape token under feature detection, with explicit round capsule exceptions and unchanged border-radius fallback. No scripting, hardware, state or layout changes.
