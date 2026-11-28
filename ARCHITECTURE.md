@@ -79,3 +79,5 @@ Build 66 removes nav-glass overlay and uses a noninteractive measured selection 
 Build 67 refines navigation material in existing CSS selectors; no new interaction or geometry logic.
 
 Build 68 updates the shared settings typography token and reuses it for selection choices; no interaction or geometry logic changes.
+
+Build 69 adds corners.js as a presentation-only progressive enhancement; resize and theme/DOM observers refresh paths without modifying hardware or data.

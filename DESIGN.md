@@ -196,3 +196,7 @@ Use the supplied ChatGPT floating selection screenshot as the visual material re
 
 ## Build 68 — Settings typography correction (approved)
 Use 19 CSS px regular (400) for Profile settings labels, inherited secondary values and shared floating settings choices, superseding the 18px references in Builds 49, 63 and 64. Screenshot-based estimate, not a verified ChatGPT native token. Preserve existing row dimensions, icons, colors, spacing, hardware and storage. Physical fit pending.
+
+
+## Build 69 — Safari continuous corners (approved)
+Use shared responsive cubic path clipping and SVG outlines on eligible existing continuous-corner surfaces in browsers without native CSS corner-shape. Preserve radius tokens, box metrics, theme colors, timer/navigation/day/segment capsules and hardware/storage. Focus-visible, asymmetric and unsupported surfaces keep CSS rounding. External shadows may be clipped. Exact native geometry and physical Safari appearance unverified.
