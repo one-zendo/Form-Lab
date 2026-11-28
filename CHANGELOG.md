@@ -19,3 +19,6 @@ Three-second foreground deployment polling, versioned assets, matching HTML veri
 
 ## Diagnostic Build 05
 Added side-by-side test pair and adaptive dimensions and gaps for both pairs across all profiles. Preserves shared padding, anchored controls and existing interaction state. Provisional minimum sizes and gaps; binary posture transitions, not continuous angle tracking. Added regression assertions; deployment and physical verification pending.
+
+## Diagnostic Build 06
+Four functional pages: Home, Workouts, Profile, Diagnostic. Global master and individual overlay toggles, posture simulation and measurements moved to Diagnostic. Timer remains visible globally for testing; session state retained across page navigation. Home card pairs adjust only while visible. No new persistent storage. Exact physical hinge alignment remains unresolved. Tests updated; verification pending.
