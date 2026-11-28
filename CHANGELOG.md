@@ -16,3 +16,6 @@ Enabled arrangement-preserving posture adjustment in all five current stacked pr
 
 ## Diagnostic Build 04
 Three-second foreground deployment polling, versioned assets, matching HTML verification and guarded reload. Changed editable fields defer automatic reload until manual refresh; no user storage writes. Browser timing and deployment remain unverified.
+
+## Diagnostic Build 05
+Added side-by-side test pair and adaptive dimensions and gaps for both pairs across all profiles. Preserves shared padding, anchored controls and existing interaction state. Provisional minimum sizes and gaps; binary posture transitions, not continuous angle tracking. Added regression assertions; deployment and physical verification pending.
