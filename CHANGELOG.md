@@ -131,3 +131,6 @@ Corrected FP greeting compression by moving date to metadata row, reduced FP art
 
 ## Build 42
 Home is non-scrollable, with zero-minimum flexible card tracks and compact container-relative card content. Removed Home overflow glass and observer. Short landscape weather height reduced. Other pages retain scrolling and glass. Source and JS syntax checks passed; physical content fit and deployment pending.
+
+## Build 43
+Removed always-active scroll geometry transitions. Timer toggle alone enables a bounded resize transition; navigation cancels it before changing the visible page. Re-selecting the current destination is a no-op. No card, weather, hardware or storage changes. JS syntax and source checks passed; actual Safari twitch and deployment remain unverified.
