@@ -22,3 +22,6 @@ Added side-by-side test pair and adaptive dimensions and gaps for both pairs acr
 
 ## Diagnostic Build 06
 Four functional pages: Home, Workouts, Profile, Diagnostic. Global master and individual overlay toggles, posture simulation and measurements moved to Diagnostic. Timer remains visible globally for testing; session state retained across page navigation. Home card pairs adjust only while visible. No new persistent storage. Exact physical hinge alignment remains unresolved. Tests updated; verification pending.
+
+## Diagnostic Build 07
+Removed automatic midpoint fallback; matching segment axis and local fit required. Constant stacked pair target height prevents indirect displacement of cards 03/04. Flat side-by-side tracks use equal fractions. Explicit simulation retains labeled midpoint. Physical hinge guides fixed to viewport. Regression assertions revised for local-fit behavior; verification pending.
