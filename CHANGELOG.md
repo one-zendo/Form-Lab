@@ -40,3 +40,6 @@ Approved Apple × ChatGPT visual standard; monochrome icon-only destination caps
 
 ## Build 12
 Recovered ONE-derived Home card arrangement from Build 94. Personalized local-time greeting, no tagline, neutral two-card dashboard, session profile name editing, timer toggle contrast and countdown ring. Diagnostic pairs relocated. No storage writes, no workout engine. Home hinge response, animated content resizing, physical validation pending.
+
+## Build 13 — blank screen fix
+Confirmed source defect: navigation selected every data-page element, including the shell after first navigation, and hid the entire app on switching destination. Restrict visibility changes to direct page panels. Browser tests previously failed on ambiguous selectors; scope them to actual panels and assert shell visibility and exactly one visible panel on repeated navigation. Physical confirmation pending.

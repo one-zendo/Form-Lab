@@ -1,5 +1,5 @@
 # FORM — Design standard
-Status: restart foundation specification; implementation and physical acceptance pending. This is the sole active design authority for the restart. Diagnostic Build 12 introduces the approved Home dashboard; verification and calibration remain pending. Native-sized browser previews are not native implementations.
+Status: restart foundation specification; implementation and physical acceptance pending. This is the sole active design authority for the restart. Diagnostic Build 13 corrects navigation panel selection; verification and calibration remain pending. Native-sized browser previews are not native implementations.
 
 ## Hardware reference
 | Profile | Full display (pt) | Safari drawable (pt) | Safari exclusion |
