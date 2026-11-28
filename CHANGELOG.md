@@ -166,3 +166,6 @@ Removed always-active scroll geometry transitions. Timer toggle alone enables a 
 
 ## Build 55
 - Unified timer-to-dock spacing to 8 CSS px vertically or horizontally, preserving navigation anchors, capsule dimensions and timer/card alignment. Added geometry assertions across all profiles; execution and physical acceptance pending.
+
+## Build 56
+- Three primary tabs, nested Diagnostics, blank Workouts, real history-derived Progress chart, consistency and insights. Existing imported records preserved. Muscle mapping and body measurements explicitly unavailable pending sources. Adaptive fit and automated verification pending.

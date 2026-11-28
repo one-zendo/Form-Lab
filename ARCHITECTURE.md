@@ -53,3 +53,5 @@ Build 53 uses one CSS corner-shape token under feature detection, with explicit 
 Build 54 updates Home card markup and shared adaptive card CSS; history.js only changes presentation of existing derived streak and day data. Existing workout navigation, history calculations and storage unchanged.
 
 Build 55 derives bottom/side navigation reservations from shared CSS component geometry and one timer-to-navigation gap token. No hardware or JS changes.
+
+Build 56 separates three primary destinations from the Profile-owned Diagnostic subpage. Existing history import remains the sole source of Progress metrics; presentation derives rolling buckets and detail views in history.js, with no storage migration. Workouts blank; saved routines/history accessible from Profile. Diagnostic test controls preserved under Diagnostics. No hardware changes.
