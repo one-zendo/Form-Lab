@@ -1,5 +1,5 @@
 # FORM Lab architecture
-Diagnostic Build 25: index.html shared semantic components; hardware.js raw detection; layout.js explicit orientation profiles; style.css shared styling and anchored controls; app.js interactions; diagnostics.js observational overlay. No storage writes or workout engine. Unknown viewport uses explicit uncalibrated stacked fallback. Native-sized is browser simulation. Tests cover basic interactions and ten profiles; physical calibration and expanded regression coverage pending.
+Diagnostic Build 26: index.html shared semantic components; hardware.js raw detection; layout.js explicit orientation profiles; style.css shared styling and anchored controls; app.js interactions; diagnostics.js observational overlay. No storage writes or workout engine. Unknown viewport uses explicit uncalibrated stacked fallback. Native-sized is browser simulation. Tests cover basic interactions and ten profiles; physical calibration and expanded regression coverage pending.
 Global posture adjustment is implemented in layout.js for both card arrangements across the five diagnostic layouts; diagnostic simulation is explicitly labeled. No physical hinge boundary is inferred from midpoint.
 update.js checks deployed versions independently of layout; app.js supplies reload safety guard.
 Four page panels share navigation and timer; app.js switches visible panel before refreshing layout; diagnostic controls are session-global. Diagnostic owns card-pair tests; Home has independent dashboard composition. Other pages use simple stacked test content.
@@ -21,3 +21,5 @@ Home alone uses zero horizontal scroll-container design padding, full-width flex
 Shared sticky headline uses backdrop filtering on the actual header with opaque fallback.
 
 The actual header starts at viewport top and owns calibrated padding. App diagnostic master guides default off; individual categories remain selected.
+
+Build 26 adds history.js, an explicit local JSON import with read-only workout and routine views; local date/streak calculation; shared timer liquid layer using blend inversion and a single animation loop. Hardware unchanged.

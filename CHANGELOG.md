@@ -80,3 +80,6 @@ Shared sticky page header with opaque background and content separation. Physica
 
 ## Build 25
 - Home-only cohesive layout: explicit full width, zero horizontal design margin, 8px card and content gaps, 12px headline gap, consistent 24px titles. Retain 16px card padding, 24px radius, 13px secondary text, flexible equal card allocation, safe insets, existing navigation and timer clearance. Exact 12px visual navigation clearance remains pending measurement. Browser and physical acceptance pending.
+
+## Build 26
+- Home 8px card margins, right-aligned date, blue history-driven streak and day detail, routine summary; expanded monochrome liquid timer with shared capsule token and 15-second controls; local private JSON importer, read-only history and routines. Navigation transitions refined. Hardware unchanged. Real data not committed. Browser/physical acceptance pending; workout engine, exact duration estimates and muscle metadata not implemented.
