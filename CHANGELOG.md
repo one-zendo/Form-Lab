@@ -58,3 +58,7 @@ Move timer toggle into shared navigation capsule in all profiles. Preserve indep
 
 ## Build 18
 Shared sticky page header with opaque background and content separation. Physical safe-area and scroll verification pending.
+
+## Build 19
+- Home-only edge-to-edge dashboard; equal flexible cards fill available space and resize with timer visibility. Existing orientation arrangements and minimum card sizes retained. Other screens, hardware and storage unchanged.
+- Automated browser and physical acceptance pending.
