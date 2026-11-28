@@ -85,3 +85,5 @@ Build 69 adds corners.js as a presentation-only progressive enhancement; resize 
 Build 73: app.js owns independent timer visibility preference and clearance; history.js publishes active session presence without changing timer countdown ownership or storage schema.
 
 Build 74: navigation material consumes shared settings surface and outline tokens; no interaction or geometry changes.
+
+Build 80 shares headline-row/form-headline CSS between shell and dynamically generated detail headers; history retains navigation handlers.

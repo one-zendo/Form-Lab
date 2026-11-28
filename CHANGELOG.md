@@ -248,3 +248,6 @@ Move Home date to trailing column and bold weekday. Browser and physical verific
 
 ## Build 79
 Symmetric Home date alignment and abbreviated month. Browser and physical acceptance pending.
+
+## Build 80
+Consolidate primary and detail headline geometry and retain detail actions. Browser and physical acceptance pending.
